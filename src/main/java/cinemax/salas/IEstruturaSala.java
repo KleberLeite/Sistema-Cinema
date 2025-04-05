@@ -12,7 +12,7 @@ public interface IEstruturaSala {
 	Return: retorna verdadeiro se foi possível bloquear o local
 	com sucesso, ou falso caso contrário.
 	*/
-	public boolean tentarBloquearLocal(byte linha, byte coluna);
+	public boolean tentarBloquearLocal(int linha, int coluna);
 	
 	/*
 	Resumo: tenta desbloquear o local caso seja uma poltrona comum,
@@ -22,7 +22,7 @@ public interface IEstruturaSala {
 	Return: retorna verdadeiro se foi possível desbloquear o local
 	com sucesso, ou falso caso contrário.
 	*/
-	public boolean tentarDesbloquearLocal(byte linha, byte coluna);
+	public boolean tentarDesbloquearLocal(int linha, int coluna);
 	
 	/*
 	Resumo: obtém o ID da sala.
