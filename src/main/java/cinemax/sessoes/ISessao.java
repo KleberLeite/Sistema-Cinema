@@ -2,7 +2,7 @@ package cinemax.sessoes;
 
 import java.time.LocalDateTime;
 
-import cinemax.salas.IEstruturaSala;
+import cinemax.salas.ISala;
 
 /*
 Resumo: interface para sessões em exibição.
@@ -43,7 +43,7 @@ public interface ISessao {
 	Resumo: obtém a estrutura da sala da sessão.
 	Return: retorna a estrutura da sala da sessão. 
 	*/
-	public IEstruturaSala obterEstruturaSala();
+	public ISala obterEstruturaSala();
 	
 	/*
 	Resumo: obtém a data e hora do início da exibição da sessão.
