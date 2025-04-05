@@ -1,4 +1,4 @@
-package cinemax.rooms;
+package cinemax.salas;
 
 public interface IEstruturaSala {
 	public boolean tentarBloquearLocal(byte linha, byte coluna);

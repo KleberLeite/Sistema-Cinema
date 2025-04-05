@@ -1,4 +1,4 @@
-package cinemax.rooms;
+package cinemax.salas;
 
 public interface IFabricaSala {
 	public IEstruturaSala criar();
