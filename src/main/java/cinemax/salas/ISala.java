@@ -3,7 +3,7 @@ package cinemax.salas;
 /*
 Resumo: estrutura de toda a sala da sessões.
 */
-public interface IEstruturaSala {
+public interface ISala {
 	/*
 	Resumo: tenta bloquear o local caso seja uma poltrona comum,
 	poltrona para pessoas obesas ou local para cadeirantes.
