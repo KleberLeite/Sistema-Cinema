@@ -7,6 +7,7 @@ public interface IFilme {
 	public String obterNome();
 	public int obterDuracaoEmMinutos();
 	public String obterSinopse();
+	public ClassificacaoIndicativa obterClassificacaoIndicativa();
 	public boolean tentarAdicionarSessao(ISessao sessao);
 	public boolean tentarRemoverSessao(int idSessao);
 	public int obterIdFilme();
