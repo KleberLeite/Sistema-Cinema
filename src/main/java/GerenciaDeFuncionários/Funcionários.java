@@ -7,10 +7,11 @@ package GerenciaDeFuncionários;
  */
 public class Funcionários extends javax.swing.JFrame {
 
-    /**
-     * Criado interface de Gerencia de  Funcionários
-     *
-     */
+    /*
+     * Criado interface de Gerencia de  Funcionários;
+     *  Até o momento estão implementados apenas comandos de texto, botões e uma planilha...
+    */
+    
     public Funcionários() {
         initComponents();
        
@@ -191,10 +192,7 @@ public class Funcionários extends javax.swing.JFrame {
     ///-------------------------------------------------------------------------////
    
     
-   /*
-    Até o momento estão implementados apenas comandos de texto, botões e uma planilha...
-    
-    */
+   
     public static void main(String args[]) {
         
        
