@@ -29,4 +29,6 @@ public interface ISala {
 	Return: retorna o ID da sala.
 	*/
 	public int obterIdSala();
+	
+	public DadosSala obterCopiaDados();
 }
