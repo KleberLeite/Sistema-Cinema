@@ -1,4 +1,4 @@
-package cinemax.filmes;
+package cinemax.backend.filmes;
 
 import cinemax.sessoes.ISessao;
 

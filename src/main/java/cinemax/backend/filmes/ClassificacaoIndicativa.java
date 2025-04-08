@@ -1,4 +1,4 @@
-package cinemax.filmes;
+package cinemax.backend.filmes;
 
 public enum ClassificacaoIndicativa {
 	AL,
