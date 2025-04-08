@@ -1,7 +1,8 @@
-package cinemax.sessoes;
+package cinemax.backend.sessoes;
 
 import java.time.LocalDateTime;
 
+import cinemax.backend.filmes.IFilme;
 import cinemax.backend.salas.ISala;
 
 /*
@@ -56,4 +57,8 @@ public interface ISessao {
 	Return: retorna o ID da sessão. 
 	*/
 	public int obterIdSessao();
+	
+	public IFilme obterFilme();
+	
+	public DadosSessao obterCopiaDados();
 }

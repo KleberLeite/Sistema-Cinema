@@ -4,6 +4,9 @@ package cinemax.backend.salas;
 Resumo: estrutura de toda a sala da sessões.
 */
 public interface ISala {
+	public int obterLinhas();
+	public int obterColunas();
+	
 	/*
 	Resumo: tenta bloquear o local caso seja uma poltrona comum,
 	poltrona para pessoas obesas ou local para cadeirantes.
@@ -31,4 +34,8 @@ public interface ISala {
 	public int obterIdSala();
 	
 	public DadosSala obterCopiaDados();
+	
+	public boolean estaDentroDaSala(int linha, int coluna);
+	
+	public boolean ePoltronaOuLocalCadeirante(int linha, int coluna);
 }

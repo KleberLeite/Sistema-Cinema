@@ -21,12 +21,22 @@ public class Sala implements ISala {
 	}
 	
 	@Override
+	public int obterLinhas() {
+		return linhas;
+	}
+	
+	@Override
+	public int obterColunas() {
+		return colunas;
+	}
+	
+	@Override
 	public boolean tentarBloquearLocal(int linha, int coluna) {
-		if(linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas) {
+		if(!estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
 		
-		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.linhas);
+		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.colunas);
 		Estrutura estrutura = this.estrutura[index];
 		if(estrutura != Estrutura.Vazio && !bloqueados[index]) {
 			bloqueados[index] = true;
@@ -38,11 +48,11 @@ public class Sala implements ISala {
 
 	@Override
 	public boolean tentarDesbloquearLocal(int linha, int coluna) {
-		if(linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas) {
+		if(!estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
 		
-		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.linhas);
+		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.colunas);
 		Estrutura estrutura = this.estrutura[index];
 		if(estrutura != Estrutura.Vazio && bloqueados[index]) {
 			bloqueados[index] = false;
@@ -62,5 +72,18 @@ public class Sala implements ISala {
 			cachedDados = new DadosSala(idSala, linhas, colunas, bloqueados, estrutura);
 		}
 		return cachedDados;
+	}
+	
+	public boolean estaDentroDaSala(int linha, int coluna) {
+		return linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas;
+	}
+	
+	public boolean ePoltronaOuLocalCadeirante(int linha, int coluna) {
+		if(!estaDentroDaSala(linha, coluna)) {
+			return false;
+		}
+		
+		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.colunas);
+		return estrutura[index] != Estrutura.Vazio;
 	}
 }

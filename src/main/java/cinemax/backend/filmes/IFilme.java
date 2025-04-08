@@ -1,6 +1,6 @@
 package cinemax.backend.filmes;
 
-import cinemax.sessoes.ISessao;
+import cinemax.backend.sessoes.ISessao;
 
 public interface IFilme {
 	public ISessao obterTodasSessoes();
