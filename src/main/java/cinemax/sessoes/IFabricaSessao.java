@@ -2,7 +2,7 @@ package cinemax.sessoes;
 
 import java.time.LocalDateTime;
 
-import cinemax.salas.ISala;
+import cinemax.backend.salas.ISala;
 
 /*
 Resumo: interface para fábricas de sessões.

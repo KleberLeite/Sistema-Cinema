@@ -1,4 +1,4 @@
-package cinemax.salas;
+package cinemax.backend.salas;
 
 /*
 Resumo: possíveis estruturas das salas

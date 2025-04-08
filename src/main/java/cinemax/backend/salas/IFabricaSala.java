@@ -1,4 +1,4 @@
-package cinemax.salas;
+package cinemax.backend.salas;
 
 /*
 Resumo: interface para fábricas de ISala.

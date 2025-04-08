@@ -1,4 +1,4 @@
-package cinemax.salas;
+package cinemax.backend.salas;
 
 public interface IBancoDeDadosSala {
 	public DadosSala[] obterTodasSalas();

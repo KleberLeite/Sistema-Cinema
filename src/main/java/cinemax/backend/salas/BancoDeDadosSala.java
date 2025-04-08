@@ -1,4 +1,4 @@
-package cinemax.salas;
+package cinemax.backend.salas;
 
 import java.util.ArrayList;
 import java.util.HashMap;

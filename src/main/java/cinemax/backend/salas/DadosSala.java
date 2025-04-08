@@ -1,4 +1,4 @@
-package cinemax.salas;
+package cinemax.backend.salas;
 
 import cinemax.utilities.ConversorDeCoordenadas;
 
