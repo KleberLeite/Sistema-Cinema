@@ -1,5 +1,5 @@
 
-package GeranciaDeFuncionarios;
+package cinemax.frontend.geranciadefuncionarios;
 
 /**
  *
