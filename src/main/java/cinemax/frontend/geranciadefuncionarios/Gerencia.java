@@ -1,6 +1,10 @@
 
 package cinemax.frontend.geranciadefuncionarios;
 
+import cinemax.frontend.model.FuncionariosModel;
+
+
+
 /**
  *
  * @author Geraldo Luiz
@@ -12,7 +16,10 @@ public class Gerencia extends javax.swing.JFrame {
      * Ate o momento foram implementados apenas botões e comandos se texto alem de euma planilha.
      */
     public Gerencia() {
-        initComponents();
+         initComponents();
+        FuncionariosModel model=new FuncionariosModel();
+       PlanilhaGerenciaFuncionarios.setModel(model);
+      
     }
 
    
