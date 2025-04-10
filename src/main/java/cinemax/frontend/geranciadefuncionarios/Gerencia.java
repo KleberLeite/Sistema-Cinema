@@ -29,7 +29,7 @@ public class Gerencia extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         PlanilhaGerenciaFuncionarios = new javax.swing.JTable();
-        BotãoCadastrarFuncionarios = new javax.swing.JButton();
+        BotaoCadastrarFuncionarios = new javax.swing.JButton();
         BotãoEditarFuncionarios = new javax.swing.JButton();
         BotãoRemoverFuncionarios = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -60,10 +60,10 @@ public class Gerencia extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(PlanilhaGerenciaFuncionarios);
 
-        BotãoCadastrarFuncionarios.setText("Cadastrar");
-        BotãoCadastrarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+        BotaoCadastrarFuncionarios.setText("Cadastrar");
+        BotaoCadastrarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotãoCadastrarFuncionariosActionPerformed(evt);
+                BotaoCadastrarFuncionariosActionPerformed(evt);
             }
         });
 
@@ -127,7 +127,7 @@ public class Gerencia extends javax.swing.JFrame {
                                             .addComponent(CapturarTXTCargoFuncionarios, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(164, 164, 164)
-                                .addComponent(BotãoCadastrarFuncionarios)
+                                .addComponent(BotaoCadastrarFuncionarios)
                                 .addGap(124, 124, 124)
                                 .addComponent(BotãoEditarFuncionarios)
                                 .addGap(126, 126, 126)
@@ -165,7 +165,7 @@ public class Gerencia extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(263, 263, 263)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BotãoCadastrarFuncionarios)
+                            .addComponent(BotaoCadastrarFuncionarios)
                             .addComponent(BotãoEditarFuncionarios)
                             .addComponent(BotãoRemoverFuncionarios))))
                 .addGap(18, 18, 18)
@@ -182,7 +182,7 @@ public class Gerencia extends javax.swing.JFrame {
 
     
                           //Botão cadastrar//
-    private void BotãoCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoCadastrarFuncionariosActionPerformed
+    private void BotaoCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarFuncionariosActionPerformed
         String nome= CapturarTXTNomeFuncionarios.getText();
         String cpf =CapturarTXTCPFFuncionarios.getText();
         String cargo=CapturarTXTCargoFuncionarios.getText();
@@ -197,7 +197,7 @@ public class Gerencia extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_BotãoCadastrarFuncionariosActionPerformed
+    }//GEN-LAST:event_BotaoCadastrarFuncionariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,7 +212,7 @@ public class Gerencia extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotãoCadastrarFuncionarios;
+    private javax.swing.JButton BotaoCadastrarFuncionarios;
     private javax.swing.JButton BotãoEditarFuncionarios;
     private javax.swing.JButton BotãoRemoverFuncionarios;
     private javax.swing.JTextField CapturarTXTCPFFuncionarios;
