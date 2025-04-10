@@ -32,7 +32,6 @@ public class Gerencia extends javax.swing.JFrame {
         BotaoCadastrarFuncionarios = new javax.swing.JButton();
         BotãoEditarFuncionarios = new javax.swing.JButton();
         BotãoRemoverFuncionarios = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         TXTNomeFuncionarios = new javax.swing.JLabel();
         TXTCPFFuncionarios = new javax.swing.JLabel();
         TXTCargoFuncionarios = new javax.swing.JLabel();
@@ -43,6 +42,8 @@ public class Gerencia extends javax.swing.JFrame {
         CapturarTXTCargoFuncionarios = new javax.swing.JTextField();
         CapturarTXTTelefoneFuncionarios = new javax.swing.JTextField();
         CapturarTXTSenhaFuncionarios = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Funcionários");
@@ -55,9 +56,17 @@ public class Gerencia extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Cargo", "Telefone", "senha"
+                "Nome", "CPF", "Cargo", "Teléfone", "Senha"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(PlanilhaGerenciaFuncionarios);
 
         BotaoCadastrarFuncionarios.setText("Cadastrar");
@@ -70,9 +79,6 @@ public class Gerencia extends javax.swing.JFrame {
         BotãoEditarFuncionarios.setText("Editar");
 
         BotãoRemoverFuncionarios.setText("Remover");
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Gerência de Funcionários");
 
         TXTNomeFuncionarios.setText("Nome");
 
@@ -90,55 +96,73 @@ public class Gerencia extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(0, 32, 64));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Gerência de Funcionários");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(280, 280, 280)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addComponent(jLabel1))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(37, 37, 37)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(273, 273, 273)
-                                .addComponent(jLabel1))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(TXTTelefoneFuncionarios)
+                                    .addComponent(TXTSenhaFuncionarios, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CapturarTXTTelefoneFuncionarios)
+                                    .addComponent(CapturarTXTSenhaFuncionarios)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TXTNomeFuncionarios)
+                                    .addComponent(TXTCPFFuncionarios)
+                                    .addComponent(TXTCargoFuncionarios))
+                                .addGap(34, 34, 34)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(TXTTelefoneFuncionarios)
-                                            .addComponent(TXTSenhaFuncionarios, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(CapturarTXTTelefoneFuncionarios)
-                                            .addComponent(CapturarTXTSenhaFuncionarios)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(TXTNomeFuncionarios)
-                                            .addComponent(TXTCPFFuncionarios)
-                                            .addComponent(TXTCargoFuncionarios))
-                                        .addGap(34, 34, 34)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(CapturarTXTNomeFuncionarios)
-                                            .addComponent(CapturarTXTCPFFuncionarios)
-                                            .addComponent(CapturarTXTCargoFuncionarios, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(164, 164, 164)
-                                .addComponent(BotaoCadastrarFuncionarios)
-                                .addGap(124, 124, 124)
-                                .addComponent(BotãoEditarFuncionarios)
-                                .addGap(126, 126, 126)
-                                .addComponent(BotãoRemoverFuncionarios)))
-                        .addGap(0, 151, Short.MAX_VALUE)))
-                .addContainerGap())
+                                    .addComponent(CapturarTXTNomeFuncionarios)
+                                    .addComponent(CapturarTXTCPFFuncionarios)
+                                    .addComponent(CapturarTXTCargoFuncionarios, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(164, 164, 164)
+                        .addComponent(BotaoCadastrarFuncionarios)
+                        .addGap(124, 124, 124)
+                        .addComponent(BotãoEditarFuncionarios)
+                        .addGap(126, 126, 126)
+                        .addComponent(BotãoRemoverFuncionarios)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 753, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
@@ -170,7 +194,7 @@ public class Gerencia extends javax.swing.JFrame {
                             .addComponent(BotãoRemoverFuncionarios))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -191,14 +215,29 @@ public class Gerencia extends javax.swing.JFrame {
         
         Funcionarios f =new Funcionarios(nome,cpf,cargo,telefone,senha);
                 this.model.CadastrarFuncionario(f);
-        
+    }
+    
+    
 
-        
-        
-        
-        
+//Metodo limpara campos de comando//
+        public void limparTextos(){
+        CapturarTXTNomeFuncionarios.setText("");
+        CapturarTXTCPFFuncionarios.setText("");
+        CapturarTXTCargoFuncionarios.setText("");
+        CapturarTXTTelefoneFuncionarios.setText("");
+        CapturarTXTSenhaFuncionarios.setText("");
     }//GEN-LAST:event_BotaoCadastrarFuncionariosActionPerformed
 
+        
+        //Metodos para valodar campos de Funcionario completo//
+       
+        
+                
+                
+                
+                
+                
+       
     /**
      * @param args the command line arguments
      */
@@ -227,6 +266,7 @@ public class Gerencia extends javax.swing.JFrame {
     private javax.swing.JLabel TXTSenhaFuncionarios;
     private javax.swing.JLabel TXTTelefoneFuncionarios;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
