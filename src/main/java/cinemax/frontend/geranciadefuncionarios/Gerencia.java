@@ -1,6 +1,7 @@
 
 package cinemax.frontend.geranciadefuncionarios;
 
+import cinemax.frontend.model.Funcionarios;
 import cinemax.frontend.model.FuncionariosModel;
 
 
@@ -10,14 +11,13 @@ import cinemax.frontend.model.FuncionariosModel;
  * @author Geraldo Luiz
  */
 public class Gerencia extends javax.swing.JFrame {
-
+ FuncionariosModel model=new FuncionariosModel();
     /**
      * Criado interface de Ger√™ncia de funcionarios;
      * Ate o momento foram implementados apenas bot√µes e comandos se texto alem de euma planilha.
      */
     public Gerencia() {
          initComponents();
-        FuncionariosModel model=new FuncionariosModel();
        PlanilhaGerenciaFuncionarios.setModel(model);
       
     }
@@ -29,9 +29,9 @@ public class Gerencia extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         PlanilhaGerenciaFuncionarios = new javax.swing.JTable();
-        Bot√£oCadastrarFuncionarios = new javax.swing.JButton();
-        Bot√£oEditarFuncionarios = new javax.swing.JButton();
-        Bot√£oRemoverFuncionarios = new javax.swing.JButton();
+        Bot„oCadastrarFuncionarios = new javax.swing.JButton();
+        Bot„oEditarFuncionarios = new javax.swing.JButton();
+        Bot„oRemoverFuncionarios = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         TXTNomeFuncionarios = new javax.swing.JLabel();
         TXTCPFFuncionarios = new javax.swing.JLabel();
@@ -45,7 +45,7 @@ public class Gerencia extends javax.swing.JFrame {
         CapturarTXTSenhaFuncionarios = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Funcion√°rios");
+        setTitle("Funcion·rios");
 
         PlanilhaGerenciaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -60,14 +60,19 @@ public class Gerencia extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(PlanilhaGerenciaFuncionarios);
 
-        Bot√£oCadastrarFuncionarios.setText("Cadastrar");
+        Bot„oCadastrarFuncionarios.setText("Cadastrar");
+        Bot„oCadastrarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Bot„oCadastrarFuncionariosActionPerformed(evt);
+            }
+        });
 
-        Bot√£oEditarFuncionarios.setText("Editar");
+        Bot„oEditarFuncionarios.setText("Editar");
 
-        Bot√£oRemoverFuncionarios.setText("Remover");
+        Bot„oRemoverFuncionarios.setText("Remover");
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Ger√™ncia de Funcion√°rios");
+        jLabel1.setText("GerÍncia de Funcion·rios");
 
         TXTNomeFuncionarios.setText("Nome");
 
@@ -75,7 +80,7 @@ public class Gerencia extends javax.swing.JFrame {
 
         TXTCargoFuncionarios.setText("Cargo");
 
-        TXTTelefoneFuncionarios.setText("Tel√©fone");
+        TXTTelefoneFuncionarios.setText("TelÈfone");
 
         TXTSenhaFuncionarios.setText("Senha");
 
@@ -122,11 +127,11 @@ public class Gerencia extends javax.swing.JFrame {
                                             .addComponent(CapturarTXTCargoFuncionarios, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(164, 164, 164)
-                                .addComponent(Bot√£oCadastrarFuncionarios)
+                                .addComponent(Bot„oCadastrarFuncionarios)
                                 .addGap(124, 124, 124)
-                                .addComponent(Bot√£oEditarFuncionarios)
+                                .addComponent(Bot„oEditarFuncionarios)
                                 .addGap(126, 126, 126)
-                                .addComponent(Bot√£oRemoverFuncionarios)))
+                                .addComponent(Bot„oRemoverFuncionarios)))
                         .addGap(0, 151, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -160,9 +165,9 @@ public class Gerencia extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(263, 263, 263)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(Bot√£oCadastrarFuncionarios)
-                            .addComponent(Bot√£oEditarFuncionarios)
-                            .addComponent(Bot√£oRemoverFuncionarios))))
+                            .addComponent(Bot„oCadastrarFuncionarios)
+                            .addComponent(Bot„oEditarFuncionarios)
+                            .addComponent(Bot„oRemoverFuncionarios))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -174,6 +179,25 @@ public class Gerencia extends javax.swing.JFrame {
     private void CapturarTXTNomeFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CapturarTXTNomeFuncionariosActionPerformed
      
     }//GEN-LAST:event_CapturarTXTNomeFuncionariosActionPerformed
+
+    
+                          //Bot„o cadastrar//
+    private void Bot„oCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Bot„oCadastrarFuncionariosActionPerformed
+        String nome= CapturarTXTNomeFuncionarios.getText();
+        String cpf =CapturarTXTCPFFuncionarios.getText();
+        String cargo=CapturarTXTCargoFuncionarios.getText();
+        String telefone=CapturarTXTTelefoneFuncionarios.getText();
+        String senha=CapturarTXTSenhaFuncionarios.getText();
+        
+        Funcionarios f =new Funcionarios(nome,cpf,cargo,telefone,senha);
+                this.model.CadastrarFuncionario(f);
+        
+
+        
+        
+        
+        
+    }//GEN-LAST:event_Bot„oCadastrarFuncionariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,9 +212,9 @@ public class Gerencia extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Bot√£oCadastrarFuncionarios;
-    private javax.swing.JButton Bot√£oEditarFuncionarios;
-    private javax.swing.JButton Bot√£oRemoverFuncionarios;
+    private javax.swing.JButton Bot„oCadastrarFuncionarios;
+    private javax.swing.JButton Bot„oEditarFuncionarios;
+    private javax.swing.JButton Bot„oRemoverFuncionarios;
     private javax.swing.JTextField CapturarTXTCPFFuncionarios;
     private javax.swing.JTextField CapturarTXTCargoFuncionarios;
     private javax.swing.JTextField CapturarTXTNomeFuncionarios;

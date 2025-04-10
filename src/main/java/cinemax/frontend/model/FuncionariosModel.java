@@ -18,7 +18,13 @@ public class FuncionariosModel extends AbstractTableModel {
     return colunas[column];
         
     }
-
+//__________________________________________________________//
+              //Funcionalidade para cadastrar//
+    public void CadastrarFuncionario(Funcionarios f){
+        funcionarios.add(f);
+        this.fireTableDataChanged();
+    }
+    
     
 
   
