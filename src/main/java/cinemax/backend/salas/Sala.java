@@ -57,8 +57,12 @@ public class Sala {
 		return false;
 	}
 	
-	public boolean estaDentroDaSala(int linha, int coluna) {
-		return linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas;
+	public TipoDeEstrutura obterTipoDeEstrutura(int linha, int coluna) {
+		if(!estaDentroDaSala(linha, coluna)) {
+			return null;
+		}
+		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.colunas);
+		return estrutura[index];
 	}
 	
 	public boolean ePoltronaOuLocalCadeirante(int linha, int coluna) {
@@ -68,5 +72,9 @@ public class Sala {
 		
 		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.colunas);
 		return estrutura[index] != TipoDeEstrutura.Vazio;
+	}
+	
+	public boolean estaDentroDaSala(int linha, int coluna) {
+		return linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas;
 	}
 }
