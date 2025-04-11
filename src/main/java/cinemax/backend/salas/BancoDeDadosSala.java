@@ -1,34 +1,26 @@
 package cinemax.backend.salas;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class BancoDeDadosSala implements IBancoDeDadosSala {
-	private Map<Integer, ISala> salas;
+	private Map<Integer, Sala> salas;
 	
 	public BancoDeDadosSala() {
-		this.salas = new HashMap<Integer, ISala>();
+		this.salas = new HashMap<Integer, Sala>();
 	}
 	
 	@Override
-	public DadosSala[] obterTodasSalas() {
-		List<DadosSala> todasSalas = new ArrayList<DadosSala>();
-		
-		for(ISala sala : salas.values()) {
-			todasSalas.add(sala.obterCopiaDados());
-		}
-		
-		return todasSalas.toArray(new DadosSala[todasSalas.size()]);
+	public Sala[] obterTodasSalas() {		
+		return salas.values().toArray(new Sala[salas.size()]);
 	}
 
 	@Override
-	public DadosSala obterSalaPorId(int id) {
+	public Sala obterSalaPorId(int id) {
 		if(!salas.containsKey(id)) {
 			return null;
 		}
-		return salas.get(id).obterCopiaDados();
+		return salas.get(id);
 	}
 
 	@Override
@@ -37,7 +29,7 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 			return false;
 		}
 		
-		ISala sala = salas.get(idSala);
+		Sala sala = salas.get(idSala);
 		return sala.tentarBloquearLocal(linha, coluna);
 	}
 
@@ -47,7 +39,7 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 			return false;
 		}
 		
-		ISala sala = salas.get(idSala);
+		Sala sala = salas.get(idSala);
 		return sala.tentarDesbloquearLocal(linha, coluna);
 	}
 }

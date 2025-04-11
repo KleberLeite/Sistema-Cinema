@@ -2,76 +2,59 @@ package cinemax.backend.salas;
 
 import cinemax.utilities.ConversorDeCoordenadas;
 
-public class Sala implements ISala {
+public class Sala {
 	private int idSala;
 	private boolean[] bloqueados;
-	private Estrutura[] estrutura;
+	private TipoDeEstrutura[] estrutura;
 	private int linhas;
 	private int colunas;
-	private DadosSala cachedDados;
-	private boolean houveAlteracoes;
 
-	protected Sala(int idSala, int linhas, int colunas, boolean[] bloqueados, Estrutura[] estrutura) {
+	protected Sala(int idSala, int linhas, int colunas, boolean[] bloqueados, TipoDeEstrutura[] estrutura) {
 		this.idSala = idSala;
 		this.bloqueados = bloqueados;
 		this.estrutura = estrutura;
 		this.linhas = linhas;
 		this.colunas = colunas;
-		this.houveAlteracoes = true;
 	}
 	
-	@Override
 	public int obterLinhas() {
 		return linhas;
 	}
 	
-	@Override
 	public int obterColunas() {
 		return colunas;
 	}
 	
-	@Override
-	public boolean tentarBloquearLocal(int linha, int coluna) {
+	protected boolean tentarBloquearLocal(int linha, int coluna) {
 		if(!estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
 		
 		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.colunas);
-		Estrutura estrutura = this.estrutura[index];
-		if(estrutura != Estrutura.Vazio && !bloqueados[index]) {
+		TipoDeEstrutura estrutura = this.estrutura[index];
+		if(estrutura != TipoDeEstrutura.Vazio && !bloqueados[index]) {
 			bloqueados[index] = true;
-			houveAlteracoes = true;
 			return true;
 		}
 		return false;
 	}
 
-	@Override
-	public boolean tentarDesbloquearLocal(int linha, int coluna) {
+	protected boolean tentarDesbloquearLocal(int linha, int coluna) {
 		if(!estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
 		
 		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.colunas);
-		Estrutura estrutura = this.estrutura[index];
-		if(estrutura != Estrutura.Vazio && bloqueados[index]) {
+		TipoDeEstrutura estrutura = this.estrutura[index];
+		if(estrutura != TipoDeEstrutura.Vazio && bloqueados[index]) {
 			bloqueados[index] = false;
-			houveAlteracoes = true;
 			return true;
 		}
 		return false;
 	}
 
-	@Override
 	public int obterIdSala() {
 		return idSala;
-	}
-	
-	public DadosSala obterCopiaDados() {
-		if(houveAlteracoes) {
-			cachedDados = new DadosSala(idSala, linhas, colunas, bloqueados, estrutura);
-		}
-		return cachedDados;
 	}
 	
 	public boolean estaDentroDaSala(int linha, int coluna) {
@@ -84,6 +67,6 @@ public class Sala implements ISala {
 		}
 		
 		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, this.colunas);
-		return estrutura[index] != Estrutura.Vazio;
+		return estrutura[index] != TipoDeEstrutura.Vazio;
 	}
 }
