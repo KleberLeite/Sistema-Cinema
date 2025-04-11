@@ -17,12 +17,16 @@ public class Sala {
 		this.colunas = colunas;
 	}
 	
-	public int obterLinhas() {
+	public int getLinhas() {
 		return linhas;
 	}
 	
-	public int obterColunas() {
+	public int getColunas() {
 		return colunas;
+	}
+
+	public int getIdSala() {
+		return idSala;
 	}
 	
 	protected boolean tentarBloquearLocal(int linha, int coluna) {
@@ -51,10 +55,6 @@ public class Sala {
 			return true;
 		}
 		return false;
-	}
-
-	public int obterIdSala() {
-		return idSala;
 	}
 	
 	public boolean estaDentroDaSala(int linha, int coluna) {
