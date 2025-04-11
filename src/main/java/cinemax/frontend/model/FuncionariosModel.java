@@ -2,31 +2,55 @@ package cinemax.frontend.model;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
+/*
+Model de Funcionalidades...
+Funcionaliddaes implementadas:
 
+ Lista de funcionarios;
+Retornara linhas corretas da coluna;
+Funcionalidade para cadastrar;
+Metodos que nos retornara um funcionario;
+Metodo para Linhas, colunas e objetos da planilhas;
+
+*/
 public class FuncionariosModel extends AbstractTableModel {
-    // Lista de funcionarios
+    // Lista de funcionarios//
  ArrayList<Funcionarios> funcionarios =new ArrayList();
     
-    // Colunas de funcionarios
+    // Colunas de funcionarios//
     String[] colunas = {"nome", "cpf", "cargo", "telefone", "senha"};
     
     
     
     
-    //Retornara linhas corretas da coluna
+    //Retornara linhas corretas da coluna//
     public String getColumnCount(int column){
     return colunas[column];
         
     }
-//__________________________________________________________//
-              //Funcionalidade para cadastrar//
+//______________________________________________________________________________________//
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+//____________________________Metodos___________________________________________________//
+    
+                     //Funcionalidade para cadastrar//
     public void CadastrarFuncionario(Funcionarios f){
         funcionarios.add(f);
         this.fireTableDataChanged();
     }
+ 
     
+        //   Metodos que nos retornara um funcionario//
     
-
+    public Funcionarios returnFuncionario(int index){
+        return funcionarios.get(index);
+    }
+    
+//______________________________________________________________________________________//
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+//________________________Linhas, colunas e objetos da planilhas________________________//
+    
   
     //Retorna a quantidade de linhas
     @Override

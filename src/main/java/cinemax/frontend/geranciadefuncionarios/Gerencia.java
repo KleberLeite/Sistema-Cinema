@@ -3,18 +3,28 @@ package cinemax.frontend.geranciadefuncionarios;
 
 import cinemax.frontend.model.Funcionarios;
 import cinemax.frontend.model.FuncionariosModel;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 
 
 /**
  *
  * @author Geraldo Luiz
+ * 
+ * 
  */
 public class Gerencia extends javax.swing.JFrame {
  FuncionariosModel model=new FuncionariosModel();
     /**
-     * Criado interface de GerÃªncia de funcionarios;
-     * Ate o momento foram implementados apenas botÃµes e comandos se texto alem de euma planilha.
+     * Criado interface de Gerenncia de funcionarios;
+     * Funcionalidades:
+     * 
+     * Botão cadastrar;
+     * Metodo validar campos de texto;
+     * Criando funcionario;
+     * metodo para limpar campos de comando apos a criçaão do objeto;
+     * Metodos para validar campos de Funcionario completo;
      */
     public Gerencia() {
          initComponents();
@@ -65,6 +75,11 @@ public class Gerencia extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        PlanilhaGerenciaFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PlanilhaGerenciaFuncionariosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(PlanilhaGerenciaFuncionarios);
@@ -165,7 +180,7 @@ public class Gerencia extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -187,7 +202,7 @@ public class Gerencia extends javax.swing.JFrame {
                             .addComponent(TXTSenhaFuncionarios)
                             .addComponent(CapturarTXTSenhaFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(263, 263, 263)
+                        .addGap(272, 272, 272)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoCadastrarFuncionarios)
                             .addComponent(BotãoEditarFuncionarios)
@@ -203,8 +218,10 @@ public class Gerencia extends javax.swing.JFrame {
     private void CapturarTXTNomeFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CapturarTXTNomeFuncionariosActionPerformed
      
     }//GEN-LAST:event_CapturarTXTNomeFuncionariosActionPerformed
-
-    
+//______________________________________________________________________________________//
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+//__________________________________Botão e ações______________________________________//
                           //Botão cadastrar//
     private void BotaoCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarFuncionariosActionPerformed
         String nome= CapturarTXTNomeFuncionarios.getText();
@@ -213,10 +230,26 @@ public class Gerencia extends javax.swing.JFrame {
         String telefone=CapturarTXTTelefoneFuncionarios.getText();
         String senha=CapturarTXTSenhaFuncionarios.getText();
         
+        
+        //Metodo validar campos de texto//
+                 limparTextos();
+                 if(validarCampos(nome,cpf,cargo,telefone,senha)){
+                   
+                 }
+                 
+           //Criando funcionario//
         Funcionarios f =new Funcionarios(nome,cpf,cargo,telefone,senha);
                 this.model.CadastrarFuncionario(f);
+                
+            //metodo para limpar campos de comando apos a criçaão do objeto//
+                   limparTextos();
+                 
     }
     
+//______________________________________________________________________________________//
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+//_____________________________________Metodos________________________________________________//
     
 
 //Metodo limpara campos de comando//
@@ -227,11 +260,45 @@ public class Gerencia extends javax.swing.JFrame {
         CapturarTXTTelefoneFuncionarios.setText("");
         CapturarTXTSenhaFuncionarios.setText("");
     }//GEN-LAST:event_BotaoCadastrarFuncionariosActionPerformed
+   
+        
+        //Metodo que clicamos na planilha para alterar modificações//
+    private void PlanilhaGerenciaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlanilhaGerenciaFuncionariosMouseClicked
+        int index =PlanilhaGerenciaFuncionarios.getEditingRow();
+        Funcionarios f = this.model.returnFuncionario(index);
+        CapturarTXTNomeFuncionarios.setText("");
+        CapturarTXTCPFFuncionarios.setText("");
+        CapturarTXTCargoFuncionarios.setText("");
+        CapturarTXTTelefoneFuncionarios.setText("");
+        CapturarTXTSenhaFuncionarios.setText("");
+    }//GEN-LAST:event_PlanilhaGerenciaFuncionariosMouseClicked
 
         
-        //Metodos para valodar campos de Funcionario completo//
+        //Metodos para validar campos de Funcionario completo//
+      public boolean validarCampos(String nome, String cpf, String cargo, String telefone, String senha){
+          if(nome.trim().isEmpty() || cpf.trim().isEmpty() || cargo.trim().isEmpty() || telefone.trim().isEmpty() || senha.trim().isEmpty()){
+     
+        //Criar caixa de atenção para campos não prenchidos//
+        Alert alerta = new Alert(AlertType.WARNING);
+        alerta.setTitle("Campos obrigatórios");
+        alerta.setHeaderText("Atenção!");
+        alerta.setContentText("Por favor, preencha todos os campos obrigatórios.");
+        alerta.showAndWait();
+         return false;
+          }
+          return true;
+      }
+ //______________________________________________________________________________________//
+    /////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////
+//______________________________________________________________________________________//
+      
        
-        
+        /*
+      
+      metodo para verificar se existe objatos funcionarios iguais
+      
+      */
                 
                 
                 
