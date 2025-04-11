@@ -60,7 +60,7 @@
                       <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
                       <Component id="BotaoCadastrarFuncionarios" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
-                      <Component id="BotãoEditarFuncionarios" min="-2" max="-2" attributes="0"/>
+                      <Component id="BotaoEditarFuncionarios" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
                       <Component id="BotãoRemoverFuncionarios" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -112,7 +112,7 @@
                       <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="BotaoCadastrarFuncionarios" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="BotãoEditarFuncionarios" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="BotaoEditarFuncionarios" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="BotãoRemoverFuncionarios" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -158,7 +158,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BotaoCadastrarFuncionariosActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="Bot&#xe3;oEditarFuncionarios">
+    <Component class="javax.swing.JButton" name="BotaoEditarFuncionarios">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
