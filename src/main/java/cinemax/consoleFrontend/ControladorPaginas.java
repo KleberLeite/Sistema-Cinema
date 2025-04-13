@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import cinemax.backend.alimentos.BancoDeDadosAlimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
+import cinemax.consoleFrontend.vendaDeAlimentos.PaginaVendaDeAlimentos;
 
 public class ControladorPaginas {
 	public static void main(String[] args) {

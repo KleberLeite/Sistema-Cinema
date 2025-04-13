@@ -1,11 +1,11 @@
-package cinemax.consoleFrontend;
+package cinemax.consoleFrontend.vendaDeAlimentos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import cinemax.backend.alimentos.*;
-import cinemax.consoleFrontend.utilidades.ControladorDeOpcoes;
+import cinemax.consoleFrontend.PaginaBase;
 
 public class PaginaCarrinhoAlimentos extends PaginaBase {
 	private class PedidoAlimento {

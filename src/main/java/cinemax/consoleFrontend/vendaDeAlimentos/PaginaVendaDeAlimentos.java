@@ -1,6 +1,7 @@
-package cinemax.consoleFrontend;
+package cinemax.consoleFrontend.vendaDeAlimentos;
 
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
+import cinemax.consoleFrontend.PaginaBase;
 
 public class PaginaVendaDeAlimentos extends PaginaBase {	
 	private PaginaCarrinhoAlimentos paginaCarrinhoAlimentos;
