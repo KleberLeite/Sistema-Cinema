@@ -53,13 +53,8 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 			super.limparConsole();
 			System.out.println("----- Carrinho de Alimentos -----");
 			
-			if(pedidos.size() > 0) {
-				System.out.println("Carrinho:");
-				printarAlimentosNoCarrinho();
-				System.out.println("\n");
-			} else {
-				System.out.println("Não há alimentos no carrinho!\n");
-			}
+			printarAlimentosNoCarrinho();
+			System.out.print("\n");
 			
 			System.out.println(
 				"Opções:\n" +
@@ -104,18 +99,34 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 			if(codigo == -1) {
 				return;
 			}
+			if(!bancoDeDadosAlimentos.existeAlimentoComCodigo(codigo)) {
+				System.out.println("Não encontrado!");
+				if(desejaSair("Deseja adicionar outro alimento?")) {
+					return;
+				} else {
+					continue;
+				}
+			}
+			Alimento alimento = bancoDeDadosAlimentos.obterAlimentoPorCodigo(codigo);
+			System.out.println("Alimento Selecionado: " + alimento.getNome());
 
 			System.out.print("Insira a Quantidade (ou -1 para cancelar): ");
 			int quantidade = sc.nextInt(); 
 			if(quantidade == -1) {
 				return;
 			}
-			
-			if(tentarAdicionarPedido(codigo, quantidade)) {
-				System.out.println("Pedido adicionado com sucesso!");
-			} else {
-				System.out.println("Entradas inválidas!");
+			if(quantidade <= 0) {
+				System.out.println("Entrada inválida!");
+				if(desejaSair("Deseja adicionar outro alimento?")) {
+					return;
+				} else {
+					continue;
+				}
 			}
+
+			PedidoAlimento pedido = new PedidoAlimento(alimento, quantidade);
+			pedidos.add(pedido);
+			System.out.println("Pedido adicionado com sucesso!");
 			
 			if(desejaSair("Deseja adicionar outro alimento?")) {
 				return;
@@ -163,7 +174,6 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 		while(true) {
 			super.limparConsole();
 			System.out.println("----- Carrinho de Alimentos -----");
-			System.out.println("Carrinho: ");
 			printarAlimentosNoCarrinho();
 			System.out.print("\n");
 			
@@ -173,17 +183,31 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 				return;
 			}
 			
+			PedidoAlimento pedido = obterPedidoPorCodigoAlimento(codigo);
+			if(pedido == null) {
+				System.out.println("Não encontrado!");
+				if(desejaSair("Deseja remover outro alimento?")) {
+					return;
+				} else {
+					continue;
+				}
+			}
+			
 			System.out.println("Insira a quantidade (0 para tudo, -1 para cancelar): ");
 			int quantidade = sc.nextInt();
 			if(quantidade == -1) {
 				return;
+			} else if(quantidade < 0) {
+				System.out.println("Entrada inválida!");
+				continue;
 			}
 			
-			if(tentarRemoverPedido(codigo, quantidade)) {
-				System.out.println("Removido com sucesso!");
+			if(quantidade == 0 || pedido.quantidade - quantidade <= 0) {
+				pedidos.remove(pedido);
 			} else {
-				System.out.println("Entradas inválidas!");
-			}
+				pedido.quantidade -= quantidade;
+			}			
+			System.out.println("Removido com sucesso!");
 			
 			if(desejaSair("Deseja remover outro alimento?")) {
 				return;
@@ -198,6 +222,12 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 	}
 	
 	private void printarAlimentosNoCarrinho() {
+		if(pedidos.size() == 0) {
+			System.out.println("Não há alimentos no carrinho!");
+			return;
+		}
+			
+		System.out.println("Carrinho:");
 		for(int i = 0; i < pedidos.size(); i++) {
 			PedidoAlimento pedido = pedidos.get(i);
 			System.out.println(
@@ -218,47 +248,17 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 		}
 	}
 	
-	private boolean tentarAdicionarPedido(int codigo, int quantidade) {
-		if(!bancoDeDadosAlimentos.existeAlimentoComCodigo(codigo)) {
-			return false;
-		}
-		if(quantidade <= 0) {
-			return false;
-		}
-		
-		Alimento alimento = bancoDeDadosAlimentos.obterAlimentoPorCodigo(codigo);
-		PedidoAlimento pedido = new PedidoAlimento(alimento, quantidade);
-		pedidos.add(pedido);
-		return true;
-	}
-	
-	private boolean tentarRemoverPedido(int codigo, int quantidade) {
-		if(!bancoDeDadosAlimentos.existeAlimentoComCodigo(codigo)) {
-			return false;
-		}
-		if(quantidade < 0) {
-			return false;
-		}
-		
-		PedidoAlimento pedido = pedidos.stream()
-				.filter(p -> p.alimento.getCodigo() == codigo)
-				.findFirst()
-				.orElse(null);
-		if(pedido != null) {
-			if(quantidade == 0 || pedido.quantidade - quantidade <= 0) {
-				pedidos.remove(pedido);
-			} else {
-				pedido.quantidade -= quantidade;
-			}
-			return true;
-		}
-		return false;
-	}
-	
 	private boolean desejaSair(String mensagem) {
 		System.out.println(mensagem + " Digite 'S' (ou 's'), ou qualquer outro caractere para sair.");
 		String opcao = super.getScanner().next();
 		return !opcao.toLowerCase().trim().equals("s");
+	}
+	
+	private PedidoAlimento obterPedidoPorCodigoAlimento(int codigo) {
+		return pedidos.stream()
+			.filter(p -> p.alimento.getCodigo() == codigo)
+			.findFirst()
+			.orElse(null);
 	}
 
 	@Override
