@@ -62,7 +62,7 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 				"2. BuscarAlimento\n" +
 				"3. Remover Alimento\n" +
 				"4. Concluir pedido\n" +
-				"5. Cancelar"
+				"5. Cancelar Pedido"
 			);
 			int opcao = sc.nextInt();
 			switch(opcao) {
@@ -81,7 +81,10 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 				}
 				break;
 			case 5:
-				return;
+				if(aoSelecionarCancelarPedido()) {
+					return;
+				}
+				break;
 			}
 		}		
 	}
@@ -123,9 +126,14 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 					continue;
 				}
 			}
-
-			PedidoAlimento pedido = new PedidoAlimento(alimento, quantidade);
-			pedidos.add(pedido);
+			
+			PedidoAlimento pedidoExistente = obterPedidoPorCodigoAlimento(codigo);
+			if(pedidoExistente != null) {
+				pedidoExistente.quantidade += quantidade;
+			} else {
+				PedidoAlimento pedido = new PedidoAlimento(alimento, quantidade);
+				pedidos.add(pedido);
+			}
 			System.out.println("Pedido adicionado com sucesso!");
 			
 			if(desejaSair("Deseja adicionar outro alimento?")) {
@@ -217,6 +225,12 @@ public class PaginaCarrinhoAlimentos extends PaginaBase {
 	
 	private boolean aoSelecionarConcluirPedido() {
 		System.out.println("Deseja realmente finalizar o pedido? Digite S para confirmar, ou qualquer outro caractere para sair.");
+		String opcao = super.getScanner().next();
+		return opcao.toLowerCase().trim().equals("s");
+	}
+	
+	private boolean aoSelecionarCancelarPedido() {
+		System.out.println("Deseja realmente cancelar o pedido? Digite S para confirmar, ou qualquer outro caractere para sair.");
 		String opcao = super.getScanner().next();
 		return opcao.toLowerCase().trim().equals("s");
 	}
