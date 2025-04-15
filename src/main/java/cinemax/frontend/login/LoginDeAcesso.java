@@ -31,7 +31,7 @@ public class LoginDeAcesso extends javax.swing.JFrame {
         TXTUsuarioLogin = new javax.swing.JLabel();
         TXTSenhaLogin = new javax.swing.JLabel();
         CapturaDeTXTUsuarioLogin = new javax.swing.JTextField();
-        BotãoLogin = new javax.swing.JButton();
+        BotaoLogin = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         TXTRedefinirSenhaLogin = new javax.swing.JLabel();
@@ -71,8 +71,8 @@ public class LoginDeAcesso extends javax.swing.JFrame {
             }
         });
 
-        BotãoLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        BotãoLogin.setText("Entar");
+        BotaoLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        BotaoLogin.setText("Entar");
 
         TXTRedefinirSenhaLogin.setText("Redefinir senha?");
 
@@ -126,7 +126,7 @@ public class LoginDeAcesso extends javax.swing.JFrame {
                                 .addComponent(TXTLoginAcessso)
                                 .addGap(227, 227, 227))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(BotãoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(BotaoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(204, 204, 204))))))
         );
         layout.setVerticalGroup(
@@ -150,7 +150,7 @@ public class LoginDeAcesso extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CapturaDeTXTSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
-                .addComponent(BotãoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BotaoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(75, 75, 75)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TXTRedefinirSenhaLogin)
@@ -202,7 +202,7 @@ public class LoginDeAcesso extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotãoLogin;
+    private javax.swing.JButton BotaoLogin;
     private javax.swing.JPasswordField CapturaDeTXTSenhaLogin;
     private javax.swing.JTextField CapturaDeTXTUsuarioLogin;
     private javax.swing.JLabel TXTLoginAcessso;

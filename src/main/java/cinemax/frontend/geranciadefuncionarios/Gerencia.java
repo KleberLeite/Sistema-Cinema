@@ -3,6 +3,7 @@ package cinemax.frontend.geranciadefuncionarios;
 
 import cinemax.frontend.model.Funcionarios;
 import cinemax.frontend.model.FuncionariosModel;
+import javax.swing.JOptionPane;
 
 
 
@@ -15,14 +16,15 @@ import cinemax.frontend.model.FuncionariosModel;
  */
 public class Gerencia extends javax.swing.JFrame {
  FuncionariosModel model=new FuncionariosModel();
+  private int indiceSelecionado = -1;
     /**
      * Criado interface de Gerencia de funcionarios;
      * Funcionalidades:
      * 
-     * Bot„o cadastrar;
+     * BotÔøΩo cadastrar;
      * Metodo validar campos de texto;
      * Criando funcionario;
-     * metodo para limpar campos de comando apos a criÁa„o do objeto;
+     * metodo para limpar campos de comando apos a criÔøΩaÔøΩo do objeto;
      * Metodos para validar campos de Funcionario completo;
      */
     public Gerencia() {
@@ -40,7 +42,7 @@ public class Gerencia extends javax.swing.JFrame {
         PlanilhaGerenciaFuncionarios = new javax.swing.JTable();
         BotaoCadastrarFuncionarios = new javax.swing.JButton();
         BotaoEditarFuncionarios = new javax.swing.JButton();
-        Bot„oRemoverFuncionarios = new javax.swing.JButton();
+        BotaoRemoverFuncionarios = new javax.swing.JButton();
         TXTNomeFuncionarios = new javax.swing.JLabel();
         TXTCPFFuncionarios = new javax.swing.JLabel();
         TXTCargoFuncionarios = new javax.swing.JLabel();
@@ -55,7 +57,7 @@ public class Gerencia extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Funcion·rios");
+        setTitle("Funcion√°rios");
 
         PlanilhaGerenciaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -65,7 +67,7 @@ public class Gerencia extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "CPF", "Cargo", "TelÈfone", "Senha"
+                "Nome", "CPF", "Cargo", "Tel√©fone", "Senha"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -91,8 +93,13 @@ public class Gerencia extends javax.swing.JFrame {
         });
 
         BotaoEditarFuncionarios.setText("Editar");
+        BotaoEditarFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoEditarFuncionariosActionPerformed(evt);
+            }
+        });
 
-        Bot„oRemoverFuncionarios.setText("Remover");
+        BotaoRemoverFuncionarios.setText("Remover");
 
         TXTNomeFuncionarios.setText("Nome");
 
@@ -100,7 +107,7 @@ public class Gerencia extends javax.swing.JFrame {
 
         TXTCargoFuncionarios.setText("Cargo");
 
-        TXTTelefoneFuncionarios.setText("TelÈfone");
+        TXTTelefoneFuncionarios.setText("Tel√©fone");
 
         TXTSenhaFuncionarios.setText("Senha");
 
@@ -114,7 +121,7 @@ public class Gerencia extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("GerÍncia de Funcion·rios");
+        jLabel1.setText("Ger√™ncia de Funcion√°rios");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -166,7 +173,7 @@ public class Gerencia extends javax.swing.JFrame {
                         .addGap(124, 124, 124)
                         .addComponent(BotaoEditarFuncionarios)
                         .addGap(126, 126, 126)
-                        .addComponent(Bot„oRemoverFuncionarios)))
+                        .addComponent(BotaoRemoverFuncionarios)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
@@ -205,7 +212,7 @@ public class Gerencia extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoCadastrarFuncionarios)
                             .addComponent(BotaoEditarFuncionarios)
-                            .addComponent(Bot„oRemoverFuncionarios))))
+                            .addComponent(BotaoRemoverFuncionarios))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -220,8 +227,8 @@ public class Gerencia extends javax.swing.JFrame {
 //______________________________________________________________________________________//
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
-//__________________________________Bot„o e aÁıes______________________________________//
-                          //Bot„o cadastrar//
+//__________________________________BotÔøΩo e aÔøΩÔøΩes______________________________________//
+                          //BotÔøΩo cadastrar//
     private void BotaoCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarFuncionariosActionPerformed
         String nome= CapturarTXTNomeFuncionarios.getText();
         String cpf =CapturarTXTCPFFuncionarios.getText();
@@ -232,16 +239,20 @@ public class Gerencia extends javax.swing.JFrame {
         
         //Metodo validar campos de texto//
                 
-                 if(validarCampos(nome,cpf,cargo,telefone,senha)){
-                    Funcionarios f =new Funcionarios(nome,cpf,cargo,telefone,senha);
-                this.model.CadastrarFuncionario(f);
-                
-                 }
+     if (validarCampos(nome, cpf, cargo, telefone, senha)) {
+    Funcionarios f = new Funcionarios(nome, cpf, cargo, telefone, senha);
+    this.model.CadastrarFuncionario(f);
+    //metodo para limpar campos de comando apos a criÔøΩaÔøΩo do objeto//
+    limparTextos();
+   } else {
+    JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigat√≥rios!", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+
                  
       
                 
-            //metodo para limpar campos de comando apos a criÁa„o do objeto//
-                   limparTextos();
+            
+                 
                  
     }
     
@@ -250,7 +261,13 @@ public class Gerencia extends javax.swing.JFrame {
     /////////////////////////////////////////////////////////////////////////////////
 //_____________________________________Metodos________________________________________________//
     
+    
+    
+    
+   
 
+    
+    
 //Metodo limpara campos de comando//
         public void limparTextos(){
         CapturarTXTNomeFuncionarios.setText("");
@@ -261,27 +278,63 @@ public class Gerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoCadastrarFuncionariosActionPerformed
    
         
-        //Metodo que clicamos na planilha para alterar modificaÁıes//
+        //Metodo que clicamos na planilha para alterar modificaÔøΩÔøΩes//
     private void PlanilhaGerenciaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlanilhaGerenciaFuncionariosMouseClicked
-        int index =PlanilhaGerenciaFuncionarios.getEditingRow();
+                                                               
+    int index = PlanilhaGerenciaFuncionarios.getSelectedRow();
+    if (index >= 0) {
         Funcionarios f = this.model.returnFuncionario(index);
-        CapturarTXTNomeFuncionarios.setText("");
-        CapturarTXTCPFFuncionarios.setText("");
-        CapturarTXTCargoFuncionarios.setText("");
-        CapturarTXTTelefoneFuncionarios.setText("");
-        CapturarTXTSenhaFuncionarios.setText("");
+        CapturarTXTNomeFuncionarios.setText(f.getNome());
+        CapturarTXTCPFFuncionarios.setText(f.getCpf());
+        CapturarTXTCargoFuncionarios.setText(f.getCargo());
+        CapturarTXTTelefoneFuncionarios.setText(f.getTelefone());
+        CapturarTXTSenhaFuncionarios.setText(f.getSenha());
+        
+        // Define o √≠ndice do funcion√°rio selecionado para edi√ß√£o
+            indiceSelecionado = index;
+    }
+
+
     }//GEN-LAST:event_PlanilhaGerenciaFuncionariosMouseClicked
+
+    private void BotaoEditarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEditarFuncionariosActionPerformed
+          if (indiceSelecionado >= 0) {
+            String nome = CapturarTXTNomeFuncionarios.getText();
+            String cpf = CapturarTXTCPFFuncionarios.getText();
+            String cargo = CapturarTXTCargoFuncionarios.getText();
+            String telefone = CapturarTXTTelefoneFuncionarios.getText();
+            String senha = CapturarTXTSenhaFuncionarios.getText();
+
+            if (validarCampos(nome, cpf, cargo, telefone, senha)) {
+               if (validarCampos(nome, cpf, cargo, telefone, senha)) {
+        // Obter o funcion√°rio existente da lista
+        Funcionarios f = model.returnFuncionario(indiceSelecionado);
+        
+        // Atualizar os dados desse funcion√°rio
+        f.setNome(nome);
+        f.setCpf(cpf);
+        f.setCargo(cargo);
+        f.setTelefone(telefone);
+        f.setSenha(senha);
+
+        // Atualizar a tabela
+         model.fireTableRowsUpdated(indiceSelecionado, indiceSelecionado);
+        
+        // Limpar os campos de entrada e resetar o √≠ndice
+        limparTextos();
+        indiceSelecionado = -1;
+            } else {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um funcion√°rio na tabela para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_BotaoEditarFuncionariosActionPerformed
 
         
         //Metodos para validar campos de Funcionario completo//
-      public boolean validarCampos(String nome, String cpf, String cargo, String telefone, String senha){
-          if(nome.trim().isEmpty() && cpf.trim().isEmpty() && cargo.trim().isEmpty() && telefone.trim().isEmpty() && senha.trim().isEmpty()){
-     
-        
-         return false;
-          }
-          return true;
-      }
+    
+
  //______________________________________________________________________________________//
     /////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////
@@ -293,11 +346,27 @@ public class Gerencia extends javax.swing.JFrame {
       metodo para verificar se existe objatos funcionarios iguais
       
       */
+           
+    public boolean validarCampos(String nome, String cpf, String cargo, String telefone, String senha) {
+    return nome.trim().isEmpty() &&
+           !cpf.trim().isEmpty() &&
+           !cargo.trim().isEmpty() &&
+           !telefone.trim().isEmpty() &&
+           !senha.trim().isEmpty();
+}
+
+    
+        
+        
+        
+        
+        
                 
                 
                 
                 
-                
+       
+        
        
     /**
      * @param args the command line arguments
@@ -314,7 +383,7 @@ public class Gerencia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoCadastrarFuncionarios;
     private javax.swing.JButton BotaoEditarFuncionarios;
-    private javax.swing.JButton Bot„oRemoverFuncionarios;
+    private javax.swing.JButton BotaoRemoverFuncionarios;
     private javax.swing.JTextField CapturarTXTCPFFuncionarios;
     private javax.swing.JTextField CapturarTXTCargoFuncionarios;
     private javax.swing.JTextField CapturarTXTNomeFuncionarios;

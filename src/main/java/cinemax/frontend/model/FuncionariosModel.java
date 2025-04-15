@@ -2,83 +2,59 @@ package cinemax.frontend.model;
 
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
-/*
-Model de Funcionalidades...
-Funcionaliddaes implementadas:
 
- Lista de funcionarios;
-Retornara linhas corretas da coluna;
-Funcionalidade para cadastrar;
-Metodos que nos retornara um funcionario;
-Metodo para Linhas, colunas e objetos da planilhas;
-
-*/
 public class FuncionariosModel extends AbstractTableModel {
-    // Lista de funcionarios//
- ArrayList<Funcionarios> funcionarios =new ArrayList();
-    
-    // Colunas de funcionarios//
-    String[] colunas = {"nome", "cpf", "cargo", "telefone", "senha"};
-    
-    
-    
-    
-    //Retornara linhas corretas da coluna//
-    public String getColumnCount(int column){
-    return colunas[column];
-        
-    }
-//______________________________________________________________________________________//
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-//____________________________Metodos___________________________________________________//
-    
-                     //Funcionalidade para cadastrar//
-    public void CadastrarFuncionario(Funcionarios f){
-        funcionarios.add(f);
-        this.fireTableDataChanged();
-    }
- 
-    
-        //   Metodos que nos retornara um funcionario//
-    
-    public Funcionarios returnFuncionario(int index){
-        return funcionarios.get(index);
-    }
-    
-//______________________________________________________________________________________//
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-//________________________Linhas, colunas e objetos da planilhas________________________//
-    
-  
-    //Retorna a quantidade de linhas
+    private ArrayList<Funcionarios> listaDeFuncionarios = new ArrayList<>();
+
+    private String[] colunas = {"Nome", "CPF", "Cargo", "Telefone", "Senha"};
+
+    // Outras funções como adicionar, remover, etc...
+
     @Override
     public int getRowCount() {
-        return funcionarios.size();
+        return listaDeFuncionarios.size();
     }
 
-    //Retorna aquantidade de colunas
     @Override
     public int getColumnCount() {
         return colunas.length;
     }
 
-   //Retorna a quantidade de 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-       
-        Funcionarios funcionario = funcionarios.get(rowIndex);
-
-       //Posicacao d Array
+        Funcionarios f = listaDeFuncionarios.get(rowIndex);
         switch (columnIndex) {
-            case 0: return funcionario.getNome();
-            case 1: return funcionario.getCpf();
-            case 2: return funcionario.getCargo();
-            case 3: return funcionario.getTelefone();
-            case 4: return funcionario.getSenha();
+            case 0: return f.getNome();
+            case 1: return f.getCpf();
+            case 2: return f.getCargo();
+            case 3: return f.getTelefone();
+            case 4: return f.getSenha();
             default: return null;
         }
     }
 
+    @Override
+    public String getColumnName(int column) {
+        return colunas[column];
+    }
+
+    // 👉 AQUI você coloca o método de atualizar:
+    public void atualizarFuncionario(int index, Funcionarios funcionarioAtualizado) {
+        listaDeFuncionarios.set(index, funcionarioAtualizado);
+        fireTableRowsUpdated(index, index); // Atualiza a linha na tabela
+    }
+
+    public void CadastrarFuncionario(Funcionarios f) {
+        listaDeFuncionarios.add(f);
+        fireTableRowsInserted(listaDeFuncionarios.size() - 1, listaDeFuncionarios.size() - 1);
+    }
+
+    public Funcionarios returnFuncionario(int index) {
+        return listaDeFuncionarios.get(index);
+    }
+
+    public void removerFuncionario(int index) {
+        listaDeFuncionarios.remove(index);
+        fireTableRowsDeleted(index, index);
+    }
 }
