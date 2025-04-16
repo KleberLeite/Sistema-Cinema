@@ -171,8 +171,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		}
 		
 		Filme filme = filmes.get(idFilme);
-		filme.removerSessao(idSessao);
-		return true;
+		return filme.removerSessao(idSessao);
 	}
 	
 	private boolean existeAlgumFilmeNaMesmaSala(int idSala, LocalDateTime inicio) {
@@ -183,9 +182,6 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 				}
 				
 				LocalDateTime fimSessao = sessao.getInicio().plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
-				if(inicio.isEqual(inicio)) {
-					return true;
-				}
 				if(inicio.isAfter(sessao.getInicio()) && inicio.isBefore(fimSessao)) {
 					return true;
 				}
