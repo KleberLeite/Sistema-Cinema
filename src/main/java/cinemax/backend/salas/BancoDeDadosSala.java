@@ -5,7 +5,9 @@ import java.util.Map;
 
 import cinemax.utilities.ConversorDeCoordenadas;
 
-public class BancoDeDadosSala implements IBancoDeDadosSala {	
+public class BancoDeDadosSala implements IBancoDeDadosSala {
+	private final int NUM_SALAS = 4;
+	
 	private Map<Integer, Sala> salas;
 	
 	public BancoDeDadosSala() {
@@ -43,30 +45,12 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 		estruturaDasSalas[indexLocalObesos1] = TipoDeEstrutura.PoltronaObesos;
 		estruturaDasSalas[indexLocalObesos2] = TipoDeEstrutura.PoltronaObesos;
 		
-		/*System.out.println("Estrutura Criada: ");
-		for(int i = 0; i < 16; i++) {
-			for(int j = 0; j < 16; j++) {
-				int index = ConversorDeCoordenadas.obter1dPor2d(i, j, 16);
-				TipoDeEstrutura e = estruturaDasSalas[index];
-				//System.out.println(e);
-				if(e == TipoDeEstrutura.Poltrona)
-					System.out.print("P ");
-				else if(e == TipoDeEstrutura.PoltronaObesos)
-					System.out.print("O ");
-				else if(e == TipoDeEstrutura.LocalCadeirantes)
-					System.out.print("C ");
-				else
-					System.out.print("  ");
-			}
-			System.out.print("\n");
-		}*/
-		
 		return estruturaDasSalas;
 	}
 	
 	private void preencherSalas() {
 		TipoDeEstrutura[] estrutura = gerarEstruturaDasSalas();
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < NUM_SALAS; i++) {
 			Sala sala = new Sala(
 				i,
 				16,
