@@ -6,27 +6,54 @@ import cinemax.frontend.model.FuncionariosModel;
 import javax.swing.JOptionPane;
 
 
+/**
+ * @author Geraldo Luiz
+ *
+ */
 
+//_______________________________________________________//
+
+ /**
+     * @VISÃO GERAL DA JAVAFX gERANCIA
+     * 
+     *Tabela para exibição dos funcionários
+     *Campos de formulário para inserção de dados
+     * Botões de ação (Cadastrar, Editar, Remover)
+     */
+
+//_______________________________________________________//
 
 /**
- *
- * @author Geraldo Luiz
- * 
- * 
+     * @METODOS IMPLEMENTADOS
+     * 
+     * Captura dados dos campos de texto
+     *Valida campos com validarCampos()
+     *Cria novo objeto Funcionarios
+     *Adiciona ao modelo
+     *Limpa campos com limparTextos()
+     *BotaoEditarFuncionariosActionPerformed(ActionEvent evt)
+     *BotaoRemoverFuncionariosActionPerformed(ActionEvent evt)
+     *PlanilhaGerenciaFuncionariosMouseClicked(MouseEvent evt)
+     * ( ALEM, DE VALIDAÇÕES:
+     * Verifica campos vazios
+     * Formato do CPF (11 dígitos)
+     * Formato do telefone (10-11 dígitos)
+     * Tamanho mínimo da senha (6 caracteres)
  */
+
+//_______________________________________________________//
+
+
+
+
+
+
 public class Gerencia extends javax.swing.JFrame {
  FuncionariosModel model=new FuncionariosModel();
   private int indiceSelecionado = -1;
-    /**
-     * Criado interface de Gerencia de funcionarios;
-     * Funcionalidades:
-     * 
-     * Bot�o cadastrar;
-     * Metodo validar campos de texto;
-     * Criando funcionario;
-     * metodo para limpar campos de comando apos a cri�a�o do objeto;
-     * Metodos para validar campos de Funcionario completo;
-     */
+    
+  
+  
     public Gerencia() {
          initComponents();
        PlanilhaGerenciaFuncionarios.setModel(model);
@@ -100,6 +127,11 @@ public class Gerencia extends javax.swing.JFrame {
         });
 
         BotaoRemoverFuncionarios.setText("Remover");
+        BotaoRemoverFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoRemoverFuncionariosActionPerformed(evt);
+            }
+        });
 
         TXTNomeFuncionarios.setText("Nome");
 
@@ -224,11 +256,15 @@ public class Gerencia extends javax.swing.JFrame {
     private void CapturarTXTNomeFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CapturarTXTNomeFuncionariosActionPerformed
      
     }//GEN-LAST:event_CapturarTXTNomeFuncionariosActionPerformed
-//______________________________________________________________________________________//
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-//__________________________________Bot�o e a��es______________________________________//
-                          //Bot�o cadastrar//
+
+    
+    
+// ===================== BOTÂO DE AÇÃO, CADASTRAR FUNCIONARIO ===================== //
+//                    Responsáveis pelas operações CRUD (CRIAR)
+// -------------------------------------------------------------------------------- //
+    
+    
+                        
     private void BotaoCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarFuncionariosActionPerformed
         String nome= CapturarTXTNomeFuncionarios.getText();
         String cpf =CapturarTXTCPFFuncionarios.getText();
@@ -236,39 +272,30 @@ public class Gerencia extends javax.swing.JFrame {
         String telefone=CapturarTXTTelefoneFuncionarios.getText();
         String senha=CapturarTXTSenhaFuncionarios.getText();
         
-        
-        //Metodo validar campos de texto//
-                
+      
      if (validarCampos(nome, cpf, cargo, telefone, senha)) {
     Funcionarios f = new Funcionarios(nome, cpf, cargo, telefone, senha);
     this.model.CadastrarFuncionario(f);
-    //metodo para limpar campos de comando apos a cri�a�o do objeto//
+   
     limparTextos();
    } else {
     JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios!", "Erro", JOptionPane.ERROR_MESSAGE);
-    }
-
-                 
-      
-                
-            
-                 
+     }          
                  
     }
     
-//______________________________________________________________________________________//
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-//_____________________________________Metodos________________________________________________//
-    
-    
-    
-    
-   
 
     
     
-//Metodo limpara campos de comando//
+    
+// ===================== MEDODOS DE FUNCIONALIDADES GERAIS ===================== //
+//              1- lIMPARA CAMPOS DE TEXTO;
+//              2- METODO MAUSE CLICK
+// -------------------------------------------------------------------------------//
+    
+
+    
+        // 01 //
         public void limparTextos(){
         CapturarTXTNomeFuncionarios.setText("");
         CapturarTXTCPFFuncionarios.setText("");
@@ -278,7 +305,7 @@ public class Gerencia extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoCadastrarFuncionariosActionPerformed
    
         
-        //Metodo que clicamos na planilha para alterar modifica��es//
+        // 02 //
     private void PlanilhaGerenciaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlanilhaGerenciaFuncionariosMouseClicked
                                                                
     int index = PlanilhaGerenciaFuncionarios.getSelectedRow();
@@ -290,82 +317,196 @@ public class Gerencia extends javax.swing.JFrame {
         CapturarTXTTelefoneFuncionarios.setText(f.getTelefone());
         CapturarTXTSenhaFuncionarios.setText(f.getSenha());
         
-        // Define o índice do funcionário selecionado para edição
+        // Define o índice do funcionário selecionado para edição//
             indiceSelecionado = index;
     }
 
 
     }//GEN-LAST:event_PlanilhaGerenciaFuncionariosMouseClicked
 
+    
+// ===================== BOTÂO DE AÇÃO, EDITAR FUNCIONARIO ===================== //
+//                    Responsáveis pelas operações CRUD (EDITAR)
+// -------------------------------------------------------------------------------- //
+    
+    
+    
     private void BotaoEditarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEditarFuncionariosActionPerformed
-          if (indiceSelecionado >= 0) {
-            String nome = CapturarTXTNomeFuncionarios.getText();
-            String cpf = CapturarTXTCPFFuncionarios.getText();
-            String cargo = CapturarTXTCargoFuncionarios.getText();
-            String telefone = CapturarTXTTelefoneFuncionarios.getText();
-            String senha = CapturarTXTSenhaFuncionarios.getText();
+           if (indiceSelecionado >= 0) {
+        String nome = CapturarTXTNomeFuncionarios.getText();
+        String cpf = CapturarTXTCPFFuncionarios.getText();
+        String cargo = CapturarTXTCargoFuncionarios.getText();
+        String telefone = CapturarTXTTelefoneFuncionarios.getText();
+        String senha = CapturarTXTSenhaFuncionarios.getText();
 
-            if (validarCampos(nome, cpf, cargo, telefone, senha)) {
-               if (validarCampos(nome, cpf, cargo, telefone, senha)) {
-        // Obter o funcionário existente da lista
+        if (!validarCampos(nome, cpf, cargo, telefone, senha)) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+      
         Funcionarios f = model.returnFuncionario(indiceSelecionado);
         
-        // Atualizar os dados desse funcionário
+        // Atualizar os dados desse funcionário//
         f.setNome(nome);
         f.setCpf(cpf);
         f.setCargo(cargo);
         f.setTelefone(telefone);
         f.setSenha(senha);
 
-        // Atualizar a tabela
-         model.fireTableRowsUpdated(indiceSelecionado, indiceSelecionado);
+        // Atualizar a tabela//
+        model.fireTableRowsUpdated(indiceSelecionado, indiceSelecionado);
         
-        // Limpar os campos de entrada e resetar o índice
+      
         limparTextos();
         indiceSelecionado = -1;
-            } else {
-                JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione um funcionário na tabela para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }
+    } else {
+        JOptionPane.showMessageDialog(this, 
+            "Selecione um funcionário na tabela para editar.", 
+            "Aviso", 
+            JOptionPane.WARNING_MESSAGE);
+    }
     }//GEN-LAST:event_BotaoEditarFuncionariosActionPerformed
 
-        
-        //Metodos para validar campos de Funcionario completo//
+    
+// ===================== BOTÂO DE AÇÃO, EXCLUIR FUNCIONARIO ===================== //
+//                    Responsáveis pelas operações CRUD (EXCLUIR)
+//1. Verifica se há um item selecionado na tabela;
+// 2. Obtém o funcionário selecionado para mostrar detalhes na confirmação;
+// 3. Diálogo de confirmação com detalhes do funcionário;
+// 4. Se usuário confirmar, procede com a remoção;
+// 4.1 Remove do modelo de dados;
+// 4.2 Atualiza a visualização da tabela;
+// 4.4 FIEED 
+    
+// -------------------------------------------------------------------------------- //
+    
+    
+    
+    private void BotaoRemoverFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverFuncionariosActionPerformed
+        //1. //
+    if (indiceSelecionado < 0) {
+        JOptionPane.showMessageDialog(
+            this, 
+            "Por favor, selecione um funcionário na tabela para remover.", 
+            "Nenhum Selecionado", 
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    // 2. //
+    Funcionarios funcionario = model.returnFuncionario(indiceSelecionado);
+    
+    // 3. //
+    int confirmacao = JOptionPane.showConfirmDialog(
+        this,
+        "Deseja realmente remover o funcionário?\n\n" +
+        "Nome: " + funcionario.getNome() + "\n" +
+        "CPF: " + funcionario.getCpf() + "\n" +
+        "Cargo: " + funcionario.getCargo(),
+        "Confirmar Remoção",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE);
+    
+    // 4. //
+    if (confirmacao == JOptionPane.YES_OPTION) {
+        try {
+            // 4.1 //
+            model.removerFuncionario(indiceSelecionado);
+            
+            // 4.2 //
+            model.fireTableDataChanged();
+            
+            // 4.3 //
+            limparTextos();
+            indiceSelecionado = -1;
+            
+            // 4.4 //
+            JOptionPane.showMessageDialog(
+                this,
+                "Funcionário removido com sucesso!",
+                "Sucesso",
+                JOptionPane.INFORMATION_MESSAGE);
+                
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(
+                this,
+                "Erro ao remover funcionário:\n" + e.getMessage(),
+                "Erro",
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }//GEN-LAST:event_BotaoRemoverFuncionariosActionPerformed
+
+    
+    
+    
+    
+// ===================== METODO RESPONSAVEL POR VALIDAÇÕE ===================== //
+//   * Valida se todos os campos obrigatórios foram preenchidos corretamente*
+// Verifica se algum campo obrigatório está vazio;
+// -------------------------------------------------------------------------------//
+    
     
 
- //______________________________________________________________________________________//
-    /////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////
-//______________________________________________________________________________________//
-      
-       
-        /*
-      
-      metodo para verificar se existe objatos funcionarios iguais
-      
-      */
-           
-    public boolean validarCampos(String nome, String cpf, String cargo, String telefone, String senha) {
-    return nome.trim().isEmpty() &&
-           !cpf.trim().isEmpty() &&
-           !cargo.trim().isEmpty() &&
-           !telefone.trim().isEmpty() &&
-           !senha.trim().isEmpty();
+public boolean validarCampos(String nome, String cpf, String cargo, String telefone, String senha) {
+    
+    if (nome.trim().isEmpty() || 
+        cpf.trim().isEmpty() || 
+        cargo.trim().isEmpty() || 
+        telefone.trim().isEmpty() || 
+        senha.trim().isEmpty()) {
+        return false;
+    }
+    
+    // Validações específicas para cada campo//
+    
+    
+    
+    if (!validarCPF(cpf)) {
+        JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    
+    if (!validarTelefone(telefone)) {
+        JOptionPane.showMessageDialog(this, "Telefone inválido! Formato esperado: (XX) XXXX-XXXX", "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    
+    if (senha.length() < 6) {
+        JOptionPane.showMessageDialog(this, "Senha deve ter no mínimo 6 caracteres!", "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    
+    return true;
 }
 
-    
+/**
+ * Valida o formato do CPF (apenas estrutura, não calcula dígitos verificadores)
+ * @param cpf CPF a ser validado
+ * @return true se o CPF estiver no formato correto
+ */
+private boolean validarCPF(String cpf) {
+    // Remove caracteres não numéricos
+    cpf = cpf.replaceAll("[^0-9]", "");
+    // Verifica se tem 11 dígitos
+    return cpf.length() == 11;
+}
+
+/**
+ * Valida o formato do telefone
+ * @param telefone Telefone a ser validado
+ * @return true se o telefone estiver em um formato aceitável
+ */
+private boolean validarTelefone(String telefone) {
+    // Remove caracteres não numéricos
+    telefone = telefone.replaceAll("[^0-9]", "");
+    // Verifica se tem entre 10 e 11 dígitos (incluindo DDD)
+    return telefone.length() >= 10 && telefone.length() <= 11;
+}
         
-        
-        
-        
-        
-                
-                
-                
-                
-       
+ 
         
        
     /**
