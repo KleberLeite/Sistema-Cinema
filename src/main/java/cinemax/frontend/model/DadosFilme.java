@@ -11,7 +11,7 @@ public class DadosFilme {
 	private String nome;
 	private String sinopse;
 	private String sessoes;
-	private int duracaoEmMin;
+	private int duracao;
 	private String classificacao;
 	
 	// :=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=
@@ -20,13 +20,13 @@ public class DadosFilme {
 
 	public DadosFilme() {
 	}
-	public DadosFilme(int id, String nome, String sinopse, String sessoes, int duracaoEmMin, String classificacao) {
+	public DadosFilme(int id, String nome, String sinopse, String sessoes, int duracao, String classificacao) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.sinopse = sinopse;
 		this.sessoes = sessoes;
-		this.duracaoEmMin = duracaoEmMin;
+		this.duracao = duracao;
 		this.classificacao = classificacao;
 	}
 
@@ -79,12 +79,12 @@ public class DadosFilme {
 		this.nome = nome;
 	}
 
-	public int getDuracaoEmMin() {
-		return duracaoEmMin;
+	public int getDuracao() {
+		return duracao;
 	}
 
-	public void setDurancaoEmMin(int duracaoEmMin) {
-		this.duracaoEmMin = duracaoEmMin;
+	public void setDurancao(int duracao) {
+		this.duracao = duracao;
 	}
 
 	public String getClassificacao() {

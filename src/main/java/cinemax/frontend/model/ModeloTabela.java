@@ -54,7 +54,7 @@ public class ModeloTabela extends AbstractTableModel {
 		} else if (columnIndex == 2) {
 			return filme.getSinopse();
 		} else if (columnIndex == 3) {
-			return filme.getDuracaoEmMin();
+			return filme.getDuracao();
 		} else if (columnIndex == 4) {
 			return filme.getClassificacao();
 		} else if (columnIndex == 5) {
