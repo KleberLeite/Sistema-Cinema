@@ -1,5 +1,6 @@
 package cinemax.backend.filmes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -219,5 +220,44 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public Sessao[] obterSessoesNoDia(LocalDate data) {
+		List<Sessao> resultado = new ArrayList<Sessao>();
+		for(Filme f : filmes.values()) {
+			for(Sessao s : f.obterTodasSessoes()) {
+				if(data.equals(s.getInicio().toLocalDate())) {
+					resultado.add(s);
+				}
+			}
+		}
+		return resultado.toArray(new Sessao[resultado.size()]);
+	}
+	
+	@Override
+	public boolean tentarReservar(int idFilme, int idSessao, int linha, int coluna) {
+		if(!filmes.containsKey(idFilme)) {
+			return false;
+		}
+		Filme filme = filmes.get(idFilme);
+		if(!filme.contemSessao(idSessao)) {
+			return false;
+		}
+		Sessao sessao = filme.obterSessao(idSessao);
+		return sessao.tentarReservar(linha, coluna);
+	}
+	
+	@Override
+	public boolean tentarDesreservar(int idFilme, int idSessao, int linha, int coluna) {
+		if(!filmes.containsKey(idFilme)) {
+			return false;
+		}
+		Filme filme = filmes.get(idFilme);
+		if(!filme.contemSessao(idSessao)) {
+			return false;
+		}
+		Sessao sessao = filme.obterSessao(idSessao);
+		return sessao.tentarDesreservar(linha, coluna);
 	}
 }
