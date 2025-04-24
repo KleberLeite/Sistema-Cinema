@@ -182,9 +182,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 				}
 				
 				LocalDateTime fimSessao = sessao.getInicio().plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
-				if(inicio.isEqual(inicio)) {
-					return true;
-				}
+
 				if(inicio.isAfter(sessao.getInicio()) && inicio.isBefore(fimSessao)) {
 					return true;
 				}
