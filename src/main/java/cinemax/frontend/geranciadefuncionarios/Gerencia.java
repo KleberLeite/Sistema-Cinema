@@ -57,6 +57,7 @@ public class Gerencia extends javax.swing.JFrame {
     public Gerencia() {
          initComponents();
        PlanilhaGerenciaFuncionarios.setModel(model);
+        
       
     }
 
@@ -266,6 +267,7 @@ public class Gerencia extends javax.swing.JFrame {
     
                         
     private void BotaoCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarFuncionariosActionPerformed
+         BotaoCadastrarFuncionarios.setEnabled(true);  
         String nome= CapturarTXTNomeFuncionarios.getText();
         String cpf =CapturarTXTCPFFuncionarios.getText();
         String cargo=CapturarTXTCargoFuncionarios.getText();
@@ -281,7 +283,7 @@ public class Gerencia extends javax.swing.JFrame {
    } else {
     JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios!", "Erro", JOptionPane.ERROR_MESSAGE);
      }          
-                 
+              
     }
     
 
@@ -307,7 +309,7 @@ public class Gerencia extends javax.swing.JFrame {
         
         // 02 //
     private void PlanilhaGerenciaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlanilhaGerenciaFuncionariosMouseClicked
-                                                               
+                                           
     int index = PlanilhaGerenciaFuncionarios.getSelectedRow();
     if (index >= 0) {
         Funcionarios f = this.model.returnFuncionario(index);
@@ -319,8 +321,10 @@ public class Gerencia extends javax.swing.JFrame {
         
         // Define o índice do funcionário selecionado para edição//
             indiceSelecionado = index;
+             BotaoCadastrarFuncionarios.setEnabled(false);
+             BotaoRemoverFuncionarios.setEnabled(false);
     }
-
+             
 
     }//GEN-LAST:event_PlanilhaGerenciaFuncionariosMouseClicked
 
@@ -360,6 +364,9 @@ public class Gerencia extends javax.swing.JFrame {
       
         limparTextos();
         indiceSelecionado = -1;
+        BotaoCadastrarFuncionarios.setEnabled(true);
+         BotaoRemoverFuncionarios.setEnabled(true);
+         
     } else {
         JOptionPane.showMessageDialog(this, 
             "Selecione um funcionário na tabela para editar.", 
@@ -420,6 +427,7 @@ public class Gerencia extends javax.swing.JFrame {
             // 4.3 //
             limparTextos();
             indiceSelecionado = -1;
+           
             
             // 4.4 //
             JOptionPane.showMessageDialog(
