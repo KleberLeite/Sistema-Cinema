@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cinemax.backend.core.Backend;
 import cinemax.backend.salas.IBancoDeDadosSala;
 import cinemax.backend.salas.Sala;
 
@@ -17,8 +18,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	private IBancoDeDadosSala bancoDeDadosSala;
 	private int idFilmesAtual = 0;
 	private int idSessoesAtual = 0;
+	private Backend backend;
 	
-	public BancoDeDadosFilme(IBancoDeDadosSala bancoDeDadosSala) {
+	public BancoDeDadosFilme(Backend backend, IBancoDeDadosSala bancoDeDadosSala) {
+		this.backend = backend;
 		this.bancoDeDadosSala = bancoDeDadosSala;
 	}
 	
@@ -55,6 +58,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		int duracaoEmMinutos,
 		ClassificacaoIndicativa classificacaoIndicativa
 	) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		nome = nome.trim();
 		if(!eNomeValido(nome)) {
 			return false;
@@ -78,6 +85,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAlterarNome(int id, String novoNome) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
@@ -93,6 +104,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAlterarSinopse(int id, String novaSinopse) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
@@ -108,6 +123,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAlterarDuracao(int id, int novaDuracaoEmMinutos) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
@@ -122,6 +141,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAlterarClassificacaoIndicativa(int id, ClassificacaoIndicativa novaClassificacaoIndicativa) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
@@ -145,6 +168,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		Sala sala = bancoDeDadosSala.obterSalaPorId(idSala);
 		if(sala == null) {
 			return false;
@@ -166,6 +193,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarRemoverSessao(int idSessao, int idFilme) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}

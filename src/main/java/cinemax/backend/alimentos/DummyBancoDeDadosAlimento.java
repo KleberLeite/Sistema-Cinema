@@ -1,8 +1,10 @@
 package cinemax.backend.alimentos;
 
+import cinemax.backend.core.Backend;
+
 public class DummyBancoDeDadosAlimento extends BancoDeDadosAlimento {
-	public DummyBancoDeDadosAlimento() {
-		super();
+	public DummyBancoDeDadosAlimento(Backend backend) {
+		super(backend);
 		tentardicionarAlimento("Pipoca P", 5.0, 1001);
 		tentardicionarAlimento("Pipoca M", 5.0, 1002);
 		tentardicionarAlimento("Pipoca G", 5.0, 1003);

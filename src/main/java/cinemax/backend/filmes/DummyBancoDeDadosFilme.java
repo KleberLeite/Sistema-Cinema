@@ -1,10 +1,11 @@
 package cinemax.backend.filmes;
 
+import cinemax.backend.core.Backend;
 import cinemax.backend.salas.IBancoDeDadosSala;
 
 public class DummyBancoDeDadosFilme extends BancoDeDadosFilme {
-	public DummyBancoDeDadosFilme(IBancoDeDadosSala bancoDeDadosSala) {
-		super(bancoDeDadosSala);
+	public DummyBancoDeDadosFilme(Backend backend, IBancoDeDadosSala bancoDeDadosSala) {
+		super(backend, bancoDeDadosSala);
 
 		this.tentarAdicionarFilme("Cinderela e os 7 Anões", "Um filme da Cinderela com os 7 anões.", 120, ClassificacaoIndicativa.AL);
 		this.tentarAdicionarFilme("SpiderMan: O retorno", "Homem Aranha está de volta!", 180, ClassificacaoIndicativa.AL14);

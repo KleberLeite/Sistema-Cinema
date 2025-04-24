@@ -6,8 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cinemax.backend.core.Backend;
+
 public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 	private Map<String, Funcionario> funcionarios = new HashMap<String, Funcionario>();
+	private Backend backend;
+	
+	public BancoDeDadosFuncionario(Backend backend) {
+		this.backend = backend;
+	}
 	
 	@Override
 	public Funcionario obterFuncionarioPorCPF(String cpf) {
@@ -44,6 +51,10 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 		String telefone,
 		String senha
 	) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+				
 		if(funcionarios.containsKey(cpf)) {
 			return false;
 		}
@@ -74,6 +85,10 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 
 	@Override
 	public boolean tentarRemoverFuncionarioPorCPF(String cpf) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!funcionarios.containsKey(cpf)) {
 			return false;
 		}
@@ -83,6 +98,10 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 
 	@Override
 	public boolean tentarAlterarNome(String cpf, String novoNome) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!funcionarios.containsKey(cpf)) {
 			return false;
 		}
@@ -98,6 +117,10 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 
 	@Override
 	public boolean tentarAlterarSenha(String cpf, String novaSenha) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!funcionarios.containsKey(cpf)) {
 			return false;
 		}
@@ -113,6 +136,10 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 
 	@Override
 	public boolean tentarAlterarCargo(String cpf, CargoFuncionario novoCargo) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!funcionarios.containsKey(cpf)) {
 			return false;
 		}
@@ -127,6 +154,10 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 
 	@Override
 	public boolean tentarAlterarTelefone(String cpf, String novoTelefone) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!funcionarios.containsKey(cpf)) {
 			return false;
 		}
@@ -142,6 +173,10 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 
 	@Override
 	public boolean tentarAlterarCPF(String cpf, String novoCPF) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!funcionarios.containsKey(cpf)) {
 			return false;
 		}

@@ -19,7 +19,7 @@ public class Backend {
 	private IBancoDeDadosAlimento bancoAlimentos;
 	private IBancoDeDadosSala bancoSalas;
 	
-	private Backend(
+	private void setup(
 		IBancoDeDadosFilme bancoFilmes,
 		IBancoDeDadosFuncionario bancoFuncionarios,
 		IBancoDeDadosAlimento bancoAlimentos,
@@ -33,19 +33,23 @@ public class Backend {
 	}
 	
 	public static Backend vazio() {
-		IBancoDeDadosAlimento bancoAlimentos = new BancoDeDadosAlimento();
-		IBancoDeDadosFuncionario bancoFuncionarios = new BancoDeDadosFuncionario();
-		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala();
-		IBancoDeDadosFilme bancoFilmes = new BancoDeDadosFilme(bancoSalas);
-		return new Backend(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas);
+		Backend backend = new Backend();
+		IBancoDeDadosAlimento bancoAlimentos = new BancoDeDadosAlimento(backend);
+		IBancoDeDadosFuncionario bancoFuncionarios = new BancoDeDadosFuncionario(backend);
+		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala(backend);
+		IBancoDeDadosFilme bancoFilmes = new BancoDeDadosFilme(backend, bancoSalas);
+		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas);
+		return backend;
 	}
 	
 	public static Backend dummy() {
-		IBancoDeDadosAlimento bancoAlimentos = new DummyBancoDeDadosAlimento();
-		IBancoDeDadosFuncionario bancoFuncionarios = new DummyBancoDeDadosFuncionario();
-		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala();
-		IBancoDeDadosFilme bancoFilmes = new DummyBancoDeDadosFilme(bancoSalas);
-		return new Backend(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas);
+		Backend backend = new Backend();
+		IBancoDeDadosAlimento bancoAlimentos = new DummyBancoDeDadosAlimento(backend);
+		IBancoDeDadosFuncionario bancoFuncionarios = new DummyBancoDeDadosFuncionario(backend);
+		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala(backend);
+		IBancoDeDadosFilme bancoFilmes = new DummyBancoDeDadosFilme(backend, bancoSalas);
+		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas);
+		return backend;
 	}
 	
 	public boolean tentarAbrirDia() {
@@ -64,7 +68,7 @@ public class Backend {
 		return true;
 	}
 
-	public boolean isDiaEstaAberto() {
+	public boolean diaEstaAberto() {
 		return diaEstaAberto;
 	}
 

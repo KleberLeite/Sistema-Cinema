@@ -3,14 +3,17 @@ package cinemax.backend.salas;
 import java.util.HashMap;
 import java.util.Map;
 
+import cinemax.backend.core.Backend;
 import cinemax.utilities.ConversorDeCoordenadas;
 
 public class BancoDeDadosSala implements IBancoDeDadosSala {
 	private final int NUM_SALAS = 4;
 	
 	private Map<Integer, Sala> salas;
+	private Backend backend;
 	
-	public BancoDeDadosSala() {
+	public BancoDeDadosSala(Backend backend) {
+		this.backend = backend;
 		this.salas = new HashMap<Integer, Sala>();
 		preencherSalas();
 	}
@@ -77,6 +80,10 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 
 	@Override
 	public boolean tentarBloquearLocal(int idSala, int linha, int coluna) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!salas.containsKey(idSala)) {
 			return false;
 		}
@@ -87,6 +94,10 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 
 	@Override
 	public boolean tentarDesbloquearLocal(int idSala, int linha, int coluna) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!salas.containsKey(idSala)) {
 			return false;
 		}
