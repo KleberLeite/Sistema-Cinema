@@ -1,22 +1,58 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package cinemax.frontend.vendadealimentos;
+import cinemax.backend.alimentos.Alimento;
+import cinemax.backend.alimentos.BancoDeDadosAlimento;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
 
 /**
  *
  * @author geral
  */
-public class Vendas extends javax.swing.JFrame {
 
+
+
+public class Vendas extends javax.swing.JFrame {
+ private BancoDeDadosAlimento bancoDados = new BancoDeDadosAlimento();
+    private DefaultTableModel modeloTabela;
+    private int indiceSelecionado = -1;
     /**
      * Creates new form Vendas
      */
     public Vendas() {
         initComponents();
+        inicializarTabela();
+        configurarListeners();
     }
 
+    
+     private void inicializarTabela() {
+        modeloTabela = (DefaultTableModel) PlanilhaAlimento.getModel();
+        atualizarTabela();
+    }
+    
+    private void configurarListeners() {
+        PlanilhaAlimento.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int linhaSelecionada = PlanilhaAlimento.getSelectedRow();
+                if (linhaSelecionada != -1) {
+                    preencherCampos(linhaSelecionada);
+                    indiceSelecionado = linhaSelecionada;
+                    ButaoCadastrarAlimento.setEnabled(false);
+                }
+            }
+        });
+    }
+    
+    private void preencherCampos(int linha) {
+        CapturaTXTNomeAlimento.setText(modeloTabela.getValueAt(linha, 0).toString());
+        CapturaTXTPrecoAlimento.setText(modeloTabela.getValueAt(linha, 1).toString());
+        CapturaTXTCodigoAlimento.setText(modeloTabela.getValueAt(linha, 2).toString());
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,12 +146,32 @@ public class Vendas extends javax.swing.JFrame {
         });
 
         ButaoCadastrarAlimento.setText("Novo");
+        ButaoCadastrarAlimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButaoCadastrarAlimentoActionPerformed(evt);
+            }
+        });
 
         ButaoEditarAlimento.setText("Editar");
+        ButaoEditarAlimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButaoEditarAlimentoActionPerformed(evt);
+            }
+        });
 
         ButaoRemoverAlimento.setText("Remover");
+        ButaoRemoverAlimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButaoRemoverAlimentoActionPerformed(evt);
+            }
+        });
 
         ButaoProcurarAlimentoNome.setText("Procurar");
+        ButaoProcurarAlimentoNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButaoProcurarAlimentoNomeActionPerformed(evt);
+            }
+        });
 
         TXTProcurarNomeAlimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         TXTProcurarNomeAlimento.setForeground(new java.awt.Color(0, 32, 64));
@@ -126,6 +182,11 @@ public class Vendas extends javax.swing.JFrame {
         TXTProcurarCodigoAlimento.setText("Procurar Código");
 
         ButaoProcurarCodigoAlimento.setText("Procurar");
+        ButaoProcurarCodigoAlimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButaoProcurarCodigoAlimentoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -259,6 +320,243 @@ public class Vendas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CapturaTXTPrecoAlimentoActionPerformed
 
+    private void ButaoCadastrarAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoCadastrarAlimentoActionPerformed
+       if (!validarCampos()) {
+            return;
+        }
+        
+        try {
+            String nome = CapturaTXTNomeAlimento.getText().trim();
+            double preco = Double.parseDouble(CapturaTXTPrecoAlimento.getText().trim());
+            int codigo = Integer.parseInt(CapturaTXTCodigoAlimento.getText().trim());
+            
+            if (bancoDados.tentardicionarAlimento(nome, preco, codigo)) {
+                JOptionPane.showMessageDialog(this, "Alimento cadastrado com sucesso!");
+                atualizarTabela();
+                limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "Erro ao cadastrar. Código já existe ou dados inválidos!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Preço e código devem ser números válidos!", 
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_ButaoCadastrarAlimentoActionPerformed
+
+    private void ButaoEditarAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoEditarAlimentoActionPerformed
+           if (indiceSelecionado == -1) {
+        JOptionPane.showMessageDialog(this, 
+            "Selecione um alimento na tabela para editar!", 
+            "Aviso", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    if (!validarCampos()) {
+        return;
+    }
+    
+    try {
+        int codigoOriginal = (int) modeloTabela.getValueAt(indiceSelecionado, 2);
+        String novoNome = CapturaTXTNomeAlimento.getText().trim();
+        double novoPreco = Double.parseDouble(CapturaTXTPrecoAlimento.getText().trim());
+        int novoCodigo = Integer.parseInt(CapturaTXTCodigoAlimento.getText().trim());
+        
+        // Substitua esta parte:
+        boolean sucesso = true;
+        
+        // Se está alterando o código
+        if (codigoOriginal != novoCodigo) {
+            if (!bancoDados.tentarAlterarCodigo(codigoOriginal, novoCodigo)) {
+                sucesso = false;
+            }
+        }
+        
+        // Altera nome e preço
+        if (sucesso) {
+            sucesso = bancoDados.tentarAlterarNome(novoCodigo, novoNome) && 
+                     bancoDados.tentarAlterarPreco(novoCodigo, novoPreco);
+        }
+        
+        if (sucesso) {
+            JOptionPane.showMessageDialog(this, "Alimento atualizado com sucesso!");
+            atualizarTabela();
+            limparCampos();
+            indiceSelecionado = -1;
+            ButaoCadastrarAlimento.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Erro ao atualizar. Verifique se o novo código já existe!", 
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, 
+            "Preço e código devem ser números válidos!", 
+            "Erro", JOptionPane.ERROR_MESSAGE);
+    }                               
+       
+        
+    }//GEN-LAST:event_ButaoEditarAlimentoActionPerformed
+
+    private void ButaoRemoverAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoRemoverAlimentoActionPerformed
+     if (indiceSelecionado == -1) {
+            JOptionPane.showMessageDialog(this, 
+                "Selecione um alimento na tabela para remover!", 
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        int codigo = (int) modeloTabela.getValueAt(indiceSelecionado, 2);
+        String nome = modeloTabela.getValueAt(indiceSelecionado, 0).toString();
+        
+        int confirmacao = JOptionPane.showConfirmDialog(
+            this, 
+            "Deseja realmente remover o alimento:\n" + nome + " (Código: " + codigo + ")?", 
+            "Confirmar Remoção", 
+            JOptionPane.YES_NO_OPTION);
+        
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            if (bancoDados.tentarRemoverAlimento(codigo)) {
+                JOptionPane.showMessageDialog(this, "Alimento removido com sucesso!");
+                atualizarTabela();
+                limparCampos();
+                indiceSelecionado = -1;
+                ButaoCadastrarAlimento.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "Erro ao remover alimento!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_ButaoRemoverAlimentoActionPerformed
+
+    private void ButaoProcurarAlimentoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoProcurarAlimentoNomeActionPerformed
+       String nomeProcurado = CapturaTXTProcurarNomeAlimento.getText().trim();
+        
+        if (nomeProcurado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Digite um nome para procurar!", 
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        modeloTabela.setRowCount(0);
+        Alimento[] resultados = bancoDados.obterAlimentoPorNome(nomeProcurado);
+        
+        if (resultados.length == 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Nenhum alimento encontrado com este nome!", 
+                "Informação", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Alimento alimento : resultados) {
+                modeloTabela.addRow(new Object[]{
+                    alimento.getNome(),
+                    alimento.getPreco(),
+                    alimento.getCodigo()
+                });
+            }
+        }
+    }//GEN-LAST:event_ButaoProcurarAlimentoNomeActionPerformed
+
+    private void ButaoProcurarCodigoAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoProcurarCodigoAlimentoActionPerformed
+        String codigoText = CapturaTXTProcurarCodigoAlimento.getText().trim();
+        
+        if (codigoText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Digite um código para procurar!", 
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        try {
+            int codigo = Integer.parseInt(codigoText);
+            Alimento alimento = bancoDados.obterAlimentoPorCodigo(codigo);
+            
+            if (alimento == null) {
+                JOptionPane.showMessageDialog(this, 
+                    "Nenhum alimento encontrado com este código!", 
+                    "Informação", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                modeloTabela.setRowCount(0);
+                modeloTabela.addRow(new Object[]{
+                    alimento.getNome(),
+                    alimento.getPreco(),
+                    alimento.getCodigo()
+                });
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, 
+                "O código deve ser um número válido!", 
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_ButaoProcurarCodigoAlimentoActionPerformed
+
+      // ===================== MÉTODOS AUXILIARES ===================== //
+    
+    private void atualizarTabela() {
+        modeloTabela.setRowCount(0);
+        Alimento[] alimentos = bancoDados.obterTodosAlimentos();
+        for (Alimento alimento : alimentos) {
+            modeloTabela.addRow(new Object[]{
+                alimento.getNome(),
+                alimento.getPreco(),
+                alimento.getCodigo()
+            });
+        }
+    }
+    
+    private void limparCampos() {
+        CapturaTXTNomeAlimento.setText("");
+        CapturaTXTPrecoAlimento.setText("");
+        CapturaTXTCodigoAlimento.setText("");
+        CapturaTXTProcurarNomeAlimento.setText("");
+        CapturaTXTProcurarCodigoAlimento.setText("");
+    }
+    
+    private boolean validarCampos() {
+        if (CapturaTXTNomeAlimento.getText().trim().isEmpty() ||
+            CapturaTXTPrecoAlimento.getText().trim().isEmpty() ||
+            CapturaTXTCodigoAlimento.getText().trim().isEmpty()) {
+            
+            JOptionPane.showMessageDialog(this, 
+                "Preencha todos os campos obrigatórios!", 
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
+        try {
+            double preco = Double.parseDouble(CapturaTXTPrecoAlimento.getText().trim());
+            if (preco <= 0) {
+                JOptionPane.showMessageDialog(this, 
+                    "O preço deve ser maior que zero!", 
+                    "Erro", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, 
+                "O preço deve ser um número válido!", 
+                "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        try {
+            Integer.parseInt(CapturaTXTCodigoAlimento.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, 
+                "O código deve ser um número válido!", 
+                "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        return true;
+    }
+
+   
+    
+    
+    
     /**
      * @param args the command line arguments
      */

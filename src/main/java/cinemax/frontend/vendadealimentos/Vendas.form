@@ -252,16 +252,25 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Novo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButaoCadastrarAlimentoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="ButaoEditarAlimento">
           <Properties>
             <Property name="text" type="java.lang.String" value="Editar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButaoEditarAlimentoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="ButaoRemoverAlimento">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remover"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButaoRemoverAlimentoActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel3">
 
@@ -321,6 +330,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Procurar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButaoProcurarAlimentoNomeActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="TXTProcurarNomeAlimento">
               <Properties>
@@ -350,6 +362,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Procurar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButaoProcurarCodigoAlimentoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
