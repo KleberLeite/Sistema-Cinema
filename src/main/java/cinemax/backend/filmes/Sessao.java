@@ -8,7 +8,7 @@ import cinemax.utilities.ConversorDeCoordenadas;
 
 public class Sessao {
 	private int id;
-	private boolean[] reservados;
+	private boolean[][] reservados;
 	private Sala sala;
 	private LocalDateTime inicio;
 	private Filme filme;
@@ -23,18 +23,17 @@ public class Sessao {
 		this.sala = sala;
 		this.filme = filme;
 		this.inicio = inicio;
-		this.reservados = new boolean[sala.getLinhas() * sala.getColunas()];
+		this.reservados = new boolean[sala.getLinhas()][sala.getColunas()];
 	}
 
 	public boolean estaReservado(int linha, int coluna) {
 		if(!sala.estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
-		if(sala.obterTipoDeEstrutura(linha, coluna) == TipoDeEstrutura.Vazio) {
+		if(sala.obterTipoDeEstrutura(linha, coluna).getTipo() == TipoDeEstrutura.Vazio) {
 			return false;
 		}
-		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, sala.getColunas());
-		return reservados[index];
+		return reservados[linha][coluna];
 	}
 
 	public Sala getSala() {
@@ -69,14 +68,13 @@ public class Sessao {
 		if(!sala.estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
-		if(sala.obterTipoDeEstrutura(linha, coluna) == TipoDeEstrutura.Vazio) {
+		if(sala.obterTipoDeEstrutura(linha, coluna).getTipo() == TipoDeEstrutura.Vazio) {
 			return false;
 		}
-		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, sala.getColunas());
-		if(reservados[index]) {
+		if(reservados[linha][coluna]) {
 			return false;
 		}
-		reservados[index] = true;
+		reservados[linha][coluna] = true;
 		return true;
 	}
 	
@@ -84,14 +82,14 @@ public class Sessao {
 		if(!sala.estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
-		if(sala.obterTipoDeEstrutura(linha, coluna) == TipoDeEstrutura.Vazio) {
+		if(sala.obterTipoDeEstrutura(linha, coluna).getTipo() == TipoDeEstrutura.Vazio) {
 			return false;
 		}
 		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, sala.getColunas());
-		if(!reservados[index]) {
+		if(!reservados[linha][coluna]) {
 			return false;
 		}
-		reservados[index] = false;
+		reservados[linha][coluna] = false;
 		return true;
 	}
 }
