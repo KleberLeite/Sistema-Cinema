@@ -1,7 +1,7 @@
 package cinemax.backend.filmes;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Filme {
 	private int id;
@@ -9,7 +9,7 @@ public class Filme {
 	private String sinopse;
 	private int duracaoEmMinutos;
 	private ClassificacaoIndicativa classificacaoIndicativa;
-	private List<Sessao> sessoes = new ArrayList<Sessao>();
+	private Map<Integer, Sessao> sessoes = new HashMap<Integer, Sessao>();
 	
 	public Filme(
 		int id,
@@ -62,14 +62,26 @@ public class Filme {
 	}
 	
 	public Sessao[] obterTodasSessoes() {
-		return sessoes.toArray(new Sessao[sessoes.size()]);
+		return sessoes.values().toArray(new Sessao[sessoes.size()]);
+	}
+	
+	public boolean contemSessao(int id) {
+		return sessoes.containsKey(id);
+	}
+	
+	public Sessao obterSessao(int id) {
+		return sessoes.getOrDefault(id, null);
 	}
 	
 	protected void adicionarSessao(Sessao sessao) {
-		sessoes.add(sessao);
+		sessoes.put(sessao.getId(), sessao);
 	}
 	
 	protected boolean removerSessao(int id) {
-		return sessoes.removeIf(sessao -> sessao.getId() == id);
+		if(sessoes.containsKey(id)) {
+			sessoes.remove(id);
+			return true;
+		}
+		return false;
 	}
 }

@@ -6,11 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cinemax.backend.core.Backend;
+
 public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 	private Map<Integer, Alimento> alimentos;
+	private Backend backend;
 	
-	public BancoDeDadosAlimento() {
+	public BancoDeDadosAlimento(Backend backend) {
 		this.alimentos = new HashMap<Integer, Alimento>();
+		this.backend = backend;
 	}
 
 	@Override
@@ -46,6 +50,10 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 
 	@Override
 	public boolean tentardicionarAlimento(String nome, double preco, int codigo) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(alimentos.containsKey(codigo)) {
 			return false;
 		}
@@ -63,6 +71,10 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 
 	@Override
 	public boolean tentarRemoverAlimento(int codigo) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(alimentos.containsKey(codigo)) {
 			alimentos.remove(codigo);
 			return true;
@@ -72,6 +84,10 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 
 	@Override
 	public boolean tentarAlterarNome(int codigo, String novoNome) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(alimentos.containsKey(codigo)) {
 			Alimento alimento = alimentos.get(codigo);
 			alimento.setNome(novoNome);
@@ -82,6 +98,10 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 
 	@Override
 	public boolean tentarAlterarCodigo(int codigo, int novoCodigo) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(alimentos.containsKey(novoCodigo) || !alimentos.containsKey(codigo)) {
 			return false;
 		}
@@ -95,6 +115,10 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 
 	@Override
 	public boolean tentarAlterarPreco(int codigo, double novoPreco) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(alimentos.containsKey(codigo)) {
 			Alimento alimento = alimentos.get(codigo);
 			alimento.setPreco(novoPreco);

@@ -3,14 +3,17 @@ package cinemax.backend.salas;
 import java.util.HashMap;
 import java.util.Map;
 
+import cinemax.backend.core.Backend;
 import cinemax.utilities.ConversorDeCoordenadas;
 
 public class BancoDeDadosSala implements IBancoDeDadosSala {
 	private final int NUM_SALAS = 4;
 	
 	private Map<Integer, Sala> salas;
+	private Backend backend;
 	
-	public BancoDeDadosSala() {
+	public BancoDeDadosSala(Backend backend) {
+		this.backend = backend;
 		this.salas = new HashMap<Integer, Sala>();
 		preencherSalas();
 	}
@@ -45,32 +48,12 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 		estruturaDasSalas[indexLocalObesos1] = TipoDeEstrutura.PoltronaObesos;
 		estruturaDasSalas[indexLocalObesos2] = TipoDeEstrutura.PoltronaObesos;
 		
-
-		/*System.out.println("Estrutura Criada: ");
-		for(int i = 0; i < 16; i++) {
-			for(int j = 0; j < 16; j++) {
-				int index = ConversorDeCoordenadas.obter1dPor2d(i, j, 16);
-				TipoDeEstrutura e = estruturaDasSalas[index];
-				//System.out.println(e);
-				if(e == TipoDeEstrutura.Poltrona)
-					System.out.print("P ");
-				else if(e == TipoDeEstrutura.PoltronaObesos)
-					System.out.print("O ");
-				else if(e == TipoDeEstrutura.LocalCadeirantes)
-					System.out.print("C ");
-				else
-					System.out.print("  ");
-			}
-			System.out.print("\n");
-		}*/
-		
 		return estruturaDasSalas;
 	}
 	
 	private void preencherSalas() {
 		TipoDeEstrutura[] estrutura = gerarEstruturaDasSalas();
 		for(int i = 0; i < NUM_SALAS; i++) {
-
 			Sala sala = new Sala(
 				i,
 				16,
@@ -97,6 +80,10 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 
 	@Override
 	public boolean tentarBloquearLocal(int idSala, int linha, int coluna) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!salas.containsKey(idSala)) {
 			return false;
 		}
@@ -107,6 +94,10 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 
 	@Override
 	public boolean tentarDesbloquearLocal(int idSala, int linha, int coluna) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!salas.containsKey(idSala)) {
 			return false;
 		}

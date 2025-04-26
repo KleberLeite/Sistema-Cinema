@@ -1,5 +1,6 @@
 package cinemax.backend.filmes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public interface IBancoDeDadosFilme {
@@ -19,4 +20,9 @@ public interface IBancoDeDadosFilme {
 	
 	boolean tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio);
 	boolean tentarRemoverSessao(int idSessao, int idFilme);
+	
+	Sessao[] obterSessoesNoDia(LocalDate data);
+	
+	boolean tentarReservar(int idFilme, int idSessao, int linha, int coluna);
+	boolean tentarDesreservar(int idFilme, int idSessao, int linha, int coluna);
 }

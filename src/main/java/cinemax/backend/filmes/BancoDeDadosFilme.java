@@ -1,5 +1,6 @@
 package cinemax.backend.filmes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cinemax.backend.core.Backend;
 import cinemax.backend.salas.IBancoDeDadosSala;
 import cinemax.backend.salas.Sala;
 
@@ -17,8 +19,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	private IBancoDeDadosSala bancoDeDadosSala;
 	private int idFilmesAtual = 0;
 	private int idSessoesAtual = 0;
+	private Backend backend;
 	
-	public BancoDeDadosFilme(IBancoDeDadosSala bancoDeDadosSala) {
+	public BancoDeDadosFilme(Backend backend, IBancoDeDadosSala bancoDeDadosSala) {
+		this.backend = backend;
 		this.bancoDeDadosSala = bancoDeDadosSala;
 	}
 	
@@ -55,6 +59,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		int duracaoEmMinutos,
 		ClassificacaoIndicativa classificacaoIndicativa
 	) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		nome = nome.trim();
 		if(!eNomeValido(nome)) {
 			return false;
@@ -78,6 +86,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAlterarNome(int id, String novoNome) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
@@ -93,6 +105,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAlterarSinopse(int id, String novaSinopse) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
@@ -108,6 +124,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAlterarDuracao(int id, int novaDuracaoEmMinutos) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
@@ -122,6 +142,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAlterarClassificacaoIndicativa(int id, ClassificacaoIndicativa novaClassificacaoIndicativa) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
@@ -145,6 +169,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		Sala sala = bancoDeDadosSala.obterSalaPorId(idSala);
 		if(sala == null) {
 			return false;
@@ -166,6 +194,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarRemoverSessao(int idSessao, int idFilme) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
@@ -182,12 +214,50 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 				}
 				
 				LocalDateTime fimSessao = sessao.getInicio().plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
-
 				if(inicio.isAfter(sessao.getInicio()) && inicio.isBefore(fimSessao)) {
 					return true;
 				}
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public Sessao[] obterSessoesNoDia(LocalDate data) {
+		List<Sessao> resultado = new ArrayList<Sessao>();
+		for(Filme f : filmes.values()) {
+			for(Sessao s : f.obterTodasSessoes()) {
+				if(data.equals(s.getInicio().toLocalDate())) {
+					resultado.add(s);
+				}
+			}
+		}
+		return resultado.toArray(new Sessao[resultado.size()]);
+	}
+	
+	@Override
+	public boolean tentarReservar(int idFilme, int idSessao, int linha, int coluna) {
+		if(!filmes.containsKey(idFilme)) {
+			return false;
+		}
+		Filme filme = filmes.get(idFilme);
+		if(!filme.contemSessao(idSessao)) {
+			return false;
+		}
+		Sessao sessao = filme.obterSessao(idSessao);
+		return sessao.tentarReservar(linha, coluna);
+	}
+	
+	@Override
+	public boolean tentarDesreservar(int idFilme, int idSessao, int linha, int coluna) {
+		if(!filmes.containsKey(idFilme)) {
+			return false;
+		}
+		Filme filme = filmes.get(idFilme);
+		if(!filme.contemSessao(idSessao)) {
+			return false;
+		}
+		Sessao sessao = filme.obterSessao(idSessao);
+		return sessao.tentarDesreservar(linha, coluna);
 	}
 }

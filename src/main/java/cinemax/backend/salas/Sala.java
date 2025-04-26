@@ -82,6 +82,7 @@ public class Sala {
 
 	// Retorna se a linha e coluna está dentro dos limites da sala.
 	public boolean estaDentroDaSala(int linha, int coluna) {
-		return linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas;
+		
+		return linha >= 0 && linha < linhas && coluna >= 0 && coluna < colunas;
 	}
 }

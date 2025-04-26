@@ -18,25 +18,29 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.BancoDeDadosFilme;
 import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.backend.salas.BancoDeDadosSala;
+import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.model.DadosFilme;
 import cinemax.frontend.model.ModeloTabela;
 
 import javax.swing.JScrollPane;
 import java.awt.Font;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class TelaVendasIngressos extends JFrame {
+public class TelaEscolhaFilme extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-	private BancoDeDadosFilme filmes = new BancoDeDadosFilme(new BancoDeDadosSala());
-	//private ArrayList<DadosFilme> filmes;
+	private ControladorDeApp app = ControladorDeApp.getInstancia();
+	Backend bancos = app.getBackend();
 
 	/**
 	 * Launch the application.
@@ -45,7 +49,7 @@ public class TelaVendasIngressos extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaVendasIngressos frame = new TelaVendasIngressos();
+					TelaEscolhaFilme frame = new TelaEscolhaFilme();
 					frame.setLocationRelativeTo(null);
 					frame.setSize(800, 500);
 					frame.setVisible(true);
@@ -59,21 +63,7 @@ public class TelaVendasIngressos extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaVendasIngressos() {
-		filmes.tentarAdicionarFilme("Rei leão", "Um leão",  190, ClassificacaoIndicativa.AL);
-		LocalDateTime sessao = LocalDateTime.of(2025,04,16,13,00);
-		filmes.tentarAdicionarSessao(0, 0, sessao);
-		filmes.tentarAdicionarSessao(0, 0, sessao.plusHours(2));
-		filmes.tentarAdicionarFilme("Rei leão 2", "Filha do leão", 170, ClassificacaoIndicativa.AL);
-		filmes.tentarAdicionarSessao(1, 1, sessao.plusHours(4));
-		filmes.tentarAdicionarSessao(1, 1, sessao.plusHours(6));
-		filmes.tentarAdicionarFilme("Rei leão 3", "Amigos do Leão", 180, ClassificacaoIndicativa.AL);
-		filmes.tentarAdicionarSessao(2, 2, sessao.plusHours(8));
-		filmes.tentarAdicionarSessao(2, 2, sessao.plusHours(10));
-		filmes.tentarAdicionarFilme("Shrek", "Um leão", 200, ClassificacaoIndicativa.AL);
-		filmes.tentarAdicionarSessao(3, 3, sessao.plusHours(12));
-		filmes.tentarAdicionarSessao(3, 3, sessao.plusHours(14));
-		
+	public TelaEscolhaFilme() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
@@ -101,10 +91,27 @@ public class TelaVendasIngressos extends JFrame {
 		panelDias.setLayout(new FlowLayout(FlowLayout.LEFT)); // Usando FlowLayout para disposição horizontal
 		
 		// Criando os botões para cada dia da semana
-        String[] diasSemana = {"Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"};
+        
+        for (int i = 0 ; i < 7 ; i++) {
+        	LocalDate hoje = LocalDate.now().plusDays(i);
+        	
+        	
+    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
 
-        for (String dia : diasSemana) {
-            JButton botaoDia = new JButton(dia);
+    		String diaAtual = hoje.format(formatter);
+    		
+            JButton botaoDia = new JButton(diaAtual);
+            
+            final LocalDate dataSelecionada = hoje;
+
+            // Evento de clique no botão
+            botaoDia.addActionListener(e -> {
+                System.out.println("Dia selecionado: " + dataSelecionada);
+
+                // Aqui você pode, por exemplo, filtrar os filmes com sessões só nesse dia
+                // Ou atualizar a interface com os dados da data escolhida
+            });
+            
             panelDias.add(botaoDia); // Adiciona o botão ao painel
         }
 
@@ -125,39 +132,56 @@ public class TelaVendasIngressos extends JFrame {
 
 
 		// Criar os cards dos filmes
-		for (Filme filme : filmes.obterTodosFilmes()) {
+		for (Filme filme : bancos.getBancoFilmes().obterTodosFilmes()) {
 			JPanel card = new JPanel();
 			card.setLayout(null); 
-			card.setPreferredSize(new Dimension(700, 100));
-			card.setMaximumSize(new Dimension(700, 100));
+			card.setPreferredSize(new Dimension(1355, 100));
+			card.setMaximumSize(new Dimension(1355, 100));
 			card.setBackground(new Color(230, 230, 250));
 
 			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
 			card.setBorder(new EmptyBorder(10, 10, 10, 10)); // espaçamento interno
 
-		    
-		    JLabel lblNome = new JLabel(filme.getNome());
-		    lblNome.setBounds(20, 10, 300, 25);
-		    card.add(lblNome);
+			JLabel lblNome = new JLabel(filme.getNome());
+			lblNome.setBounds(20, 10, 400, 25); // mais largura pro nome
+			card.add(lblNome);
 
-		    JLabel lblDuracao = new JLabel("Duração: " + filme.getDuracaoEmMinutos() + " min");
-		    lblDuracao.setBounds(20, 40, 200, 20);
-		    card.add(lblDuracao);
+			JLabel lblDuracao = new JLabel("Duração: " + filme.getDuracaoEmMinutos() + " min");
+			lblDuracao.setBounds(20, 35, 200, 20);
+			card.add(lblDuracao);
 
-		 // Adicionar um label título fixo "Sessões:"
-		    JLabel lblTituloSessoes = new JLabel("Sessões:");
-		    lblTituloSessoes.setBounds(20, 65, 100, 20);
-		    card.add(lblTituloSessoes);
+			JLabel lblTituloSessoes = new JLabel("Sessões:");
+			lblTituloSessoes.setBounds(20, 60, 100, 20);
+			card.add(lblTituloSessoes);
 
-		    // Painel para exibir as sessões uma ao lado da outra
-		    JPanel painelSessoes = new JPanel();
-		    painelSessoes.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
-		    painelSessoes.setBounds(100, 65, 580, 25); // Ajuste conforme necessário
-		    painelSessoes.setOpaque(false); // deixa transparente, se quiser manter fundo do card
+			JPanel painelSessoes = new JPanel();
+			painelSessoes.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
+			painelSessoes.setBounds(100, 60, 400, 25); // mais à esquerda pra sobrar espaço pro botão
+			painelSessoes.setOpaque(false);
+			card.add(painelSessoes);
 
-		    for (Sessao s : filme.obterTodasSessoes()) {
-		        JLabel lblSessao = new JLabel(s.getInicio().toLocalTime().toString()); // exibe só hora
-		        painelSessoes.add(lblSessao);
+
+		    for (Sessao sessao : filme.obterTodasSessoes()) {
+		    	
+		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		    	String sessaoFormatada = sessao.getInicio().format(formatter);
+		    	
+		        //String sessao1 = s.getInicio().toLocalTime().toString(); // exibe só hora
+		        JButton btnSessao1 = new JButton(sessaoFormatada);
+				btnSessao1.setBounds(550, 65, 100, 25); // canto inferior direito do card
+				card.add(btnSessao1);
+				
+				btnSessao1.addActionListener(e -> {
+		                
+					TelaEscolhaPoltrona telaEscolhaPoltrona = new TelaEscolhaPoltrona(sessao);
+					telaEscolhaPoltrona.setLocationRelativeTo(null); // centraliza a tela
+					telaEscolhaPoltrona.setVisible(true);
+
+				    dispose();
+		               
+		        });
+		        
+		        painelSessoes.add(btnSessao1);
 		    }
 
 		    card.add(painelSessoes);
