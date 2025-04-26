@@ -4,75 +4,94 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cinemax.backend.core.Backend;
-import cinemax.utilities.ConversorDeCoordenadas;
 
 public class BancoDeDadosSala implements IBancoDeDadosSala {
 	private final int NUM_SALAS = 4;
-	
+	private final int TAM_HOR = 16;
+	private final int TAM_VERT = 18;
+
 	private Map<Integer, Sala> salas;
 	private Backend backend;
-	
+
 	public BancoDeDadosSala(Backend backend) {
 		this.backend = backend;
 		this.salas = new HashMap<Integer, Sala>();
 		preencherSalas();
 	}
-	
-	private TipoDeEstrutura[] gerarEstruturaDasSalas() {
-		TipoDeEstrutura[] estruturaDasSalas = new TipoDeEstrutura[16 * 16];
-		for(int i = 0; i < 16; i++) {
-			for(int j = 0; j < 16; j++) {
-				int index = ConversorDeCoordenadas.obter1dPor2d(i, j, 16);
-				
-				if(i == 0 || i == 15) {
-					estruturaDasSalas[index] = TipoDeEstrutura.Poltrona;
-				} else if(i == 1 || i == 14) {
-					estruturaDasSalas[index] = TipoDeEstrutura.Vazio;
-				} else {
-					if(j == 3 || j == 4 || j == 11 || j == 12) {
-						estruturaDasSalas[index] = TipoDeEstrutura.Vazio;
-					} else {
-						estruturaDasSalas[index] = TipoDeEstrutura.Poltrona;
-					}
-				}
+
+	private Estrutura[][] gerarEstruturaSala() {
+		Estrutura[][] estrutura = new Estrutura[TAM_VERT][TAM_HOR];
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				estrutura[i][j] = getEstrutura(i, j);
 			}
 		}
-		
-		int indexLocalCadeirante1 = ConversorDeCoordenadas.obter1dPor2d(13, 7, 16);
-		int indexLocalCadeirante2 = ConversorDeCoordenadas.obter1dPor2d(13, 8, 16);
-		estruturaDasSalas[indexLocalCadeirante1] = TipoDeEstrutura.LocalCadeirantes;
-		estruturaDasSalas[indexLocalCadeirante2] = TipoDeEstrutura.LocalCadeirantes;
-		
-		int indexLocalObesos1 = ConversorDeCoordenadas.obter1dPor2d(0, 0, 16);
-		int indexLocalObesos2 = ConversorDeCoordenadas.obter1dPor2d(0, 15, 16);
-		estruturaDasSalas[indexLocalObesos1] = TipoDeEstrutura.PoltronaObesos;
-		estruturaDasSalas[indexLocalObesos2] = TipoDeEstrutura.PoltronaObesos;
-		
-		return estruturaDasSalas;
+		return estrutura;
 	}
 	
-	private void preencherSalas() {
-		TipoDeEstrutura[] estrutura = gerarEstruturaDasSalas();
-		for(int i = 0; i < NUM_SALAS; i++) {
-			Sala sala = new Sala(
-				i,
-				16,
-				16,
-				new boolean[16 * 16],
-				estrutura
-			);
-			salas.put(i, sala);	
+	private Estrutura getEstrutura(int i, int j) {
+		TipoDeEstrutura tipo = getTipoEstrutura(i, j);
+		String identificador = getIdentificador(i, j, tipo);
+		switch(tipo) {
+		case Vazio:
+			return new EstruturaPassagem(i, j, identificador, tipo);
+		default:
+			return new Poltrona(i, j , identificador, tipo);
 		}
 	}
-	
+
+	private String getIdentificador(int i, int j, TipoDeEstrutura tipo) {
+		if(tipo == TipoDeEstrutura.Vazio) {
+			return "";
+		}
+		if(i == 0) {
+			return String.format("A%d", j + 1);
+		}
+		if(i == 15) {
+			return String.format("%c%d", (char)(TAM_VERT - 1 - 2), j + 1);
+		}
+		return String.format("%c%d", (char)(TAM_VERT - 1), j + 1);
+	}
+
+	private TipoDeEstrutura getTipoEstrutura(int i, int j) {
+		// Local p/ pessoas obesas
+		if(i == 0 && (j == 0 || j == 15)) {
+			return TipoDeEstrutura.PoltronaObesos;
+		}
+		// Local p/ cadeirantes
+		if(i == 13 && (j == 7 || j == 8)) {
+			return TipoDeEstrutura.LocalCadeirantes;
+		}
+		
+		// Resto da sala
+		if(i == 2 || i == 14) {
+			return TipoDeEstrutura.Vazio;
+		}
+		if(i == 0 || i == 15) {
+			return TipoDeEstrutura.Poltrona;
+		}
+		if((j >= 3 && j <=4) || (j >= 11 && j <=12)) {
+			return TipoDeEstrutura.Vazio;
+		}
+		return TipoDeEstrutura.Poltrona;
+	}
+
+	private void preencherSalas() {
+		Estrutura[][] estrutura = gerarEstruturaSala();
+		for (int i = 0; i < NUM_SALAS; i++) {
+			Sala sala = new Sala(i, 16, 16, estrutura);
+			salas.put(i, sala);
+		}
+	}
+
 	@Override
-	public Sala[] obterTodasSalas() {		
+	public Sala[] obterTodasSalas() {
 		return salas.values().toArray(new Sala[salas.size()]);
 	}
 
 	@Override
 	public Sala obterSalaPorId(int id) {
-		if(!salas.containsKey(id)) {
+		if (!salas.containsKey(id)) {
 			return null;
 		}
 		return salas.get(id);
@@ -80,28 +99,28 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 
 	@Override
 	public boolean tentarBloquearLocal(int idSala, int linha, int coluna) {
-		if(backend.diaEstaAberto()) {
+		if (backend.diaEstaAberto()) {
 			return false;
 		}
-		
-		if(!salas.containsKey(idSala)) {
+
+		if (!salas.containsKey(idSala)) {
 			return false;
 		}
-		
+
 		Sala sala = salas.get(idSala);
 		return sala.tentarBloquearLocal(linha, coluna);
 	}
 
 	@Override
 	public boolean tentarDesbloquearLocal(int idSala, int linha, int coluna) {
-		if(backend.diaEstaAberto()) {
+		if (backend.diaEstaAberto()) {
 			return false;
 		}
-		
-		if(!salas.containsKey(idSala)) {
+
+		if (!salas.containsKey(idSala)) {
 			return false;
 		}
-		
+
 		Sala sala = salas.get(idSala);
 		return sala.tentarDesbloquearLocal(linha, coluna);
 	}

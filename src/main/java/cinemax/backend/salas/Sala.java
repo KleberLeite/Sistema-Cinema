@@ -6,7 +6,7 @@ public class Sala {
 	private int linhas;
 	private int colunas;
 
-	protected Sala(int idSala, int linhas, int colunas, boolean[] bloqueados, Estrutura[][] estrutura) {
+	protected Sala(int idSala, int linhas, int colunas, Estrutura[][] estrutura) {
 		this.idSala = idSala;
 		this.estrutura = estrutura;
 		this.linhas = linhas;
