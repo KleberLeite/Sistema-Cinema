@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.core.Backend;
@@ -18,15 +19,20 @@ import cinemax.backend.salas.Sala;
 import cinemax.backend.salas.TipoDeEstrutura;
 import cinemax.frontend.controller.ControladorDeApp;
 
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class TelaEscolhaPoltrona extends JFrame{
 
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
-	private JPanel contentPane;
+	private List<String> PoltronasSelecionadas = new ArrayList<>();
+	private JPanel panelPrincipal;
 	private double valorDoBilhete=20;
 	
 	/**
@@ -46,7 +52,7 @@ public class TelaEscolhaPoltrona extends JFrame{
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the application.
 	 */
@@ -54,17 +60,17 @@ public class TelaEscolhaPoltrona extends JFrame{
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(-14, -42, 800, 700);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelPrincipal = new JPanel();
+		panelPrincipal.setBackground(new Color(0, 64, 128));
+		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		setContentPane(panelPrincipal);
+		panelPrincipal.setLayout(null);
 		
 		JPanel panelPoltronas = new JPanel();
 		panelPoltronas.setBackground(new Color(255, 255, 255));
-		panelPoltronas.setBounds(10, 11, 425, 504);
-		contentPane.add(panelPoltronas);
+		panelPoltronas.setBounds(10, 11, 425, 590);
+		panelPrincipal.add(panelPoltronas);
 		
 
 		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -136,67 +142,62 @@ public class TelaEscolhaPoltrona extends JFrame{
 		panelPoltronas.setLayout(null);
 		
 		JLabel imgPoltrona = new JLabel(iconePoltrona);
-		imgPoltrona.setBounds(43, 413, 19, 19);
+		imgPoltrona.setBounds(41, 499, 19, 19);
 		panelPoltronas.add(imgPoltrona);
 		
 		JLabel imgTomSelecionado = new JLabel(IconeTomDeSelecionado);
-		imgTomSelecionado.setBounds(43, 443, 19, 19);
+		imgTomSelecionado.setBounds(41, 529, 19, 19);
 		panelPoltronas.add(imgTomSelecionado);
 		
 		JLabel imgPoltronaObesos = new JLabel(iconePoltronaObesos);
-		imgPoltronaObesos.setBounds(203, 413, 19, 19);
+		imgPoltronaObesos.setBounds(201, 499, 19, 19);
 		panelPoltronas.add(imgPoltronaObesos);
 		
 		JLabel imgLocalCadeirantes = new JLabel(iconeLocalCadeirantes);
-		imgLocalCadeirantes.setBounds(203, 443, 19, 19);
+		imgLocalCadeirantes.setBounds(201, 529, 19, 19);
 		panelPoltronas.add(imgLocalCadeirantes);
 		
 		
 		JLabel imgTomOcupado = new JLabel(IconeTomDeOcupado);
-		imgTomOcupado.setBounds(43, 473, 19, 19);
+		imgTomOcupado.setBounds(41, 559, 19, 19);
 		panelPoltronas.add(imgTomOcupado);
 		
 		JLabel imgBloqueado = new JLabel(iconeBloqueada);
-		imgBloqueado.setBounds(203, 474, 19, 19);
+		imgBloqueado.setBounds(201, 560, 19, 19);
 		panelPoltronas.add(imgBloqueado);
 		
 		JLabel lblLinha = new JLabel("__________________________________________________________");
-		lblLinha.setBounds(2, 397, 411, 14);
+		lblLinha.setBounds(10, 461, 411, 14);
 		panelPoltronas.add(lblLinha);
 		
-		JLabel lblNewLabel = new JLabel("Disponível");
-		lblNewLabel.setBounds(72, 413, 84, 14);
-		panelPoltronas.add(lblNewLabel);
+		JLabel lblDisponivel = new JLabel("Disponível");
+		lblDisponivel.setBounds(70, 499, 84, 14);
+		panelPoltronas.add(lblDisponivel);
 		
 		JLabel lblPoltronaSelecionada = new JLabel("Tom de Selecionado");
-		lblPoltronaSelecionada.setBounds(72, 443, 126, 14);
+		lblPoltronaSelecionada.setBounds(70, 529, 126, 14);
 		panelPoltronas.add(lblPoltronaSelecionada);
 		
-		JList list = new JList();
-		list.setBounds(76, 461, 1, 1);
-		panelPoltronas.add(list);
-		
 		JLabel lblPoltronaPObesos = new JLabel("Poltrona p/ Obesos");
-		lblPoltronaPObesos.setBounds(232, 413, 121, 14);
+		lblPoltronaPObesos.setBounds(230, 499, 121, 14);
 		panelPoltronas.add(lblPoltronaPObesos);
 		
 		JLabel lblLocalPCadeirantes = new JLabel("Local p/ Cadeirantes");
-		lblLocalPCadeirantes.setBounds(232, 443, 131, 14);
+		lblLocalPCadeirantes.setBounds(230, 529, 131, 14);
 		panelPoltronas.add(lblLocalPCadeirantes);
 		
 		JLabel lblTomOcupado = new JLabel("Tom de Ocupado");
-		lblTomOcupado.setBounds(72, 479, 105, 14);
+		lblTomOcupado.setBounds(70, 565, 105, 14);
 		panelPoltronas.add(lblTomOcupado);
 		
-		JLabel lblNewLabel_2 = new JLabel("Bloqueado");
-		lblNewLabel_2.setBounds(232, 479, 61, 14);
-		panelPoltronas.add(lblNewLabel_2);
+		JLabel lblBloqueado = new JLabel("Bloqueado");
+		lblBloqueado.setBounds(230, 565, 61, 14);
+		panelPoltronas.add(lblBloqueado);
 		
-		
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(445, 11, 329, 449);
-		contentPane.add(panel);
+		JLabel lblLegenda = new JLabel("Legenda");
+		lblLegenda.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblLegenda.setBounds(10, 478, 91, 14);
+		panelPoltronas.add(lblLegenda);
 		
 		JButton btnAvançar = new JButton("Avançar");
 		btnAvançar.addActionListener(new ActionListener() {
@@ -212,7 +213,7 @@ public class TelaEscolhaPoltrona extends JFrame{
 			}
 		});
 		btnAvançar.setBounds(674, 612, 89, 23);
-		contentPane.add(btnAvançar);
+		panelPrincipal.add(btnAvançar);
 		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -229,24 +230,33 @@ public class TelaEscolhaPoltrona extends JFrame{
 			}
 		});
 		btnVoltar.setBounds(10, 612, 89, 23);
-		contentPane.add(btnVoltar);
+		panelPrincipal.add(btnVoltar);
+		
+		JPanel panelResumo = new JPanel();
+		panelResumo.setBounds(445, 11, 329, 449);
+		panelPrincipal.add(panelResumo);
+		panelResumo.setLayout(null);
 		
 		
 		Sala sala = sessao.getSala();
-		int linhas = sala.getLinhas();
-		int colunas = sala.getLinhas();
 		int espaco = 5;
 		int tamanho = 20;
 		
-		double preçoTotal;
-		int qtdeDeCaideiras = 0;
+		//parcial modelo da lista
+		DefaultListModel<String> modeloLista = new DefaultListModel<>();
+		
+		char letra = (char)((int)'A' + sala.getLinhas() - 2);
+		int numero = (sala.getColunas() - 2);
+		
+		for (int i = 0; i < sala.getLinhas(); i++) {
+				if(i!=2 && i!=14) letra--;
 
-		for (int i = 0; i < linhas; i++) {
-	        for (int j = 0; j < colunas; j++) {
+	        for (int j = 0; j < sala.getColunas(); j++) {
 	            
 	        	JButton botao;
-	            // Definir o ícone diretamente dentro do laço
-	            final ImageIcon iconeQueAparecera;  // Usar uma variável local dentro do loop para garantir que será final
+	        	final int coluna = j;
+	        	String poltronaSelecionada = letra + String.valueOf(coluna + 1);
+	        	
 	            if (TipoDeEstrutura.Vazio == sala.obterTipoDeEstrutura(i, j)) {
 		            botao = new JButton(iconeEspacoVazio);
 		            botao.setBounds(5+j * (tamanho + espaco), 5+i * (tamanho + espaco), tamanho, tamanho);
@@ -268,39 +278,63 @@ public class TelaEscolhaPoltrona extends JFrame{
 	            // Ação do botão
 	            botao.addActionListener(e -> {
 	            	
+	            	
 	                if (botao.getIcon().equals(iconePoltrona) || botao.getIcon().equals(iconePoltronaSelecionada)) {
 	                	if (botao.getIcon().equals(iconePoltrona)) {
 	                		botao.setIcon(iconePoltronaSelecionada);
+	                		PoltronasSelecionadas.add(poltronaSelecionada);
+	                		modeloLista.addElement(poltronaSelecionada);
 		                    
 		                } else {
 		                    botao.setIcon(iconePoltrona);
+		                    PoltronasSelecionadas.remove(poltronaSelecionada);
+	                		modeloLista.removeElement(poltronaSelecionada);
 		                }
 	                }else if(botao.getIcon().equals(iconePoltronaObesos) || botao.getIcon().equals(iconePoltronaObesosSelecionada)) {
 	                	if (botao.getIcon().equals(iconePoltronaObesos)) {
 	                		botao.setIcon(iconePoltronaObesosSelecionada);
+	                		PoltronasSelecionadas.add(poltronaSelecionada);
+	                		modeloLista.addElement(poltronaSelecionada);
 		                    
 		                } else {
 		                    botao.setIcon(iconePoltronaObesos);
+		                    PoltronasSelecionadas.remove(poltronaSelecionada);
+	                		modeloLista.removeElement(poltronaSelecionada);
 		                }
 	                }else {
 	                	if (botao.getIcon().equals(iconeLocalCadeirantes)) {
 	                		botao.setIcon(iconeLocalCadeirantesSelecionado);
-		                    
+	                		PoltronasSelecionadas.add(poltronaSelecionada);
+	                		modeloLista.addElement(poltronaSelecionada);
 		                } else {
 		                    botao.setIcon(iconeLocalCadeirantes);
+		                    PoltronasSelecionadas.remove(poltronaSelecionada);
+	                		modeloLista.removeElement(poltronaSelecionada);
 		                }
 	                }
+	                
+	                
 	            });
 
 	            panelPoltronas.add(botao);
 	        }
 	    }
 		
+		
+		JList<String> listPoltronasSelecionadas = new JList(modeloLista);
+		listPoltronasSelecionadas.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		listPoltronasSelecionadas.setVisibleRowCount(-1); // -1 significa que ele vai quebrar sozinho
+		listPoltronasSelecionadas.setFixedCellWidth(50);  // Largura de cada "item" (ajuste como quiser)
+		
+		JScrollPane scrollPanePoltronas = new JScrollPane(listPoltronasSelecionadas);
+		scrollPanePoltronas.setBounds(20, 237, 284, 159);
+		panelResumo.add(scrollPanePoltronas);
+		
+		
+		
 		/*Checa se tá achando a imagem mesmo
 		java.net.URL url = getClass().getResource("/img/poltronaPreta.png");
 		System.out.println("URL da imagem: " + url);*/
-
-
 
 	}
 }

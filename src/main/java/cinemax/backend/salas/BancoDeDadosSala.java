@@ -19,8 +19,8 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 	}
 	
 	private TipoDeEstrutura[] gerarEstruturaDasSalas() {
-		TipoDeEstrutura[] estruturaDasSalas = new TipoDeEstrutura[16 * 16];
-		for(int i = 0; i < 16; i++) {
+		TipoDeEstrutura[] estruturaDasSalas = new TipoDeEstrutura[18 * 16];
+		for(int i = 0; i < 18; i++) {
 			for(int j = 0; j < 16; j++) {
 				int index = ConversorDeCoordenadas.obter1dPor2d(i, j, 16);
 				
@@ -56,9 +56,9 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 		for(int i = 0; i < NUM_SALAS; i++) {
 			Sala sala = new Sala(
 				i,
+				18,
 				16,
-				16,
-				new boolean[16 * 16],
+				new boolean[18 * 16],
 				estrutura
 			);
 			salas.put(i, sala);	

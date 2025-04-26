@@ -11,7 +11,6 @@ import cinemax.backend.funcionarios.DummyBancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.backend.salas.BancoDeDadosSala;
 import cinemax.backend.salas.IBancoDeDadosSala;
-import cinemax.frontend.compra.RegistroDeVendas;
 
 public class Backend {
 	private boolean diaEstaAberto;
@@ -19,7 +18,6 @@ public class Backend {
 	private IBancoDeDadosFuncionario bancoFuncionarios;
 	private IBancoDeDadosAlimento bancoAlimentos;
 	private IBancoDeDadosSala bancoSalas;
-	private RegistroDeVendas vendas;
 	
 	private void setup(
 		IBancoDeDadosFilme bancoFilmes,
@@ -68,10 +66,6 @@ public class Backend {
 		}
 		diaEstaAberto = false;
 		return true;
-	}
-	
-	public RegistroDeVendas getVendas() {
-		return vendas;
 	}
 
 	public boolean diaEstaAberto() {

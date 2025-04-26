@@ -38,7 +38,6 @@ public class TelaEscolhaFilme extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	Backend bancos = app.getBackend();
 
@@ -74,13 +73,6 @@ public class TelaEscolhaFilme extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		/*
-		ModeloTabela modeloTabela = new ModeloTabela(filmes);
-		table = new JTable();
-		table.setModel(modeloTabela);
-		scrollPane.setViewportView(table);
-		*/
-
 		JPanel panelDatas = new JPanel();
 		panelDatas.setBounds(27, 11, 709, 52);
 		contentPane.add(panelDatas);
@@ -112,10 +104,10 @@ public class TelaEscolhaFilme extends JFrame {
                 // Ou atualizar a interface com os dados da data escolhida
             });
             
-            panelDias.add(botaoDia); // Adiciona o botão ao painel
+            panelDias.add(botaoDia);
         }
 
-		// Criando um JScrollPane para rolar horizontalmente
+		// Criando um JScrollPane para rolar horizontalmente o painel de dias da semana
 		JScrollPane scrollPane_1 = new JScrollPane(panelDias, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane_1.setBounds(323, 0, 358, 52);
@@ -156,7 +148,7 @@ public class TelaEscolhaFilme extends JFrame {
 
 			JPanel painelSessoes = new JPanel();
 			painelSessoes.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
-			painelSessoes.setBounds(100, 60, 400, 25); // mais à esquerda pra sobrar espaço pro botão
+			painelSessoes.setBounds(100, 60, 400, 25);
 			painelSessoes.setOpaque(false);
 			card.add(painelSessoes);
 
@@ -174,7 +166,7 @@ public class TelaEscolhaFilme extends JFrame {
 				btnSessao1.addActionListener(e -> {
 		                
 					TelaEscolhaPoltrona telaEscolhaPoltrona = new TelaEscolhaPoltrona(sessao);
-					telaEscolhaPoltrona.setLocationRelativeTo(null); // centraliza a tela
+					telaEscolhaPoltrona.setLocationRelativeTo(null);
 					telaEscolhaPoltrona.setVisible(true);
 
 				    dispose();

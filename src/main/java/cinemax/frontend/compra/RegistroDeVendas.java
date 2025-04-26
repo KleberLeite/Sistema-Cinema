@@ -1,7 +1,10 @@
 package cinemax.frontend.compra;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.filmes.Filme;
@@ -10,7 +13,7 @@ public class RegistroDeVendas {
 	
 	private double valorTotal;
 	private List<VendasFilme> listaVendasFilme = new ArrayList<>();
-	private List<VendasAlimento> listaVendasAlimento = new ArrayList<>();
+	private Map<Alimento, Integer> mapVendasAlimento = new HashMap<>();
 
 	
 	
@@ -22,61 +25,61 @@ public class RegistroDeVendas {
 	 * @param: Filme, int, int;
 	 * return: void
 	 * */
-	public void registrarVendaFilme(Filme filme, int ingressosInteiros, int ingressosMeios) {
+	public void registrarVendaFilme(Filme filme, Carrinho carrinho) {
 		for (VendasFilme venda : listaVendasFilme) {
 			if (venda.getFilme().equals(filme)) {
-				venda.adicionarIngressos(ingressosInteiros, ingressosMeios);
-				this.valorTotal=venda.calcularTotal(ingressosInteiros, ingressosMeios);
+				venda.adicionarIngressos(carrinho.qtdeDeInteiras(), carrinho.qtdeDeMeias());
+				this.valorTotal += carrinho.totalCompraFilme();
 				return;
 			};
 		}
 
-		VendasFilme venda = new VendasFilme(filme, ingressosInteiros, ingressosMeios);
+		VendasFilme venda = new VendasFilme(filme, carrinho.qtdeDeInteiras(), carrinho.qtdeDeMeias());
 		listaVendasFilme.add(venda);
-		this.valorTotal=venda.calcularTotal(ingressosInteiros, ingressosMeios);
+		this.valorTotal += carrinho.totalCompraFilme();
+
 	}
 	
 	/*Metodo responsável por registrar a venda do alimento na lista e somar no valor total
 	 * @param: Ailmento, int, int;
 	 * return: void
 	 * */
-	public void registrarVendaAlimento(Alimento alimento, double preco,int quantidade) {
-		for (VendasAlimento venda : listaVendasAlimento) {
-			if (venda.getAlimento().equals(alimento)) {
-				venda.adicionarAlimentos(quantidade);
-				return;
-			}
+	public void registrarVendaAlimento(Carrinho carrinho) {
+		for (Map.Entry<Alimento, Integer> entry : carrinho.getAlimentos().entrySet()) {
+			Alimento alimento = entry.getKey();
+			int quantidade = entry.getValue();
+			mapVendasAlimento.put(alimento, mapVendasAlimento.getOrDefault(carrinho, 0) + quantidade);
+			this.valorTotal += carrinho.totalCompraAlimento();
 		}
-		// Se não encontrou, adiciona novo
-		VendasAlimento venda = new VendasAlimento(alimento, preco,quantidade);
-		listaVendasAlimento.add(venda);
-		this.valorTotal=venda.calcularTotal();
 	}
 
 	/*Metodo responsável por exibir o relatorio Geral de compras
 	 * @param: double, double;
 	 * return: void
 	 * */
-	public void exibirRelatorio(double precoInteiro, double precoMeia) {
+	public void exibirRelatorio() {
 		System.out.println("Vendas Filmes --------------------------------------------");
 		for (VendasFilme vendasFilme : listaVendasFilme) {
-			System.out.println(vendasFilme + " | Total R$: " + vendasFilme.calcularTotal(precoInteiro, precoMeia));
+			System.out.println(vendasFilme + " | Total R$: " 
+		+ vendasFilme.calcularTotal(Ingresso.precoIngresso(), Ingresso.precoIngresso()/2));
 		}
-		
+		/*
 		System.out.println("Vendas Alimentos --------------------------------------------");
 		
 		for (VendasAlimento vendasAlimento : listaVendasAlimento) {
 			System.out.println(vendasAlimento + " | Total R$: " + vendasAlimento.calcularTotal());
-		}
+		}*/
 	}
 
 	private List<VendasFilme> getListaVendasFilme() {
 		return listaVendasFilme;
 	}
 
-	private List<VendasAlimento> getListaVendasAlimento() {
-		return listaVendasAlimento;
+	public Map<Alimento, Integer> getMapVendasAlimento() {
+		return mapVendasAlimento;
 	}
+
+
 
 	
 
