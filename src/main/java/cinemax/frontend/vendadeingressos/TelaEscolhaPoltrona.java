@@ -257,14 +257,14 @@ public class TelaEscolhaPoltrona extends JFrame{
 	        	final int coluna = j;
 	        	String poltronaSelecionada = letra + String.valueOf(coluna + 1);
 	        	
-	            if (TipoDeEstrutura.Vazio == sala.obterTipoDeEstrutura(i, j)) {
+	            if (TipoDeEstrutura.Vazio == sala.obterTipoDeEstrutura(i, j).getTipo()) {
 		            botao = new JButton(iconeEspacoVazio);
 		            botao.setBounds(5+j * (tamanho + espaco), 5+i * (tamanho + espaco), tamanho, tamanho);
 		            botao.setEnabled(false);
-	            } else if (TipoDeEstrutura.Poltrona == sala.obterTipoDeEstrutura(i, j)) {
+	            } else if (TipoDeEstrutura.Poltrona == sala.obterTipoDeEstrutura(i, j).getTipo()) {
 		            botao = new JButton(iconePoltrona);
 		            botao.setBounds(5+j * (tamanho + espaco), 5+i * (tamanho + espaco), tamanho, tamanho);
-	            } else if (TipoDeEstrutura.PoltronaObesos == sala.obterTipoDeEstrutura(i, j)) {
+	            } else if (TipoDeEstrutura.PoltronaObesos == sala.obterTipoDeEstrutura(i, j).getTipo()) {
 		            botao = new JButton(iconePoltronaObesos);
 		            botao.setBounds(3+j * (tamanho + espaco), 3+i * (tamanho + espaco), tamanho+5, tamanho+5);
 	            } else {
@@ -320,15 +320,16 @@ public class TelaEscolhaPoltrona extends JFrame{
 	        }
 	    }
 		
+		JScrollPane scrollPanePoltronas = new JScrollPane();
+		scrollPanePoltronas.setBounds(37, 267, 250, 100);
+		panelResumo.add(scrollPanePoltronas);
+		
 		
 		JList<String> listPoltronasSelecionadas = new JList(modeloLista);
+		scrollPanePoltronas.setViewportView(listPoltronasSelecionadas);
 		listPoltronasSelecionadas.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		listPoltronasSelecionadas.setVisibleRowCount(-1); // -1 significa que ele vai quebrar sozinho
 		listPoltronasSelecionadas.setFixedCellWidth(50);  // Largura de cada "item" (ajuste como quiser)
-		
-		JScrollPane scrollPanePoltronas = new JScrollPane(listPoltronasSelecionadas);
-		scrollPanePoltronas.setBounds(20, 237, 284, 159);
-		panelResumo.add(scrollPanePoltronas);
 		
 		
 		
