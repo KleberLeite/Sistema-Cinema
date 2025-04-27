@@ -21,9 +21,10 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 
 	private Estrutura[][] gerarEstruturaSala() {
 		Estrutura[][] estrutura = new Estrutura[TAM_VERT][TAM_HOR];
-		for (int i = 0; i < 16; i++) {
-			for (int j = 0; j < 16; j++) {
+		for (int i = 0; i < TAM_VERT; i++) {
+			for (int j = 0; j < TAM_HOR; j++) {
 				estrutura[i][j] = getEstrutura(i, j);
+				System.out.println(i + ", " + j + ": " + estrutura[i][j].getTipo());
 			}
 		}
 		return estrutura;
@@ -40,34 +41,42 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 		}
 	}
 
+/*
+ 
+D 4  3
+C 3  2
+B 2  1
+  1  0
+A 0  0
+*/
 	private String getIdentificador(int i, int j, TipoDeEstrutura tipo) {
 		if(tipo == TipoDeEstrutura.Vazio) {
-			return "";
+			return " ";
 		}
 		if(i == 0) {
+			return String.format("%c%d", 'A' + TAM_VERT - 3, j + 1);
+		}
+		if(i == TAM_VERT - 1) {
 			return String.format("A%d", j + 1);
 		}
-		if(i == 15) {
-			return String.format("%c%d", (char)(TAM_VERT - 1 - 2), j + 1);
-		}
-		return String.format("%c%d", (char)(TAM_VERT - 1), j + 1);
+		return String.format("%c%d", 'A' + TAM_VERT - 2 - i, j + 1);
 	}
 
 	private TipoDeEstrutura getTipoEstrutura(int i, int j) {
 		// Local p/ pessoas obesas
-		if(i == 0 && (j == 0 || j == 15)) {
+		if(i == TAM_VERT - 1 && (j == 0 || j == 15)) {
 			return TipoDeEstrutura.PoltronaObesos;
 		}
 		// Local p/ cadeirantes
-		if(i == 13 && (j == 7 || j == 8)) {
+		if(i == TAM_VERT - 1 && (j == 7 || j == 8)) {
 			return TipoDeEstrutura.LocalCadeirantes;
 		}
 		
 		// Resto da sala
-		if(i == 2 || i == 14) {
+		if(i == 1 || i == TAM_VERT - 2) {
 			return TipoDeEstrutura.Vazio;
 		}
-		if(i == 0 || i == 15) {
+		if(i == 0 || i == TAM_VERT - 1) {
 			return TipoDeEstrutura.Poltrona;
 		}
 		if((j >= 3 && j <=4) || (j >= 11 && j <=12)) {
@@ -79,7 +88,7 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 	private void preencherSalas() {
 		Estrutura[][] estrutura = gerarEstruturaSala();
 		for (int i = 0; i < NUM_SALAS; i++) {
-			Sala sala = new Sala(i, 16, 16, estrutura);
+			Sala sala = new Sala(i, TAM_VERT, TAM_HOR, estrutura);
 			salas.put(i, sala);
 		}
 	}
