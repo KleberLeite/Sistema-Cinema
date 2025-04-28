@@ -1,6 +1,7 @@
 package cinemax.frontend.vendadeingressos;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Image;
 
@@ -11,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.core.Backend;
@@ -19,6 +21,8 @@ import cinemax.backend.salas.Sala;
 import cinemax.backend.salas.TipoDeEstrutura;
 import cinemax.frontend.controller.ControladorDeApp;
 
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
@@ -31,9 +35,12 @@ import java.awt.Font;
 public class TelaEscolhaPoltrona extends JFrame{
 
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
+	Backend bancos = app.getBackend();
 	private List<String> PoltronasSelecionadas = new ArrayList<>();
 	private JPanel panelPrincipal;
 	private double valorDoBilhete=20;
+	private Sessao sessao = bancos.getBancoFilmes().obterFilmePorId(0).obterSessao(0);
+	
 	
 	/**
 	 * Launch the application.
@@ -56,7 +63,12 @@ public class TelaEscolhaPoltrona extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public TelaEscolhaPoltrona(Sessao sessao) {
+	public TelaEscolhaPoltrona(Sessao sessaoAtual) {
+		if (sessaoAtual != null) {
+			this.sessao = sessaoAtual;
+	    } 
+		Sessao sessao = this.sessao;
+		
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(-14, -42, 800, 700);
@@ -245,17 +257,13 @@ public class TelaEscolhaPoltrona extends JFrame{
 		//parcial modelo da lista
 		DefaultListModel<String> modeloLista = new DefaultListModel<>();
 		
-		char letra = (char)((int)'A' + sala.getLinhas() - 2);
-		int numero = (sala.getColunas() - 2);
 		
 		for (int i = 0; i < sala.getLinhas(); i++) {
-				if(i!=2 && i!=14) letra--;
 
 	        for (int j = 0; j < sala.getColunas(); j++) {
 	            
 	        	JButton botao;
-	        	final int coluna = j;
-	        	String poltronaSelecionada = letra + String.valueOf(coluna + 1);
+	        	String poltronaSelecionada = sala.obterTipoDeEstrutura(i, j).getIdentificador();
 	        	
 	            if (TipoDeEstrutura.Vazio == sala.obterTipoDeEstrutura(i, j).getTipo()) {
 		            botao = new JButton(iconeEspacoVazio);
@@ -331,8 +339,18 @@ public class TelaEscolhaPoltrona extends JFrame{
 		listPoltronasSelecionadas.setVisibleRowCount(-1); // -1 significa que ele vai quebrar sozinho
 		listPoltronasSelecionadas.setFixedCellWidth(50);  // Largura de cada "item" (ajuste como quiser)
 		
-		
-		
+		// Estilizando a lista:
+		DefaultListCellRenderer defaultListCellRenderer = new DefaultListCellRenderer() {
+		    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+		        JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+		        label.setHorizontalAlignment(SwingConstants.CENTER);
+		        label.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+		        return label;
+		    }
+		};
+		listPoltronasSelecionadas.setCellRenderer(defaultListCellRenderer);
 		/*Checa se tá achando a imagem mesmo
 		java.net.URL url = getClass().getResource("/img/poltronaPreta.png");
 		System.out.println("URL da imagem: " + url);*/
