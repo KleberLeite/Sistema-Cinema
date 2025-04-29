@@ -4,15 +4,16 @@
  */
 package cinemax.frontend.login;
 
+import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.geranciadefuncionarios.Gerencia;
+
 /**
  *
  * @author geral
  */
 public class LoginDeAcesso extends javax.swing.JFrame {
-
-    /**
-     * Creates new form LoginDeAcesso
-     */
+ 
+  
     public LoginDeAcesso() {
         initComponents();
     }
@@ -73,6 +74,11 @@ public class LoginDeAcesso extends javax.swing.JFrame {
 
         BotaoLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         BotaoLogin.setText("Entar");
+        BotaoLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoLoginActionPerformed(evt);
+            }
+        });
 
         TXTRedefinirSenhaLogin.setText("Redefinir senha?");
 
@@ -165,6 +171,15 @@ public class LoginDeAcesso extends javax.swing.JFrame {
     private void CapturaDeTXTUsuarioLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CapturaDeTXTUsuarioLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CapturaDeTXTUsuarioLoginActionPerformed
+
+    private void BotaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLoginActionPerformed
+     // Cria e mostra a tela do gerente
+    Gerente telaGerente = new Gerente("Gerente", "Gerente2025");
+    telaGerente.setVisible(true);
+
+    // Fecha a tela de login
+    this.dispose();
+    }//GEN-LAST:event_BotaoLoginActionPerformed
 
     /**
      * @param args the command line arguments

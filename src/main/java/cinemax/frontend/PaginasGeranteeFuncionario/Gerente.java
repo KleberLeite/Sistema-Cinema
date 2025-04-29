@@ -13,7 +13,7 @@ public class Gerente extends javax.swing.JFrame {
     /**
      * Creates new form Gerente
      */
-    public Gerente() {
+    public Gerente(String gerante, String gernate2025) {
         initComponents();
     }
 
@@ -305,7 +305,7 @@ public class Gerente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Gerente().setVisible(true);
+                new Gerente("@Gerante", "Gernate@2025").setVisible(true);
             }
         });
     }
