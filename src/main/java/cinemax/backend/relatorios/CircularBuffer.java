@@ -30,4 +30,9 @@ public class CircularBuffer<T> {
 		}
 		return result;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public T obterAtual() {
+		return (T)buffer[0];
+	}
 }

@@ -9,6 +9,7 @@ import cinemax.backend.filmes.IBancoDeDadosFilme;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.DummyBancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
+import cinemax.backend.relatorios.GerenciadorDeRelatorios;
 import cinemax.backend.salas.BancoDeDadosSala;
 import cinemax.backend.salas.IBancoDeDadosSala;
 
@@ -18,18 +19,21 @@ public class Backend {
 	private IBancoDeDadosFuncionario bancoFuncionarios;
 	private IBancoDeDadosAlimento bancoAlimentos;
 	private IBancoDeDadosSala bancoSalas;
+	private GerenciadorDeRelatoriosBackend gerenciadorDeRelatorios;
 	
 	private void setup(
 		IBancoDeDadosFilme bancoFilmes,
 		IBancoDeDadosFuncionario bancoFuncionarios,
 		IBancoDeDadosAlimento bancoAlimentos,
-		IBancoDeDadosSala bancoSalas
+		IBancoDeDadosSala bancoSalas,
+		GerenciadorDeRelatorios gerenciadorDeRelatorios
 	) {
 		this.diaEstaAberto = false;
 		this.bancoFilmes = bancoFilmes;
 		this.bancoFuncionarios = bancoFuncionarios;
 		this.bancoAlimentos = bancoAlimentos;
 		this.bancoSalas = bancoSalas;
+		this.gerenciadorDeRelatorios = new GerenciadorDeRelatoriosBackend(gerenciadorDeRelatorios);
 	}
 	
 	public static Backend vazio() {
@@ -38,7 +42,8 @@ public class Backend {
 		IBancoDeDadosFuncionario bancoFuncionarios = new BancoDeDadosFuncionario(backend);
 		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala(backend);
 		IBancoDeDadosFilme bancoFilmes = new BancoDeDadosFilme(backend, bancoSalas);
-		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas);
+		GerenciadorDeRelatorios gerenciadorDeRelatorios = new GerenciadorDeRelatorios();
+		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas, gerenciadorDeRelatorios);
 		return backend;
 	}
 	
@@ -48,7 +53,8 @@ public class Backend {
 		IBancoDeDadosFuncionario bancoFuncionarios = new DummyBancoDeDadosFuncionario(backend);
 		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala(backend);
 		IBancoDeDadosFilme bancoFilmes = new DummyBancoDeDadosFilme(backend, bancoSalas);
-		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas);
+		GerenciadorDeRelatorios gerenciadorDeRelatorios = new GerenciadorDeRelatorios();
+		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas, gerenciadorDeRelatorios);
 		return backend;
 	}
 	
@@ -57,6 +63,7 @@ public class Backend {
 			return false;
 		}
 		diaEstaAberto = true;
+		gerenciadorDeRelatorios.novoDia();
 		return true;
 	}
 	
