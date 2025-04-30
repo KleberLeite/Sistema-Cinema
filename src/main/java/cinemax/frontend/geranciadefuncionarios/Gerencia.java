@@ -241,7 +241,7 @@ public class Gerencia extends javax.swing.JFrame {
                             .addComponent(TXTSenhaFuncionarios)
                             .addComponent(CapturarTXTSenhaFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(272, 272, 272)
+                        .addGap(278, 278, 278)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BotaoCadastrarFuncionarios)
                             .addComponent(BotaoEditarFuncionarios)
@@ -322,7 +322,8 @@ public class Gerencia extends javax.swing.JFrame {
         // Define o índice do funcionário selecionado para edição//
             indiceSelecionado = index;
              BotaoCadastrarFuncionarios.setEnabled(false);
-             BotaoRemoverFuncionarios.setEnabled(false);
+             
+             
     }
              
 
@@ -366,6 +367,7 @@ public class Gerencia extends javax.swing.JFrame {
         indiceSelecionado = -1;
         BotaoCadastrarFuncionarios.setEnabled(true);
          BotaoRemoverFuncionarios.setEnabled(true);
+         
          
     } else {
         JOptionPane.showMessageDialog(this, 
