@@ -24,7 +24,11 @@ public class Funcionarios {
         this.senha = senha;
     }
 
-    // Métodos get
+    public Funcionarios() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    // Mï¿½todos get
     public String getNome() {
         return nome;
     }
@@ -45,7 +49,7 @@ public class Funcionarios {
         return senha;
     }
 
-    // Métodos set
+    // Mï¿½todos set
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -64,6 +68,10 @@ public class Funcionarios {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public void setVisible(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
 
