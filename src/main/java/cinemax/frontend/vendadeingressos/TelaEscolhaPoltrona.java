@@ -19,6 +19,8 @@ import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Sessao;
 import cinemax.backend.salas.Sala;
 import cinemax.backend.salas.TipoDeEstrutura;
+import cinemax.frontend.compra.Carrinho;
+import cinemax.frontend.compra.Ingresso;
 import cinemax.frontend.controller.ControladorDeApp;
 
 import javax.swing.BorderFactory;
@@ -38,8 +40,8 @@ public class TelaEscolhaPoltrona extends JFrame{
 	Backend bancos = app.getBackend();
 	private List<String> PoltronasSelecionadas = new ArrayList<>();
 	private JPanel panelPrincipal;
-	private double valorDoBilhete=20;
 	private Sessao sessao = bancos.getBancoFilmes().obterFilmePorId(0).obterSessao(0);
+	private Carrinho carrinho = new Carrinho();
 	
 	
 	/**
@@ -215,9 +217,9 @@ public class TelaEscolhaPoltrona extends JFrame{
 		btnAvançar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
-				telaEscolhaFilme.setLocationRelativeTo(null); // centraliza a tela
-				telaEscolhaFilme.setVisible(true);
+				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao,carrinho);
+				telaFinalizarCompra.setVisible(true);
+				telaFinalizarCompra.setLocationRelativeTo(null);
 
 			    // Fecha a tela atual (opcional)
 			    dispose();
@@ -245,6 +247,7 @@ public class TelaEscolhaPoltrona extends JFrame{
 		panelPrincipal.add(btnVoltar);
 		
 		JPanel panelResumo = new JPanel();
+		panelResumo.setBackground(new Color(255, 255, 255));
 		panelResumo.setBounds(445, 11, 329, 449);
 		panelPrincipal.add(panelResumo);
 		panelResumo.setLayout(null);
@@ -285,39 +288,45 @@ public class TelaEscolhaPoltrona extends JFrame{
 
 	            // Ação do botão
 	            botao.addActionListener(e -> {
-	            	
+	            	Ingresso ingresso = new Ingresso(sessao,poltronaSelecionada);
 	            	
 	                if (botao.getIcon().equals(iconePoltrona) || botao.getIcon().equals(iconePoltronaSelecionada)) {
 	                	if (botao.getIcon().equals(iconePoltrona)) {
 	                		botao.setIcon(iconePoltronaSelecionada);
 	                		PoltronasSelecionadas.add(poltronaSelecionada);
 	                		modeloLista.addElement(poltronaSelecionada);
+	                		carrinho.adicionaIngresso(ingresso);
 		                    
 		                } else {
 		                    botao.setIcon(iconePoltrona);
 		                    PoltronasSelecionadas.remove(poltronaSelecionada);
 	                		modeloLista.removeElement(poltronaSelecionada);
+	                		carrinho.removeIngresso(ingresso);
 		                }
 	                }else if(botao.getIcon().equals(iconePoltronaObesos) || botao.getIcon().equals(iconePoltronaObesosSelecionada)) {
 	                	if (botao.getIcon().equals(iconePoltronaObesos)) {
 	                		botao.setIcon(iconePoltronaObesosSelecionada);
 	                		PoltronasSelecionadas.add(poltronaSelecionada);
 	                		modeloLista.addElement(poltronaSelecionada);
+	                		carrinho.adicionaIngresso(ingresso);
 		                    
 		                } else {
 		                    botao.setIcon(iconePoltronaObesos);
 		                    PoltronasSelecionadas.remove(poltronaSelecionada);
 	                		modeloLista.removeElement(poltronaSelecionada);
+	                		carrinho.removeIngresso(ingresso);
 		                }
 	                }else {
 	                	if (botao.getIcon().equals(iconeLocalCadeirantes)) {
 	                		botao.setIcon(iconeLocalCadeirantesSelecionado);
 	                		PoltronasSelecionadas.add(poltronaSelecionada);
 	                		modeloLista.addElement(poltronaSelecionada);
+	                		carrinho.adicionaIngresso(ingresso);
 		                } else {
 		                    botao.setIcon(iconeLocalCadeirantes);
 		                    PoltronasSelecionadas.remove(poltronaSelecionada);
 	                		modeloLista.removeElement(poltronaSelecionada);
+	                		carrinho.removeIngresso(ingresso);
 		                }
 	                }
 	                
@@ -329,28 +338,33 @@ public class TelaEscolhaPoltrona extends JFrame{
 	    }
 		
 		JScrollPane scrollPanePoltronas = new JScrollPane();
-		scrollPanePoltronas.setBounds(37, 267, 250, 100);
+		scrollPanePoltronas.setBounds(38, 191, 250, 100);
 		panelResumo.add(scrollPanePoltronas);
 		
+		// Estilizando a lista:
+				DefaultListCellRenderer defaultListCellRenderer = new DefaultListCellRenderer() {
+				    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				        JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+				        label.setHorizontalAlignment(SwingConstants.CENTER);
+				        label.setFont(new Font("Tahoma", Font.PLAIN, 14));
+
+				        return label;
+				    }
+				};
 		
 		JList<String> listPoltronasSelecionadas = new JList(modeloLista);
 		scrollPanePoltronas.setViewportView(listPoltronasSelecionadas);
 		listPoltronasSelecionadas.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		listPoltronasSelecionadas.setVisibleRowCount(-1); // -1 significa que ele vai quebrar sozinho
 		listPoltronasSelecionadas.setFixedCellWidth(50);  // Largura de cada "item" (ajuste como quiser)
-		
-		// Estilizando a lista:
-		DefaultListCellRenderer defaultListCellRenderer = new DefaultListCellRenderer() {
-		    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-		        JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-		        label.setHorizontalAlignment(SwingConstants.CENTER);
-		        label.setFont(new Font("Tahoma", Font.PLAIN, 14));
-
-		        return label;
-		    }
-		};
 		listPoltronasSelecionadas.setCellRenderer(defaultListCellRenderer);
+		
+		JLabel lblLinha_1 = new JLabel("______________________________________________");
+		lblLinha_1.setBounds(4, 343, 329, 14);
+		panelResumo.add(lblLinha_1);
+		
+		
 		/*Checa se tá achando a imagem mesmo
 		java.net.URL url = getClass().getResource("/img/poltronaPreta.png");
 		System.out.println("URL da imagem: " + url);*/

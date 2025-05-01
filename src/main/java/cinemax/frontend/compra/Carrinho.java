@@ -37,6 +37,15 @@ public class Carrinho {
 		}
 		return qtdeInteiras;
 	}
+	
+	public int qtdeTotalIngressos() {
+		int qtdeIngressos = 0;
+		
+		for(Ingresso ingresso : ingressos) {
+			qtdeIngressos++;
+		}
+		return qtdeIngressos;
+	}
 
 	public double totalCompraFilme() {
 
@@ -61,8 +70,25 @@ public class Carrinho {
 		
 	}
 	
+	public void removeIngresso(Ingresso ingresso) {
+		ingressos.remove(ingresso);
+		
+	}
+	
 	public void adicionaAlimento(Alimento alimento) {
 		alimentos.put(alimento, alimentos.getOrDefault(alimento, 0) +1);
+	}
+	
+	public void removeAlimento(Alimento alimento) {
+		if(alimentos.containsKey(alimento)) {
+			int quantidadeAtual = alimentos.get(alimento);
+			
+			if(quantidadeAtual > 1) {
+				alimentos.put(alimento, quantidadeAtual - 1);
+			}else {
+				alimentos.remove(alimento);
+			}
+		}
 	}
 
 	public List<Ingresso> getIngressos() {

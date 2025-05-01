@@ -15,13 +15,11 @@ public class Ingresso {
 	private TipoDeIngresso tipo;
 	private String poltrona;
 	
-	public Ingresso(Sessao sessao, String poltrona, TipoDeIngresso tipo) {
+	public Ingresso(Sessao sessao, String poltrona) {
 		super();
 		this.sala = sessao.getSala();
 		this.sessao = sessao;
 		this.filme = sessao.getFilme();
-		this.tipo = tipo;
-		this.preco = this.definePreco(tipo);
 		this.poltrona = poltrona;
 	}
 	
@@ -29,7 +27,7 @@ public class Ingresso {
 		return precoGeral;
 	}
 	
-	private double definePreco(TipoDeIngresso tipo) {
+	public double definePreco(TipoDeIngresso tipo) {
 		if(this.isMeia(tipo)) return this.preco/2;
 		
 		return this.preco;
