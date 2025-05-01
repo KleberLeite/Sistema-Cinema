@@ -7,6 +7,9 @@ package cinemax.frontend.PaginasGeranteeFuncionario;
 import cinemax.frontend.geranciadefuncionarios.Gerencia;
 import cinemax.frontend.vendadealimentos.Vendas;
 import cinemax.frontend.vendadealimentos.VendasDeAlimentos;
+import cinemax.frontend.vendadeingressos.TelaEscolhaFilme;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 /**
@@ -30,7 +33,7 @@ public class Gerente extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -57,6 +60,16 @@ public class Gerente extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         butaoAcessoCompraDeingresos = new javax.swing.JButton();
+        butaoAcessoCompraDeingresos.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
+            	telaEscolhaFilme.setLocationRelativeTo(null);
+            	telaEscolhaFilme.setVisible(true);
+            	
+            	dispose();
+        	}
+        	
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,7 +77,7 @@ public class Gerente extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Cessão de Gerência  de Fucionários");
+        jLabel2.setText("Seção de Gerência  de Fucionários");
 
         ButaoAcessarGeranciaDeFuncionario.setText("Acessar");
         ButaoAcessarGeranciaDeFuncionario.addActionListener(new java.awt.event.ActionListener() {
@@ -413,19 +426,22 @@ public class Gerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButaoAcessarGeranciaDeFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoAcessarGeranciaDeFuncionarioActionPerformed
-   Gerencia telaGerencia = new Gerencia();
+    Gerencia telaGerencia = new Gerencia();
+    telaGerencia.setLocationRelativeTo(null);
     telaGerencia.setVisible(true);
     this.dispose(); // Fecha a tela atual se quiser
     }//GEN-LAST:event_ButaoAcessarGeranciaDeFuncionarioActionPerformed
 
     private void ButaoAcessarGeranciaDeAlimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoAcessarGeranciaDeAlimentosActionPerformed
-     Vendas gerenciamento = new Vendas();
+    Vendas gerenciamento = new Vendas();
+    gerenciamento.setLocationRelativeTo(null);
     gerenciamento.setVisible(true);  // Torna a janela Vendas visível
     this.dispose();  // Fecha a janela atual
     }//GEN-LAST:event_ButaoAcessarGeranciaDeAlimentosActionPerformed
 
     private void BotaoVendaDealimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoVendaDealimentosActionPerformed
        VendasDeAlimentos vendass = new VendasDeAlimentos();
+    vendass.setLocationRelativeTo(null); 
     vendass.setVisible(true);  // Torna a janela Vendas visível
     this.dispose();  // Fecha a janela atual
     }//GEN-LAST:event_BotaoVendaDealimentosActionPerformed

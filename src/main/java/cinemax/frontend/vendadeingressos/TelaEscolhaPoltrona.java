@@ -28,6 +28,8 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ public class TelaEscolhaPoltrona extends JFrame{
 	private JPanel panelPrincipal;
 	private Sessao sessao = bancos.getBancoFilmes().obterFilmePorId(0).obterSessao(0);
 	private Carrinho carrinho = new Carrinho();
+	private int poltronasRestantes = 8;//Contabiliza a quantidade de poltronas que ainda podem ser escolhidas
 	
 	
 	/**
@@ -88,7 +91,7 @@ public class TelaEscolhaPoltrona extends JFrame{
 		
 
 		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-		//Criando e preparando icone já redimensionado------------------------------------------------------------------------------------------------------------------
+		//Criando e preparando os icones já redimensionando-os ------------------------------------------------------------------------------------------------------------------
 		
 		ImageIcon iconePoltronaLivreParcial = new ImageIcon(getClass().getResource("/img/Poltrona.png"));
 		Image  imgIconePoltronaLivreParcial = iconePoltronaLivreParcial.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
@@ -288,49 +291,43 @@ public class TelaEscolhaPoltrona extends JFrame{
 
 	            // Ação do botão
 	            botao.addActionListener(e -> {
-	            	Ingresso ingresso = new Ingresso(sessao,poltronaSelecionada);
-	            	
-	                if (botao.getIcon().equals(iconePoltrona) || botao.getIcon().equals(iconePoltronaSelecionada)) {
-	                	if (botao.getIcon().equals(iconePoltrona)) {
-	                		botao.setIcon(iconePoltronaSelecionada);
-	                		PoltronasSelecionadas.add(poltronaSelecionada);
-	                		modeloLista.addElement(poltronaSelecionada);
-	                		carrinho.adicionaIngresso(ingresso);
-		                    
-		                } else {
-		                    botao.setIcon(iconePoltrona);
-		                    PoltronasSelecionadas.remove(poltronaSelecionada);
-	                		modeloLista.removeElement(poltronaSelecionada);
-	                		carrinho.removeIngresso(ingresso);
-		                }
-	                }else if(botao.getIcon().equals(iconePoltronaObesos) || botao.getIcon().equals(iconePoltronaObesosSelecionada)) {
-	                	if (botao.getIcon().equals(iconePoltronaObesos)) {
-	                		botao.setIcon(iconePoltronaObesosSelecionada);
-	                		PoltronasSelecionadas.add(poltronaSelecionada);
-	                		modeloLista.addElement(poltronaSelecionada);
-	                		carrinho.adicionaIngresso(ingresso);
-		                    
-		                } else {
-		                    botao.setIcon(iconePoltronaObesos);
-		                    PoltronasSelecionadas.remove(poltronaSelecionada);
-	                		modeloLista.removeElement(poltronaSelecionada);
-	                		carrinho.removeIngresso(ingresso);
-		                }
+	                Ingresso ingresso = new Ingresso(sessao, poltronaSelecionada);
+
+	                boolean isSelecionada =
+	                    botao.getIcon().equals(iconePoltronaSelecionada) ||
+	                    botao.getIcon().equals(iconePoltronaObesosSelecionada) ||
+	                    botao.getIcon().equals(iconeLocalCadeirantesSelecionado);
+
+	                // Se já está selecionada, desmarcar
+	                if (isSelecionada) {
+	                    if (botao.getIcon().equals(iconePoltronaSelecionada)) {
+	                        botao.setIcon(iconePoltrona);
+	                    } else if (botao.getIcon().equals(iconePoltronaObesosSelecionada)) {
+	                        botao.setIcon(iconePoltronaObesos);
+	                    } else {
+	                        botao.setIcon(iconeLocalCadeirantes);
+	                    }
+	                    PoltronasSelecionadas.remove(poltronaSelecionada);
+	                    modeloLista.removeElement(poltronaSelecionada);
+	                    carrinho.removeIngresso(ingresso);
+	                    poltronasRestantes++;
+	                } 
+	                // Se ainda pode selecionar, marcar
+	                else if (poltronasRestantes > 0) {
+	                    if (botao.getIcon().equals(iconePoltrona)) {
+	                        botao.setIcon(iconePoltronaSelecionada);
+	                    } else if (botao.getIcon().equals(iconePoltronaObesos)) {
+	                        botao.setIcon(iconePoltronaObesosSelecionada);
+	                    } else if (botao.getIcon().equals(iconeLocalCadeirantes)) {
+	                        botao.setIcon(iconeLocalCadeirantesSelecionado);
+	                    }
+	                    PoltronasSelecionadas.add(poltronaSelecionada);
+	                    modeloLista.addElement(poltronaSelecionada);
+	                    carrinho.adicionaIngresso(ingresso);
+	                    poltronasRestantes--;
 	                }else {
-	                	if (botao.getIcon().equals(iconeLocalCadeirantes)) {
-	                		botao.setIcon(iconeLocalCadeirantesSelecionado);
-	                		PoltronasSelecionadas.add(poltronaSelecionada);
-	                		modeloLista.addElement(poltronaSelecionada);
-	                		carrinho.adicionaIngresso(ingresso);
-		                } else {
-		                    botao.setIcon(iconeLocalCadeirantes);
-		                    PoltronasSelecionadas.remove(poltronaSelecionada);
-	                		modeloLista.removeElement(poltronaSelecionada);
-	                		carrinho.removeIngresso(ingresso);
-		                }
+	                	  JOptionPane.showMessageDialog(null, "Limite de  8 poltronas atingido!", "Aviso", JOptionPane.WARNING_MESSAGE);
 	                }
-	                
-	                
 	            });
 
 	            panelPoltronas.add(botao);

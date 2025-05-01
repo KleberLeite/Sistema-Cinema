@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.JLabel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,6 +25,7 @@ import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.backend.salas.BancoDeDadosSala;
+import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.model.DadosFilme;
 import cinemax.frontend.model.ModeloTabela;
@@ -33,6 +35,8 @@ import java.awt.Font;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaEscolhaFilme extends JFrame {
 
@@ -188,7 +192,21 @@ public class TelaEscolhaFilme extends JFrame {
 		JScrollPane scrollPaneFilmes = new JScrollPane(painelListaFilmes);
 		scrollPaneFilmes.setBounds(27, 91, 720, 330);
 		scrollPaneFilmes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPaneFilmes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPaneFilmes);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Gerente telaGerente = new Gerente("Gerente", "2391");
+				telaGerente.setLocationRelativeTo(null);
+				telaGerente.setVisible(true);
+				
+				dispose();
+			}
+		});
+		btnVoltar.setBounds(10, 427, 89, 23);
+		contentPane.add(btnVoltar);
 		
 		
 
