@@ -9,6 +9,9 @@ import java.util.Map;
 import cinemax.backend.core.Backend;
 
 public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
+	private static final int TAMANHO_TELEFONE = 11;
+	private static final int TAMANHO_CPF = 11;
+	
 	private Map<String, Funcionario> funcionarios = new HashMap<String, Funcionario>();
 	private Backend backend;
 	
@@ -198,11 +201,11 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 	}
 	
 	private boolean eCPFValido(String cpf) {
-		if(cpf.length() != 11) {
+		if(cpf.length() != TAMANHO_CPF) {
 			return false;
 		}
 		
-		for(int i = 0; i < 11; i++) {
+		for(int i = 0; i < TAMANHO_CPF; i++) {
 			char c = cpf.charAt(i);
 			if(c < '0' || c > '9') {
 				return false;
@@ -212,11 +215,11 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 	}
 	
 	private boolean eTelefoneValido(String telefone) {
-		if(telefone.length() != 8) {
+		if(telefone.length() != TAMANHO_TELEFONE) {
 			return false;
 		}
 		
-		for(int i = 0; i < 8; i++) {
+		for(int i = 0; i < TAMANHO_TELEFONE; i++) {
 			char c = telefone.charAt(i);
 			if(c < '0' || c > '9') {
 				return false;

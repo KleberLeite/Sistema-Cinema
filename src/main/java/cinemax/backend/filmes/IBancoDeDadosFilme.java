@@ -13,6 +13,7 @@ public interface IBancoDeDadosFilme {
 		int duracaoEmMinutos,
 		ClassificacaoIndicativa classificacaoIndicativa
 	);
+	boolean tentarRemoverFilme(int idFilme);
 	boolean tentarAlterarNome(int id, String novoNome);
 	boolean tentarAlterarSinopse(int id, String novaSinopse);
 	boolean tentarAlterarDuracao(int id, int novaDuracaoEmMinutos);

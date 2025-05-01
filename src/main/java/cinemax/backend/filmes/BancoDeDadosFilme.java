@@ -260,4 +260,13 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		Sessao sessao = filme.obterSessao(idSessao);
 		return sessao.tentarDesreservar(linha, coluna);
 	}
+
+	@Override
+	public boolean tentarRemoverFilme(int idFilme) {
+		if(!filmes.containsKey(idFilme)) {
+			return false;
+		}
+		filmes.remove(idFilme);
+		return true;
+	}
 }
