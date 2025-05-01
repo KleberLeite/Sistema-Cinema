@@ -65,16 +65,6 @@ public class Gerente extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         butaoAcessoCompraDeIngresos = new javax.swing.JButton();
-        butaoAcessoCompraDeIngresos.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
-            	telaEscolhaFilme.setLocationRelativeTo(null);
-            	telaEscolhaFilme.setVisible(true);
-            	
-            	dispose();
-        	}
-        	
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -330,9 +320,6 @@ public class Gerente extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         
-        JPanel jPanel2_1 = new JPanel();
-        jPanel2_1.setBackground(new Color(2, 32, 64));
-        
         JPanel jPanel6_1 = new JPanel();
         GroupLayout gl_jPanel6_1 = new GroupLayout(jPanel6_1);
         gl_jPanel6_1.setHorizontalGroup(
@@ -346,56 +333,7 @@ public class Gerente extends javax.swing.JFrame {
         		.addGap(0, 100, Short.MAX_VALUE)
         );
         jPanel6_1.setLayout(gl_jPanel6_1);
-        
-        JButton ButaoAcessarGeranciaDeFuncionario_1 = new JButton();
-        ButaoAcessarGeranciaDeFuncionario_1.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
-        	    telaCrudFilme.setLocationRelativeTo(null);
-        	    telaCrudFilme.setVisible(true);
-        	    
-        	    dispose(); // Fecha a tela atual se quiser
-        	}
-        });
-        ButaoAcessarGeranciaDeFuncionario_1.setText("Acessar");
-        
-        JLabel jLabel2_1 = new JLabel();
-        jLabel2_1.setText("Seção de Gerenciamento de Filmes");
-        jLabel2_1.setForeground(Color.WHITE);
-        jLabel2_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        GroupLayout gl_jPanel2_1 = new GroupLayout(jPanel2_1);
-        gl_jPanel2_1.setHorizontalGroup(
-        	gl_jPanel2_1.createParallelGroup(Alignment.TRAILING)
-        		.addGap(0, 228, Short.MAX_VALUE)
-        		.addGroup(gl_jPanel2_1.createSequentialGroup()
-        			.addContainerGap(14, Short.MAX_VALUE)
-        			.addComponent(jPanel6_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addComponent(ButaoAcessarGeranciaDeFuncionario_1)
-        			.addGap(124))
-        		.addGroup(Alignment.LEADING, gl_jPanel2_1.createSequentialGroup()
-        			.addGap(22)
-        			.addComponent(jLabel2_1)
-        			.addContainerGap(109, Short.MAX_VALUE))
-        );
-        gl_jPanel2_1.setVerticalGroup(
-        	gl_jPanel2_1.createParallelGroup(Alignment.LEADING)
-        		.addGap(0, 194, Short.MAX_VALUE)
-        		.addGroup(gl_jPanel2_1.createSequentialGroup()
-        			.addContainerGap()
-        			.addComponent(jLabel2_1)
-        			.addGap(18)
-        			.addGroup(gl_jPanel2_1.createParallelGroup(Alignment.LEADING)
-        				.addGroup(gl_jPanel2_1.createSequentialGroup()
-        					.addGap(27)
-        					.addComponent(ButaoAcessarGeranciaDeFuncionario_1))
-        				.addGroup(gl_jPanel2_1.createSequentialGroup()
-        					.addGap(18)
-        					.addComponent(jPanel6_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-        			.addContainerGap(31, Short.MAX_VALUE))
-        );
-        jPanel2_1.setLayout(gl_jPanel2_1);
-        
+             
         jPanel2_2 = new JPanel();
         jPanel2_2.setBackground(new Color(2, 32, 64));
         
@@ -465,32 +403,27 @@ public class Gerente extends javax.swing.JFrame {
         			.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 1186, Short.MAX_VALUE)
         			.addContainerGap())
         		.addGroup(jPanel1Layout.createSequentialGroup()
-        			.addGap(36)
+        			.addGap(77)
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
+        			.addGap(328)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-        					.addGap(98)
-        					.addComponent(jPanel2_1, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)
-        					.addPreferredGap(ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-        					.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-        					.addGap(116)
-        					.addComponent(jPanel2_2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-        					.addGap(124))
-        				.addGroup(jPanel1Layout.createSequentialGroup()
-        					.addGap(41)
-        					.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        					.addGap(328)
         					.addComponent(jPanel10, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
-        					.addContainerGap())))
+        					.addContainerGap())
+        				.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        					.addComponent(jPanel2_2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+        					.addGap(124))))
         );
         jPanel1Layout.setVerticalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(jPanel2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-        				.addComponent(jPanel2_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-        				.addComponent(jPanel2_1, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jPanel2_2, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+        				.addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
         				.addComponent(jPanel10, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
