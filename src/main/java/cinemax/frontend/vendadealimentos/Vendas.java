@@ -1,9 +1,9 @@
 
 package cinemax.frontend.vendadealimentos;
-import cinemax.backend.alimentos.Alimento;
-import cinemax.backend.alimentos.BancoDeDadosAlimento;
+import cinemax.backend.alimentos.Alimento; 
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.backend.core.Backend;
+import cinemax.frontend.controller.ControladorDeApp;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -18,7 +18,9 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class Vendas extends javax.swing.JFrame {
- private IBancoDeDadosAlimento bancoDados = Backend.dummy().getBancoAlimentos();
+
+	private ControladorDeApp app = ControladorDeApp.getInstancia();
+	private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
     private DefaultTableModel modeloTabela;
     private int indiceSelecionado = -1;
     /**
