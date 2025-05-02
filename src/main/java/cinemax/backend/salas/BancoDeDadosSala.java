@@ -24,7 +24,6 @@ public class BancoDeDadosSala implements IBancoDeDadosSala {
 		for (int i = 0; i < TAM_VERT; i++) {
 			for (int j = 0; j < TAM_HOR; j++) {
 				estrutura[i][j] = getEstrutura(i, j);
-				System.out.println(i + ", " + j + ": " + estrutura[i][j].getTipo());
 			}
 		}
 		return estrutura;
