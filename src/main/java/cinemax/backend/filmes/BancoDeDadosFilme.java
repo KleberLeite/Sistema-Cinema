@@ -237,6 +237,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	
 	@Override
 	public boolean tentarReservar(int idFilme, int idSessao, int linha, int coluna) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
@@ -250,6 +254,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	
 	@Override
 	public boolean tentarDesreservar(int idFilme, int idSessao, int linha, int coluna) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
@@ -263,6 +271,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 
 	@Override
 	public boolean tentarRemoverFilme(int idFilme) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
