@@ -463,9 +463,9 @@ public class Gerente extends javax.swing.JFrame {
     }//GEN-LAST:event_ButaoAcessarGeranciaDeAlimentosActionPerformed
 
     private void BotaoVendaDealimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoVendaDealimentosActionPerformed
-    VendasDeAlimentos vendass = new VendasDeAlimentos();
-    vendass.setLocationRelativeTo(null); 
-    vendass.setVisible(true);  // Torna a janela Vendas visível
+    VendasDeAlimentos vendas = new VendasDeAlimentos();
+    vendas.setLocationRelativeTo(null); 
+    vendas.setVisible(true);  // Torna a janela Vendas visível
     this.dispose();  // Fecha a janela atual
     }//GEN-LAST:event_BotaoVendaDealimentosActionPerformed
 
@@ -504,7 +504,7 @@ public class Gerente extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton BotaoVendaDeAlimentos;
     private javax.swing.JButton ButaoAcessarGeranciaDeAlimentos;
     private javax.swing.JButton ButaoAcessarGeranciaDeFilmes;

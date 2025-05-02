@@ -446,6 +446,7 @@ public class Gerencia extends javax.swing.JFrame {
                 "Erro",
                 JOptionPane.ERROR_MESSAGE);
         }
+        BotaoCadastrarFuncionarios.setEnabled(true);
     }
     }//GEN-LAST:event_BotaoRemoverFuncionariosActionPerformed
 
