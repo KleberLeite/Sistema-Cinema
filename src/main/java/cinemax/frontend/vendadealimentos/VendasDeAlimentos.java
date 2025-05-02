@@ -4,6 +4,8 @@
  */
 package cinemax.frontend.vendadealimentos;
 
+import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+
 /**
  *
  * @author geral
@@ -26,32 +28,259 @@ public class VendasDeAlimentos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        PlanilhaDeAlimentosDisponiveis = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        TXTQuantidadeTotalselecionado = new javax.swing.JLabel();
+        TXTCustototal = new javax.swing.JLabel();
+        QuantidadeSelecionado = new javax.swing.JLabel();
+        QualtidadeTotalValor = new javax.swing.JLabel();
+        CapturaTXTProcurarNomeAlimento = new javax.swing.JTextField();
+        CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
+        TXTProcurarNomeAlimento = new javax.swing.JLabel();
+        TXTProcurarCodigoAlimento = new javax.swing.JLabel();
+        ButaoProcurarAlimentoNome = new javax.swing.JButton();
+        ButaoProcurarCodigoAlimento = new javax.swing.JButton();
+        TXTItemselecionado = new javax.swing.JLabel();
+        TXTItem = new javax.swing.JLabel();
+        TXTAcremento = new javax.swing.JLabel();
+        TXTDecremento = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        BotaoVoltar = new javax.swing.JButton();
+        BotaovoltarInicio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(2, 32, 64));
 
-        jButton1.setText("Em desenvolvimento");
+        jPanel2.setBackground(new java.awt.Color(0, 32, 64));
+
+        PlanilhaDeAlimentosDisponiveis.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                " Nome", "Preço", "Código"
+            }
+        ));
+        jScrollPane1.setViewportView(PlanilhaDeAlimentosDisponiveis);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        TXTQuantidadeTotalselecionado.setText("Quanatidade de itens totais selecionados:");
+
+        TXTCustototal.setText("Custo totas: ");
+
+        QuantidadeSelecionado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        QuantidadeSelecionado.setText("0");
+
+        QualtidadeTotalValor.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        QualtidadeTotalValor.setText("0");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TXTQuantidadeTotalselecionado)
+                    .addComponent(TXTCustototal))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(QuantidadeSelecionado)
+                    .addComponent(QualtidadeTotalValor))
+                .addGap(32, 32, 32))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TXTQuantidadeTotalselecionado)
+                    .addComponent(QuantidadeSelecionado))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(QualtidadeTotalValor)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(TXTCustototal)
+                        .addGap(15, 15, 15))))
+        );
+
+        CapturaTXTProcurarNomeAlimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CapturaTXTProcurarNomeAlimentoActionPerformed(evt);
+            }
+        });
+
+        TXTProcurarNomeAlimento.setText("Procurar Nome:");
+
+        TXTProcurarCodigoAlimento.setText("Procurar Código");
+
+        ButaoProcurarAlimentoNome.setText("Procurar");
+
+        ButaoProcurarCodigoAlimento.setText("Procurar");
+
+        TXTItemselecionado.setText("Item selecionado:");
+
+        TXTItem.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        TXTItem.setText("itemmmmm");
+
+        TXTAcremento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        TXTAcremento.setText("+");
+
+        TXTDecremento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TXTDecremento.setText("-");
+
+        jLabel11.setText("------------------------------------------------------------------------------");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(33, 33, 33)
+                            .addComponent(TXTItemselecionado)
+                            .addGap(58, 58, 58)
+                            .addComponent(TXTItem)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TXTAcremento)
+                            .addGap(36, 36, 36)
+                            .addComponent(TXTDecremento)
+                            .addGap(11, 11, 11))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(42, 42, 42)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TXTProcurarCodigoAlimento)
+                                .addComponent(TXTProcurarNomeAlimento))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                                .addComponent(CapturaTXTProcurarNomeAlimento))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(ButaoProcurarCodigoAlimento)
+                                .addComponent(ButaoProcurarAlimentoNome)))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(15, 15, 15)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel11)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TXTProcurarNomeAlimento)
+                    .addComponent(ButaoProcurarAlimentoNome))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TXTProcurarCodigoAlimento)
+                    .addComponent(ButaoProcurarCodigoAlimento))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addGap(86, 86, 86)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TXTItemselecionado)
+                    .addComponent(TXTItem)
+                    .addComponent(TXTAcremento)
+                    .addComponent(TXTDecremento))
+                .addGap(18, 179, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
+        );
+
+        BotaoVoltar.setText("Voltar");
+        BotaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoVoltarActionPerformed(evt);
+            }
+        });
+
+        BotaovoltarInicio.setText("Voltar");
+        BotaovoltarInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaovoltarInicioActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BotaoVoltar))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(BotaovoltarInicio)
+                .addGap(72, 72, 72))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(BotaovoltarInicio)
+                .addGap(69, 69, 69)
+                .addComponent(BotaoVoltar))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(367, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(395, 395, 395))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(243, 243, 243)
-                .addComponent(jButton1)
-                .addContainerGap(364, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
-        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BotaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoVoltarActionPerformed
+      
+    }//GEN-LAST:event_BotaoVoltarActionPerformed
+
+    private void CapturaTXTProcurarNomeAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CapturaTXTProcurarNomeAlimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CapturaTXTProcurarNomeAlimentoActionPerformed
+
+    private void BotaovoltarInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaovoltarInicioActionPerformed
+      // Chamando a tela Gerente
+             Gerente telaGerente = new Gerente("usuario", "senha");
+            telaGerente.setVisible(true); // Torna a tela de Gerente visível
+            dispose(); // Fecha a tela atual (VendasDeAlimentos)
+    }//GEN-LAST:event_BotaovoltarInicioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -89,6 +318,27 @@ public class VendasDeAlimentos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton BotaoVoltar;
+    private javax.swing.JButton BotaovoltarInicio;
+    private javax.swing.JButton ButaoProcurarAlimentoNome;
+    private javax.swing.JButton ButaoProcurarCodigoAlimento;
+    private javax.swing.JTextField CapturaTXTProcurarCodigoAlimento;
+    private javax.swing.JTextField CapturaTXTProcurarNomeAlimento;
+    private javax.swing.JTable PlanilhaDeAlimentosDisponiveis;
+    private javax.swing.JLabel QualtidadeTotalValor;
+    private javax.swing.JLabel QuantidadeSelecionado;
+    private javax.swing.JLabel TXTAcremento;
+    private javax.swing.JLabel TXTCustototal;
+    private javax.swing.JLabel TXTDecremento;
+    private javax.swing.JLabel TXTItem;
+    private javax.swing.JLabel TXTItemselecionado;
+    private javax.swing.JLabel TXTProcurarCodigoAlimento;
+    private javax.swing.JLabel TXTProcurarNomeAlimento;
+    private javax.swing.JLabel TXTQuantidadeTotalselecionado;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
