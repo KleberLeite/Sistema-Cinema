@@ -106,6 +106,7 @@ public class TelaEditarSessao extends JFrame {
         	return false;
         }
 		
+		//ToDo: @Kleber tentarAdicionarDataSessao(int idSessao, int idFilme, LocalDateTime)
 		app.getBackend().getBancoFilmes().tentarAdicionarSessao(sessao.getId(), sessao.getFilme().getId(), novaData);
 		return true;
 		
@@ -212,7 +213,7 @@ public class TelaEditarSessao extends JFrame {
 				String MinutoTexto = textFieldMinuto.getText();
 				
 				if(atualizaSesao(sessao,diaTexto, MesTexto, HoraTexto, MinutoTexto)) {
-					TelaEditarFilme telaEditarFilme = new TelaEditarFilme(sessao.getFilme());
+					TelaEditarFilme telaEditarFilme = new TelaEditarFilme(app.getBackend().getBancoFilmes().obterFilmePorId(sessao.getFilme().getId()));
 					telaEditarFilme.setLocationRelativeTo(null);
 					telaEditarFilme.setVisible(true);
 					
