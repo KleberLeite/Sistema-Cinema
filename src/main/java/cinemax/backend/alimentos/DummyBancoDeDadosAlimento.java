@@ -2,6 +2,7 @@ package cinemax.backend.alimentos;
 
 import cinemax.backend.core.Backend;
 
+// Cria um banco de dados com alguns alimentos já preenchidos.
 public class DummyBancoDeDadosAlimento extends BancoDeDadosAlimento {
 	public DummyBancoDeDadosAlimento(Backend backend) {
 		super(backend);
