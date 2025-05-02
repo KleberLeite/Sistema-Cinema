@@ -1,5 +1,6 @@
 package cinemax.backend.alimentos;
 
+// Estrutura de dados para alimentos.
 public class Alimento {
 	private String nome;
 	private double preco;
