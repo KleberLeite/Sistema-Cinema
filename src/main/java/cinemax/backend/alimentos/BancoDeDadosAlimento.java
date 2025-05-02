@@ -8,6 +8,10 @@ import java.util.Map;
 
 import cinemax.backend.core.Backend;
 
+/*
+Resumo: banco de dados dos alimentos do cinema.
+Observação: alterações só são permitidas quando o dia não estiver aberto!
+*/
 public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 	private Map<Integer, Alimento> alimentos;
 	private Backend backend;
@@ -17,37 +21,45 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 		this.backend = backend;
 	}
 
+	// Retorna o alimento por seu código ou null caso não ache.
 	@Override
 	public Alimento obterAlimentoPorCodigo(int codigo) {
-		if(alimentos.containsKey(codigo)) {
-			return alimentos.get(codigo);
-		}
-		return null;
+		return alimentos.getOrDefault(codigo, null);
 	}
 
+	// Retorna um array de alimentos que contém o parâmetro "nome" em seu nome.
 	@Override
 	public Alimento[] obterAlimentoPorNome(String nome) {
 		List<Alimento> result = new ArrayList<Alimento>();
-		for(Alimento alimento : alimentos.values()) {
-			if(alimento.getNome().contains(nome)) {
+		for(Alimento alimento : alimentos.values()) {			
+			if(alimento.getNome().contains(nome)) {				
 				result.add(alimento);
 			}
 		}
 		
-		return result.toArray(new Alimento[result.size()]);
+		return collectionAlimentoToArray(result);
 	}
 
+	// Retorna todos os alimentos cadastrados.
 	@Override
 	public Alimento[] obterTodosAlimentos() {
-		Collection<Alimento> alimentosValues = alimentos.values();
-		return alimentosValues.toArray(new Alimento[alimentosValues.size()]);
+		return collectionAlimentoToArray(alimentos.values());
+	}
+	
+	private Alimento[] collectionAlimentoToArray(Collection<Alimento> collection) {
+		return collection.toArray(new Alimento[collection.size()]);
 	}
 
+	// Retorna verdadeiro caso exista algum alimento com o código especificado.
 	@Override
 	public boolean existeAlimentoComCodigo(int codigo) {
 		return alimentos.containsKey(codigo);
 	}
 
+	// Tenta adicionar um alimento novo, retornando falso se:
+	// 1. O nome conter no máximo 2 caracteres;
+	// 2. Se preco <= 0;
+	// 3. Se o código já foi cadastrado.
 	@Override
 	public boolean tentardicionarAlimento(String nome, double preco, int codigo) {
 		if(backend.diaEstaAberto()) {
@@ -57,62 +69,101 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 		if(alimentos.containsKey(codigo)) {
 			return false;
 		}
-		else if(nome.length() <= 2) {
+		nome = nome.trim();
+		if(!nomeValido(nome)) {
 			return false;
 		}
-		else if(preco <= 0) {
+		if(!precoValido(preco)) {
+			return false;
+		}
+		if(!codigoValido(codigo)) {
 			return false;
 		}
 		
-		Alimento novoAlimento = new Alimento(nome, preco, codigo);
-		alimentos.put(codigo, novoAlimento);
+		adicionarAlimento(nome, preco, codigo);
 		return true;
 	}
+	
+	private void adicionarAlimento(String nome, double preco, int codigo) {
+		Alimento novoAlimento = new Alimento(nome, preco, codigo);
+		alimentos.put(codigo, novoAlimento);
+	}
 
+	// Tenta remover o alimento pelo código, retorna falso caso:
+	// 1. O alimento não foi encontrado.
 	@Override
 	public boolean tentarRemoverAlimento(int codigo) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
-		if(alimentos.containsKey(codigo)) {
-			alimentos.remove(codigo);
-			return true;
+		if(!alimentos.containsKey(codigo)) {
+			return false;
 		}
-		return false;
+		
+		alimentos.remove(codigo);
+		return true;
 	}
 
+	// Tenta alterar o nome do alimento pelo seu código, retorna falso caso:
+	// 1. O alimento não foi encontrado;
+	// 2. O nome contém no máximo 2 caracteres.
 	@Override
 	public boolean tentarAlterarNome(int codigo, String novoNome) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
-		if(alimentos.containsKey(codigo)) {
-			Alimento alimento = alimentos.get(codigo);
-			alimento.setNome(novoNome);
-			return true;
+		if(!alimentos.containsKey(codigo)) {
+			return false;
 		}
-		return false;
+		
+		novoNome = novoNome.trim();
+		if(!nomeValido(novoNome)) {
+			return false;
+		}
+		
+		alterarNome(codigo, novoNome);
+		return true;
+	}
+	
+	private void alterarNome(int codigo, String novoNome) {
+		alimentos.get(codigo).setNome(novoNome);
 	}
 
+	// Tenta alterar o código do alimento pelo seu código atual,
+	// retornando falso caso:
+	// 1. O alimento não foi encontrado;
+	// 2. Existe outro alimento com o novo código;
+	// 3. É um código inválido.
 	@Override
-	public boolean tentarAlterarCodigo(int codigo, int novoCodigo) {
+	public boolean tentarAlterarCodigo(int codigoAtual, int novoCodigo) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
-		if(alimentos.containsKey(novoCodigo) || !alimentos.containsKey(codigo)) {
+		if(!codigoValido(novoCodigo)) {
+			return false;
+		}
+		if(!alimentos.containsKey(codigoAtual)) {
+			return false;
+		}
+		if(alimentos.containsKey(novoCodigo)) {
 			return false;
 		}
 		
-		Alimento alimento = alimentos.get(codigo);
-		alimento.setcodigo(novoCodigo);
-		alimentos.remove(codigo);
-		alimentos.put(novoCodigo, alimento);
+		alterarCodigo(codigoAtual, novoCodigo);
 		return true;
 	}
+	
+	private void alterarCodigo(int codigoAtual, int novoCodigo) {
+		Alimento alimento = alimentos.get(codigoAtual);
+		alimento.setcodigo(novoCodigo);
+		alimentos.remove(codigoAtual);
+		alimentos.put(novoCodigo, alimento);
+	}
 
+	// Tenta alterar o preço do alimento pelo seu código,
+	// retornando falso caso:
+	// 1. O alimento não foi encontrado;
+	// 2. preço <= 0.
 	@Override
 	public boolean tentarAlterarPreco(int codigo, double novoPreco) {
 		if(backend.diaEstaAberto()) {
@@ -125,5 +176,17 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 			return true;
 		}
 		return false;
+	}
+	
+	private boolean nomeValido(String nome) {
+		return !nome.startsWith(" ") && !nome.endsWith(" ") && nome.length() > 2;
+	}
+	
+	private boolean precoValido(double preco) {
+		return preco > 0;
+	}
+	
+	private boolean codigoValido(int codigo) {
+		return codigo >= 0 && codigo <= 9999;
 	}
 }
