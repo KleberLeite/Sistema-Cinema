@@ -3,6 +3,7 @@ package cinemax.backend.filmes;
 import java.util.Map;
 import java.util.HashMap;
 
+// Mantém os dados do filme e suas sessões.
 public class Filme {
 	private int id;
 	private String nome;
@@ -77,7 +78,8 @@ public class Filme {
 		sessoes.put(sessao.getId(), sessao);
 	}
 	
-	protected boolean removerSessao(int id) {
+	// Retorna falso caso não encontre a sessão.
+	protected boolean tentarRemoverSessao(int id) {
 		if(sessoes.containsKey(id)) {
 			sessoes.remove(id);
 			return true;

@@ -1,5 +1,6 @@
 package cinemax.backend.filmes;
 
+// Enum das classificações indicativas brasileira.
 public enum ClassificacaoIndicativa {
 	AL,
 	AL10,

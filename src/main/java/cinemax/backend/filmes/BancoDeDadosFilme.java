@@ -231,7 +231,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			return false;
 		}
 		
-		return filmes.get(idFilme).removerSessao(idSessao);
+		return filmes.get(idFilme).tentarRemoverSessao(idSessao);
 	}
 
 	// Obtém todas as sessoes no dia especificado.

@@ -6,6 +6,7 @@ import cinemax.backend.salas.Sala;
 import cinemax.backend.salas.TipoDeEstrutura;
 import cinemax.utilities.ConversorDeCoordenadas;
 
+// Mantém informações da sessão e de quais locais foram reservados.
 public class Sessao {
 	private int id;
 	private boolean[][] reservados;
@@ -64,6 +65,10 @@ public class Sessao {
 		return id;
 	}
 	
+	// Tenta reservar um local, retornando falso caso:
+	// 1. A posição seja inválida;
+	// 2. A estrutura é uma passagem;
+	// 3. Já esteja reservado.
 	protected boolean tentarReservar(int linha, int coluna) {
 		if(!sala.estaDentroDaSala(linha, coluna)) {
 			return false;
@@ -77,7 +82,11 @@ public class Sessao {
 		reservados[linha][coluna] = true;
 		return true;
 	}
-	
+
+	// Tenta desreservar um local, retornando falso caso:
+	// 1. A posição seja inválida;
+	// 2. A estrutura é uma passagem;
+	// 3. A posição não esteja reservada.
 	protected boolean tentarDesreservar(int linha, int coluna) {
 		if(!sala.estaDentroDaSala(linha, coluna)) {
 			return false;
@@ -85,7 +94,6 @@ public class Sessao {
 		if(sala.obterTipoDeEstrutura(linha, coluna).getTipo() == TipoDeEstrutura.Vazio) {
 			return false;
 		}
-		int index = ConversorDeCoordenadas.obter1dPor2d(linha, coluna, sala.getColunas());
 		if(!reservados[linha][coluna]) {
 			return false;
 		}
