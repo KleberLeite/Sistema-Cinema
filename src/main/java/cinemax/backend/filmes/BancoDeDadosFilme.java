@@ -221,7 +221,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	
 	// Tenta remover uma sessao do respectivo filme e sessao, retornando falso se:
 	// 1. Não encontrar o filme;
-	// 2. Não encontrar a sessao;
+	// 2. Não encontrar a sessao.
 	@Override
 	public boolean tentarRemoverSessao(int idSessao, int idFilme) {
 		if(backend.diaEstaAberto()) {
