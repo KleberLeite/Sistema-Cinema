@@ -8,10 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.core.Backend;
 import cinemax.backend.salas.IBancoDeDadosSala;
 import cinemax.backend.salas.Sala;
 
+/*
+Resumo: banco de dados dos filmes (e suas sessões) do cinema.
+Observação: alterações só são permitidas quando o dia não estiver aberto!
+*/
 public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	private final int TEMPO_LIMPEZA = 10;
 	
@@ -26,6 +31,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		this.bancoDeDadosSala = bancoDeDadosSala;
 	}
 	
+	// Retorna um array com todos os filmes que contém o parâmetro "nome" em seu nome.
 	@Override
 	public Filme[] obterFilmesPorNome(String nome) {
 		List<Filme> result = new ArrayList<Filme>();
@@ -35,23 +41,29 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			}
 		}
 		
-		return result.toArray(new Filme[result.size()]);
+		return collectionFilmeToArray(result);
 	}
 
+	// Retorna o filme do respectivo id, ou null caso não encontre.
 	@Override
 	public Filme obterFilmePorId(int id) {
-		if(filmes.containsKey(id)) {
-			return filmes.get(id);
-		}
-		return null;
+		return filmes.getOrDefault(id, null);
 	}
 
+	// Retorna um array com todos os filmes.
 	@Override
 	public Filme[] obterTodosFilmes() {
-		Collection<Filme> filmeValues = filmes.values();
-		return filmeValues.toArray(new Filme[filmeValues.size()]);
+		return collectionFilmeToArray(filmes.values());
 	}
 
+	private Filme[] collectionFilmeToArray(Collection<Filme> collection) {
+		return collection.toArray(new Filme[collection.size()]);
+	}
+	
+	// Tenta adicionar um filme, retorna falso caso:
+	// 1. nome.length() <= 2;
+	// 2. sinopse.length() <= 2;
+	// 3. duracaoEmMinutos < 1.
 	@Override
 	public boolean tentarAdicionarFilme(
 		String nome,
@@ -64,115 +76,126 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		}
 		
 		nome = nome.trim();
-		if(!eNomeValido(nome)) {
+		if(!nomeValido(nome)) {
 			return false;
 		}
 		sinopse = sinopse.trim();
-		if(!eSinopseValida(sinopse)) {
+		if(!sinopseValida(sinopse)) {
 			return false;
 		}
-		if(!eDuracaoValida(duracaoEmMinutos)) {
+		if(!duracaoValida(duracaoEmMinutos)) {
 			return false;
 		}
 		
+		adicionarFilme(nome, sinopse, duracaoEmMinutos, classificacaoIndicativa);
+		return true;
+	}
+	
+	private void adicionarFilme(
+		String nome,
+		String sinopse,
+		int duracaoEmMinutos,
+		ClassificacaoIndicativa classificacaoIndicativa
+	) {
 		Filme filme = new Filme(
-			idFilmesAtual, nome, sinopse, duracaoEmMinutos, classificacaoIndicativa
+			idFilmesAtual,
+			nome,
+			sinopse,
+			duracaoEmMinutos,
+			classificacaoIndicativa
 		);
 		filmes.put(idFilmesAtual, filme);
 		
 		idFilmesAtual++;
-		return true;
 	}
 
+	// Tenta alterar o nome do filme com o respectivo id, retorna falso caso:
+	// 1. Não encontrar o filme;
+	// 2. O novoNome ser inválido.
 	@Override
-	public boolean tentarAlterarNome(int id, String novoNome) {
+	public boolean tentarAlterarNome(int idFilme, String novoNome) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
-		if(!filmes.containsKey(id)) {
+		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
 		novoNome = novoNome.trim();
-		if(!eNomeValido(novoNome)) {
+		if(!nomeValido(novoNome)) {
 			return false;
 		}
 		
-		Filme filme = filmes.get(id);
-		filme.setNome(novoNome);
+		filmes.get(idFilme).setNome(novoNome);		
 		return true;
 	}
 
+	// Tenta alterar a sinopse do filme com o respectivo id, retorna falso caso:
+	// 1. Não encontrar o filme;
+	// 2. A novaSinopse ser inválida.
 	@Override
-	public boolean tentarAlterarSinopse(int id, String novaSinopse) {
+	public boolean tentarAlterarSinopse(int idFilme, String novaSinopse) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
-		if(!filmes.containsKey(id)) {
+		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
 		novaSinopse = novaSinopse.trim();
-		if(!eSinopseValida(novaSinopse)) {
+		if(!sinopseValida(novaSinopse)) {
 			return false;
 		}
 		
-		Filme filme = filmes.get(id);
-		filme.setSinopse(novaSinopse);
+		filmes.get(idFilme).setSinopse(novaSinopse);
 		return true;
 	}
 
+	// Tenta alterar a duracao do filme com o respectivo id, retorna falso caso:
+	// 1. Não encontrar o filme;
+	// 2. A novaDuracaoEmMinutos ser inválida.
 	@Override
 	public boolean tentarAlterarDuracao(int id, int novaDuracaoEmMinutos) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
-		if(!eDuracaoValida(novaDuracaoEmMinutos)) {
+		if(!duracaoValida(novaDuracaoEmMinutos)) {
 			return false;
 		}
 		
-		Filme filme = filmes.get(id);
-		filme.setDuracaoEmMinutos(novaDuracaoEmMinutos);
+		filmes.get(id).setDuracaoEmMinutos(novaDuracaoEmMinutos);
 		return true;
 	}
 
+	// Tenta alterar a duracao do filme com o respectivo id, retorna falso caso:
+	// 1. Não encontrar o filme.
 	@Override
-	public boolean tentarAlterarClassificacaoIndicativa(int id, ClassificacaoIndicativa novaClassificacaoIndicativa) {
+	public boolean tentarAlterarClassificacaoIndicativa(
+		int id,
+		ClassificacaoIndicativa novaClassificacaoIndicativa
+	) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
 		if(!filmes.containsKey(id)) {
 			return false;
 		}
 
-		Filme filme = filmes.get(id);
-		filme.setClassificacaoIndicativa(novaClassificacaoIndicativa);
+		filmes.get(id).setClassificacaoIndicativa(novaClassificacaoIndicativa);
 		return true;
 	}
 
-	private boolean eNomeValido(String nome) {
-		return nome.length() > 2 && !nome.startsWith(" ") && !nome.endsWith(" ");
-	}
-	
-	private boolean eSinopseValida(String sinopse) {
-		return sinopse.length() > 2 && !sinopse.startsWith(" ") && !sinopse.endsWith(" ");
-	}
-	
-	private boolean eDuracaoValida(int duracaoEmMinutos) {
-		return duracaoEmMinutos >= 1;
-	}
-
+	// Tenta adicionar uma sessao para o respectivo filme e sala, no início indicado,
+	// retorna falso se:
+	// 1. Não encontrar o filme;
+	// 2. Não encontrar a sala;
+	// 3. Uma sessao estiver acontecendo na mesma sala e horário.
 	@Override
 	public boolean tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
 		Sala sala = bancoDeDadosSala.obterSalaPorId(idSala);
 		if(sala == null) {
 			return false;
@@ -184,47 +207,62 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			return false;
 		}
 		
+		adicionarSessao(sala, idFilme, inicio);
+		return true;
+	}
+	
+	private void adicionarSessao(Sala sala, int idFilme, LocalDateTime inicio ) {
 		Filme filme = filmes.get(idFilme);
 		Sessao sessao = new Sessao(idSessoesAtual, sala, filme, inicio);
 		filme.adicionarSessao(sessao);
 		
 		idSessoesAtual++;
-		return true;
 	}
-
+	
+	// Tenta remover uma sessao do respectivo filme e sessao, retornando falso se:
+	// 1. Não encontrar o filme;
+	// 2. Não encontrar a sessao;
 	@Override
 	public boolean tentarRemoverSessao(int idSessao, int idFilme) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
 		
-		Filme filme = filmes.get(idFilme);
-		return filme.removerSessao(idSessao);
+		return filmes.get(idFilme).removerSessao(idSessao);
 	}
 
+	// Obtém todas as sessoes no dia especificado.
 	@Override
 	public Sessao[] obterSessoesNoDia(LocalDate data) {
-		List<Sessao> resultado = new ArrayList<Sessao>();
+		List<Sessao> result = new ArrayList<Sessao>();
 		for(Filme f : filmes.values()) {
 			for(Sessao s : f.obterTodasSessoes()) {
 				if(data.equals(s.getInicio().toLocalDate())) {
-					resultado.add(s);
+					result.add(s);
 				}
 			}
 		}
-		return resultado.toArray(new Sessao[resultado.size()]);
+		
+		return collectionSessaoToArray(result);
 	}
 	
+	private Sessao[] collectionSessaoToArray(Collection<Sessao> collection) {
+		return collection.toArray(new Sessao[collection.size()]);
+	}
+	
+	// Tenta reservar um assento no filme, sessao e posição especificada, retornando falso caso:
+	// 1. Não encontrar o filme;
+	// 2. Não encontrar a sessao;
+	// 3. Posicao inválida;
+	// 4. Já está reservada.
 	@Override
 	public boolean tentarReservar(int idFilme, int idSessao, int linha, int coluna) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
@@ -232,16 +270,20 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		if(!filme.contemSessao(idSessao)) {
 			return false;
 		}
-		Sessao sessao = filme.obterSessao(idSessao);
-		return sessao.tentarReservar(linha, coluna);
+		
+		return filme.obterSessao(idSessao).tentarReservar(linha, coluna);
 	}
 	
+	// Tenta desreservar um assento no filme, sessao e posição especificada, retornando falso caso:
+	// 1. Não encontrar o filme;
+	// 2. Não encontrar a sessao;
+	// 3. Posicao inválida;
+	// 4. A posição não está reservada.
 	@Override
 	public boolean tentarDesreservar(int idFilme, int idSessao, int linha, int coluna) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
@@ -249,16 +291,17 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		if(!filme.contemSessao(idSessao)) {
 			return false;
 		}
-		Sessao sessao = filme.obterSessao(idSessao);
-		return sessao.tentarDesreservar(linha, coluna);
+		
+		return filme.obterSessao(idSessao).tentarDesreservar(linha, coluna);
 	}
 
+	// Tenta remover o filme do id especificado, retornando falso caso:
+	// 1. Não encontrar o filme.
 	@Override
 	public boolean tentarRemoverFilme(int idFilme) {
 		if(backend.diaEstaAberto()) {
 			return false;
 		}
-		
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
@@ -266,30 +309,33 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		return true;
 	}
 	
+	// Tenta alterar o início da sessao do filme e id especificados, para um novoInicio,
+	// retornando falso caso:
+	// 1. Não encontrar o filme;
+	// 2. Não encontrar a sessao;
+	// 3. Já exista uma sessao ocorrendo na sala e horário da sessao.
 	@Override
 	public boolean tentarAlterarInicioSessao(int idFilme, int idSessao, LocalDateTime novoInicio) {
 		if(backend.diaEstaAberto()) {
-			System.out.println("A");
 			return false;
 		}
 		if(!filmes.containsKey(idFilme)) {
-			System.out.println("B");
 			return false;
 		}
 		Filme filme = filmes.get(idFilme);
 		if(!filme.contemSessao(idSessao)) {
-			System.out.println("C");
 			return false;
 		}
 		Sessao sessao = filme.obterSessao(idSessao);
 		if(existeOutraSessaoNoMesmoLugarHora(sessao.getSala().getIdSala(), novoInicio, sessao.getId())) {
-			System.out.println("D");
 			return false;
 		}
 		sessao.setInicio(novoInicio);
 		return true;
 	}
 	
+	// Retorna se existe outra sessao no mesmo lugar e hora,
+	// ignorando a sessao de id ignoreIdSessao.
 	private boolean existeOutraSessaoNoMesmoLugarHora(int idSala, LocalDateTime inicio, int ignoreIdSessao) {
 		for(Filme filme : filmes.values()) {
 			for(Sessao sessao : filme.obterTodasSessoes()) {
@@ -312,7 +358,8 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		}
 		return false;
 	}
-	
+
+	// Retorna se existe outra sessao no mesmo lugar e hora.
 	private boolean existeOutraSessaoNoMesmoLugarHora(int idSala, LocalDateTime inicio) {
 		for(Filme filme : filmes.values()) {
 			for(Sessao sessao : filme.obterTodasSessoes()) {
@@ -331,6 +378,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		return false;
 	}
 	
+	// Retorna se há choque de horário.
 	private boolean haChoqueDeHorario(
 		LocalDateTime inicioNovaSessao,
 		LocalDateTime fimNovaSessao,
@@ -338,5 +386,17 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		LocalDateTime fimSessaoExistente
 	) {
 		return !fimNovaSessao.isBefore(inicioSessaoExistente) && !inicioNovaSessao.isAfter(fimSessaoExistente);
+	}
+
+	private boolean nomeValido(String nome) {
+		return nome.length() > 2 && !nome.startsWith(" ") && !nome.endsWith(" ");
+	}
+	
+	private boolean sinopseValida(String sinopse) {
+		return sinopse.length() > 2 && !sinopse.startsWith(" ") && !sinopse.endsWith(" ");
+	}
+	
+	private boolean duracaoValida(int duracaoEmMinutos) {
+		return duracaoEmMinutos >= 1;
 	}
 }
