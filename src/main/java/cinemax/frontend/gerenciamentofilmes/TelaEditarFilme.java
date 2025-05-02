@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.core.Backend;
+import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.controller.ControladorDeApp;
@@ -31,6 +33,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
 public class TelaEditarFilme extends JFrame {
 
@@ -75,10 +78,15 @@ public class TelaEditarFilme extends JFrame {
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	// Methods utils -------------------------------------------------------
+	
+	private void altualizarFilme(
+			Filme filme, 
+			String novoNome, 
+			String novaSinopse, 
+			String novaDuracaoTexto, 
+			ClassificacaoIndicativa classificacaoIndicativa) {
 
-	private void altualizarFilme(String novoNome, String novaSinopse, String novaDuracaoTexto) {
-
-		// Validação básica da duração
+		// Validação entra de durancao em numeros
 		int novaDuracao = 0;
 		try {
 			novaDuracao = Integer.parseInt(novaDuracaoTexto);
@@ -87,13 +95,17 @@ public class TelaEditarFilme extends JFrame {
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		/*
-		boolean sucesso = bancos.getBancoFilmes().
+		
+		boolean sucesso = (app.getBackend().getBancoFilmes().tentarAlterarNome(filme.getId(), novoNome) && 
+				app.getBackend().getBancoFilmes().tentarAlterarSinopse(filme.getId(), novaSinopse) &&
+				app.getBackend().getBancoFilmes().tentarAlterarDuracao(filme.getId(), novaDuracao) && 
+				app.getBackend().getBancoFilmes().tentarAlterarClassificacaoIndicativa(filme.getId(), classificacaoIndicativa)
+				);
 		if (sucesso) {
 			JOptionPane.showMessageDialog(null, "Filme atualizado com sucesso!");
 		} else {
 			JOptionPane.showMessageDialog(null, "Erro ao atualizar filme.", "Erro", JOptionPane.ERROR_MESSAGE);
-		}*/
+		}
 
 	}
 
@@ -118,8 +130,16 @@ public class TelaEditarFilme extends JFrame {
 
 			JButton btnEditar = new JButton(iconeEditar); // ou seu ícone
 			btnEditar.setBounds(110, 10, 40, 40);
-			card.add(btnEditar);
+			btnEditar.addActionListener(e -> {
+				TelaEditarSessao telaEditarSessao = new TelaEditarSessao(sessao);
+				telaEditarSessao.setLocationRelativeTo(null);
+				telaEditarSessao.setVisible(true);
 
+				
+			});
+			card.add(btnEditar);
+			
+			
 			JButton btnExcluir = new JButton(iconeExcluir); // ou seu ícone
 			btnExcluir.setBounds(160, 10, 40, 40);
 			btnExcluir.addActionListener(e -> {
@@ -221,10 +241,30 @@ public class TelaEditarFilme extends JFrame {
 
 		atualizarListaDeSessoes(panelSessoes, filme);
 
-		JButton btnNewButton = new JButton("+");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 30));
-		btnNewButton.setBounds(651, 103, 59, 59);
-		panelPrincipal.add(btnNewButton);
+		JButton btnAdicionarSessao = new JButton("+");
+		btnAdicionarSessao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				TelaEditarSessao telaEditarSessao = new TelaEditarSessao);
+				telaEditarSessao.setLocationRelativeTo(null);
+				telaEditarSessao.setVisible(true);*/
+				
+				
+				
+			}
+		});
+		btnAdicionarSessao.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		btnAdicionarSessao.setBounds(651, 103, 59, 59);
+		panelPrincipal.add(btnAdicionarSessao);
+		
+		JComboBox<ClassificacaoIndicativa> comboBoxClassificacaoIndicativa = new JComboBox<>(ClassificacaoIndicativa.values());
+		comboBoxClassificacaoIndicativa.setSelectedItem(filme.getClassificacaoIndicativa());
+		comboBoxClassificacaoIndicativa.setBounds(155, 211, 92, 26);
+		panelPrincipal.add(comboBoxClassificacaoIndicativa);
+		
+		JLabel lblNewLabel_2 = new JLabel("Classificação Indicativa");
+		lblNewLabel_2.setBounds(155, 186, 155, 14);
+		panelPrincipal.add(lblNewLabel_2);
 
 		JButton btnAtualizar = new JButton("Atualizar");
 		btnAtualizar.addActionListener(new ActionListener() {
@@ -232,12 +272,39 @@ public class TelaEditarFilme extends JFrame {
 				String novoNome = textFieldNome.getText();
 				String novaSinopse = textAreaSinopse.getText();
 				String duracaoTexto = textFieldDuracao.getText();
-
+				ClassificacaoIndicativa classificacaoIndicativaSelecionada = (ClassificacaoIndicativa) comboBoxClassificacaoIndicativa.getSelectedItem();
+				
+				
+				altualizarFilme(filme,novoNome,novaSinopse,duracaoTexto,classificacaoIndicativaSelecionada);
+				
+				TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
+				telaCrudFilme.setLocationRelativeTo(null);
+				telaCrudFilme.setVisible(true);
+				
+				dispose();
 			}
 		});
 		btnAtualizar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAtualizar.setBounds(299, 322, 164, 31);
 		panelPrincipal.add(btnAtualizar);
+		
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
+				telaCrudFilme.setLocationRelativeTo(null);
+				telaCrudFilme.setVisible(true);
+				
+				dispose();
+				
+			}
+		});
+		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnVoltar.setBounds(10, 427, 89, 23);
+		contentPane.add(btnVoltar);
+		
+		
 
 	}
 }

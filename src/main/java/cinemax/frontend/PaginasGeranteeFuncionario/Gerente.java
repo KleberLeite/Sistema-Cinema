@@ -55,7 +55,7 @@ public class Gerente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        botaoIniciarDia = new javax.swing.JButton();
         JButton BotaoAcessarGeranciaDeFilmes = new JButton();
         BotaoAcessarGeranciaDeFilmes.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -66,37 +66,42 @@ public class Gerente extends javax.swing.JFrame {
         	    dispose(); // Fecha a tela atual se quiser
         	}
         });
-        jButton4.addActionListener(new ActionListener() {
+        botaoIniciarDia.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		jButton4.setEnabled(false);
-        		BotaoAcessarGeranciaFuncinario.setEnabled(true);
-        		jButton5.setEnabled(true);
-                BotaoVendaDeAlimentos.setEnabled(true);
+        		botaoIniciarDia.setEnabled(false);
+        		
+        		botaoTerminoDia.setEnabled(true);
+                BotaoAcessarVendaDeAlimentos.setEnabled(true);
                 botaoAcessoCompraDeIngresos.setEnabled(true);
-                BotaoAcessarGeranciaDeFilmes.setEnabled(true);
-                BotaoAcessarGeranciaDeAlimentos.setEnabled(true);
+                
+                BotaoAcessarGeranciaFuncinario.setEnabled(false);
+        		BotaoAcessarGeranciaDeFilmes.setEnabled(false);
+                BotaoAcessarGeranciaDeAlimentos.setEnabled(false);
+                
         	}
         });
         
-        jButton5 = new javax.swing.JButton();
-        jButton5.addActionListener(new ActionListener() {
+        botaoTerminoDia = new javax.swing.JButton();
+        botaoTerminoDia.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		jButton3.setEnabled(true);
-        		jButton5.setEnabled(false);
-        		BotaoAcessarGeranciaFuncinario.setEnabled(false);
-        		jButton5.setEnabled(false);
-                BotaoVendaDeAlimentos.setEnabled(false);
+        		botaoTerminoDia.setEnabled(false);
+        		
+        		BotaoAcessarGeranciaFuncinario.setEnabled(true);
+        		BotaoAcessarGeranciaDeFilmes.setEnabled(true);
+                BotaoAcessarGeranciaDeAlimentos.setEnabled(true);
+                
+                botaoConsultarRelatorio.setEnabled(true);
+                BotaoAcessarVendaDeAlimentos.setEnabled(false);
                 botaoAcessoCompraDeIngresos.setEnabled(false);
-                BotaoAcessarGeranciaDeFilmes.setEnabled(false);
-                BotaoAcessarGeranciaDeAlimentos.setEnabled(false);
+                
         	}
         });
-        jButton3 = new javax.swing.JButton();
+        botaoConsultarRelatorio = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         TXTVendaDeAlimentos = new javax.swing.JLabel();
-        BotaoVendaDeAlimentos = new javax.swing.JButton();
+        BotaoAcessarVendaDeAlimentos = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
@@ -185,13 +190,13 @@ public class Gerente extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Termino das Operações do dia:");
 
-        jButton4.setText("Iniciar");
+        botaoIniciarDia.setText("Iniciar");
 
-        jButton5.setText("Termino");
-        jButton5.setEnabled(false);
+        botaoTerminoDia.setText("Termino");
+        botaoTerminoDia.setEnabled(false);
 
-        jButton3.setText("Consulatar relatório");
-        jButton3.setEnabled(false);
+        botaoConsultarRelatorio.setText("Consulatar relatório");
+        botaoConsultarRelatorio.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3Layout.setHorizontalGroup(
@@ -200,7 +205,7 @@ public class Gerente extends javax.swing.JFrame {
         			.addGap(185)
         			.addGroup(jPanel3Layout.createParallelGroup(Alignment.TRAILING)
         				.addGroup(jPanel3Layout.createSequentialGroup()
-        					.addComponent(jButton4)
+        					.addComponent(botaoIniciarDia)
         					.addGap(45))
         				.addComponent(jLabel6))
         			.addPreferredGap(ComponentPlacement.RELATED, 186, Short.MAX_VALUE)
@@ -209,13 +214,13 @@ public class Gerente extends javax.swing.JFrame {
         					.addComponent(jLabel8)
         					.addGap(156))
         				.addGroup(Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-        					.addComponent(jButton5)
+        					.addComponent(botaoTerminoDia)
         					.addGap(207)))
         			.addGroup(jPanel3Layout.createParallelGroup(Alignment.LEADING)
         				.addComponent(jLabel5)
         				.addGroup(jPanel3Layout.createSequentialGroup()
         					.addGap(24)
-        					.addComponent(jButton3)))
+        					.addComponent(botaoConsultarRelatorio)))
         			.addGap(179))
         );
         jPanel3Layout.setVerticalGroup(
@@ -228,16 +233,16 @@ public class Gerente extends javax.swing.JFrame {
         						.addGroup(jPanel3Layout.createSequentialGroup()
         							.addComponent(jLabel5)
         							.addGap(18)
-        							.addComponent(jButton3))
+        							.addComponent(botaoConsultarRelatorio))
         						.addGroup(jPanel3Layout.createSequentialGroup()
         							.addComponent(jLabel6)
         							.addGap(18)
-        							.addComponent(jButton4))))
+        							.addComponent(botaoIniciarDia))))
         				.addGroup(jPanel3Layout.createSequentialGroup()
         					.addContainerGap()
         					.addComponent(jLabel8)
         					.addGap(18)
-        					.addComponent(jButton5)))
+        					.addComponent(botaoTerminoDia)))
         			.addContainerGap(108, Short.MAX_VALUE))
         );
         jPanel3.setLayout(jPanel3Layout);
@@ -271,9 +276,9 @@ public class Gerente extends javax.swing.JFrame {
         TXTVendaDeAlimentos.setForeground(new java.awt.Color(255, 255, 255));
         TXTVendaDeAlimentos.setText("Venda de Alimentos");
 
-        BotaoVendaDeAlimentos.setText("Acessar");
-        BotaoVendaDeAlimentos.setEnabled(false);
-        BotaoVendaDeAlimentos.addActionListener(new java.awt.event.ActionListener() {
+        BotaoAcessarVendaDeAlimentos.setText("Acessar");
+        BotaoAcessarVendaDeAlimentos.setEnabled(false);
+        BotaoAcessarVendaDeAlimentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoVendaDealimentosActionPerformed(evt);
             }
@@ -300,7 +305,7 @@ public class Gerente extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(90, 90, 90)
-                        .addComponent(BotaoVendaDeAlimentos))
+                        .addComponent(BotaoAcessarVendaDeAlimentos))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(TXTVendaDeAlimentos)))
@@ -314,7 +319,7 @@ public class Gerente extends javax.swing.JFrame {
                         .addGap(12, 12, 12)
                         .addComponent(TXTVendaDeAlimentos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(BotaoVendaDeAlimentos))
+                        .addComponent(BotaoAcessarVendaDeAlimentos))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -608,14 +613,14 @@ public class Gerente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JButton BotaoVendaDeAlimentos;
+    private javax.swing.JButton BotaoAcessarVendaDeAlimentos;
     private javax.swing.JButton BotaoAcessarGeranciaDeAlimentos;
     private javax.swing.JButton BotaoAcessarGeranciaFuncinario;
     private javax.swing.JLabel TXTVendaDeAlimentos;
     private javax.swing.JButton botaoAcessoCompraDeIngresos;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton botaoConsultarRelatorio;
+    private javax.swing.JButton botaoIniciarDia;
+    private javax.swing.JButton botaoTerminoDia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
