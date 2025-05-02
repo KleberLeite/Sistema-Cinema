@@ -8,6 +8,6 @@ package cinemax.frontend.vendadealimentos;
  *
  * @author geral
  */
-class alimentos {
+class modeloTabela {
     
 }
