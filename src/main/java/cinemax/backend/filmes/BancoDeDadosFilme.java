@@ -60,38 +60,37 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		return collection.toArray(new Filme[collection.size()]);
 	}
 	
-	// Tenta adicionar um filme, retorna falso caso:
+	// Tenta adicionar um filme, retorna o id do filme criado ou -1 caso:
 	// 1. nome.length() <= 2;
 	// 2. sinopse.length() <= 2;
 	// 3. duracaoEmMinutos < 1.
 	@Override
-	public boolean tentarAdicionarFilme(
+	public int tentarAdicionarFilme(
 		String nome,
 		String sinopse,
 		int duracaoEmMinutos,
 		ClassificacaoIndicativa classificacaoIndicativa
 	) {
 		if(backend.diaEstaAberto()) {
-			return false;
+			return -1;
 		}
 		
 		nome = nome.trim();
 		if(!nomeValido(nome)) {
-			return false;
+			return -1;
 		}
 		sinopse = sinopse.trim();
 		if(!sinopseValida(sinopse)) {
-			return false;
+			return -1;
 		}
 		if(!duracaoValida(duracaoEmMinutos)) {
-			return false;
+			return -1;
 		}
 		
-		adicionarFilme(nome, sinopse, duracaoEmMinutos, classificacaoIndicativa);
-		return true;
+		return adicionarFilme(nome, sinopse, duracaoEmMinutos, classificacaoIndicativa);
 	}
 	
-	private void adicionarFilme(
+	private int adicionarFilme(
 		String nome,
 		String sinopse,
 		int duracaoEmMinutos,
@@ -107,6 +106,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		filmes.put(idFilmesAtual, filme);
 		
 		idFilmesAtual++;
+		return filme.getId();
 	}
 
 	// Tenta alterar o nome do filme com o respectivo id, retorna falso caso:
@@ -187,36 +187,36 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	}
 
 	// Tenta adicionar uma sessao para o respectivo filme e sala, no início indicado,
-	// retorna falso se:
+	// retorna o id da sessão criada ou -1 caso:
 	// 1. Não encontrar o filme;
 	// 2. Não encontrar a sala;
 	// 3. Uma sessao estiver acontecendo na mesma sala e horário.
 	@Override
-	public boolean tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio) {
+	public int tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio) {
 		if(backend.diaEstaAberto()) {
-			return false;
+			return -1;
 		}
 		Sala sala = bancoDeDadosSala.obterSalaPorId(idSala);
 		if(sala == null) {
-			return false;
+			return -1;
 		}
 		if(!filmes.containsKey(idFilme)) {
-			return false;
+			return -1;
 		}
 		if(existeOutraSessaoNoMesmoLugarHora(idSala, inicio)) {
-			return false;
+			return -1;
 		}
 		
-		adicionarSessao(sala, idFilme, inicio);
-		return true;
+		return adicionarSessao(sala, idFilme, inicio);
 	}
 	
-	private void adicionarSessao(Sala sala, int idFilme, LocalDateTime inicio ) {
+	private int adicionarSessao(Sala sala, int idFilme, LocalDateTime inicio ) {
 		Filme filme = filmes.get(idFilme);
 		Sessao sessao = new Sessao(idSessoesAtual, sala, filme, inicio);
 		filme.adicionarSessao(sessao);
 		
 		idSessoesAtual++;
+		return sessao.getId();
 	}
 	
 	// Tenta remover uma sessao do respectivo filme e sessao, retornando falso se:

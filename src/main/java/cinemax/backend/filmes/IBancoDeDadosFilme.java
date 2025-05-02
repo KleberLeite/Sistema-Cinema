@@ -14,11 +14,11 @@ public interface IBancoDeDadosFilme {
 	// Retorna um array com todos os filmes.
 	Filme[] obterTodosFilmes();
 	
-	// Tenta adicionar um filme, retorna falso caso:
+	// Tenta adicionar um filme, retorna o id do filme criado ou -1 caso:
 	// 1. nome.length() <= 2;
 	// 2. sinopse.length() <= 2;
 	// 3. duracaoEmMinutos < 1.
-	boolean tentarAdicionarFilme(
+	int tentarAdicionarFilme(
 		String nome,
 		String sinopse,
 		int duracaoEmMinutos,
@@ -55,11 +55,11 @@ public interface IBancoDeDadosFilme {
 	Sessao[] obterSessoesNoDia(LocalDate data);
 	
 	// Tenta adicionar uma sessao para o respectivo filme e sala, no início indicado,
-	// retorna falso se:
+	// retorna o id da sessão criada ou -1 caso:
 	// 1. Não encontrar o filme;
 	// 2. Não encontrar a sala;
 	// 3. Uma sessao estiver acontecendo na mesma sala e horário.
-	boolean tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio);
+	int tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio);
 	
 	// Tenta remover uma sessao do respectivo filme e sessao, retornando falso se:
 	// 1. Não encontrar o filme;
