@@ -5,6 +5,9 @@ public interface IBancoDeDadosSala {
 	// Obtém todas as salas cadastradas.
 	public Sala[] obterTodasSalas();
 	
+	// Obtém quantidade de salas existentes.
+	public int obterQtdSalas();
+	
 	// Obtém a sala a partir de seu ID ou null caso não encontre.
 	public Sala obterSalaPorId(int id);
 	
