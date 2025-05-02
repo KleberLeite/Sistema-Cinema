@@ -1,6 +1,8 @@
 package cinemax.backend.alimentos;
 
-// Estrutura de dados para alimentos.
+/*
+Resumo: Estrutura de dados para alimentos do cinema.
+*/
 public class Alimento {
 	private String nome;
 	private double preco;
@@ -16,20 +18,20 @@ public class Alimento {
 		return nome;
 	}
 	
-	public double getPreco() {
-		return preco;
-	}
-	
-	public int getCodigo() {
-		return codigo;
-	}
-	
 	protected void setNome(String nome) {
 		this.nome = nome;
 	}
 	
+	public double getPreco() {
+		return preco;
+	}
+	
 	protected void setPreco(double preco) {
 		this.preco = preco;
+	}
+	
+	public int getCodigo() {
+		return codigo;
 	}
 	
 	protected void setcodigo(int codigo) {
