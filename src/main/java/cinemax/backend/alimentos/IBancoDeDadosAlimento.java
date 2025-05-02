@@ -1,17 +1,17 @@
 package cinemax.backend.alimentos;
 
+// Observação: alterações só são permitidas quando o dia não estiver aberto!
 public interface IBancoDeDadosAlimento {
 	// Retorna o alimento por seu código ou null caso não ache.
 	Alimento obterAlimentoPorCodigo(int codigo);
 	
-	// Retorna todos os alimentos que contém o parâmetro "nome" em
-	// seu nome.
+	// Retorna um array de alimentos que contém o parâmetro "nome" em seu nome.
 	Alimento[] obterAlimentoPorNome(String nome);
 	
 	// Retorna todos os alimentos cadastrados.
 	Alimento[] obterTodosAlimentos();
 	
-	// Retorna se existe algum alimento com o código.
+	// Retorna verdadeiro caso exista algum alimento com o código especificado.
 	boolean existeAlimentoComCodigo(int codigo);
 	
 	// Tenta adicionar um alimento novo, retornando falso se:
