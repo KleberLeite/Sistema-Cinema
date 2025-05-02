@@ -4,6 +4,7 @@
  */
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
+import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.Gerencia;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
 import cinemax.frontend.vendadealimentos.Vendas;
@@ -27,6 +28,8 @@ import java.awt.Font;
  */
 public class Gerente extends javax.swing.JFrame {
 
+	private ControladorDeApp app = ControladorDeApp.getInstancia();
+	
     /**
      * Creates new form Gerente
      */
@@ -46,14 +49,48 @@ public class Gerente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        ButaoAcessarGeranciaDeFilmes = new javax.swing.JButton();
+        BotaoAcessarGeranciaFuncinario = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        JButton BotaoAcessarGeranciaDeFilmes = new JButton();
+        BotaoAcessarGeranciaDeFilmes.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
+        	    telaCrudFilme.setLocationRelativeTo(null);
+        	    telaCrudFilme.setVisible(true);
+        	    
+        	    dispose(); // Fecha a tela atual se quiser
+        	}
+        });
+        jButton4.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		jButton4.setEnabled(false);
+        		BotaoAcessarGeranciaFuncinario.setEnabled(true);
+        		jButton5.setEnabled(true);
+                BotaoVendaDeAlimentos.setEnabled(true);
+                botaoAcessoCompraDeIngresos.setEnabled(true);
+                BotaoAcessarGeranciaDeFilmes.setEnabled(true);
+                BotaoAcessarGeranciaDeAlimentos.setEnabled(true);
+        	}
+        });
+        
         jButton5 = new javax.swing.JButton();
+        jButton5.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		jButton3.setEnabled(true);
+        		jButton5.setEnabled(false);
+        		BotaoAcessarGeranciaFuncinario.setEnabled(false);
+        		jButton5.setEnabled(false);
+                BotaoVendaDeAlimentos.setEnabled(false);
+                botaoAcessoCompraDeIngresos.setEnabled(false);
+                BotaoAcessarGeranciaDeFilmes.setEnabled(false);
+                BotaoAcessarGeranciaDeAlimentos.setEnabled(false);
+        	}
+        });
         jButton3 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -64,7 +101,17 @@ public class Gerente extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        butaoAcessoCompraDeIngresos = new javax.swing.JButton();
+        botaoAcessoCompraDeIngresos = new javax.swing.JButton();
+        botaoAcessoCompraDeIngresos.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
+            	telaEscolhaFilme.setLocationRelativeTo(null);
+            	telaEscolhaFilme.setVisible(true);
+            	
+            	dispose();
+        	}
+        	
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,8 +121,9 @@ public class Gerente extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Seção de Gerenciamento de Fucionários");
 
-        ButaoAcessarGeranciaDeFilmes.setText("Acessar");
-        ButaoAcessarGeranciaDeFilmes.addActionListener(new java.awt.event.ActionListener() {
+        BotaoAcessarGeranciaFuncinario.setText("Acessar");
+        BotaoAcessarGeranciaFuncinario.setEnabled(false);
+        BotaoAcessarGeranciaFuncinario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButaoAcessarGeranciaDeFuncionarioActionPerformed(evt);
             }
@@ -99,7 +147,7 @@ public class Gerente extends javax.swing.JFrame {
         			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         			.addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addComponent(ButaoAcessarGeranciaDeFilmes)
+        			.addComponent(BotaoAcessarGeranciaFuncinario)
         			.addGap(124))
         		.addGroup(jPanel2Layout.createSequentialGroup()
         			.addContainerGap()
@@ -115,7 +163,7 @@ public class Gerente extends javax.swing.JFrame {
         			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(jPanel2Layout.createSequentialGroup()
         					.addGap(27)
-        					.addComponent(ButaoAcessarGeranciaDeFilmes))
+        					.addComponent(BotaoAcessarGeranciaFuncinario))
         				.addGroup(jPanel2Layout.createSequentialGroup()
         					.addGap(18)
         					.addComponent(jPanel6, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
@@ -140,8 +188,10 @@ public class Gerente extends javax.swing.JFrame {
         jButton4.setText("Iniciar");
 
         jButton5.setText("Termino");
+        jButton5.setEnabled(false);
 
         jButton3.setText("Consulatar relatório");
+        jButton3.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3Layout.setHorizontalGroup(
@@ -222,6 +272,7 @@ public class Gerente extends javax.swing.JFrame {
         TXTVendaDeAlimentos.setText("Venda de Alimentos");
 
         BotaoVendaDeAlimentos.setText("Acessar");
+        BotaoVendaDeAlimentos.setEnabled(false);
         BotaoVendaDeAlimentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoVendaDealimentosActionPerformed(evt);
@@ -287,7 +338,9 @@ public class Gerente extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Venda de ingressos");
 
-        butaoAcessoCompraDeIngresos.setText("Acessar");
+        botaoAcessoCompraDeIngresos.setText("Acessar");
+        botaoAcessoCompraDeIngresos.setEnabled(false);
+        
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -299,7 +352,7 @@ public class Gerente extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
-                        .addComponent(butaoAcessoCompraDeIngresos))
+                        .addComponent(botaoAcessoCompraDeIngresos))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(jLabel3)))
@@ -313,12 +366,15 @@ public class Gerente extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(butaoAcessoCompraDeIngresos))
+                        .addComponent(botaoAcessoCompraDeIngresos))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+        
+        JPanel jPanel2_1 = new JPanel();
+        jPanel2_1.setBackground(new Color(2, 32, 64));
         
         JPanel jPanel6_1 = new JPanel();
         GroupLayout gl_jPanel6_1 = new GroupLayout(jPanel6_1);
@@ -333,7 +389,48 @@ public class Gerente extends javax.swing.JFrame {
         		.addGap(0, 100, Short.MAX_VALUE)
         );
         jPanel6_1.setLayout(gl_jPanel6_1);
-             
+        
+       
+        BotaoAcessarGeranciaDeFilmes.setText("Acessar");
+        BotaoAcessarGeranciaDeFilmes.setEnabled(false);
+        
+        JLabel jLabel2_1 = new JLabel();
+        jLabel2_1.setText("Seção de Gerenciamento de Filmes");
+        jLabel2_1.setForeground(Color.WHITE);
+        jLabel2_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        GroupLayout gl_jPanel2_1 = new GroupLayout(jPanel2_1);
+        gl_jPanel2_1.setHorizontalGroup(
+        	gl_jPanel2_1.createParallelGroup(Alignment.TRAILING)
+        		.addGap(0, 228, Short.MAX_VALUE)
+        		.addGroup(gl_jPanel2_1.createSequentialGroup()
+        			.addContainerGap(14, Short.MAX_VALUE)
+        			.addComponent(jPanel6_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(BotaoAcessarGeranciaDeFilmes)
+        			.addGap(124))
+        		.addGroup(Alignment.LEADING, gl_jPanel2_1.createSequentialGroup()
+        			.addGap(22)
+        			.addComponent(jLabel2_1)
+        			.addContainerGap(109, Short.MAX_VALUE))
+        );
+        gl_jPanel2_1.setVerticalGroup(
+        	gl_jPanel2_1.createParallelGroup(Alignment.LEADING)
+        		.addGap(0, 194, Short.MAX_VALUE)
+        		.addGroup(gl_jPanel2_1.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(jLabel2_1)
+        			.addGap(18)
+        			.addGroup(gl_jPanel2_1.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_jPanel2_1.createSequentialGroup()
+        					.addGap(27)
+        					.addComponent(BotaoAcessarGeranciaDeFilmes))
+        				.addGroup(gl_jPanel2_1.createSequentialGroup()
+        					.addGap(18)
+        					.addComponent(jPanel6_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+        			.addContainerGap(31, Short.MAX_VALUE))
+        );
+        jPanel2_1.setLayout(gl_jPanel2_1);
+        
         jPanel2_2 = new JPanel();
         jPanel2_2.setBackground(new Color(2, 32, 64));
         
@@ -350,10 +447,11 @@ public class Gerente extends javax.swing.JFrame {
         		.addGap(0, 100, Short.MAX_VALUE)
         );
         jPanel6_2.setLayout(gl_jPanel6_2);
-        ButaoAcessarGeranciaDeAlimentos = new javax.swing.JButton();
+        BotaoAcessarGeranciaDeAlimentos = new javax.swing.JButton();
         
-                ButaoAcessarGeranciaDeAlimentos.setText("Acessar");
-                ButaoAcessarGeranciaDeAlimentos.addActionListener(new java.awt.event.ActionListener() {
+                BotaoAcessarGeranciaDeAlimentos.setText("Acessar");
+                BotaoAcessarGeranciaDeAlimentos.setEnabled(false);
+                BotaoAcessarGeranciaDeAlimentos.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         ButaoAcessarGeranciaDeAlimentosActionPerformed(evt);
                     }
@@ -370,7 +468,7 @@ public class Gerente extends javax.swing.JFrame {
         			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         			.addComponent(jPanel6_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addGap(18)
-        			.addComponent(ButaoAcessarGeranciaDeAlimentos)
+        			.addComponent(BotaoAcessarGeranciaDeAlimentos)
         			.addGap(116))
         		.addGroup(gl_jPanel2_2.createSequentialGroup()
         			.addContainerGap()
@@ -389,7 +487,7 @@ public class Gerente extends javax.swing.JFrame {
         					.addComponent(jPanel6_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         				.addGroup(gl_jPanel2_2.createSequentialGroup()
         					.addGap(46)
-        					.addComponent(ButaoAcessarGeranciaDeAlimentos)))
+        					.addComponent(BotaoAcessarGeranciaDeAlimentos)))
         			.addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel2_2.setLayout(gl_jPanel2_2);
@@ -403,27 +501,32 @@ public class Gerente extends javax.swing.JFrame {
         			.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 1186, Short.MAX_VALUE)
         			.addContainerGap())
         		.addGroup(jPanel1Layout.createSequentialGroup()
-        			.addGap(77)
-        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE))
-        			.addGap(328)
+        			.addGap(36)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-        					.addComponent(jPanel10, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
-        					.addContainerGap())
-        				.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        					.addGap(98)
+        					.addComponent(jPanel2_1, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+        					.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+        					.addGap(116)
         					.addComponent(jPanel2_2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-        					.addGap(124))))
+        					.addGap(124))
+        				.addGroup(jPanel1Layout.createSequentialGroup()
+        					.addGap(41)
+        					.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        					.addGap(328)
+        					.addComponent(jPanel10, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
+        					.addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(jPanel2_2, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-        				.addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(jPanel2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+        				.addComponent(jPanel2_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+        				.addComponent(jPanel2_1, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
         				.addComponent(jPanel10, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -506,10 +609,10 @@ public class Gerente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton BotaoVendaDeAlimentos;
-    private javax.swing.JButton ButaoAcessarGeranciaDeAlimentos;
-    private javax.swing.JButton ButaoAcessarGeranciaDeFilmes;
+    private javax.swing.JButton BotaoAcessarGeranciaDeAlimentos;
+    private javax.swing.JButton BotaoAcessarGeranciaFuncinario;
     private javax.swing.JLabel TXTVendaDeAlimentos;
-    private javax.swing.JButton butaoAcessoCompraDeIngresos;
+    private javax.swing.JButton botaoAcessoCompraDeIngresos;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
