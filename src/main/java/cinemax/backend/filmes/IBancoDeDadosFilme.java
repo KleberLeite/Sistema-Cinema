@@ -26,4 +26,6 @@ public interface IBancoDeDadosFilme {
 	
 	boolean tentarReservar(int idFilme, int idSessao, int linha, int coluna);
 	boolean tentarDesreservar(int idFilme, int idSessao, int linha, int coluna);
+	
+	boolean tentarAlterarInicioSessao(int idFilme, int idSessao, LocalDateTime novoInicio);
 }

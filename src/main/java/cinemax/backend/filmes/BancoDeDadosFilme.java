@@ -180,7 +180,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		if(!filmes.containsKey(idFilme)) {
 			return false;
 		}
-		if(existeAlgumFilmeNaMesmaSala(idSala, inicio)) {
+		if(existeOutraSessaoNoMesmoLugarHora(idSala, inicio)) {
 			return false;
 		}
 		
@@ -204,22 +204,6 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		
 		Filme filme = filmes.get(idFilme);
 		return filme.removerSessao(idSessao);
-	}
-	
-	private boolean existeAlgumFilmeNaMesmaSala(int idSala, LocalDateTime inicio) {
-		for(Filme filme : filmes.values()) {
-			for(Sessao sessao : filme.obterTodasSessoes()) {
-				if(sessao.getSala().getIdSala() != idSala) {
-					continue;
-				}
-				
-				LocalDateTime fimSessao = sessao.getInicio().plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
-				if(inicio.isAfter(sessao.getInicio()) && inicio.isBefore(fimSessao)) {
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -280,5 +264,79 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		}
 		filmes.remove(idFilme);
 		return true;
+	}
+	
+	@Override
+	public boolean tentarAlterarInicioSessao(int idFilme, int idSessao, LocalDateTime novoInicio) {
+		if(backend.diaEstaAberto()) {
+			System.out.println("A");
+			return false;
+		}
+		if(!filmes.containsKey(idFilme)) {
+			System.out.println("B");
+			return false;
+		}
+		Filme filme = filmes.get(idFilme);
+		if(!filme.contemSessao(idSessao)) {
+			System.out.println("C");
+			return false;
+		}
+		Sessao sessao = filme.obterSessao(idSessao);
+		if(existeOutraSessaoNoMesmoLugarHora(sessao.getSala().getIdSala(), novoInicio, sessao.getId())) {
+			System.out.println("D");
+			return false;
+		}
+		sessao.setInicio(novoInicio);
+		return true;
+	}
+	
+	private boolean existeOutraSessaoNoMesmoLugarHora(int idSala, LocalDateTime inicio, int ignoreIdSessao) {
+		for(Filme filme : filmes.values()) {
+			for(Sessao sessao : filme.obterTodasSessoes()) {
+				if(sessao.getSala().getIdSala() != idSala) {
+					continue;
+				}
+				if(sessao.getId() == ignoreIdSessao) {
+					continue;
+				}
+				
+				LocalDateTime fimNovaSessao = inicio.plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
+				LocalDateTime inicioSessaoExistente = sessao.getInicio();
+				LocalDateTime fimSessaoExistente = sessao.getInicio().plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
+				if(haChoqueDeHorario(inicio, fimNovaSessao, inicioSessaoExistente, fimSessaoExistente)) {
+					System.out.println("Choque com: " + filme.getNome());
+					System.out.println("Inicio desejado: " + inicio);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean existeOutraSessaoNoMesmoLugarHora(int idSala, LocalDateTime inicio) {
+		for(Filme filme : filmes.values()) {
+			for(Sessao sessao : filme.obterTodasSessoes()) {
+				if(sessao.getSala().getIdSala() != idSala) {
+					continue;
+				}
+				
+				LocalDateTime fimNovaSessao = inicio.plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
+				LocalDateTime inicioSessaoExistente = sessao.getInicio();
+				LocalDateTime fimSessaoExistente = sessao.getInicio().plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
+				if(haChoqueDeHorario(inicio, fimNovaSessao, inicioSessaoExistente, fimSessaoExistente)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private boolean haChoqueDeHorario(
+		LocalDateTime inicioNovaSessao,
+		LocalDateTime fimNovaSessao,
+		LocalDateTime inicioSessaoExistente,
+		LocalDateTime fimSessaoExistente
+	) {
+		return !fimNovaSessao.isBefore(inicioSessaoExistente) && !inicioNovaSessao.isAfter(fimSessaoExistente);
 	}
 }
