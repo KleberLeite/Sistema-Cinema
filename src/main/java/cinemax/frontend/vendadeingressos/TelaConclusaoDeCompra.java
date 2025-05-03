@@ -75,30 +75,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 			lblSessao.setBounds(20, 10, 400, 25);
 			card.add(lblSessao);
 
-			JButton btnEditar = new JButton(iconeEditar); // ou seu ícone
-			btnEditar.setBounds(110, 10, 40, 40);
-			btnEditar.addActionListener(e -> {
-				TelaEditarSessao telaEditarSessao = new TelaEditarSessao(sessao, TelaEditarFilme.this);
-				telaEditarSessao.setLocationRelativeTo(null);
-				telaEditarSessao.setVisible(true);
-
-				
-			});
-			card.add(btnEditar);
 			
-			
-			JButton btnExcluir = new JButton(iconeExcluir); // ou seu ícone
-			btnExcluir.setBounds(160, 10, 40, 40);
-			btnExcluir.addActionListener(e -> {
-				boolean sucesso = app.getBackend().getBancoFilmes().tentarRemoverSessao(sessao.getId(), filme.getId());
-				if (!sucesso) {
-					JOptionPane.showMessageDialog(null, "Falha ao tentar Remover a sessão, tente novamente!", "Aviso",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					atualizarListaDeSessoes(panelRGs, filme); // atualiza após excluir
-				}
-			});
-			card.add(btnExcluir);
 
 			panelRGs.add(Box.createRigidArea(new Dimension(0, 10)));
 			panelRGs.add(card);
