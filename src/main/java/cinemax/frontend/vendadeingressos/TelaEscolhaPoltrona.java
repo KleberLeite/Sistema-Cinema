@@ -1,4 +1,4 @@
-package cinemax.frontend.vendaDeIngressos;
+package cinemax.frontend.vendadeingressos;
 
 import java.awt.Color;
 import java.awt.Component;

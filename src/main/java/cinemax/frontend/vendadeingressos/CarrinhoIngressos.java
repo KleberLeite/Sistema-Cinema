@@ -1,4 +1,4 @@
-package cinemax.frontend.vendaDeIngressos;
+package cinemax.frontend.vendadeingressos;
 
 import java.util.ArrayList;
 import java.util.HashMap;

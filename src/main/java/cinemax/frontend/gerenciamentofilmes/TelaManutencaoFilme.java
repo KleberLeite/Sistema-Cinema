@@ -1,4 +1,4 @@
-package cinemax.frontend.gerenciamentoFilmes;
+package cinemax.frontend.gerenciamentofilmes;
 
 import javax.swing.JPanel;
 

@@ -2,15 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package cinemax.frontend.paginasGerenteFuncionario;
+package cinemax.frontend.PaginasGeranteeFuncionario;
 
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.geranciaDeFuncionarios.Gerencia;
-import cinemax.frontend.gerenciamentoFilmes.TelaCrudFilme;
-import cinemax.frontend.vendaDeAlimentos.Vendas;
-import cinemax.frontend.vendaDeAlimentos.VendasDeAlimentos;
-import cinemax.frontend.vendaDeIngressos.TelaEscolhaFilme;
-
+import cinemax.frontend.geranciadefuncionarios.Gerencia;
+import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
+import cinemax.frontend.vendadealimentos.Vendas;
+import cinemax.frontend.vendadealimentos.VendasDeAlimentos;
+import cinemax.frontend.vendadeingressos.TelaEscolhaFilme;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout.Alignment;

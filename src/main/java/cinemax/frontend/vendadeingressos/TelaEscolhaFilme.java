@@ -1,4 +1,4 @@
-package cinemax.frontend.vendaDeIngressos;
+package cinemax.frontend.vendadeingressos;
 
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -25,10 +25,10 @@ import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.backend.salas.BancoDeDadosSala;
+import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.model.DadosFilme;
 import cinemax.frontend.model.ModeloTabela;
-import cinemax.frontend.paginasGerenteFuncionario.Gerente;
 
 import javax.swing.JScrollPane;
 import java.awt.Font;

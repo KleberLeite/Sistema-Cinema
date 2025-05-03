@@ -1,4 +1,4 @@
-package cinemax.frontend.gerenciamentoFilmes;
+package cinemax.frontend.gerenciamentofilmes;
 
 import java.awt.EventQueue;
 
@@ -8,8 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Filme;
+import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.paginasGerenteFuncionario.Gerente;
 
 import java.awt.Color;
 import java.awt.Dimension;
