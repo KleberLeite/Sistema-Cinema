@@ -6,14 +6,15 @@ import cinemax.backend.salas.Sala;
 
 public class Ingresso {
 	
-	private static double precoGeral = 20;
+	private static double precoIngresso = 20;
 	
 	private Sala sala;
 	private Sessao sessao;
 	private Filme filme;
-	private double preco = precoGeral;
+	private double preco = precoIngresso;
 	private TipoDeIngresso tipo;
 	private String poltrona;
+	private String RG;
 	
 	public Ingresso(Sessao sessao, String poltrona) {
 		super();
@@ -23,14 +24,23 @@ public class Ingresso {
 		this.poltrona = poltrona;
 	}
 	
-	public static double precoIngresso() {
-		return precoGeral;
-	}
 	
-	public double definePreco(TipoDeIngresso tipo) {
-		if(this.isMeia(tipo)) return this.preco/2;
-		
-		return this.preco;
+
+	@Override
+	public String toString() {
+		return "Ingresso [sala=" + sala.getIdSala() + 
+				", \nsessao=" + sessao.getId() + 
+				", \nfilme=" + filme.getNome() + 
+				", \\npreco=" + preco + 
+				", \\ntipo=" + tipo + 
+				", \\npoltrona=" + poltrona + 
+				", \\nRG=" + RG + "]";
+	}
+
+
+
+	public static double getPrecoIngresso() {
+		return precoIngresso;
 	}
 	
 	private boolean isMeia(TipoDeIngresso tipo) {
@@ -38,6 +48,14 @@ public class Ingresso {
 		return true;
 	}
 	
+	public void setTipo(TipoDeIngresso tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getRG() {
+		return RG;
+	}
+
 	public TipoDeIngresso getTipo() {
 		return tipo;
 	}
@@ -61,9 +79,7 @@ public class Ingresso {
 	public String getPoltrona() {
 		return poltrona;
 	}
-	public void setPoltrona(String poltrona) {
-		this.poltrona = poltrona;
-	}
+	
 	
 	
 	

@@ -61,7 +61,7 @@ public class RegistroDeVendas {
 		System.out.println("Vendas Filmes --------------------------------------------");
 		for (VendasFilme vendasFilme : listaVendasFilme) {
 			System.out.println(vendasFilme + " | Total R$: " 
-		+ vendasFilme.calcularTotal(Ingresso.precoIngresso(), Ingresso.precoIngresso()/2));
+		+ vendasFilme.calcularTotal(Ingresso.getPrecoIngresso(), Ingresso.getPrecoIngresso()/2));
 		}
 		/*
 		System.out.println("Vendas Alimentos --------------------------------------------");

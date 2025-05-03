@@ -50,7 +50,7 @@ public class Carrinho {
 	public double totalCompraFilme() {
 
 		Ingresso ingresso = ingressos.get(0);
-		double precoInteiro = Ingresso.precoIngresso();
+		double precoInteiro = Ingresso.getPrecoIngresso();
 		
 		return this.qtdeDeMeias()*precoInteiro/2 + this.qtdeDeMeias()*precoInteiro;
 	}
@@ -67,7 +67,6 @@ public class Carrinho {
 
 	public void adicionaIngresso(Ingresso ingresso) {
 		ingressos.add(ingresso);
-		
 	}
 	
 	public void removeIngresso(Ingresso ingresso) {
