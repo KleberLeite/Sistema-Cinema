@@ -8,16 +8,14 @@ import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Sessao;
-import cinemax.frontend.compra.Carrinho;
-import cinemax.frontend.compra.Ingresso;
-import cinemax.frontend.compra.TipoDeIngresso;
+import cinemax.backend.relatorios.Ingresso;
+import cinemax.backend.relatorios.TipoDeIngresso;
 import cinemax.frontend.controller.ControladorDeApp;
 
 import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.ScrollPaneConstants;
@@ -26,17 +24,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
 
 public class TelaFinalizarCompra extends JFrame {
 
@@ -165,7 +160,7 @@ public class TelaFinalizarCompra extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaFinalizarCompra(Sessao sessaoAtual, Carrinho carrinho) {
+	public TelaFinalizarCompra(Sessao sessaoAtual, CarrinhoIngressos carrinho) {
 		this.sessao = sessaoAtual;
 		totalDeIngressosRestantes = carrinho.qtdeTotalIngressos();
 		System.out.println("Total de Ingressos: " + totalDeIngressosRestantes);
@@ -258,7 +253,7 @@ public class TelaFinalizarCompra extends JFrame {
 		imgInteira.setBounds(10, 11, 46, 35);
 		panelInteiras.add(imgInteira);
 
-		double ingressoInteria = Ingresso.getPrecoIngresso();
+		double ingressoInteria = Ingresso.PRECO_INGRESSO;
 		String ingressoInteiroPreco = String.format("R$ %.2f", ingressoInteria);
 		JLabel lblPrecoInteira = new JLabel(ingressoInteiroPreco);
 		lblPrecoInteira.setBounds(78, 32, 96, 14);
@@ -274,7 +269,7 @@ public class TelaFinalizarCompra extends JFrame {
 		panelMeias.add(lblMeia);
 		lblMeia.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-		double ingressoMeia = Ingresso.getPrecoIngresso() / 2;
+		double ingressoMeia = Ingresso.PRECO_INGRESSO / 2;
 		String ingressoMeiaPreco = String.format("R$ %.2f", ingressoMeia);
 		JLabel lblPrecoMeia = new JLabel(ingressoMeiaPreco);
 		lblPrecoMeia.setBounds(78, 32, 96, 14);
@@ -374,7 +369,7 @@ public class TelaFinalizarCompra extends JFrame {
 				}
 				if (totalDeIngressosRestantes > 0) {
 					if (!btnMenosUmaInteira.isEnabled()) btnMenosUmaInteira.setEnabled(true);
-					double ingressoAtual = Ingresso.getPrecoIngresso();
+					double ingressoAtual = Ingresso.PRECO_INGRESSO;
 					somaInteira += ingressoAtual;
 					totalDeIngressosSelecionadosInteiras++;
 					somaTotal += ingressoAtual;
@@ -418,7 +413,7 @@ public class TelaFinalizarCompra extends JFrame {
 					if(totalDeIngressosRestantes == 0) {// reativa o botão de mais uma meia, pois vai ser a última rodada das inteira e vai liberar um ingresso
 						btnMaisUmaMeia.setEnabled(true);
 					}
-					double ingressoAtual = Ingresso.getPrecoIngresso();
+					double ingressoAtual = Ingresso.PRECO_INGRESSO;
 					somaInteira -= ingressoAtual;
 					totalDeIngressosSelecionadosInteiras--;
 					somaTotal -= ingressoAtual;
@@ -460,7 +455,7 @@ public class TelaFinalizarCompra extends JFrame {
 				}
 				if (totalDeIngressosRestantes > 0) {
 					if (!btnMenosUmaMeia.isEnabled()) btnMenosUmaMeia.setEnabled(true);
-					double ingressoAtual = Ingresso.getPrecoIngresso() / 2;
+					double ingressoAtual = Ingresso.PRECO_INGRESSO / 2;
 					somaMeia += ingressoAtual;
 					totalDeIngressosSelecionadosMeias++;
 					somaTotal += ingressoAtual;
@@ -506,7 +501,7 @@ public class TelaFinalizarCompra extends JFrame {
 					if(totalDeIngressosRestantes == 0) {// reativa o botão de mais uma inteira, pois vai ser a última rodada das meia e vai liberar um ingresso
 						btnMaisUmaInteira.setEnabled(true);
 					}
-					double ingressoAtual = Ingresso.getPrecoIngresso() / 2;
+					double ingressoAtual = Ingresso.PRECO_INGRESSO / 2;
 					somaMeia -= ingressoAtual;
 					totalDeIngressosSelecionadosMeias--;
 					somaTotal -= ingressoAtual;

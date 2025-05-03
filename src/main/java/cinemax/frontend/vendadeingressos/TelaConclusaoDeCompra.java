@@ -1,25 +1,14 @@
 package cinemax.frontend.vendadeingressos;
 
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cinemax.backend.core.Backend;
-import cinemax.backend.filmes.Filme;
-import cinemax.backend.filmes.Sessao;
-import cinemax.backend.salas.Sala;
-import cinemax.frontend.compra.Carrinho;
-import cinemax.frontend.compra.Ingresso;
-import cinemax.frontend.compra.TipoDeIngresso;
+import cinemax.backend.relatorios.Ingresso;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.gerenciamentofilmes.TelaAdicionarFilme;
-import cinemax.frontend.gerenciamentofilmes.TelaEditarFilme;
-import cinemax.frontend.gerenciamentofilmes.TelaEditarSessao;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -61,7 +50,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaConclusaoDeCompra(Carrinho carrinho) {		
+	public TelaConclusaoDeCompra(CarrinhoIngressos carrinho) {		
 		
 		app.getBackend().tentarAbrirDia();
 		

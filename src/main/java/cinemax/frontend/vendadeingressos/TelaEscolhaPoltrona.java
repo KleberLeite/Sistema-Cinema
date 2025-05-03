@@ -17,10 +17,10 @@ import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Sessao;
+import cinemax.backend.relatorios.Ingresso;
+import cinemax.backend.salas.Poltrona;
 import cinemax.backend.salas.Sala;
 import cinemax.backend.salas.TipoDeEstrutura;
-import cinemax.frontend.compra.Carrinho;
-import cinemax.frontend.compra.Ingresso;
 import cinemax.frontend.controller.ControladorDeApp;
 
 import javax.swing.BorderFactory;
@@ -43,7 +43,7 @@ public class TelaEscolhaPoltrona extends JFrame{
 	private List<String> PoltronasSelecionadas = new ArrayList<>();
 	private JPanel panelPrincipal;
 	private Sessao sessao = bancos.getBancoFilmes().obterFilmePorId(0).obterSessao(0);
-	private Carrinho carrinho = new Carrinho();
+	private CarrinhoIngressos carrinho = new CarrinhoIngressos();
 	private int poltronasRestantes = 8;//Contabiliza a quantidade de poltronas que ainda podem ser escolhidas
 	
 	
@@ -259,8 +259,7 @@ public class TelaEscolhaPoltrona extends JFrame{
 		int tamanho = 20;
 		
 		//parcial modelo da lista
-		DefaultListModel<String> modeloLista = new DefaultListModel<>();
-		
+		DefaultListModel<String> modeloLista = new DefaultListModel<>();		
 		
 		for (int i = 0; i < sala.getLinhas(); i++) {
 
@@ -288,8 +287,11 @@ public class TelaEscolhaPoltrona extends JFrame{
 	            botao.setBorderPainted(false);
 
 	            // Ação do botão
-	            botao.addActionListener(e -> {
-	                Ingresso ingresso = new Ingresso(sessao, poltronaSelecionada);
+	            final int auxI = i;
+	            final int auxJ = j;
+	            botao.addActionListener(e -> {	            	
+	            	Poltrona poltrona = (Poltrona)sala.obterTipoDeEstrutura(auxI, auxJ);
+	                Ingresso ingresso = new Ingresso(sessao, poltrona);
 
 	                boolean isSelecionada =
 	                    botao.getIcon().equals(iconePoltronaSelecionada) ||
