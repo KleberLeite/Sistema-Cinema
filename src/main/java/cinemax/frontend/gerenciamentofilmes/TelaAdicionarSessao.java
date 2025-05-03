@@ -19,20 +19,21 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-
 import java.awt.event.ActionListener;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
 
-public class TelaEditarSessao extends JFrame {
+public class TelaAdicionarSessao extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	private JPanel contentPane;
 	private TelaManutencaoFilme telaManutencaoFilme;
+	private int idFilme;
+	private int NumSalas = 4;
 	private JTextField textFieldMes;
 	private JTextField textFieldDia;
 	private JTextField textFieldHora;
@@ -46,7 +47,7 @@ public class TelaEditarSessao extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaEditarSessao frame = new TelaEditarSessao(null, null);
+					TelaAdicionarSessao frame = new TelaAdicionarSessao(null,0);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -59,7 +60,7 @@ public class TelaEditarSessao extends JFrame {
 	// Methods utils
 	// -----------------------------------------------------------------------------
 
-	private boolean atualizaSessao(int idSala, Sessao sessao, String diaTexto, String MesTexto, String HoraTexto,
+	private boolean adicionaSessao(int idSala, String diaTexto, String MesTexto, String HoraTexto,
 			String MinutoTexto) {
 		int anoNovo = LocalDateTime.now().getYear();
 		int diaNovo;
@@ -107,12 +108,14 @@ public class TelaEditarSessao extends JFrame {
 			JOptionPane.showMessageDialog(null, "Entrada inválida! Digite uma data e/ou hora válida!", "Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
+		
+		int idSessaoOuFalse = app.getBackend().getBancoFilmes().tentarAdicionarSessao(idSala, this.idFilme, novaData);
 
-		if (app.getBackend().getBancoFilmes().tentarAlterarInicioSessao(sessao.getId(), sessao.getFilme().getId(),novaData)) {
-			JOptionPane.showMessageDialog(null, "Sessão atualizada com sucesso!");
+		if (idSessaoOuFalse==-1) {
+			JOptionPane.showMessageDialog(null, "Data inválida! Imcompatibilidade de horário com outra sessão!", "Erro", JOptionPane.ERROR_MESSAGE);
 			return true;
 		}
-		JOptionPane.showMessageDialog(null, "Data inválida! Imcompatibilidade de horário com outra sessão!", "Erro", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Sessão Adicionada com sucesso!");
 		return true;
 		
 	}
@@ -133,13 +136,11 @@ public class TelaEditarSessao extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @wbp.parser.constructor
 	 */
-	public TelaEditarSessao(Sessao sessaoAtual, TelaManutencaoFilme telaManutencaoFilme) {
-		if (sessaoAtual != null) {
-			this.sessao = sessaoAtual;
-		}
-		Sessao sessao = this.sessao;
+	public TelaAdicionarSessao(TelaManutencaoFilme telaManutencaoFilme, int idFilme) {
 		this.telaManutencaoFilme = telaManutencaoFilme;
+		this.idFilme = idFilme;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 300);
@@ -150,16 +151,6 @@ public class TelaEditarSessao extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		int dia = sessao.getInicio().getDayOfMonth();
-		int mes = sessao.getInicio().getMonthValue();
-		int hora = sessao.getInicio().getHour();
-		int minuto = sessao.getInicio().getMinute();
-
-		String diaAtual = Integer.toString(dia);
-		String mesAtual = Integer.toString(mes);
-		String horaAtual = Integer.toString(hora);
-		String minutoAtual = Integer.toString(minuto);
-
 		JPanel panel = new JPanel();
 		panel.setBounds(10, 11, 564, 239);
 		contentPane.add(panel);
@@ -167,25 +158,25 @@ public class TelaEditarSessao extends JFrame {
 
 		JLabel lblNewLabel = new JLabel("Editar Sessão:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel.setBounds(10, 11, 379, 44);
+		lblNewLabel.setBounds(10, 11, 161, 44);
 		panel.add(lblNewLabel);
 
-		textFieldDia = new JTextField(diaAtual);
+		textFieldDia = new JTextField();
 		textFieldDia.setBounds(24, 102, 86, 20);
 		panel.add(textFieldDia);
 		textFieldDia.setColumns(10);
 
-		textFieldMes = new JTextField(mesAtual);
+		textFieldMes = new JTextField();
 		textFieldMes.setBounds(132, 102, 86, 20);
 		panel.add(textFieldMes);
 		textFieldMes.setColumns(10);
 
-		textFieldHora = new JTextField(horaAtual);
+		textFieldHora = new JTextField();
 		textFieldHora.setBounds(238, 102, 86, 20);
 		panel.add(textFieldHora);
 		textFieldHora.setColumns(10);
 
-		textFieldMinuto = new JTextField(minutoAtual);
+		textFieldMinuto = new JTextField();
 		textFieldMinuto.setBounds(344, 102, 86, 20);
 		panel.add(textFieldMinuto);
 		textFieldMinuto.setColumns(10);
@@ -226,7 +217,7 @@ public class TelaEditarSessao extends JFrame {
 				String MinutoTexto = textFieldMinuto.getText();
 				int idSala = (int) comboBoxSala.getSelectedItem();
 
-				if (atualizaSessao(idSala,sessao, diaTexto, MesTexto, HoraTexto, MinutoTexto)) {
+				if (adicionaSessao(idSala, diaTexto, MesTexto, HoraTexto, MinutoTexto)) {
 					
 					telaManutencaoFilme.atualizarListaDeSessoesPosEdicaoOuAdicao();
 					dispose();
@@ -237,5 +228,8 @@ public class TelaEditarSessao extends JFrame {
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.setBounds(207, 168, 161, 35);
 		panel.add(btnNewButton);
+		
+		
 	}
+
 }

@@ -11,6 +11,7 @@ import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.IBancoDeDadosFilme;
 import cinemax.backend.filmes.Sessao;
+import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.vendadeingressos.TelaEscolhaPoltrona;
 
@@ -27,6 +28,8 @@ import java.time.format.DateTimeFormatter;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaCrudFilme extends JFrame {
 
@@ -137,6 +140,15 @@ public class TelaCrudFilme extends JFrame {
 		scrollPane.setViewportView(panelListaFilmes);
 		
 		JButton btnAdicionarFilme = new JButton("Adicionar");
+		btnAdicionarFilme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaAdicionarFilme telaAdicionarFilme = new TelaAdicionarFilme();
+				telaAdicionarFilme.setLocationRelativeTo(null);
+				telaAdicionarFilme.setVisible(true);
+				
+				dispose();
+			}
+		});
 		btnAdicionarFilme.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAdicionarFilme.setBounds(323, 364, 111, 30);
 		panelPrincipal.add(btnAdicionarFilme);
@@ -147,6 +159,16 @@ public class TelaCrudFilme extends JFrame {
 		panelPrincipal.add(lblListaDosFilmes);
 		
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Gerente gerente = new Gerente("gerente123", "1234");
+				gerente.setLocationRelativeTo(null);
+				gerente.setVisible(true);
+				
+				dispose();
+				
+			}
+		});
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnVoltar.setBounds(10, 427, 89, 23);
 		contentPane.add(btnVoltar);

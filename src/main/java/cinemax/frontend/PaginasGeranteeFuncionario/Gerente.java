@@ -30,6 +30,7 @@ public class Gerente extends javax.swing.JFrame {
 
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	
+	
     /**
      * Creates new form Gerente
      */
@@ -68,6 +69,7 @@ public class Gerente extends javax.swing.JFrame {
         });
         botaoIniciarDia.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		app.getBackend().tentarAbrirDia();
         		botaoIniciarDia.setEnabled(false);
         		
         		botaoTerminoDia.setEnabled(true);
@@ -84,6 +86,7 @@ public class Gerente extends javax.swing.JFrame {
         botaoTerminoDia = new javax.swing.JButton();
         botaoTerminoDia.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		app.getBackend().tentarFecharDia();
         		botaoTerminoDia.setEnabled(false);
         		
         		BotaoAcessarGeranciaFuncinario.setEnabled(true);
@@ -127,7 +130,8 @@ public class Gerente extends javax.swing.JFrame {
         jLabel2.setText("Seção de Gerenciamento de Fucionários");
 
         BotaoAcessarGeranciaFuncinario.setText("Acessar");
-        BotaoAcessarGeranciaFuncinario.setEnabled(false);
+        if(!app.getBackend().diaEstaAberto()) BotaoAcessarGeranciaFuncinario.setEnabled(true);
+        else BotaoAcessarGeranciaFuncinario.setEnabled(false);
         BotaoAcessarGeranciaFuncinario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ButaoAcessarGeranciaDeFuncionarioActionPerformed(evt);
@@ -180,7 +184,7 @@ public class Gerente extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Consultar relatorio de vandas:");
+        jLabel5.setText("Consultar relatório de vendas:");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -188,12 +192,13 @@ public class Gerente extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Termino das Operações do dia:");
+        jLabel8.setText("Término das Operações do dia:");
 
         botaoIniciarDia.setText("Iniciar");
 
         botaoTerminoDia.setText("Termino");
-        botaoTerminoDia.setEnabled(false);
+        if(!app.getBackend().diaEstaAberto())botaoTerminoDia.setEnabled(false);
+        else botaoTerminoDia.setEnabled(true);
 
         botaoConsultarRelatorio.setText("Consulatar relatório");
         botaoConsultarRelatorio.setEnabled(false);
@@ -277,7 +282,8 @@ public class Gerente extends javax.swing.JFrame {
         TXTVendaDeAlimentos.setText("Venda de Alimentos");
 
         BotaoAcessarVendaDeAlimentos.setText("Acessar");
-        BotaoAcessarVendaDeAlimentos.setEnabled(false);
+        if(!app.getBackend().diaEstaAberto()) BotaoAcessarVendaDeAlimentos.setEnabled(false);
+        else BotaoAcessarVendaDeAlimentos.setEnabled(true);
         BotaoAcessarVendaDeAlimentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoVendaDealimentosActionPerformed(evt);
@@ -344,7 +350,8 @@ public class Gerente extends javax.swing.JFrame {
         jLabel3.setText("Venda de ingressos");
 
         botaoAcessoCompraDeIngresos.setText("Acessar");
-        botaoAcessoCompraDeIngresos.setEnabled(false);
+        if(!app.getBackend().diaEstaAberto()) botaoAcessoCompraDeIngresos.setEnabled(false);
+        else botaoAcessoCompraDeIngresos.setEnabled(true);
         
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -397,7 +404,8 @@ public class Gerente extends javax.swing.JFrame {
         
        
         BotaoAcessarGeranciaDeFilmes.setText("Acessar");
-        BotaoAcessarGeranciaDeFilmes.setEnabled(false);
+        if(!app.getBackend().diaEstaAberto()) BotaoAcessarGeranciaDeFilmes.setEnabled(true);
+        else BotaoAcessarGeranciaDeFilmes.setEnabled(false);
         
         JLabel jLabel2_1 = new JLabel();
         jLabel2_1.setText("Seção de Gerenciamento de Filmes");
@@ -455,7 +463,8 @@ public class Gerente extends javax.swing.JFrame {
         BotaoAcessarGeranciaDeAlimentos = new javax.swing.JButton();
         
                 BotaoAcessarGeranciaDeAlimentos.setText("Acessar");
-                BotaoAcessarGeranciaDeAlimentos.setEnabled(false);
+                if(!app.getBackend().diaEstaAberto()) BotaoAcessarGeranciaDeAlimentos.setEnabled(true);
+                else BotaoAcessarGeranciaDeAlimentos.setEnabled(false);
                 BotaoAcessarGeranciaDeAlimentos.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         ButaoAcessarGeranciaDeAlimentosActionPerformed(evt);

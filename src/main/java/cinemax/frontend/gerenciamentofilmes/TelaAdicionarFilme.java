@@ -6,7 +6,10 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Box;
@@ -35,15 +38,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
-public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
+public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
-	Backend bancos = app.getBackend();
-	Filme filme = bancos.getBancoFilmes().obterFilmePorId(0);
+	private int idFilme = -1;
+	private JButton btnAdicionarSessao = new JButton("+");;
 	private JTextField textFieldNome;
 	private JTextField textFieldDuracao;
+	private JTextArea textAreaSinopse;
+	private JComboBox<ClassificacaoIndicativa> comboBoxClassificacaoIndicativa;
 	private JPanel panelSessoes = new JPanel();
 
 	/**
@@ -53,7 +58,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaEditarFilme frame = new TelaEditarFilme(null);
+					TelaAdicionarFilme frame = new TelaAdicionarFilme();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -80,7 +85,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 
 	// Methods utils -------------------------------------------------------
 	
-	private void altualizarFilme(
+	private void adicionarFilme(
 			Filme filme, 
 			String novoNome, 
 			String novaSinopse, 
@@ -97,21 +102,25 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 			return;
 		}
 		
-		boolean sucesso = (app.getBackend().getBancoFilmes().tentarAlterarNome(filme.getId(), novoNome) && 
-				app.getBackend().getBancoFilmes().tentarAlterarSinopse(filme.getId(), novaSinopse) &&
-				app.getBackend().getBancoFilmes().tentarAlterarDuracao(filme.getId(), novaDuracao) && 
-				app.getBackend().getBancoFilmes().tentarAlterarClassificacaoIndicativa(filme.getId(), classificacaoIndicativa)
-				);
-		if (sucesso) {
-			JOptionPane.showMessageDialog(null, "Filme atualizado com sucesso!");
+		int idOuFalse = app.getBackend().getBancoFilmes().tentarAdicionarFilme(novoNome, novaSinopse, novaDuracao, classificacaoIndicativa);
+		
+		if (idOuFalse == -1) {//Deu erro ao adicionar o filme
+			JOptionPane.showMessageDialog(null, "Erro ao adicionar filme.", "Erro", JOptionPane.ERROR_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, "Erro ao atualizar filme.", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Filme criado com sucesso, não é possivel mais alterá-lo por aqui!");
+			this.idFilme = idOuFalse;
+			btnAdicionarSessao.setEnabled(true);
+			textFieldNome.setEnabled(false);
+			textFieldDuracao.setEnabled(false);
+			textAreaSinopse.setEnabled(false);
+			comboBoxClassificacaoIndicativa.setEnabled(false);
+			JOptionPane.showMessageDialog(null, "Adicione sessões ao filme!");
 		}
 
 	}
 	
 	public void atualizarListaDeSessoesPosEdicaoOuAdicao() {
-	    atualizarListaDeSessoes(panelSessoes, this.filme); // já existente
+	    atualizarListaDeSessoes(panelSessoes, app.getBackend().getBancoFilmes().obterFilmePorId(idFilme)); // já existente
 	}
 
 	public void atualizarListaDeSessoes(JPanel panelSessoes, Filme filme) {
@@ -133,10 +142,10 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 			lblSessao.setBounds(20, 10, 400, 25);
 			card.add(lblSessao);
 
-			JButton btnEditar = new JButton(iconeEditar); // ou seu ícone
+			JButton btnEditar = new JButton(iconeEditar);
 			btnEditar.setBounds(110, 10, 40, 40);
 			btnEditar.addActionListener(e -> {
-				TelaEditarSessao telaEditarSessao = new TelaEditarSessao(sessao, TelaEditarFilme.this);
+				TelaEditarSessao telaEditarSessao = new TelaEditarSessao(sessao, TelaAdicionarFilme.this);
 				telaEditarSessao.setLocationRelativeTo(null);
 				telaEditarSessao.setVisible(true);
 
@@ -171,10 +180,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 	/**
 	 * Create the frame.
 	 */
-	public TelaEditarFilme(Filme filmeAtual) {
-		if (filmeAtual != null) {
-			this.filme = filmeAtual;
-		}
+	public TelaAdicionarFilme() {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
@@ -190,7 +196,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		contentPane.add(panelPrincipal);
 		panelPrincipal.setLayout(null);
 
-		textFieldNome = new JTextField(filme.getNome());
+		textFieldNome = new JTextField();
 		textFieldNome.setBounds(30, 38, 280, 26);
 		panelPrincipal.add(textFieldNome);
 		textFieldNome.setColumns(10);
@@ -203,7 +209,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		lblNewLabel_1.setBounds(30, 76, 46, 14);
 		panelPrincipal.add(lblNewLabel_1);
 
-		JTextArea textAreaSinopse = new JTextArea(filme.getSinopse());
+		textAreaSinopse = new JTextArea();
 		// Ativa quebra automática de linha
 		textAreaSinopse.setLineWrap(true);
 		// Garante que a quebra respeite palavras (em vez de cortar no meio)
@@ -216,13 +222,11 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 
 		scrollPane.setViewportView(textAreaSinopse);
 
-		String duracao = Integer.toString(filme.getDuracaoEmMinutos());
-
 		JLabel lblDurao = new JLabel("Duração(min)");
 		lblDurao.setBounds(30, 186, 78, 14);
 		panelPrincipal.add(lblDurao);
 
-		textFieldDuracao = new JTextField(duracao);
+		textFieldDuracao = new JTextField();
 		textFieldDuracao.setColumns(10);
 		textFieldDuracao.setBounds(30, 211, 78, 26);
 		panelPrincipal.add(textFieldDuracao);
@@ -243,17 +247,14 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 
 		scrollPaneSessoes.setViewportView(panelSessoes);
 
-		atualizarListaDeSessoes(panelSessoes, filme);
-
-		JButton btnAdicionarSessao = new JButton("+");
+		//btnAdicionarSessao = new JButton("+");
+		btnAdicionarSessao.setEnabled(false);
 		btnAdicionarSessao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaAdicionarSessao telaAdicionarSessao = new TelaAdicionarSessao(TelaEditarFilme.this,filme.getId());
+				TelaAdicionarSessao telaAdicionarSessao = new TelaAdicionarSessao(TelaAdicionarFilme.this, idFilme);
 				telaAdicionarSessao.setLocationRelativeTo(null);
 				telaAdicionarSessao.setVisible(true);
-				
-				
 				
 			}
 		});
@@ -261,8 +262,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		btnAdicionarSessao.setBounds(651, 103, 59, 59);
 		panelPrincipal.add(btnAdicionarSessao);
 		
-		JComboBox<ClassificacaoIndicativa> comboBoxClassificacaoIndicativa = new JComboBox<>(ClassificacaoIndicativa.values());
-		comboBoxClassificacaoIndicativa.setSelectedItem(filme.getClassificacaoIndicativa());
+		comboBoxClassificacaoIndicativa = new JComboBox<>(ClassificacaoIndicativa.values());
 		comboBoxClassificacaoIndicativa.setBounds(155, 211, 92, 26);
 		panelPrincipal.add(comboBoxClassificacaoIndicativa);
 		
@@ -278,40 +278,22 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 				String duracaoTexto = textFieldDuracao.getText();
 				ClassificacaoIndicativa classificacaoIndicativaSelecionada = (ClassificacaoIndicativa) comboBoxClassificacaoIndicativa.getSelectedItem();
 				
-				
-				altualizarFilme(filme,novoNome,novaSinopse,duracaoTexto,classificacaoIndicativaSelecionada);
-				
-				TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
-				telaCrudFilme.setLocationRelativeTo(null);
-				telaCrudFilme.setVisible(true);
-				
-				dispose();
+				if(!btnAdicionarSessao.isEnabled()) { 
+					adicionarFilme( app.getBackend().getBancoFilmes().obterFilmePorId(idFilme),novoNome,novaSinopse,duracaoTexto,classificacaoIndicativaSelecionada);
+				}else {
+					JOptionPane.showMessageDialog(null, "Filme e sessões adicionados com sucesso");
+					
+					TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
+					telaCrudFilme.setLocationRelativeTo(null);
+					telaCrudFilme.setVisible(true);
+					
+					dispose();
+				}
 			}
 		});
 		btnAtualizar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAtualizar.setBounds(299, 322, 164, 31);
 		panelPrincipal.add(btnAtualizar);
-		
-		JButton btnTeste = new JButton("Teste");
-		btnTeste.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println("============================================================");
-				for(Sessao sessao : filme.obterTodasSessoes()) {
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-					String data = sessao.getInicio().format(formatter);
-					System.out.println("-----------------------------------------------------");
-					System.out.println("Id Sessao: "+sessao.getId());
-					System.out.println("Id Filme: "+sessao.getFilme().getId());
-					System.out.println("Sala: "+sessao.getSala().getIdSala());
-					System.out.println("Inicio: "+data);
-					System.out.println("Filme: "+ sessao.getFilme().getNome());
-					System.out.println("-----------------------------------------------------");
-				}
-				System.out.println("============================================================");
-			}
-		});
-		btnTeste.setBounds(317, 245, 89, 23);
-		panelPrincipal.add(btnTeste);
 		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
