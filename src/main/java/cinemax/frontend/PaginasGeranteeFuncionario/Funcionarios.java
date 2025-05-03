@@ -4,7 +4,7 @@
  */
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
-import cinemax.frontend.vendadealimentos.VendasDeAlimentos;
+import cinemax.frontend.vendadealimentos.VendaDealimentoss;
 
 /**
  *
@@ -203,7 +203,7 @@ public class Funcionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_BotaoVendasDeIngressosActionPerformed
 
     private void BotaoAcessarVendaDeAlimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAcessarVendaDeAlimentosActionPerformed
-     VendasDeAlimentos vendass = new VendasDeAlimentos();
+        VendaDealimentoss vendass= new VendaDealimentoss();
     vendass.setLocationRelativeTo(null); 
     vendass.setVisible(true);  // Torna a janela Vendas visível
     this.dispose();

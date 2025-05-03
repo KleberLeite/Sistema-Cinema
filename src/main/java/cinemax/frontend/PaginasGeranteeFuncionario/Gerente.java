@@ -8,7 +8,7 @@ import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.Gerencia;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
 import cinemax.frontend.vendadealimentos.Vendas;
-import cinemax.frontend.vendadealimentos.VendasDeAlimentos;
+import cinemax.frontend.vendadealimentos.VendaDealimentoss;
 import cinemax.frontend.vendadeingressos.TelaEscolhaFilme;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -580,7 +580,7 @@ public class Gerente extends javax.swing.JFrame {
     }//GEN-LAST:event_ButaoAcessarGeranciaDeAlimentosActionPerformed
 
     private void BotaoVendaDealimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoVendaDealimentosActionPerformed
-    VendasDeAlimentos vendas = new VendasDeAlimentos();
+    VendaDealimentoss vendas = new VendaDealimentoss();
     vendas.setLocationRelativeTo(null); 
     vendas.setVisible(true);  // Torna a janela Vendas visível
     this.dispose();  // Fecha a janela atual
