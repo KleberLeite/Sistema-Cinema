@@ -56,50 +56,66 @@ public class TelaCrudFilme extends JFrame {
 	}
 	//Methods utils --------------------------------------------------------------------------------
 	
+	private JPanel gerarCard() {
+		JPanel card = new JPanel();
+	    card.setLayout(null); 
+	    card.setPreferredSize(new Dimension(1400, 50));
+	    card.setMaximumSize(new Dimension(1400, 50));
+	    card.setBackground(new Color(230, 210, 250));
+	    card.setBorder(new EmptyBorder(10, 30, 10, 10));
+	    return card;
+	}
+	
+	private void adicionarLabelNomeFilme(JPanel card, Filme filme) {
+		JLabel lblNome = new JLabel(filme.getNome());
+	    lblNome.setFont(new Font("Tahoma", Font.BOLD, 14));
+	    lblNome.setBounds(20, 10, 400, 25);
+	    card.add(lblNome);
+	}
+	
+	private void adicionarBotaoEditar(JPanel card, Filme filme) {
+		JButton btnEditar = new JButton("Editar");
+	    btnEditar.addActionListener(e -> {
+              
+	    	 TelaEditarFilme telaEditarFilme = new TelaEditarFilme(filme);
+	    	 telaEditarFilme.setLocationRelativeTo(null);
+	    	 telaEditarFilme.setVisible(true);
+	    	 
+	    	 dispose();
+               
+        });
+	    btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    btnEditar.setBounds(500, 10, 80, 30);
+	    card.add(btnEditar);
+	}
+	
+	private void adicionarBotaoExcluir(JPanel card, JPanel panelListaFilmes, Filme filme) {
+		JButton btnExcluir = new JButton("Excluir");
+	    btnExcluir.addActionListener(e -> {
+	    	 if(!app.getBackend().getBancoFilmes().tentarRemoverFilme(filme.getId())) {
+	    		 JOptionPane.showMessageDialog(null, "Falha ao tentar Remover o Filme, tente novamente!", "Aviso", JOptionPane.WARNING_MESSAGE); 
+	    	 }else{
+	    		 atualizarListaDeFilmes(panelListaFilmes, app.getBackend().getBancoFilmes().obterTodosFilmes());
+	    	 }
+             
+        });
+	    btnExcluir.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    btnExcluir.setBounds(590, 10, 80, 30);
+	    card.add(btnExcluir);
+	}
+	
 	private void atualizarListaDeFilmes(JPanel panelListaFilmes, Filme[] filmes) {
 		panelListaFilmes.removeAll();
 		
 		for (Filme filme : filmes) {
-		    JPanel card = new JPanel();
-		    card.setLayout(null); 
-		    card.setPreferredSize(new Dimension(1400, 50));
-		    card.setMaximumSize(new Dimension(1400, 50));
-		    card.setBackground(new Color(230, 210, 250));
-		    card.setBorder(new EmptyBorder(10, 30, 10, 10));
+		    JPanel card = gerarCard();
 
-		    JLabel lblNome = new JLabel(filme.getNome());
-		    lblNome.setFont(new Font("Tahoma", Font.BOLD, 14));
-		    lblNome.setBounds(20, 10, 400, 25);
-		    card.add(lblNome);
-
-		    JButton btnEditar = new JButton("Editar");
-		    btnEditar.addActionListener(e -> {
-	              
-		    	 TelaEditarFilme telaEditarFilme = new TelaEditarFilme(filme);
-		    	 telaEditarFilme.setLocationRelativeTo(null);
-		    	 telaEditarFilme.setVisible(true);
-		    	 
-		    	 dispose();
-	               
-	        });
-		    btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		    btnEditar.setBounds(500, 10, 80, 30);
-		    card.add(btnEditar);
-
-		    JButton btnExcluir = new JButton("Excluir");
-		    btnExcluir.addActionListener(e -> {
-		    	 if(!app.getBackend().getBancoFilmes().tentarRemoverFilme(filme.getId())) {
-		    		 JOptionPane.showMessageDialog(null, "Falha ao tentar Remover o Filme, tente novamente!", "Aviso", JOptionPane.WARNING_MESSAGE); 
-		    	 }else{
-		    		 atualizarListaDeFilmes(panelListaFilmes, app.getBackend().getBancoFilmes().obterTodosFilmes());
-		    	 }
-	             
-	        });
-		    btnExcluir.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		    btnExcluir.setBounds(590, 10, 80, 30);
-		    card.add(btnExcluir);
-
-		    panelListaFilmes.add(Box.createRigidArea(new Dimension(0, 10))); // espaço entre os cards
+		    adicionarLabelNomeFilme(card, filme);		    
+		    adicionarBotaoEditar(card, filme);
+		    adicionarBotaoExcluir(card, panelListaFilmes, filme);
+		    
+		    // Espaço entre os cards
+		    panelListaFilmes.add(Box.createRigidArea(new Dimension(0, 10))); 
 		    panelListaFilmes.add(card);
 		}
 		
