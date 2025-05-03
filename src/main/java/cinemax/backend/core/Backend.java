@@ -94,4 +94,8 @@ public class Backend {
 	public IBancoDeDadosSala getBancoSalas() {
 		return bancoSalas;
 	}
+	
+	public GerenciadorDeRelatorios getGerenciadorRelatorios() {
+		return gerenciadorDeRelatorios;
+	}
 }
