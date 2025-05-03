@@ -1,7 +1,6 @@
 package cinemax.frontend.gerenciamentofilmes;
 
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,11 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Filme;
-import cinemax.backend.filmes.IBancoDeDadosFilme;
-import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.vendadeingressos.TelaEscolhaPoltrona;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,7 +20,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.ScrollPaneConstants;
 import java.awt.Font;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,15 +27,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class TelaCrudFilme extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
-	Backend bancos = app.getBackend();
+	private Backend bancos = app.getBackend();
 
-	/**
-	 * Launch the application.
-	 */
+	// Launch the application.
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -54,7 +46,6 @@ public class TelaCrudFilme extends JFrame {
 			}
 		});
 	}
-	//Methods utils --------------------------------------------------------------------------------
 	
 	private JPanel gerarCard() {
 		JPanel card = new JPanel();
@@ -122,39 +113,64 @@ public class TelaCrudFilme extends JFrame {
 		panelListaFilmes.revalidate();
 		panelListaFilmes.repaint();
 	}
-	
-	//----------------------------------------------------------------------------------------------
-	
 
-	/**
-	 * Create the frame.
-	 */
+	// Create the frame.
 	public TelaCrudFilme() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
+		contentPane = gerarContentPane();
+		JPanel panelPrincipal = gerarPanelPrincipal(contentPane);
+		JScrollPane scrollPane = gerarScrollPane(panelPrincipal);
+		JPanel panelListaFilmes = gerarPanelListaFilmes(scrollPane);
+		
+		gerarBotaoAdicionarFilme(panelPrincipal);
+		adicionarLabel(panelPrincipal);
+		adicionarBotaoVoltar();
+		
+		atualizarListaDeFilmes(panelListaFilmes,app.getBackend().getBancoFilmes().obterTodosFilmes());
+	}
+	
+	private JPanel gerarContentPane() {
+		JPanel contentPanel = new JPanel();
+		contentPanel.setBackground(new Color(0, 64, 128));
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPanel);
+		contentPanel.setLayout(null);
+		
+		return contentPanel;
+	}
+	
+	private JPanel gerarPanelPrincipal(JPanel contentPanel) {
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setBounds(10, 11, 764, 405);
-		contentPane.add(panelPrincipal);
+		contentPanel.add(panelPrincipal);
 		panelPrincipal.setLayout(null);
 		
+		return panelPrincipal;
+	}
+	
+	private JScrollPane gerarScrollPane(JPanel panelPrincipal) {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(10, 85, 744, 274);
 		panelPrincipal.add(scrollPane);
 		
+		return scrollPane;
+	}
+
+	private JPanel gerarPanelListaFilmes(JScrollPane scrollPane) {
 		JPanel panelListaFilmes = new JPanel();
 		panelListaFilmes.setLayout(new BoxLayout(panelListaFilmes, BoxLayout.Y_AXIS));
 		//panelListaFilmes.setBackground(new Color(0, 64, 128)); // mesma cor do fundo
 		scrollPane.setViewportView(panelListaFilmes);
 		
+		return panelListaFilmes;
+	}
+	
+	private void gerarBotaoAdicionarFilme(JPanel panelPrincipal) {
 		JButton btnAdicionarFilme = new JButton("Adicionar");
 		btnAdicionarFilme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -168,12 +184,16 @@ public class TelaCrudFilme extends JFrame {
 		btnAdicionarFilme.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAdicionarFilme.setBounds(323, 364, 111, 30);
 		panelPrincipal.add(btnAdicionarFilme);
-		
+	}
+	
+	private void adicionarLabel(JPanel panelPrincipal) {
 		JLabel lblListaDosFilmes = new JLabel("Lista dos Filmes Cadastrados:");
 		lblListaDosFilmes.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblListaDosFilmes.setBounds(10, 21, 513, 40);
 		panelPrincipal.add(lblListaDosFilmes);
-		
+	}
+	
+	private void adicionarBotaoVoltar() {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -188,8 +208,5 @@ public class TelaCrudFilme extends JFrame {
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnVoltar.setBounds(10, 427, 89, 23);
 		contentPane.add(btnVoltar);
-		
-		atualizarListaDeFilmes(panelListaFilmes,app.getBackend().getBancoFilmes().obterTodosFilmes());
-
 	}
 }
