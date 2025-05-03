@@ -190,7 +190,8 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	// retorna o id da sessão criada ou -1 caso:
 	// 1. Não encontrar o filme;
 	// 2. Não encontrar a sala;
-	// 3. Uma sessao estiver acontecendo na mesma sala e horário.
+	// 3. Uma sessao estiver acontecendo na mesma sala e horário;
+	// 4. A data e hora ser um momento anterior ao atual.
 	@Override
 	public int tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio) {
 		if(backend.diaEstaAberto()) {
@@ -201,6 +202,9 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			return -1;
 		}
 		if(!filmes.containsKey(idFilme)) {
+			return -1;
+		}
+		if(inicio.isBefore(LocalDateTime.now())) {
 			return -1;
 		}
 		if(existeOutraSessaoNoMesmoLugarHora(idSala, inicio)) {
