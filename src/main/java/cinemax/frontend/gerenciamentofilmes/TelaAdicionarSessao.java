@@ -38,7 +38,6 @@ public class TelaAdicionarSessao extends JFrame {
 	private JTextField textFieldDia;
 	private JTextField textFieldHora;
 	private JTextField textFieldMinuto;
-	Sessao sessao = app.getBackend().getBancoFilmes().obterFilmePorId(0).obterSessao(0);
 
 	/**
 	 * Launch the application.
@@ -121,15 +120,12 @@ public class TelaAdicionarSessao extends JFrame {
 	}
 
 	private boolean validaNumero(String textoNumero) {
-
-		int numeroTexto = 0;
 		try {
-			numeroTexto = Integer.parseInt(textoNumero);
+			Integer.parseInt(textoNumero);
 			return true;
 		} catch (NumberFormatException ex) {
 			return false;
 		}
-
 	}
 
 	// -------------------------------------------------------------------------------------------
