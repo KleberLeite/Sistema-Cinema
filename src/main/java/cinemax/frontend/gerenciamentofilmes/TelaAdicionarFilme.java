@@ -1,4 +1,4 @@
-package cinemax.frontend.gerenciamentofilmes;
+package cinemax.frontend.gerenciamentoFilmes;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,7 +25,7 @@ import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.vendadeingressos.TelaEscolhaPoltrona;
+import cinemax.frontend.vendaDeIngressos.TelaEscolhaPoltrona;
 
 import javax.swing.JTextField;
 import javax.swing.JLabel;

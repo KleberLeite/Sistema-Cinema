@@ -1,10 +1,10 @@
 
-package cinemax.frontend.vendadealimentos;
+package cinemax.frontend.vendaDeAlimentos;
 import cinemax.backend.alimentos.Alimento; 
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.backend.core.Backend;
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.paginasGerenteFuncionario.Gerente;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;

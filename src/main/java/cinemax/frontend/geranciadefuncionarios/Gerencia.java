@@ -1,9 +1,10 @@
 
-package cinemax.frontend.geranciadefuncionarios;
+package cinemax.frontend.geranciaDeFuncionarios;
 
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.model.Funcionarios;
 import cinemax.frontend.model.FuncionariosModel;
+import cinemax.frontend.paginasGerenteFuncionario.Gerente;
+
 import javax.swing.JOptionPane;
 
 

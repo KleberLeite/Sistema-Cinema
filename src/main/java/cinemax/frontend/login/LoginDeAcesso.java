@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package cinemax.frontend.login;
-import cinemax.frontend.PaginasGeranteeFuncionario.Funcionarios;
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
-import cinemax.frontend.geranciadefuncionarios.Gerencia;
+import cinemax.frontend.geranciaDeFuncionarios.Gerencia;
+import cinemax.frontend.paginasGerenteFuncionario.Funcionarios;
+import cinemax.frontend.paginasGerenteFuncionario.Gerente;
 
 
 
