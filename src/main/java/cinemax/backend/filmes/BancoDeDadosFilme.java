@@ -333,6 +333,36 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		sessao.setInicio(novoInicio);
 		return true;
 	}
+
+	// Tenta alterar a sala da sessão, retornando falso caso:
+	// 1. Não encontrar o filme;
+	// 2. Não encontrar a sala;
+	// 3. Uma sessao estiver acontecendo na mesma sala e horário;~
+	// 4. A sessão já ocorrer na sala especificada.
+	@Override
+	public boolean tentarAlterarSalaSessao(int idFilme, int idSessao, int idNovaSala) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		if(!filmes.containsKey(idFilme)) {
+			return false;
+		}
+		Filme filme = filmes.get(idFilme);
+		if(!filme.contemSessao(idSessao)) {
+			return false;
+		}
+		Sessao sessao = filme.obterSessao(idSessao);
+		if(sessao.getSala().getIdSala() == idNovaSala) {
+			return false;
+		}
+		if(existeOutraSessaoNoMesmoLugarHora(idNovaSala, sessao.getInicio())) {
+			return false;
+		}
+		
+		Sala novaSala = bancoDeDadosSala.obterSalaPorId(idNovaSala);
+		sessao.setSala(novaSala);
+		return true;
+	}
 	
 	// Retorna se existe outra sessao no mesmo lugar e hora,
 	// ignorando a sessao de id ignoreIdSessao.
