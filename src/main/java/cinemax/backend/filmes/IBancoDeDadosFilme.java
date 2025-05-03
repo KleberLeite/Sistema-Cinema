@@ -61,6 +61,13 @@ public interface IBancoDeDadosFilme {
 	// 3. Uma sessao estiver acontecendo na mesma sala e horário.
 	int tentarAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio);
 	
+
+	// Tenta alterar a sala da sessão, retornando falso caso:
+	// 1. Não encontrar o filme;
+	// 2. Não encontrar a sala;
+	// 3. Uma sessao estiver acontecendo na mesma sala e horário.
+	boolean tentarAlterarSalaSessao(int idFilme, int idSessao, int idNovaSala);
+
 	// Tenta remover uma sessao do respectivo filme e sessao, retornando falso se:
 	// 1. Não encontrar o filme;
 	// 2. Não encontrar a sessao.

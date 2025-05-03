@@ -15,16 +15,23 @@ import cinemax.frontend.controller.ControladorDeApp;
 
 import java.awt.Color;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
 import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
@@ -32,10 +39,14 @@ public class TelaFinalizarCompra extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	JPanel panelMeias;
+	JPanel panelRGs;
+	JScrollPane scrollPaneRGs;
+	JTextField textFieldRGs;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	Backend bancos = app.getBackend();
 	private Sessao sessao = bancos.getBancoFilmes().obterFilmePorId(0).obterSessao(0);
-	private Carrinho carrinho;
+	private int qtdeMeias;
 
 	private int totalDeIngressosSelecionadosMeias;
 	private int totalDeIngressosSelecionadosInteiras;
@@ -68,15 +79,66 @@ public class TelaFinalizarCompra extends JFrame {
 		ingresso.setTipo(tipo);
 	}
 	
+	public void atualizarListaDeRGs(JPanel panelRGs, int qtdeMeias) {
+		panelRGs.removeAll(); // limpa os cards antigos
+
+		for (int i = 0 ; i < qtdeMeias ; i++) {
+			JPanel card = new JPanel();
+			card.setLayout(null);
+			card.setPreferredSize(new Dimension(400, 50));
+			card.setMaximumSize(new Dimension(400, 50));
+			card.setBackground(new Color(230, 210, 250));
+			card.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+			JLabel lblRG = new JLabel("RG:");
+			lblRG.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblRG.setBounds(20, 10, 400, 25);
+			card.add(lblRG);
+			
+			//Falta ajeitar essa logica dd como vai criar dinamicaamente
+			textFieldRGs = new JTextField();
+			textFieldRGs.setBounds(88, 57, 254, 35);
+			panelMeias.add(textFieldRGs);
+			textFieldRGs.setColumns(10);
+
+			panelRGs.add(Box.createRigidArea(new Dimension(0, 10)));
+			panelRGs.add(card);
+		}
+
+		panelRGs.revalidate();
+		panelRGs.repaint();
+	}
+	
 	//-----------------------------------------------------------------------------------------------
 	
+	public boolean ativaOuDesativaListaRGs() {
+		
+		if(totalDeIngressosSelecionadosMeias > 0) {
+			panelMeias.setBounds(10, 79, 405, 272);
+	
+			scrollPaneRGs.setEnabled(true);
+			panelRGs.setEnabled(true);
+
+
+			return true;
+		
+		}else {
+			panelMeias.setBounds(10, 79, 405, 57);
+			scrollPaneRGs.setEnabled(false);
+			panelRGs.setEnabled(false);
+			
+			return false;
+			
+			
+		}
+		
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	public TelaFinalizarCompra(Sessao sessaoAtual, Carrinho carrinho) {
 		this.sessao = sessaoAtual;
-		this.carrinho = carrinho;
 		totalDeIngressosRestantes = carrinho.qtdeTotalIngressos();
 		System.out.println("Total de Ingressos: " + totalDeIngressosRestantes);
 
@@ -154,7 +216,7 @@ public class TelaFinalizarCompra extends JFrame {
 		lblPrecoInteira.setBounds(78, 32, 96, 14);
 		panelInteiras.add(lblPrecoInteira);
 
-		JPanel panelMeias = new JPanel();
+	    panelMeias = new JPanel();
 		panelMeias.setBounds(10, 79, 405, 57);
 		panelIngressos.add(panelMeias);
 		panelMeias.setLayout(null);
@@ -229,6 +291,20 @@ public class TelaFinalizarCompra extends JFrame {
 		lblSubPrecoMeia.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblSubPrecoMeia.setBounds(263, 272, 76, 14);
 		panelResumo.add(lblSubPrecoMeia);
+		
+		scrollPaneRGs = new JScrollPane();
+		scrollPaneRGs.setEnabled(false);
+		scrollPaneRGs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneRGs.setBounds(79, 109, 278, 138);
+		panelMeias.add(scrollPaneRGs);
+		
+		panelRGs = new JPanel();
+		panelRGs.setLayout(new BoxLayout(panelRGs, BoxLayout.Y_AXIS)); // lista vertical
+		panelRGs.setBorder(new EmptyBorder(5, 5, 5, 5)); // margem geral
+		panelRGs.setEnabled(false);
+		scrollPaneRGs.setViewportView(panelRGs);
+		
+		ativaOuDesativaListaRGs();
 
 		// Declaração dos botões de + e -
 		JButton btnMaisUmaInteira = new JButton("+");
@@ -345,6 +421,10 @@ public class TelaFinalizarCompra extends JFrame {
 					//Altera o tipo de ingresso na lista para inteira
 					adicionaTipoIngresso(carrinho.getIngressos().get(indexIngresso), TipoDeIngresso.Inteira);
 					indexIngresso++;
+					qtdeMeias++;
+					ativaOuDesativaListaRGs();
+					atualizarListaDeRGs(panelRGs, qtdeMeias);
+					
 
 					String subPrecoMeia = String.format("R$ %.2f", somaMeia);
 					String precoTotal = String.format("R$ %.2f", somaTotal);
@@ -408,6 +488,7 @@ public class TelaFinalizarCompra extends JFrame {
 		});
 		btnMenosUmaMeia.setBounds(303, 17, 41, 23);
 		panelMeias.add(btnMenosUmaMeia);
+		
 		
 		/*botão de certos testes
 		JButton btnTeste = new JButton("Teste");

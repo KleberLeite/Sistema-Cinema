@@ -118,6 +118,10 @@ A 0  0
 		Sala sala = salas.get(idSala);
 		return sala.tentarBloquearLocal(linha, coluna);
 	}
+	
+	public int obterQtdSalas() {
+		return salas.size();
+	}
 
 	@Override
 	public boolean tentarDesbloquearLocal(int idSala, int linha, int coluna) {

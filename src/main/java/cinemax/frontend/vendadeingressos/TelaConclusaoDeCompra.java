@@ -38,6 +38,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 	Backend bancos = app.getBackend();
 	private Sessao sessao = bancos.getBancoFilmes().obterFilmePorId(0).obterSessao(0);
 	private Carrinho carrinho = new Carrinho();
+	private int qtdeMeias;
 
 	/**
 	 * Launch the application.
