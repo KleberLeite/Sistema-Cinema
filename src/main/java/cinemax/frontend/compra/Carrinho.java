@@ -11,13 +11,11 @@ public class Carrinho {
 	
 	private double total;
 	private List<Ingresso> ingressos;
-    private Map<Alimento, Integer> alimentos;
     
 
 	public Carrinho() {
 		super();
 		this.ingressos = new ArrayList<>();
-		this.alimentos = new HashMap<>();
 	}
 	
 	public int qtdeDeMeias() {
@@ -55,15 +53,6 @@ public class Carrinho {
 		return this.qtdeDeMeias()*precoInteiro/2 + this.qtdeDeMeias()*precoInteiro;
 	}
 	
-	public double totalCompraAlimento() {
-		total = 0;
-		for (Map.Entry<Alimento, Integer> entry : alimentos.entrySet()) {
-			Alimento alimento = entry.getKey();
-			int quantidade = entry.getValue();
-			total += alimento.getPreco() * quantidade;
-		}
-		return total;
-	}
 
 	public void adicionaIngresso(Ingresso ingresso) {
 		ingressos.add(ingresso);
@@ -74,29 +63,20 @@ public class Carrinho {
 		
 	}
 	
-	public void adicionaAlimento(Alimento alimento) {
-		alimentos.put(alimento, alimentos.getOrDefault(alimento, 0) +1);
-	}
-	
-	public void removeAlimento(Alimento alimento) {
-		if(alimentos.containsKey(alimento)) {
-			int quantidadeAtual = alimentos.get(alimento);
-			
-			if(quantidadeAtual > 1) {
-				alimentos.put(alimento, quantidadeAtual - 1);
-			}else {
-				alimentos.remove(alimento);
-			}
-		}
-	}
-
 	public List<Ingresso> getIngressos() {
 		return ingressos;
 	}
-
-	public Map<Alimento, Integer> getAlimentos() {
-		return alimentos;
+	
+	public List<Ingresso> getIngressosMeias() {
+		List<Ingresso> ingressosMeias = new ArrayList();
+		
+		for(Ingresso ingresso : ingressos) {
+			if(ingresso.getTipo()==TipoDeIngresso.Meia) ingressosMeias.add(ingresso);
+		}
+		
+		return ingressosMeias;
 	}
+
 
     
     

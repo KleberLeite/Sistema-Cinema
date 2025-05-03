@@ -92,8 +92,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		try {
 			novaDuracao = Integer.parseInt(novaDuracaoTexto);
 		} catch (NumberFormatException ex) {
-			JOptionPane.showMessageDialog(null, "A duração precisa ser um número inteiro!", "Erro",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "A duração precisa ser um número inteiro!", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		

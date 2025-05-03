@@ -236,12 +236,10 @@ public class TelaEscolhaPoltrona extends JFrame{
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaEscolhaFilme telaEscolhaTipoBilhete = new TelaEscolhaFilme();
-				telaEscolhaTipoBilhete.setLocationRelativeTo(null); // centraliza a tela
-				telaEscolhaTipoBilhete.setVisible(true);
+				TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
+				telaEscolhaFilme.setLocationRelativeTo(null);
+				telaEscolhaFilme.setVisible(true);
 
-
-			    // Fecha a tela atual (opcional)
 			    dispose();
 				
 			}

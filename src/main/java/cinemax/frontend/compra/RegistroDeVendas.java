@@ -39,19 +39,6 @@ public class RegistroDeVendas {
 		this.valorTotal += carrinho.totalCompraFilme();
 
 	}
-	
-	/*Metodo responsável por registrar a venda do alimento na lista e somar no valor total
-	 * @param: Ailmento, int, int;
-	 * return: void
-	 * */
-	public void registrarVendaAlimento(Carrinho carrinho) {
-		for (Map.Entry<Alimento, Integer> entry : carrinho.getAlimentos().entrySet()) {
-			Alimento alimento = entry.getKey();
-			int quantidade = entry.getValue();
-			mapVendasAlimento.put(alimento, mapVendasAlimento.getOrDefault(carrinho, 0) + quantidade);
-			this.valorTotal += carrinho.totalCompraAlimento();
-		}
-	}
 
 	/*Metodo responsável por exibir o relatorio Geral de compras
 	 * @param: double, double;
@@ -63,12 +50,7 @@ public class RegistroDeVendas {
 			System.out.println(vendasFilme + " | Total R$: " 
 		+ vendasFilme.calcularTotal(Ingresso.getPrecoIngresso(), Ingresso.getPrecoIngresso()/2));
 		}
-		/*
-		System.out.println("Vendas Alimentos --------------------------------------------");
-		
-		for (VendasAlimento vendasAlimento : listaVendasAlimento) {
-			System.out.println(vendasAlimento + " | Total R$: " + vendasAlimento.calcularTotal());
-		}*/
+
 	}
 
 	private List<VendasFilme> getListaVendasFilme() {

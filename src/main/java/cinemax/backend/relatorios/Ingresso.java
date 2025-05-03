@@ -31,6 +31,10 @@ public class Ingresso {
 	public void setTipo(TipoDeIngresso tipo) {
 		this.tipo = tipo;
 	}
+	
+	public void setRG(String RG) {
+		this.RG = RG;
+	}
 
 	public String getRG() {
 		return RG;

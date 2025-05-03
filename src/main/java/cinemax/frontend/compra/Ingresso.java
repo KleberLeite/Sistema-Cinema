@@ -24,7 +24,9 @@ public class Ingresso {
 		this.poltrona = poltrona;
 	}
 	
-	
+	public void setRG(String RG) {
+		this.RG = RG;
+	}
 
 	@Override
 	public String toString() {
