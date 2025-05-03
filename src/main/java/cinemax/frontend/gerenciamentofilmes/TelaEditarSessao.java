@@ -108,7 +108,7 @@ public class TelaEditarSessao extends JFrame {
 			return false;
 		}
 
-		if (app.getBackend().getBancoFilmes().tentarAlterarInicioSessao(sessao.getId(), sessao.getFilme().getId(),novaData)) {
+		if (app.getBackend().getBancoFilmes().tentarAlterarInicioSessao(sessao.getFilme().getId(), sessao.getId(), novaData)) {
 			JOptionPane.showMessageDialog(null, "Sessão atualizada com sucesso!");
 			return true;
 		}
