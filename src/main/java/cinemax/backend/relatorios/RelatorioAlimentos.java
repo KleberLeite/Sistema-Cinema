@@ -1,6 +1,5 @@
 package cinemax.backend.relatorios;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -9,15 +8,10 @@ import cinemax.backend.alimentos.Alimento;
 
 public class RelatorioAlimentos {
 	private Map<Alimento, Integer> vendas = new HashMap<>();
-	private LocalDateTime inicio;
-	private LocalDateTime fim;
+	private Relatorio relatorio;
 	
-	public RelatorioAlimentos() {
-		this.inicio = LocalDateTime.now();
-	}
-	
-	public void adicionarVendas(Map<Alimento, Integer> venda) {
-		if(fim != null) {
+	public void adicionarVendas(Map<Alimento, Integer> venda) {		
+		if(relatorio.estaFechado()) {
 			return;
 		}
 		
@@ -27,21 +21,6 @@ public class RelatorioAlimentos {
 	}
 	
 	public Set<Map.Entry<Alimento, Integer>> obterVendas() {
-		if(fim == null) {
-			return null;
-		}
 		return vendas.entrySet();
-	}
-	
-	public void fecharRelatorio() {
-		fim = LocalDateTime.now();
-	}
-
-	public LocalDateTime getInicio() {
-		return inicio;
-	}
-
-	public LocalDateTime getFim() {
-		return fim;
 	}
 }

@@ -21,6 +21,6 @@ public class GerenciadorDeRelatorios {
 	}
 	
 	protected void novoDia() {
-		relatorios.push(new Relatorio(new RelatorioAlimentos()));
+		relatorios.push(new Relatorio());
 	}
 }
