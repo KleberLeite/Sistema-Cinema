@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import cinemax.backend.salas.Sala;
 import cinemax.backend.salas.TipoDeEstrutura;
-import cinemax.utilities.ConversorDeCoordenadas;
 
 // Mantém informações da sessão e de quais locais foram reservados.
 public class Sessao {
