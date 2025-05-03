@@ -33,6 +33,6 @@ public class CircularBuffer<T> {
 	
 	@SuppressWarnings("unchecked")
 	public T obterAtual() {
-		return (T)buffer[0];
+		return tamanho == 0 ? null : (T)buffer[0];
 	}
 }
