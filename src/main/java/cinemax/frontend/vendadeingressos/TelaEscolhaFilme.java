@@ -3,15 +3,18 @@ package cinemax.frontend.vendadeingressos;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -35,6 +38,7 @@ import java.awt.Font;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -62,72 +66,8 @@ public class TelaEscolhaFilme extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
-	public TelaEscolhaFilme() {
-
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 500);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-
-		JPanel panelDatas = new JPanel();
-		panelDatas.setBounds(27, 11, 709, 52);
-		contentPane.add(panelDatas);
-		panelDatas.setLayout(null);
-		
-		// Criando o painel com os dias da semana
-		JPanel panelDias = new JPanel();
-		panelDias.setLayout(new FlowLayout(FlowLayout.LEFT)); // Usando FlowLayout para disposição horizontal
-		
-		// Criando os botões para cada dia da semana
-        
-        for (int i = 0 ; i < 7 ; i++) {
-        	LocalDate hoje = LocalDate.now().plusDays(i);
-        	
-        	
-    		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-
-    		String diaAtual = hoje.format(formatter);
-    		
-            JButton botaoDia = new JButton(diaAtual);
-            
-            final LocalDate dataSelecionada = hoje;
-
-            // Evento de clique no botão
-            botaoDia.addActionListener(e -> {
-                System.out.println("Dia selecionado: " + dataSelecionada);
-
-                // Aqui você pode, por exemplo, filtrar os filmes com sessões só nesse dia
-                // Ou atualizar a interface com os dados da data escolhida
-            });
-            
-            panelDias.add(botaoDia);
-        }
-
-		// Criando um JScrollPane para rolar horizontalmente o painel de dias da semana
-		JScrollPane scrollPane_1 = new JScrollPane(panelDias, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
-				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setBounds(323, 0, 358, 52);
-		panelDatas.add(scrollPane_1);
-
-		JLabel lblSelecionarDia = new JLabel("Selecione o dia: ");
-		lblSelecionarDia.setBounds(24, 11, 126, 30);
-		panelDatas.add(lblSelecionarDia);
-		
-		JPanel painelListaFilmes = new JPanel();
-		painelListaFilmes.setLayout(new BoxLayout(painelListaFilmes, BoxLayout.Y_AXIS)); // lista vertical
-		painelListaFilmes.setBackground(Color.WHITE);
-		painelListaFilmes.setBorder(new EmptyBorder(10, 10, 10, 10)); // margem geral
-
-
-		// Criar os cards dos filmes
+	
+	private void atualizarListaFilmes(JPanel painelListaFilmes) {
 		for (Filme filme : bancos.getBancoFilmes().obterTodosFilmes()) {
 			JPanel card = new JPanel();
 			card.setLayout(null); 
@@ -187,6 +127,90 @@ public class TelaEscolhaFilme extends JFrame {
 		    painelListaFilmes.add(Box.createRigidArea(new Dimension(0, 10))); // espaço entre os cards
 		    painelListaFilmes.add(card);
 		}
+	}
+	
+	private void geraPanelFiltroDeData(JPanel panelDias,JPanel painelListaFilmes) {
+	    for (int i = 0 ; i < 7 ; i++) {
+	        LocalDate hoje = LocalDate.now().plusDays(i);
+	        
+	        String diaFormatado = hoje.getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("pt", "BR")).toUpperCase();
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
+	        String diaAtual = hoje.format(formatter);
+	        
+	        JLabel diaDaSemana = new JLabel(diaFormatado, SwingConstants.CENTER);//Deixar o texto no centro do label
+	        JButton botaoDia = new JButton(diaAtual);
+	        
+	        // Cria um painel vertical para colocar o label em cima do botão
+	        JPanel painelDia = new JPanel();
+	        painelDia.setLayout(new BoxLayout(painelDia, BoxLayout.Y_AXIS));
+	        painelDia.add(diaDaSemana);
+	        painelDia.add(botaoDia);
+	        
+	        // Centraliza os elementos no painel
+	        diaDaSemana.setAlignmentX(Component.CENTER_ALIGNMENT);
+	        botaoDia.setAlignmentX(Component.CENTER_ALIGNMENT);
+	        
+	        final LocalDate dataSelecionada = hoje;
+
+	        botaoDia.addActionListener(e -> {
+	        	
+	        	
+	        	
+	        	atualizarListaFilmes(painelListaFilmes);
+	        });
+
+	        panelDias.add(painelDia);
+	    }
+	}
+
+
+	/**
+	 * Create the frame.
+	 */
+	public TelaEscolhaFilme() {
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 800, 500);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(0, 64, 128));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel painelListaFilmes = new JPanel();
+		painelListaFilmes.setLayout(new BoxLayout(painelListaFilmes, BoxLayout.Y_AXIS)); // lista vertical
+		painelListaFilmes.setBackground(Color.WHITE);
+		painelListaFilmes.setBorder(new EmptyBorder(10, 10, 10, 10)); // margem geral
+
+
+		// Criar os cards dos filmes
+		atualizarListaFilmes(painelListaFilmes);
+
+		JPanel panelDatas = new JPanel();
+		panelDatas.setBounds(27, 11, 709, 69);
+		contentPane.add(panelDatas);
+		panelDatas.setLayout(null);
+		
+		// Criando o painel geral do filtro dos dias da semana
+		JPanel panelDias = new JPanel();
+		panelDias.setLayout(new FlowLayout(FlowLayout.LEFT)); // Usando FlowLayout para disposição horizontal
+		
+		// Criando os botões para cada dia da semana
+        geraPanelFiltroDeData(panelDias,painelListaFilmes );
+
+		// Criando um JScrollPane para rolar horizontalmente o painel de dias da semana
+		JScrollPane scrollPane_1 = new JScrollPane(panelDias, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.setBounds(322, 0, 358, 69);
+		panelDatas.add(scrollPane_1);
+
+		JLabel lblSelecionarDia = new JLabel("Selecione o dia: ");
+		lblSelecionarDia.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSelecionarDia.setBounds(25, 11, 126, 30);
+		panelDatas.add(lblSelecionarDia);
+		
+		
 
 		// Agora colocar isso num JScrollPane
 		JScrollPane scrollPaneFilmes = new JScrollPane(painelListaFilmes);
