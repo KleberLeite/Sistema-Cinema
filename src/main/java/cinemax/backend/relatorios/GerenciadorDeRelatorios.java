@@ -7,6 +7,10 @@ public class GerenciadorDeRelatorios {
 	
 	public GerenciadorDeRelatorios() { }
 	
+	protected GerenciadorDeRelatorios(CircularBuffer<Relatorio> relatorios) {
+		this.relatorios = relatorios;
+	}
+	
 	protected GerenciadorDeRelatorios(GerenciadorDeRelatorios gerenciador) {
 		this.relatorios = gerenciador.relatorios;
 	}
