@@ -5,20 +5,82 @@
 package cinemax.frontend.vendadealimentos;
 
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.backend.alimentos.Alimento; 
+import cinemax.backend.alimentos.IBancoDeDadosAlimento;
+import cinemax.backend.core.Backend;
+import cinemax.frontend.controller.ControladorDeApp;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author geral
  */
 public class VendaDealimentoss extends javax.swing.JFrame {
-
+private ControladorDeApp app = ControladorDeApp.getInstancia();
+private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
+ private DefaultTableModel modeloTabela;
+ private int indiceSelecionado = -1;
+ 
+ 
     /**
      * Creates new form VendaDealimentoss
      */
     public VendaDealimentoss() {
         initComponents();
+       inicializarTabela();
+       configurarListeners();
+       
     }
 
+     private void inicializarTabela() {
+      modeloTabela = (DefaultTableModel) PlanilhaDeAlimentos.getModel();
+
+
+        atualizarTabela();
+    }
+    
+    private void atualizarTabela() {
+        modeloTabela.setRowCount(0);
+        Alimento[] alimentos = bancoDados.obterTodosAlimentos();
+        for (Alimento alimento : alimentos) {
+            modeloTabela.addRow(new Object[]{
+                alimento.getNome(),
+                alimento.getPreco(),
+                alimento.getCodigo()
+            });
+        }
+    }
+    
+    private void configurarListeners() {
+       PlanilhaDeAlimentos.getSelectionModel().addListSelectionListener(e -> {
+
+            if (!e.getValueIsAdjusting()) {
+                 int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow(); // CORRIGIDO AQUI
+                if (linhaSelecionada != -1) {
+                     preencherCampos(linhaSelecionada);
+                    indiceSelecionado = linhaSelecionada;
+                    
+                }
+            }
+        });
+    }
+     private void limparCampos() {
+       CapturaTXTProcurarNomeAlimento.setText("");
+        CapturaTXTProcurarCodigoAlimento.setText("");
+     }
+     
+     private void preencherCampos(int linhaSelecionada) {
+    Object valor = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0);
+    String nome = valor != null ? valor.toString() : "Desconhecido";
+    TXTitemSelecionado.setText(nome);
+}
+
+     
+     
+     
+     
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,8 +96,8 @@ public class VendaDealimentoss extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         TxtnomeDoalimento = new javax.swing.JLabel();
         TXTcodigodoalimento = new javax.swing.JLabel();
-        escreverNomealimento = new javax.swing.JTextField();
-        EscreverCodigoAlimento = new javax.swing.JTextField();
+        CapturaTXTProcurarNomeAlimento = new javax.swing.JTextField();
+        CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
         bntProcurarnomeAliemnto = new javax.swing.JButton();
         bntProvurarcodigo = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -78,15 +140,24 @@ public class VendaDealimentoss extends javax.swing.JFrame {
         TXTcodigodoalimento.setText("Procurar Código:");
 
         bntProcurarnomeAliemnto.setText("Procurar");
+        bntProcurarnomeAliemnto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntProcurarnomeAliemntoActionPerformed(evt);
+            }
+        });
 
         bntProvurarcodigo.setText("Procurar");
+        bntProvurarcodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntProvurarcodigoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("-----------------------------------------------------------------");
 
         jLabel4.setText("Item Selecionado:");
 
         TXTitemSelecionado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        TXTitemSelecionado.setText("Item");
 
         TXTAcrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TXTAcrementoDeItem.setText("+");
@@ -145,16 +216,6 @@ public class VendaDealimentoss extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel4)
-                .addGap(82, 82, 82)
-                .addComponent(TXTitemSelecionado)
-                .addGap(64, 64, 64)
-                .addComponent(TXTAcrementoDeItem)
-                .addGap(18, 18, 18)
-                .addComponent(TXTDecrementoDeItem)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,14 +228,23 @@ public class VendaDealimentoss extends javax.swing.JFrame {
                                 .addComponent(TXTcodigodoalimento)
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(escreverNomealimento, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                            .addComponent(EscreverCodigoAlimento))
+                            .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                            .addComponent(CapturaTXTProcurarCodigoAlimento))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(bntProvurarcodigo)
                             .addComponent(bntProcurarnomeAliemnto)))
-                    .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addGap(82, 82, 82)
+                            .addComponent(TXTitemSelecionado)
+                            .addGap(64, 64, 64)
+                            .addComponent(TXTAcrementoDeItem)
+                            .addGap(29, 29, 29)
+                            .addComponent(TXTDecrementoDeItem))
+                        .addComponent(jLabel3)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,14 +252,14 @@ public class VendaDealimentoss extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtnomeDoalimento)
-                    .addComponent(escreverNomealimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntProcurarnomeAliemnto))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TXTcodigodoalimento)
-                    .addComponent(EscreverCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntProvurarcodigo))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(67, 67, 67)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -197,7 +267,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
                     .addComponent(TXTitemSelecionado)
                     .addComponent(TXTAcrementoDeItem)
                     .addComponent(TXTDecrementoDeItem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -218,7 +288,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addGap(50, 50, 50))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bntVoltar)
@@ -253,15 +323,78 @@ public class VendaDealimentoss extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
-         // Chamando a tela Gerente
+         // Chamando a tela Gerente//
              Gerente telaGerente = new Gerente("usuario", "senha");
-            telaGerente.setVisible(true); // Torna a tela de Gerente visível
-            dispose(); // Fecha a tela atual (VendasDeAlimentos)
+            telaGerente.setVisible(true);
+            dispose(); 
     }//GEN-LAST:event_bntVoltarActionPerformed
 
     private void PlanilhaDeAlimentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlanilhaDeAlimentosMouseClicked
         
     }//GEN-LAST:event_PlanilhaDeAlimentosMouseClicked
+
+    private void bntProcurarnomeAliemntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntProcurarnomeAliemntoActionPerformed
+     String nomeProcurado = CapturaTXTProcurarNomeAlimento.getText().trim();
+        
+        if (nomeProcurado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Digite um nome para procurar!", 
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        modeloTabela.setRowCount(0);
+        Alimento[] resultados = bancoDados.obterAlimentoPorNome(nomeProcurado);
+        
+        if (resultados.length == 0) {
+            JOptionPane.showMessageDialog(this, 
+                "Nenhum alimento encontrado com este nome!", 
+                "Informação", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Alimento alimento : resultados) {
+                modeloTabela.addRow(new Object[]{
+                    alimento.getNome(),
+                    alimento.getPreco(),
+                    alimento.getCodigo()
+                });
+            }
+        }
+        limparCampos();
+    }//GEN-LAST:event_bntProcurarnomeAliemntoActionPerformed
+
+    private void bntProvurarcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntProvurarcodigoActionPerformed
+      String codigoText = CapturaTXTProcurarCodigoAlimento.getText().trim();
+        
+        if (codigoText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Digite um código para procurar!", 
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        try {
+            int codigo = Integer.parseInt(codigoText);
+            Alimento alimento = bancoDados.obterAlimentoPorCodigo(codigo);
+            
+            if (alimento == null) {
+                JOptionPane.showMessageDialog(this, 
+                    "Nenhum alimento encontrado com este código!", 
+                    "Informação", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                modeloTabela.setRowCount(0);
+                modeloTabela.addRow(new Object[]{
+                    alimento.getNome(),
+                    alimento.getPreco(),
+                    alimento.getCodigo()
+                });
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, 
+                "O código deve ser um número válido!", 
+                "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        limparCampos();
+    }//GEN-LAST:event_bntProvurarcodigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,7 +432,8 @@ public class VendaDealimentoss extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField EscreverCodigoAlimento;
+    private javax.swing.JTextField CapturaTXTProcurarCodigoAlimento;
+    private javax.swing.JTextField CapturaTXTProcurarNomeAlimento;
     private javax.swing.JTable PlanilhaDeAlimentos;
     private javax.swing.JLabel TXTAcrementoDeItem;
     private javax.swing.JLabel TXTDecrementoDeItem;
@@ -311,7 +445,6 @@ public class VendaDealimentoss extends javax.swing.JFrame {
     private javax.swing.JButton bntProcurarnomeAliemnto;
     private javax.swing.JButton bntProvurarcodigo;
     private javax.swing.JButton bntVoltar;
-    private javax.swing.JTextField escreverNomealimento;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
@@ -321,4 +454,6 @@ public class VendaDealimentoss extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+   
 }

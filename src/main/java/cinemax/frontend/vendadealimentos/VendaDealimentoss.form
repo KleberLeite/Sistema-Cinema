@@ -54,7 +54,7 @@
                   <Component id="jScrollPane1" min="-2" pref="434" max="-2" attributes="0"/>
                   <EmptySpace pref="49" max="32767" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -107,17 +107,6 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                      <Component id="TXTitemSelecionado" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                      <Component id="TXTAcrementoDeItem" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="TXTDecrementoDeItem" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -134,8 +123,8 @@
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="escreverNomealimento" pref="112" max="32767" attributes="0"/>
-                                  <Component id="EscreverCodigoAlimento" max="32767" attributes="0"/>
+                                  <Component id="CapturaTXTProcurarNomeAlimento" pref="112" max="32767" attributes="0"/>
+                                  <Component id="CapturaTXTProcurarCodigoAlimento" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -143,9 +132,20 @@
                                   <Component id="bntProcurarnomeAliemnto" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                                  <Component id="TXTitemSelecionado" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                                  <Component id="TXTAcrementoDeItem" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="TXTDecrementoDeItem" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="38" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -155,16 +155,16 @@
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="TxtnomeDoalimento" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="escreverNomealimento" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="CapturaTXTProcurarNomeAlimento" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="bntProcurarnomeAliemnto" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="TXTcodigodoalimento" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="EscreverCodigoAlimento" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="CapturaTXTProcurarCodigoAlimento" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="bntProvurarcodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -173,7 +173,7 @@
                           <Component id="TXTAcrementoDeItem" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="TXTDecrementoDeItem" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="132" max="32767" attributes="0"/>
+                      <EmptySpace pref="129" max="32767" attributes="0"/>
                       <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
@@ -191,19 +191,25 @@
                 <Property name="text" type="java.lang.String" value="Procurar C&#xf3;digo:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="escreverNomealimento">
+            <Component class="javax.swing.JTextField" name="CapturaTXTProcurarNomeAlimento">
             </Component>
-            <Component class="javax.swing.JTextField" name="EscreverCodigoAlimento">
+            <Component class="javax.swing.JTextField" name="CapturaTXTProcurarCodigoAlimento">
             </Component>
             <Component class="javax.swing.JButton" name="bntProcurarnomeAliemnto">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Procurar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntProcurarnomeAliemntoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="bntProvurarcodigo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Procurar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntProvurarcodigoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
@@ -220,7 +226,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Item"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="TXTAcrementoDeItem">

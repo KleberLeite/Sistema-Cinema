@@ -474,6 +474,7 @@ public class Vendas extends javax.swing.JFrame {
                 });
             }
         }
+        limparCamposs();
     }//GEN-LAST:event_ButaoProcurarAlimentoNomeActionPerformed
 
     private void ButaoProcurarCodigoAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoProcurarCodigoAlimentoActionPerformed
@@ -507,6 +508,7 @@ public class Vendas extends javax.swing.JFrame {
                 "O código deve ser um número válido!", 
                 "Erro", JOptionPane.ERROR_MESSAGE);
         }
+        limparCamposs();
     }//GEN-LAST:event_ButaoProcurarCodigoAlimentoActionPerformed
 
     private void ButaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoVoltarActionPerformed
@@ -529,6 +531,13 @@ public class Vendas extends javax.swing.JFrame {
             });
         }
     }
+    
+     private void limparCamposs() {
+       CapturaTXTProcurarNomeAlimento.setText("");
+        CapturaTXTProcurarCodigoAlimento.setText("");
+     }
+    
+    
     
     private void limparCampos() {
         CapturaTXTNomeAlimento.setText("");
