@@ -17,4 +17,5 @@ public interface IBancoDeDadosFuncionario {
 	boolean tentarAlterarCargo(String cpf, CargoFuncionario novoCargo);
 	boolean tentarAlterarTelefone(String cpf, String novoTelefone);
 	boolean tentarAlterarCPF(String cpf, String novoCPF);
+	boolean existeFuncionario(String usuario, String senha);
 }

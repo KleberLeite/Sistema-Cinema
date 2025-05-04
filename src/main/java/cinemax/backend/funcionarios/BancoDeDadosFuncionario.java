@@ -196,6 +196,12 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 		return true;
 	}
 
+	@Override
+	public boolean existeFuncionario(String usuario, String senha) {
+		Funcionario f = funcionarios.getOrDefault(usuario, null);
+		return f != null && f.getSenha() == senha;
+	}
+
 	private boolean eNomeValido(String nome) {
 		return nome.length() > 2 && !nome.startsWith(" ") && !nome.endsWith(" ");
 	}
