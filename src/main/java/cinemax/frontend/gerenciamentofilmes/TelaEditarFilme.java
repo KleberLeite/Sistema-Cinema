@@ -7,12 +7,15 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -20,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.filmes.Filme;
+import cinemax.backend.filmes.GeneroFilme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.vendadeingressos.TelaEscolhaPoltrona;
@@ -42,6 +46,8 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	Backend bancos = app.getBackend();
 	Filme filme = bancos.getBancoFilmes().obterFilmePorId(0);
+	private List<JCheckBox> checkBoxesGeneros;
+	private JPanel panelGeneros;
 	private JTextField textFieldNome;
 	private JTextField textFieldDuracao;
 	private JPanel panelSessoes = new JPanel();
@@ -88,7 +94,8 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 			String novoNome, 
 			String novaSinopse, 
 			String novaDuracaoTexto, 
-			ClassificacaoIndicativa classificacaoIndicativa) {
+			ClassificacaoIndicativa classificacaoIndicativa,
+			GeneroFilme[] generosSelecionados) {
 
 		// Validação entra de durancao em numeros
 		int novaDuracao = 0;
@@ -102,7 +109,8 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		boolean sucesso = (app.getBackend().getBancoFilmes().tentarAlterarNome(filme.getId(), novoNome) && 
 				app.getBackend().getBancoFilmes().tentarAlterarSinopse(filme.getId(), novaSinopse) &&
 				app.getBackend().getBancoFilmes().tentarAlterarDuracao(filme.getId(), novaDuracao) && 
-				app.getBackend().getBancoFilmes().tentarAlterarClassificacaoIndicativa(filme.getId(), classificacaoIndicativa)
+				app.getBackend().getBancoFilmes().tentarAlterarClassificacaoIndicativa(filme.getId(), classificacaoIndicativa) &&
+				app.getBackend().getBancoFilmes().alterarGeneros(filme.getId(), generosSelecionados)
 				);
 		if (sucesso) {
 			JOptionPane.showMessageDialog(null, "Filme atualizado com sucesso!");
@@ -167,6 +175,55 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		panelSessoes.revalidate();
 		panelSessoes.repaint();
 	}
+	
+	private GeneroFilme[] pegaOsGeneros(List<JCheckBox> checkBoxesGeneros) {
+		List<GeneroFilme> generosSelecionados = new ArrayList<>();
+
+		for (JCheckBox checkBox : checkBoxesGeneros) {
+		    if (checkBox.isSelected()) {
+		        generosSelecionados.add(GeneroFilme.valueOf(checkBox.getActionCommand()));
+		    }
+		}
+		return  generosSelecionados.toArray(new GeneroFilme[0]);
+	}
+	
+	private void geraCheckBoxesGeneros() {
+	    checkBoxesGeneros = new ArrayList<>();
+
+	    for (GeneroFilme genero : GeneroFilme.values()) {
+	        JCheckBox checkBox = new JCheckBox(genero.toString());
+	        checkBox.setActionCommand(genero.name()); 
+	        checkBoxesGeneros.add(checkBox);
+
+	        checkBox.addItemListener(e -> {
+	            long selecionados = checkBoxesGeneros.stream()
+	                                    .filter(AbstractButton::isSelected)
+	                                    .count();
+
+	            if (selecionados > 3) {
+	                checkBox.setSelected(false);
+	                JOptionPane.showMessageDialog(null, "Você só pode selecionar até 3 gêneros.", "Limite atingido", JOptionPane.WARNING_MESSAGE);
+	            }
+	        });
+	    }
+
+	    for (JCheckBox checkBox : checkBoxesGeneros) {
+	        panelGeneros.add(checkBox);
+	    }
+	}
+	
+	private void marcarGenerosSelecionados(Filme filme) {
+	    List<GeneroFilme> generosDoFilme = List.of(filme.getGeneros());
+
+	    for (JCheckBox checkBox : checkBoxesGeneros) {
+	        GeneroFilme generoDoCheck = GeneroFilme.valueOf(checkBox.getActionCommand());
+
+	        if (generosDoFilme.contains(generoDoCheck)) {
+	            checkBox.setSelected(true);
+	        }
+	    }
+	}
+	
 
 	// ----------------------------------------------------------------------
 
@@ -268,6 +325,24 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		comboBoxClassificacaoIndicativa.setBounds(155, 211, 92, 26);
 		panelPrincipal.add(comboBoxClassificacaoIndicativa);
 		
+		JLabel lblGenero = new JLabel("Gênero");
+		lblGenero.setBounds(30, 248, 117, 14);
+		panelPrincipal.add(lblGenero);
+
+		JScrollPane scrollPaneGeneros = new JScrollPane();
+		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneGeneros.setBounds(30, 271, 120, 100); // ajuste o tamanho
+		panelPrincipal.add(scrollPaneGeneros);
+		
+		panelGeneros = new JPanel();
+		scrollPaneGeneros.setViewportView(panelGeneros);
+		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
+		
+		// Lista para guardar os checkboxes
+		geraCheckBoxesGeneros();
+		
+		marcarGenerosSelecionados(filme);
+		
 		JLabel lblNewLabel_2 = new JLabel("Classificação Indicativa");
 		lblNewLabel_2.setBounds(155, 186, 155, 14);
 		panelPrincipal.add(lblNewLabel_2);
@@ -279,9 +354,9 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 				String novaSinopse = textAreaSinopse.getText();
 				String duracaoTexto = textFieldDuracao.getText();
 				ClassificacaoIndicativa classificacaoIndicativaSelecionada = (ClassificacaoIndicativa) comboBoxClassificacaoIndicativa.getSelectedItem();
+				GeneroFilme[] generosSelecionados = pegaOsGeneros(checkBoxesGeneros);
 				
-				
-				altualizarFilme(filme,novoNome,novaSinopse,duracaoTexto,classificacaoIndicativaSelecionada);
+				altualizarFilme(filme,novoNome,novaSinopse,duracaoTexto,classificacaoIndicativaSelecionada,generosSelecionados);
 				
 				TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
 				telaCrudFilme.setLocationRelativeTo(null);
@@ -294,6 +369,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		btnAtualizar.setBounds(299, 322, 164, 31);
 		panelPrincipal.add(btnAtualizar);
 		
+		/*
 		JButton btnTeste = new JButton("Teste");
 		btnTeste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -313,7 +389,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 			}
 		});
 		btnTeste.setBounds(317, 245, 89, 23);
-		panelPrincipal.add(btnTeste);
+		panelPrincipal.add(btnTeste);*/
 		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
