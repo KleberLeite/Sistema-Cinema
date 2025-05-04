@@ -33,12 +33,9 @@ import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class TelaEscolhaPoltrona extends JFrame {
-
-	// private ControladorDeApp app = ControladorDeApp.getInstancia();
-	private List<Poltrona> poltronasSelecionadas = new ArrayList<>();
 	private JPanel panelPrincipal;
-	private CarrinhoIngressos carrinho = new CarrinhoIngressos();
-	private int poltronasRestantes = 8;// Contabiliza a quantidade de poltronas que ainda podem ser escolhidas
+	private List<Poltrona> poltronas = new ArrayList<>();
+	private int poltronasRestantes;// Contabiliza a quantidade de poltronas que ainda podem ser escolhidas
 
 	/**
 	 * Launch the application.
@@ -62,7 +59,8 @@ public class TelaEscolhaPoltrona extends JFrame {
 	 * Create the application.
 	 */
 	public TelaEscolhaPoltrona(Sessao sessao) {
-
+		poltronasRestantes = 8;
+		
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(-14, -42, 800, 700);
@@ -217,7 +215,12 @@ public class TelaEscolhaPoltrona extends JFrame {
 		btnAvançar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(carrinho);
+				CarrinhoIngressos carrinho = new CarrinhoIngressos();
+				for(Poltrona p : poltronas) {
+					carrinho.adicionaIngresso(new Ingresso(sessao, p));
+				}
+				
+				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
 				telaFinalizarCompra.setVisible(true);
 				telaFinalizarCompra.setLocationRelativeTo(null);
 
@@ -286,7 +289,6 @@ public class TelaEscolhaPoltrona extends JFrame {
 				final int auxJ = j;
 				botao.addActionListener(e -> {
 					Poltrona poltrona = (Poltrona) sala.obterTipoDeEstrutura(auxI, auxJ);
-					Ingresso ingresso = new Ingresso(sessao, poltrona);
 
 					boolean isSelecionada = botao.getIcon().equals(iconePoltronaSelecionada)
 							|| botao.getIcon().equals(iconePoltronaObesosSelecionada)
@@ -301,9 +303,8 @@ public class TelaEscolhaPoltrona extends JFrame {
 						} else {
 							botao.setIcon(iconeLocalCadeirantes);
 						}
-						poltronasSelecionadas.remove(poltrona);
 						modeloLista.removeElement(poltronaSelecionada);
-						carrinho.removeIngresso(ingresso);
+						poltronas.remove(poltrona);
 						poltronasRestantes++;
 					}
 					// Se ainda pode selecionar, marcar
@@ -315,9 +316,8 @@ public class TelaEscolhaPoltrona extends JFrame {
 						} else if (botao.getIcon().equals(iconeLocalCadeirantes)) {
 							botao.setIcon(iconeLocalCadeirantesSelecionado);
 						}
-						poltronasSelecionadas.add(poltrona);
 						modeloLista.addElement(poltronaSelecionada);
-						carrinho.adicionaIngresso(ingresso);
+						poltronas.add(poltrona);
 						poltronasRestantes--;
 					} else {
 						JOptionPane.showMessageDialog(null, "Limite de  8 poltronas atingido!", "Aviso",

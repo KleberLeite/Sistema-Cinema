@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import cinemax.backend.filmes.Sessao;
 import cinemax.backend.relatorios.Ingresso;
 import cinemax.frontend.controller.ControladorDeApp;
 
@@ -36,24 +37,14 @@ public class TelaConclusaoDeCompra extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaConclusaoDeCompra frame = new TelaConclusaoDeCompra(null);
-					frame.setVisible(true);
-					frame.setLocationRelativeTo(null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		throw new UnsupportedOperationException("Não pode iniciar por aqui!");
 	}
 	
 
 	/**
 	 * Create the frame.
 	 */
-	public TelaConclusaoDeCompra(CarrinhoIngressos carrinho) {		
+	public TelaConclusaoDeCompra(Sessao sessao, CarrinhoIngressos carrinho) {		
 		
 		app.getBackend().tentarAbrirDia();
 		
@@ -80,7 +71,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(carrinho);
+				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
 				telaFinalizarCompra.setVisible(true);
 				telaFinalizarCompra.setLocationRelativeTo(null);
 				
@@ -126,7 +117,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 						}*/
 						JOptionPane.showMessageDialog(null, "Erro ao reservar poltronas! Por favor, refaça", "Erro",
 								JOptionPane.ERROR_MESSAGE);
-						TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(carrinho);
+						TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
 						telaFinalizarCompra.setVisible(true);
 						telaFinalizarCompra.setLocationRelativeTo(null);
 						
