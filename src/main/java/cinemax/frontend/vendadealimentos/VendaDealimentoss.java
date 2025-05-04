@@ -7,7 +7,6 @@ package cinemax.frontend.vendadealimentos;
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
-import cinemax.backend.core.Backend;
 import cinemax.frontend.controller.ControladorDeApp;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,18 +18,16 @@ import java.util.Map;
  * @author geral
  */
 public class VendaDealimentoss extends javax.swing.JFrame {
-	private Map<String, Integer> itensSelecionados = new HashMap<>();
-	private java.util.Map<String, Integer> carrinho = new java.util.HashMap<>();
+	private Map<Alimento, Integer> carrinho = new HashMap<>();
 
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
 	private DefaultTableModel modeloTabela;
-	private int indiceSelecionado = -1;
 
 	/**
 	 * Creates new form VendaDealimentoss
 	 */
-	public VendaDealimentoss() {
+	public VendaDealimentoss() {		
 		initComponents();
 		inicializarTabela();
 		configurarListeners();
@@ -49,7 +46,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 				decrementarItem();
 			}
 		});
-		BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
+		/*BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				BotaoComprarActionPerformed(evt);
 			}
@@ -59,7 +56,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				bntRecarregarListaActionPerformed(evt);
 			}
-		});
+		});*/
 	}
 
 	// ___________________________________________///
@@ -82,7 +79,6 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 				int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow(); // CORRIGIDO AQUI
 				if (linhaSelecionada != -1) {
 					preencherCampos(linhaSelecionada);
-					indiceSelecionado = linhaSelecionada;
 				}
 			}
 		});
@@ -102,29 +98,35 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 	private void incrementarItem() {
 		int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
 		if (linhaSelecionada != -1) {
-			String nome = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0).toString();
-			double preco = Double.parseDouble(PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 1).toString());
+			int codigo = (int)PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 2);
+			Alimento a = bancoDados.obterAlimentoPorCodigo(codigo);
+			if(a != null) {
+				// Incrementar quantidade
+				carrinho.put(a, carrinho.getOrDefault(a, 0) + 1);
 
-			// Incrementar quantidade
-			carrinho.put(nome, carrinho.getOrDefault(nome, 0) + 1);
-
-			// Atualizar contadores
-			atualizarQuantidadeTotal();
-			atualizarPrecoTotal();
+				// Atualizar contadores
+				atualizarQuantidadeTotal();
+				atualizarPrecoTotal();
+			}
 		}
 	}
 
 	private void decrementarItem() {
 		int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
 		if (linhaSelecionada != -1) {
-			String nome = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0).toString();
-
-			if (carrinho.containsKey(nome)) {
-				int qtdAtual = carrinho.get(nome);
+			int codigo = (int)PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 2);
+			Alimento a = bancoDados.obterAlimentoPorCodigo(codigo);
+			
+			if(a == null) {
+				return;
+			}
+			
+			if (carrinho.containsKey(a)) {
+				int qtdAtual = carrinho.get(a);
 				if (qtdAtual > 1) {
-					carrinho.put(nome, qtdAtual - 1);
+					carrinho.put(a, qtdAtual - 1);
 				} else {
-					carrinho.remove(nome); // Remove se quantidade for 1
+					carrinho.remove(a); // Remove se quantidade for 1
 				}
 
 				atualizarQuantidadeTotal();
@@ -143,22 +145,13 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 		TXTQuantidadeDeitemTotaisSelecionados.setText(String.valueOf(total));
 
 		// Opcional: imprime no console para depuração
-		System.out.println("Total de itens no carrinho: " + total);
+		//System.out.println("Total de itens no carrinho: " + total);
 	}
 
 	private void atualizarPrecoTotal() {
 		double total = 0.0;
-		for (String nome : carrinho.keySet()) {
-			int qtd = carrinho.get(nome);
-			// Procurar o preço na tabela
-			for (int i = 0; i < PlanilhaDeAlimentos.getRowCount(); i++) {
-				String nomeTabela = PlanilhaDeAlimentos.getValueAt(i, 0).toString();
-				if (nomeTabela.equals(nome)) {
-					double preco = Double.parseDouble(PlanilhaDeAlimentos.getValueAt(i, 1).toString());
-					total += preco * qtd;
-					break;
-				}
-			}
+		for (Map.Entry<Alimento, Integer> entry : carrinho.entrySet()) {
+			total += entry.getKey().getPreco() * entry.getValue();
 		}
 		TXTPrecoTotalDeTodosOsItems.setText(String.format("R$ %.2f", total));
 	}
@@ -507,8 +500,10 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 		limparCampos();
 	}// GEN-LAST:event_bntRecarregarListaActionPerformed
 
-	private void salvarCompraNoHistorico() {
-		for (Map.Entry<String, Integer> entry : carrinho.entrySet()) {
+	private void salvarCompraNoHistorico() {		
+		app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia()
+			.getRelatorioAlimentos().adicionarVendas(carrinho);
+		/*for (Map.Entry<String, Integer> entry : carrinho.entrySet()) {
 			String nomeProduto = entry.getKey();
 			int quantidade = entry.getValue();
 
@@ -518,7 +513,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 			// Exemplo fictício (substitua com o real):
 			// app.getBackend().getHistoricoCompras().registrarCompra(nomeProduto,
 			// quantidade);
-		}
+		}*/
 
 		// Posteriormente o RelatorioGeral pode consultar esse histórico
 	}
