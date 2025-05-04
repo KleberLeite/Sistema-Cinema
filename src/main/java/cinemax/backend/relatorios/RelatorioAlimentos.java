@@ -15,10 +15,12 @@ public class RelatorioAlimentos {
 	}
 	
 	public void adicionarVendas(Map<Alimento, Integer> venda) {		
-		if(relatorio.estaFechado()) {
-			return;
+		if(!relatorio.estaFechado()) {
+			internoAdicionarVendas(venda);
 		}
-		
+	}
+	
+	protected void internoAdicionarVendas(Map<Alimento, Integer> venda) {
 		for(Map.Entry<Alimento, Integer> e : venda.entrySet()) {
 			vendas.put(e.getKey(), vendas.getOrDefault(e, 0) + e.getValue());
 		}
