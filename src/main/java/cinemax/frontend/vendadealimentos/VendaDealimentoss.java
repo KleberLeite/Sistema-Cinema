@@ -9,14 +9,18 @@ import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.backend.core.Backend;
 import cinemax.frontend.controller.ControladorDeApp;
-
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @author geral
  */
 public class VendaDealimentoss extends javax.swing.JFrame {
+    private Map<String, Integer> itensSelecionados = new HashMap<>();
+    private java.util.Map<String, Integer> carrinho = new java.util.HashMap<>();
+
 private ControladorDeApp app = ControladorDeApp.getInstancia();
 private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
  private DefaultTableModel modeloTabela;
@@ -30,8 +34,39 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
         initComponents();
        inicializarTabela();
        configurarListeners();
-       
+    TXTAcrementoDeItem.setText("+");
+    TXTDecrementoDeItem.setText("-");
+
+       // Aqui está o local certo para adicionar os listeners aos "+" e "-"
+    TXTAcrementoDeItem.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            incrementarItem();
+        }
+    });
+
+    TXTDecrementoDeItem.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            decrementarItem();
+        }
+    });
+    BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        BotaoComprarActionPerformed(evt);
     }
+});
+
+     bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bntRecarregarListaActionPerformed(evt);
+    }
+});
+
+    
+    
+
+    }
+    
+    //___________________________________________///
 
      private void inicializarTabela() {
       modeloTabela = (DefaultTableModel) PlanilhaDeAlimentos.getModel();
@@ -77,8 +112,72 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
 }
 
      
-     
-     
+    private void incrementarItem() {
+    int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
+    if (linhaSelecionada != -1) {
+        String nome = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0).toString();
+        double preco = Double.parseDouble(PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 1).toString());
+
+        // Incrementar quantidade
+        carrinho.put(nome, carrinho.getOrDefault(nome, 0) + 1);
+
+        // Atualizar contadores
+        atualizarQuantidadeTotal();
+        atualizarPrecoTotal();
+    }
+}
+
+private void decrementarItem() {
+    int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
+    if (linhaSelecionada != -1) {
+        String nome = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0).toString();
+
+        if (carrinho.containsKey(nome)) {
+            int qtdAtual = carrinho.get(nome);
+            if (qtdAtual > 1) {
+                carrinho.put(nome, qtdAtual - 1);
+            } else {
+                carrinho.remove(nome); // Remove se quantidade for 1
+            }
+
+            atualizarQuantidadeTotal();
+            atualizarPrecoTotal();
+        }
+    }
+}
+
+
+ private void atualizarQuantidadeTotal() {
+    int total = 0;
+    for (int qtd : carrinho.values()) {
+        total += qtd;
+    }
+
+    // Atualiza o texto no JLabel com a quantidade total de itens
+    TXTQuantidadeDeitemTotaisSelecionados.setText(String.valueOf(total));
+
+    // Opcional: imprime no console para depuração
+    System.out.println("Total de itens no carrinho: " + total);
+}
+
+  /////////
+  ///
+     private void atualizarPrecoTotal() {
+    double total = 0.0;
+    for (String nome : carrinho.keySet()) {
+        int qtd = carrinho.get(nome);
+        // Procurar o preço na tabela
+        for (int i = 0; i < PlanilhaDeAlimentos.getRowCount(); i++) {
+            String nomeTabela = PlanilhaDeAlimentos.getValueAt(i, 0).toString();
+            if (nomeTabela.equals(nome)) {
+                double preco = Double.parseDouble(PlanilhaDeAlimentos.getValueAt(i, 1).toString());
+                total += preco * qtd;
+                break;
+            }
+        }
+    }
+    TXTPrecoTotalDeTodosOsItems.setText(String.format("R$ %.2f", total));
+}
      
      
     /**
@@ -110,6 +209,8 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
         jLabel9 = new javax.swing.JLabel();
         TXTQuantidadeDeitemTotaisSelecionados = new javax.swing.JLabel();
         TXTPrecoTotalDeTodosOsItems = new javax.swing.JLabel();
+        BotaoComprar = new javax.swing.JButton();
+        bntRecarregarLista = new javax.swing.JButton();
         bntVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -153,16 +254,16 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
             }
         });
 
-        jLabel3.setText("-----------------------------------------------------------------");
+        jLabel3.setText("-------------------------------------------------------------------------");
 
         jLabel4.setText("Item Selecionado:");
 
         TXTitemSelecionado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        TXTAcrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TXTAcrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TXTAcrementoDeItem.setText("+");
 
-        TXTDecrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TXTDecrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TXTDecrementoDeItem.setText("-");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -211,40 +312,71 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
                         .addGap(19, 19, 19))))
         );
 
+        BotaoComprar.setText("Compra");
+        BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotaoComprarActionPerformed(evt);
+            }
+        });
+
+        bntRecarregarLista.setText("Recarregar Lista");
+        bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntRecarregarListaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(bntRecarregarLista)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(TxtnomeDoalimento)
+                                        .addGap(12, 12, 12))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(TXTcodigodoalimento)
+                                        .addGap(18, 18, 18)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                                    .addComponent(CapturaTXTProcurarCodigoAlimento))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bntProvurarcodigo)
+                                    .addComponent(bntProcurarnomeAliemnto)))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(TXTitemSelecionado)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(TXTAcrementoDeItem)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(TXTDecrementoDeItem)))
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(BotaoComprar)
+                                .addGap(158, 158, 158))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(TxtnomeDoalimento)
-                                .addGap(12, 12, 12))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(TXTcodigodoalimento)
-                                .addGap(18, 18, 18)))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                            .addComponent(CapturaTXTProcurarCodigoAlimento))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(bntProvurarcodigo)
-                            .addComponent(bntProcurarnomeAliemnto)))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(82, 82, 82)
-                            .addComponent(TXTitemSelecionado)
-                            .addGap(64, 64, 64)
-                            .addComponent(TXTAcrementoDeItem)
-                            .addGap(29, 29, 29)
-                            .addComponent(TXTDecrementoDeItem))
-                        .addComponent(jLabel3)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(0, 21, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,17 +391,27 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
                     .addComponent(TXTcodigodoalimento)
                     .addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntProvurarcodigo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addGap(67, 67, 67)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(bntRecarregarLista)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(TXTitemSelecionado)
+                .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(TXTitemSelecionado)
                     .addComponent(TXTAcrementoDeItem)
                     .addComponent(TXTDecrementoDeItem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(18, 18, 18)
+                .addComponent(BotaoComprar)
+                .addGap(32, 32, 32))
         );
 
         bntVoltar.setText("Voltar");
@@ -286,9 +428,9 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addContainerGap(60, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bntVoltar)
@@ -396,6 +538,49 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
         limparCampos();
     }//GEN-LAST:event_bntProvurarcodigoActionPerformed
 
+    private void BotaoComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoComprarActionPerformed
+      if (carrinho.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Carrinho está vazio!", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Salvar os dados no histórico do backend
+    salvarCompraNoHistorico();
+
+    // Exibir confirmação
+    JOptionPane.showMessageDialog(this, "Compra concluída!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+    // Limpar carrinho
+    carrinho.clear();
+    atualizarQuantidadeTotal();
+    atualizarPrecoTotal();
+    }//GEN-LAST:event_BotaoComprarActionPerformed
+
+    private void bntRecarregarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRecarregarListaActionPerformed
+    atualizarTabela();  
+    limparCampos();     
+    }//GEN-LAST:event_bntRecarregarListaActionPerformed
+
+    private void salvarCompraNoHistorico() {
+    for (Map.Entry<String, Integer> entry : carrinho.entrySet()) {
+        String nomeProduto = entry.getKey();
+        int quantidade = entry.getValue();
+
+        // Aqui você pode chamar seu backend para salvar no banco
+        System.out.println("Salvando compra: " + nomeProduto + " - Qtd: " + quantidade);
+
+        // Exemplo fictício (substitua com o real):
+        // app.getBackend().getHistoricoCompras().registrarCompra(nomeProduto, quantidade);
+    }
+
+    // Posteriormente o RelatorioGeral pode consultar esse histórico
+}
+    
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -432,6 +617,7 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotaoComprar;
     private javax.swing.JTextField CapturaTXTProcurarCodigoAlimento;
     private javax.swing.JTextField CapturaTXTProcurarNomeAlimento;
     private javax.swing.JTable PlanilhaDeAlimentos;
@@ -444,6 +630,7 @@ private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
     private javax.swing.JLabel TxtnomeDoalimento;
     private javax.swing.JButton bntProcurarnomeAliemnto;
     private javax.swing.JButton bntProvurarcodigo;
+    private javax.swing.JButton bntRecarregarLista;
     private javax.swing.JButton bntVoltar;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
