@@ -264,7 +264,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	// 4. Já está reservada.
 	@Override
 	public boolean tentarReservar(int idFilme, int idSessao, int linha, int coluna) {
-		if(backend.diaEstaAberto()) {
+		if(!backend.diaEstaAberto()) {
 			return false;
 		}
 		if(!filmes.containsKey(idFilme)) {
@@ -285,7 +285,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	// 4. A posição não está reservada.
 	@Override
 	public boolean tentarDesreservar(int idFilme, int idSessao, int linha, int coluna) {
-		if(backend.diaEstaAberto()) {
+		if(!backend.diaEstaAberto()) {
 			return false;
 		}
 		if(!filmes.containsKey(idFilme)) {
