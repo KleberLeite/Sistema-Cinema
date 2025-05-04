@@ -5,7 +5,7 @@
 package cinemax.frontend.vendadealimentos;
 
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
-import cinemax.backend.alimentos.Alimento; 
+import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.backend.core.Backend;
 import cinemax.frontend.controller.ControladorDeApp;
@@ -13,634 +13,582 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  *
  * @author geral
  */
 public class VendaDealimentoss extends javax.swing.JFrame {
-    private Map<String, Integer> itensSelecionados = new HashMap<>();
-    private java.util.Map<String, Integer> carrinho = new java.util.HashMap<>();
+	private Map<String, Integer> itensSelecionados = new HashMap<>();
+	private java.util.Map<String, Integer> carrinho = new java.util.HashMap<>();
 
-private ControladorDeApp app = ControladorDeApp.getInstancia();
-private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
- private DefaultTableModel modeloTabela;
- private int indiceSelecionado = -1;
- 
- 
-    /**
-     * Creates new form VendaDealimentoss
-     */
-    public VendaDealimentoss() {
-        initComponents();
-       inicializarTabela();
-       configurarListeners();
-    TXTAcrementoDeItem.setText("+");
-    TXTDecrementoDeItem.setText("-");
+	private ControladorDeApp app = ControladorDeApp.getInstancia();
+	private IBancoDeDadosAlimento bancoDados = app.getBackend().getBancoAlimentos();
+	private DefaultTableModel modeloTabela;
+	private int indiceSelecionado = -1;
 
-       // Aqui está o local certo para adicionar os listeners aos "+" e "-"
-    TXTAcrementoDeItem.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            incrementarItem();
-        }
-    });
+	/**
+	 * Creates new form VendaDealimentoss
+	 */
+	public VendaDealimentoss() {
+		initComponents();
+		inicializarTabela();
+		configurarListeners();
+		TXTAcrementoDeItem.setText("+");
+		TXTDecrementoDeItem.setText("-");
 
-    TXTDecrementoDeItem.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            decrementarItem();
-        }
-    });
-    BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        BotaoComprarActionPerformed(evt);
-    }
-});
+		// Aqui está o local certo para adicionar os listeners aos "+" e "-"
+		TXTAcrementoDeItem.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				incrementarItem();
+			}
+		});
 
-     bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        bntRecarregarListaActionPerformed(evt);
-    }
-});
+		TXTDecrementoDeItem.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				decrementarItem();
+			}
+		});
+		BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				BotaoComprarActionPerformed(evt);
+			}
+		});
 
-    
-    
+		bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				bntRecarregarListaActionPerformed(evt);
+			}
+		});
+	}
 
-    }
-    
-    //___________________________________________///
+	// ___________________________________________///
+	private void inicializarTabela() {
+		modeloTabela = (DefaultTableModel) PlanilhaDeAlimentos.getModel();
+		atualizarTabela();
+	}
 
-     private void inicializarTabela() {
-      modeloTabela = (DefaultTableModel) PlanilhaDeAlimentos.getModel();
+	private void atualizarTabela() {
+		modeloTabela.setRowCount(0);
+		Alimento[] alimentos = bancoDados.obterTodosAlimentos();
+		for (Alimento alimento : alimentos) {
+			modeloTabela.addRow(new Object[] { alimento.getNome(), alimento.getPreco(), alimento.getCodigo() });
+		}
+	}
 
+	private void configurarListeners() {
+		PlanilhaDeAlimentos.getSelectionModel().addListSelectionListener(e -> {
+			if (!e.getValueIsAdjusting()) {
+				int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow(); // CORRIGIDO AQUI
+				if (linhaSelecionada != -1) {
+					preencherCampos(linhaSelecionada);
+					indiceSelecionado = linhaSelecionada;
+				}
+			}
+		});
+	}
 
-        atualizarTabela();
-    }
-    
-    private void atualizarTabela() {
-        modeloTabela.setRowCount(0);
-        Alimento[] alimentos = bancoDados.obterTodosAlimentos();
-        for (Alimento alimento : alimentos) {
-            modeloTabela.addRow(new Object[]{
-                alimento.getNome(),
-                alimento.getPreco(),
-                alimento.getCodigo()
-            });
-        }
-    }
-    
-    private void configurarListeners() {
-       PlanilhaDeAlimentos.getSelectionModel().addListSelectionListener(e -> {
+	private void limparCampos() {
+		CapturaTXTProcurarNomeAlimento.setText("");
+		CapturaTXTProcurarCodigoAlimento.setText("");
+	}
 
-            if (!e.getValueIsAdjusting()) {
-                 int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow(); // CORRIGIDO AQUI
-                if (linhaSelecionada != -1) {
-                     preencherCampos(linhaSelecionada);
-                    indiceSelecionado = linhaSelecionada;
-                    
-                }
-            }
-        });
-    }
-     private void limparCampos() {
-       CapturaTXTProcurarNomeAlimento.setText("");
-        CapturaTXTProcurarCodigoAlimento.setText("");
-     }
-     
-     private void preencherCampos(int linhaSelecionada) {
-    Object valor = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0);
-    String nome = valor != null ? valor.toString() : "Desconhecido";
-    TXTitemSelecionado.setText(nome);
-}
+	private void preencherCampos(int linhaSelecionada) {
+		Object valor = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0);
+		String nome = valor != null ? valor.toString() : "Desconhecido";
+		TXTitemSelecionado.setText(nome);
+	}
 
-     
-    private void incrementarItem() {
-    int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
-    if (linhaSelecionada != -1) {
-        String nome = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0).toString();
-        double preco = Double.parseDouble(PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 1).toString());
+	private void incrementarItem() {
+		int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
+		if (linhaSelecionada != -1) {
+			String nome = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0).toString();
+			double preco = Double.parseDouble(PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 1).toString());
 
-        // Incrementar quantidade
-        carrinho.put(nome, carrinho.getOrDefault(nome, 0) + 1);
+			// Incrementar quantidade
+			carrinho.put(nome, carrinho.getOrDefault(nome, 0) + 1);
 
-        // Atualizar contadores
-        atualizarQuantidadeTotal();
-        atualizarPrecoTotal();
-    }
-}
+			// Atualizar contadores
+			atualizarQuantidadeTotal();
+			atualizarPrecoTotal();
+		}
+	}
 
-private void decrementarItem() {
-    int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
-    if (linhaSelecionada != -1) {
-        String nome = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0).toString();
+	private void decrementarItem() {
+		int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
+		if (linhaSelecionada != -1) {
+			String nome = PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 0).toString();
 
-        if (carrinho.containsKey(nome)) {
-            int qtdAtual = carrinho.get(nome);
-            if (qtdAtual > 1) {
-                carrinho.put(nome, qtdAtual - 1);
-            } else {
-                carrinho.remove(nome); // Remove se quantidade for 1
-            }
+			if (carrinho.containsKey(nome)) {
+				int qtdAtual = carrinho.get(nome);
+				if (qtdAtual > 1) {
+					carrinho.put(nome, qtdAtual - 1);
+				} else {
+					carrinho.remove(nome); // Remove se quantidade for 1
+				}
 
-            atualizarQuantidadeTotal();
-            atualizarPrecoTotal();
-        }
-    }
-}
+				atualizarQuantidadeTotal();
+				atualizarPrecoTotal();
+			}
+		}
+	}
 
+	private void atualizarQuantidadeTotal() {
+		int total = 0;
+		for (int qtd : carrinho.values()) {
+			total += qtd;
+		}
 
- private void atualizarQuantidadeTotal() {
-    int total = 0;
-    for (int qtd : carrinho.values()) {
-        total += qtd;
-    }
+		// Atualiza o texto no JLabel com a quantidade total de itens
+		TXTQuantidadeDeitemTotaisSelecionados.setText(String.valueOf(total));
 
-    // Atualiza o texto no JLabel com a quantidade total de itens
-    TXTQuantidadeDeitemTotaisSelecionados.setText(String.valueOf(total));
+		// Opcional: imprime no console para depuração
+		System.out.println("Total de itens no carrinho: " + total);
+	}
 
-    // Opcional: imprime no console para depuração
-    System.out.println("Total de itens no carrinho: " + total);
-}
+	private void atualizarPrecoTotal() {
+		double total = 0.0;
+		for (String nome : carrinho.keySet()) {
+			int qtd = carrinho.get(nome);
+			// Procurar o preço na tabela
+			for (int i = 0; i < PlanilhaDeAlimentos.getRowCount(); i++) {
+				String nomeTabela = PlanilhaDeAlimentos.getValueAt(i, 0).toString();
+				if (nomeTabela.equals(nome)) {
+					double preco = Double.parseDouble(PlanilhaDeAlimentos.getValueAt(i, 1).toString());
+					total += preco * qtd;
+					break;
+				}
+			}
+		}
+		TXTPrecoTotalDeTodosOsItems.setText(String.format("R$ %.2f", total));
+	}
 
-  /////////
-  ///
-     private void atualizarPrecoTotal() {
-    double total = 0.0;
-    for (String nome : carrinho.keySet()) {
-        int qtd = carrinho.get(nome);
-        // Procurar o preço na tabela
-        for (int i = 0; i < PlanilhaDeAlimentos.getRowCount(); i++) {
-            String nomeTabela = PlanilhaDeAlimentos.getValueAt(i, 0).toString();
-            if (nomeTabela.equals(nome)) {
-                double preco = Double.parseDouble(PlanilhaDeAlimentos.getValueAt(i, 1).toString());
-                total += preco * qtd;
-                break;
-            }
-        }
-    }
-    TXTPrecoTotalDeTodosOsItems.setText(String.format("R$ %.2f", total));
-}
-     
-     
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	/**
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
+	 */
+	@SuppressWarnings("unchecked")
+	// <editor-fold defaultstate="collapsed" desc="Generated
+	// Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        PlanilhaDeAlimentos = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        TxtnomeDoalimento = new javax.swing.JLabel();
-        TXTcodigodoalimento = new javax.swing.JLabel();
-        CapturaTXTProcurarNomeAlimento = new javax.swing.JTextField();
-        CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
-        bntProcurarnomeAliemnto = new javax.swing.JButton();
-        bntProvurarcodigo = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        TXTitemSelecionado = new javax.swing.JLabel();
-        TXTAcrementoDeItem = new javax.swing.JLabel();
-        TXTDecrementoDeItem = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        TXTQuantidadeDeitemTotaisSelecionados = new javax.swing.JLabel();
-        TXTPrecoTotalDeTodosOsItems = new javax.swing.JLabel();
-        BotaoComprar = new javax.swing.JButton();
-        bntRecarregarLista = new javax.swing.JButton();
-        bntVoltar = new javax.swing.JButton();
+		jPanel1 = new javax.swing.JPanel();
+		jScrollPane1 = new javax.swing.JScrollPane();
+		PlanilhaDeAlimentos = new javax.swing.JTable();
+		jPanel2 = new javax.swing.JPanel();
+		TxtnomeDoalimento = new javax.swing.JLabel();
+		TXTcodigodoalimento = new javax.swing.JLabel();
+		CapturaTXTProcurarNomeAlimento = new javax.swing.JTextField();
+		CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
+		bntProcurarnomeAliemnto = new javax.swing.JButton();
+		bntProvurarcodigo = new javax.swing.JButton();
+		jLabel3 = new javax.swing.JLabel();
+		jLabel4 = new javax.swing.JLabel();
+		TXTitemSelecionado = new javax.swing.JLabel();
+		TXTAcrementoDeItem = new javax.swing.JLabel();
+		TXTDecrementoDeItem = new javax.swing.JLabel();
+		jPanel3 = new javax.swing.JPanel();
+		jLabel8 = new javax.swing.JLabel();
+		jLabel9 = new javax.swing.JLabel();
+		TXTQuantidadeDeitemTotaisSelecionados = new javax.swing.JLabel();
+		TXTPrecoTotalDeTodosOsItems = new javax.swing.JLabel();
+		BotaoComprar = new javax.swing.JButton();
+		bntRecarregarLista = new javax.swing.JButton();
+		bntVoltar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(2, 32, 64));
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setBackground(new java.awt.Color(2, 32, 64));
 
-        jPanel1.setBackground(new java.awt.Color(2, 32, 64));
+		jPanel1.setBackground(new java.awt.Color(2, 32, 64));
 
-        PlanilhaDeAlimentos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Nome", "Preço", "Código"
-            }
-        ));
-        PlanilhaDeAlimentos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PlanilhaDeAlimentosMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(PlanilhaDeAlimentos);
+		PlanilhaDeAlimentos.setModel(
+				new javax.swing.table.DefaultTableModel(new Object[][] { { null, null, null }, { null, null, null },
+						{ null, null, null }, { null, null, null } }, new String[] { "Nome", "Preço", "Código" }));
+		PlanilhaDeAlimentos.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				PlanilhaDeAlimentosMouseClicked(evt);
+			}
+		});
+		jScrollPane1.setViewportView(PlanilhaDeAlimentos);
 
-        TxtnomeDoalimento.setText("Procurar Nome:");
+		TxtnomeDoalimento.setText("Procurar Nome:");
 
-        TXTcodigodoalimento.setText("Procurar Código:");
+		TXTcodigodoalimento.setText("Procurar Código:");
 
-        bntProcurarnomeAliemnto.setText("Procurar");
-        bntProcurarnomeAliemnto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntProcurarnomeAliemntoActionPerformed(evt);
-            }
-        });
+		bntProcurarnomeAliemnto.setText("Procurar");
+		bntProcurarnomeAliemnto.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				bntProcurarnomeAliemntoActionPerformed(evt);
+			}
+		});
 
-        bntProvurarcodigo.setText("Procurar");
-        bntProvurarcodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntProvurarcodigoActionPerformed(evt);
-            }
-        });
+		bntProvurarcodigo.setText("Procurar");
+		bntProvurarcodigo.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				bntProvurarcodigoActionPerformed(evt);
+			}
+		});
 
-        jLabel3.setText("-------------------------------------------------------------------------");
+		jLabel3.setText("-------------------------------------------------------------------------");
 
-        jLabel4.setText("Item Selecionado:");
+		jLabel4.setText("Item Selecionado:");
 
-        TXTitemSelecionado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+		TXTitemSelecionado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        TXTAcrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        TXTAcrementoDeItem.setText("+");
+		TXTAcrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+		TXTAcrementoDeItem.setText("+");
 
-        TXTDecrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        TXTDecrementoDeItem.setText("-");
+		TXTDecrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+		TXTDecrementoDeItem.setText("-");
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+		jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel8.setText("Total de Item selecionados:");
+		jLabel8.setText("Total de Item selecionados:");
 
-        jLabel9.setText("Total:");
+		jLabel9.setText("Total:");
 
-        TXTQuantidadeDeitemTotaisSelecionados.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        TXTQuantidadeDeitemTotaisSelecionados.setText("0");
+		TXTQuantidadeDeitemTotaisSelecionados.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+		TXTQuantidadeDeitemTotaisSelecionados.setText("0");
 
-        TXTPrecoTotalDeTodosOsItems.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        TXTPrecoTotalDeTodosOsItems.setText("0");
+		TXTPrecoTotalDeTodosOsItems.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+		TXTPrecoTotalDeTodosOsItems.setText("0");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-                        .addComponent(TXTQuantidadeDeitemTotaisSelecionados))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TXTPrecoTotalDeTodosOsItems)))
-                .addGap(22, 22, 22))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(TXTQuantidadeDeitemTotaisSelecionados))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(TXTPrecoTotalDeTodosOsItems)
-                        .addGap(19, 19, 19))))
-        );
+		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+		jPanel3.setLayout(jPanel3Layout);
+		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel3Layout.createSequentialGroup().addGap(17, 17, 17)
+						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(jPanel3Layout.createSequentialGroup().addComponent(jLabel8)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143,
+												Short.MAX_VALUE)
+										.addComponent(TXTQuantidadeDeitemTotaisSelecionados))
+								.addGroup(jPanel3Layout.createSequentialGroup().addComponent(jLabel9)
+										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+												javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(TXTPrecoTotalDeTodosOsItems)))
+						.addGap(22, 22, 22)));
+		jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel3Layout.createSequentialGroup().addContainerGap()
+						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(jLabel8).addComponent(TXTQuantidadeDeitemTotaisSelecionados))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+										jPanel3Layout.createSequentialGroup().addComponent(jLabel9).addContainerGap())
+								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+										jPanel3Layout.createSequentialGroup().addComponent(TXTPrecoTotalDeTodosOsItems)
+												.addGap(19, 19, 19)))));
 
-        BotaoComprar.setText("Compra");
-        BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoComprarActionPerformed(evt);
-            }
-        });
+		BotaoComprar.setText("Compra");
+		BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				BotaoComprarActionPerformed(evt);
+			}
+		});
 
-        bntRecarregarLista.setText("Recarregar Lista");
-        bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntRecarregarListaActionPerformed(evt);
-            }
-        });
+		bntRecarregarLista.setText("Recarregar Lista");
+		bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				bntRecarregarListaActionPerformed(evt);
+			}
+		});
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(bntRecarregarLista)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(TxtnomeDoalimento)
-                                        .addGap(12, 12, 12))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(TXTcodigodoalimento)
-                                        .addGap(18, 18, 18)))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                    .addComponent(CapturaTXTProcurarCodigoAlimento))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bntProvurarcodigo)
-                                    .addComponent(bntProcurarnomeAliemnto)))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(TXTitemSelecionado)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(TXTAcrementoDeItem)
-                                        .addGap(32, 32, 32)
-                                        .addComponent(TXTDecrementoDeItem)))
-                                .addGap(28, 28, 28))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(BotaoComprar)
-                                .addGap(158, 158, 158))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 21, Short.MAX_VALUE))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtnomeDoalimento)
-                    .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntProcurarnomeAliemnto))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TXTcodigodoalimento)
-                    .addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntProvurarcodigo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bntRecarregarLista)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(TXTitemSelecionado)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TXTAcrementoDeItem)
-                    .addComponent(TXTDecrementoDeItem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BotaoComprar)
-                .addGap(32, 32, 32))
-        );
+		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+		jPanel2.setLayout(jPanel2Layout);
+		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel2Layout.createSequentialGroup().addGroup(jPanel2Layout
+						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(jPanel2Layout.createSequentialGroup().addGap(20, 20, 20).addGroup(jPanel2Layout
+								.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+								.addComponent(bntRecarregarLista)
+								.addGroup(jPanel2Layout.createSequentialGroup().addGroup(jPanel2Layout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addGroup(jPanel2Layout.createSequentialGroup().addComponent(TxtnomeDoalimento)
+												.addGap(12, 12, 12))
+										.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+												jPanel2Layout.createSequentialGroup().addComponent(TXTcodigodoalimento)
+														.addGap(18, 18, 18)))
+										.addGroup(jPanel2Layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+												.addComponent(CapturaTXTProcurarNomeAlimento,
+														javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+												.addComponent(CapturaTXTProcurarCodigoAlimento))
+										.addGap(18, 18, 18)
+										.addGroup(jPanel2Layout
+												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+												.addComponent(bntProvurarcodigo)
+												.addComponent(bntProcurarnomeAliemnto)))))
+						.addGroup(jPanel2Layout.createSequentialGroup().addGap(138, 138, 138)
+								.addComponent(TXTitemSelecionado)))
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap().addGroup(jPanel2Layout
+						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+								.addGap(0, 0, Short.MAX_VALUE)
+								.addGroup(jPanel2Layout
+										.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+												javax.swing.GroupLayout.Alignment.TRAILING,
+												jPanel2Layout.createSequentialGroup().addGroup(jPanel2Layout
+														.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+														.addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
+																javax.swing.GroupLayout.DEFAULT_SIZE,
+																javax.swing.GroupLayout.PREFERRED_SIZE)
+														.addGroup(jPanel2Layout.createSequentialGroup()
+																.addComponent(TXTAcrementoDeItem).addGap(32, 32, 32)
+																.addComponent(TXTDecrementoDeItem)))
+														.addGap(28, 28, 28))
+										.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+												jPanel2Layout.createSequentialGroup().addComponent(BotaoComprar)
+														.addGap(158, 158, 158))))
+						.addGroup(jPanel2Layout.createSequentialGroup()
+								.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+										.addComponent(jLabel3).addComponent(jLabel4))
+								.addGap(0, 21, Short.MAX_VALUE)))));
+		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel2Layout.createSequentialGroup().addGap(25, 25, 25)
+						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(TxtnomeDoalimento)
+								.addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(bntProcurarnomeAliemnto))
+						.addGap(38, 38, 38)
+						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(TXTcodigodoalimento)
+								.addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(bntProvurarcodigo))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+						.addComponent(bntRecarregarLista)
+						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(jPanel2Layout.createSequentialGroup().addGap(3, 3, 3)
+										.addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16,
+												javax.swing.GroupLayout.PREFERRED_SIZE)
+										.addGap(57, 57, 57))
+								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+										jPanel2Layout.createSequentialGroup()
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57,
+														Short.MAX_VALUE)
+												.addComponent(jLabel4)
+												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+						.addComponent(TXTitemSelecionado).addGap(10, 10, 10)
+						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+								.addComponent(TXTAcrementoDeItem).addComponent(TXTDecrementoDeItem))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+						.addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGap(18, 18, 18).addComponent(BotaoComprar).addGap(32, 32, 32)));
 
-        bntVoltar.setText("Voltar");
-        bntVoltar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntVoltarActionPerformed(evt);
-            }
-        });
+		bntVoltar.setText("Voltar");
+		bntVoltar.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				bntVoltarActionPerformed(evt);
+			}
+		});
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bntVoltar)
-                .addGap(71, 71, 71))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bntVoltar)
-                .addGap(18, 18, 18))
-        );
+		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		jPanel1.setLayout(jPanel1Layout);
+		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addGap(26, 26, 26)
+						.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434,
+								javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGap(39, 39, 39)
+						.addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(60, Short.MAX_VALUE))
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
+						jPanel1Layout.createSequentialGroup()
+								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(bntVoltar).addGap(71, 71, 71)));
+		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup().addGap(44, 44, 44)
+						.addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE,
+										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503,
+										javax.swing.GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+								javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(bntVoltar).addGap(18, 18, 18)));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+				jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGap(0, 0, Short.MAX_VALUE)));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
-    private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
-         // Chamando a tela Gerente//
-             Gerente telaGerente = new Gerente("usuario", "senha");
-            telaGerente.setVisible(true);
-            dispose(); 
-    }//GEN-LAST:event_bntVoltarActionPerformed
+	private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bntVoltarActionPerformed
+		// Chamando a tela Gerente//
+		Gerente telaGerente = new Gerente("usuario", "senha");
+		telaGerente.setVisible(true);
+		dispose();
+	}// GEN-LAST:event_bntVoltarActionPerformed
 
-    private void PlanilhaDeAlimentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlanilhaDeAlimentosMouseClicked
-        
-    }//GEN-LAST:event_PlanilhaDeAlimentosMouseClicked
+	private void PlanilhaDeAlimentosMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_PlanilhaDeAlimentosMouseClicked
 
-    private void bntProcurarnomeAliemntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntProcurarnomeAliemntoActionPerformed
-     String nomeProcurado = CapturaTXTProcurarNomeAlimento.getText().trim();
-        
-        if (nomeProcurado.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "Digite um nome para procurar!", 
-                "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        modeloTabela.setRowCount(0);
-        Alimento[] resultados = bancoDados.obterAlimentoPorNome(nomeProcurado);
-        
-        if (resultados.length == 0) {
-            JOptionPane.showMessageDialog(this, 
-                "Nenhum alimento encontrado com este nome!", 
-                "Informação", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            for (Alimento alimento : resultados) {
-                modeloTabela.addRow(new Object[]{
-                    alimento.getNome(),
-                    alimento.getPreco(),
-                    alimento.getCodigo()
-                });
-            }
-        }
-        limparCampos();
-    }//GEN-LAST:event_bntProcurarnomeAliemntoActionPerformed
+	}// GEN-LAST:event_PlanilhaDeAlimentosMouseClicked
 
-    private void bntProvurarcodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntProvurarcodigoActionPerformed
-      String codigoText = CapturaTXTProcurarCodigoAlimento.getText().trim();
-        
-        if (codigoText.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "Digite um código para procurar!", 
-                "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        try {
-            int codigo = Integer.parseInt(codigoText);
-            Alimento alimento = bancoDados.obterAlimentoPorCodigo(codigo);
-            
-            if (alimento == null) {
-                JOptionPane.showMessageDialog(this, 
-                    "Nenhum alimento encontrado com este código!", 
-                    "Informação", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                modeloTabela.setRowCount(0);
-                modeloTabela.addRow(new Object[]{
-                    alimento.getNome(),
-                    alimento.getPreco(),
-                    alimento.getCodigo()
-                });
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, 
-                "O código deve ser um número válido!", 
-                "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        limparCampos();
-    }//GEN-LAST:event_bntProvurarcodigoActionPerformed
+	private void bntProcurarnomeAliemntoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bntProcurarnomeAliemntoActionPerformed
+		String nomeProcurado = CapturaTXTProcurarNomeAlimento.getText().trim();
 
-    private void BotaoComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoComprarActionPerformed
-      if (carrinho.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Carrinho está vazio!", "Aviso", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
+		if (nomeProcurado.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Digite um nome para procurar!", "Aviso", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 
-    // Salvar os dados no histórico do backend
-    salvarCompraNoHistorico();
+		modeloTabela.setRowCount(0);
+		Alimento[] resultados = bancoDados.obterAlimentoPorNome(nomeProcurado);
 
-    // Exibir confirmação
-    JOptionPane.showMessageDialog(this, "Compra concluída!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+		if (resultados.length == 0) {
+			JOptionPane.showMessageDialog(this, "Nenhum alimento encontrado com este nome!", "Informação",
+					JOptionPane.INFORMATION_MESSAGE);
+		} else {
+			for (Alimento alimento : resultados) {
+				modeloTabela.addRow(new Object[] { alimento.getNome(), alimento.getPreco(), alimento.getCodigo() });
+			}
+		}
+		limparCampos();
+	}// GEN-LAST:event_bntProcurarnomeAliemntoActionPerformed
 
-    // Limpar carrinho
-    carrinho.clear();
-    atualizarQuantidadeTotal();
-    atualizarPrecoTotal();
-    }//GEN-LAST:event_BotaoComprarActionPerformed
+	private void bntProvurarcodigoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bntProvurarcodigoActionPerformed
+		String codigoText = CapturaTXTProcurarCodigoAlimento.getText().trim();
 
-    private void bntRecarregarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRecarregarListaActionPerformed
-    atualizarTabela();  
-    limparCampos();     
-    }//GEN-LAST:event_bntRecarregarListaActionPerformed
+		if (codigoText.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Digite um código para procurar!", "Aviso",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 
-    private void salvarCompraNoHistorico() {
-    for (Map.Entry<String, Integer> entry : carrinho.entrySet()) {
-        String nomeProduto = entry.getKey();
-        int quantidade = entry.getValue();
+		try {
+			int codigo = Integer.parseInt(codigoText);
+			Alimento alimento = bancoDados.obterAlimentoPorCodigo(codigo);
 
-        // Aqui você pode chamar seu backend para salvar no banco
-        System.out.println("Salvando compra: " + nomeProduto + " - Qtd: " + quantidade);
+			if (alimento == null) {
+				JOptionPane.showMessageDialog(this, "Nenhum alimento encontrado com este código!", "Informação",
+						JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				modeloTabela.setRowCount(0);
+				modeloTabela.addRow(new Object[] { alimento.getNome(), alimento.getPreco(), alimento.getCodigo() });
+			}
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "O código deve ser um número válido!", "Erro",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		limparCampos();
+	}// GEN-LAST:event_bntProvurarcodigoActionPerformed
 
-        // Exemplo fictício (substitua com o real):
-        // app.getBackend().getHistoricoCompras().registrarCompra(nomeProduto, quantidade);
-    }
+	private void BotaoComprarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotaoComprarActionPerformed
+		if (carrinho.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Carrinho está vazio!", "Aviso", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 
-    // Posteriormente o RelatorioGeral pode consultar esse histórico
-}
-    
-    
-    
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+		// Salvar os dados no histórico do backend
+		salvarCompraNoHistorico();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VendaDealimentoss().setVisible(true);
-            }
-        });
-    }
+		// Exibir confirmação
+		JOptionPane.showMessageDialog(this, "Compra concluída!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoComprar;
-    private javax.swing.JTextField CapturaTXTProcurarCodigoAlimento;
-    private javax.swing.JTextField CapturaTXTProcurarNomeAlimento;
-    private javax.swing.JTable PlanilhaDeAlimentos;
-    private javax.swing.JLabel TXTAcrementoDeItem;
-    private javax.swing.JLabel TXTDecrementoDeItem;
-    private javax.swing.JLabel TXTPrecoTotalDeTodosOsItems;
-    private javax.swing.JLabel TXTQuantidadeDeitemTotaisSelecionados;
-    private javax.swing.JLabel TXTcodigodoalimento;
-    private javax.swing.JLabel TXTitemSelecionado;
-    private javax.swing.JLabel TxtnomeDoalimento;
-    private javax.swing.JButton bntProcurarnomeAliemnto;
-    private javax.swing.JButton bntProvurarcodigo;
-    private javax.swing.JButton bntRecarregarLista;
-    private javax.swing.JButton bntVoltar;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration//GEN-END:variables
+		// Limpar carrinho
+		carrinho.clear();
+		atualizarQuantidadeTotal();
+		atualizarPrecoTotal();
+	}// GEN-LAST:event_BotaoComprarActionPerformed
 
-   
+	private void bntRecarregarListaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bntRecarregarListaActionPerformed
+		atualizarTabela();
+		limparCampos();
+	}// GEN-LAST:event_bntRecarregarListaActionPerformed
+
+	private void salvarCompraNoHistorico() {
+		for (Map.Entry<String, Integer> entry : carrinho.entrySet()) {
+			String nomeProduto = entry.getKey();
+			int quantidade = entry.getValue();
+
+			// Aqui você pode chamar seu backend para salvar no banco
+			System.out.println("Salvando compra: " + nomeProduto + " - Qtd: " + quantidade);
+
+			// Exemplo fictício (substitua com o real):
+			// app.getBackend().getHistoricoCompras().registrarCompra(nomeProduto,
+			// quantidade);
+		}
+
+		// Posteriormente o RelatorioGeral pode consultar esse histórico
+	}
+
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String args[]) {
+		/* Set the Nimbus look and feel */
+		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+		// (optional) ">
+		/*
+		 * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+		 * look and feel. For details see
+		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+		 */
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException ex) {
+			java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE,
+					null, ex);
+		} catch (InstantiationException ex) {
+			java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE,
+					null, ex);
+		} catch (IllegalAccessException ex) {
+			java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE,
+					null, ex);
+		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+			java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE,
+					null, ex);
+		}
+		// </editor-fold>
+
+		/* Create and display the form */
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new VendaDealimentoss().setVisible(true);
+			}
+		});
+	}
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private javax.swing.JButton BotaoComprar;
+	private javax.swing.JTextField CapturaTXTProcurarCodigoAlimento;
+	private javax.swing.JTextField CapturaTXTProcurarNomeAlimento;
+	private javax.swing.JTable PlanilhaDeAlimentos;
+	private javax.swing.JLabel TXTAcrementoDeItem;
+	private javax.swing.JLabel TXTDecrementoDeItem;
+	private javax.swing.JLabel TXTPrecoTotalDeTodosOsItems;
+	private javax.swing.JLabel TXTQuantidadeDeitemTotaisSelecionados;
+	private javax.swing.JLabel TXTcodigodoalimento;
+	private javax.swing.JLabel TXTitemSelecionado;
+	private javax.swing.JLabel TxtnomeDoalimento;
+	private javax.swing.JButton bntProcurarnomeAliemnto;
+	private javax.swing.JButton bntProvurarcodigo;
+	private javax.swing.JButton bntRecarregarLista;
+	private javax.swing.JButton bntVoltar;
+	private javax.swing.JLabel jLabel3;
+	private javax.swing.JLabel jLabel4;
+	private javax.swing.JLabel jLabel8;
+	private javax.swing.JLabel jLabel9;
+	private javax.swing.JPanel jPanel1;
+	private javax.swing.JPanel jPanel2;
+	private javax.swing.JPanel jPanel3;
+	private javax.swing.JScrollPane jScrollPane1;
+	// End of variables declaration//GEN-END:variables
+
 }
