@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package cinemax.frontend.login;
+import cinemax.backend.core.Backend;
 import cinemax.frontend.PaginasGeranteeFuncionario.Funcionarios;
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.Gerencia;
 
 
@@ -14,7 +16,7 @@ import cinemax.frontend.geranciadefuncionarios.Gerencia;
  * @author geral
  */
 public class LoginDeAcesso extends javax.swing.JFrame {
- 
+	private Backend backend = ControladorDeApp.getInstancia().getBackend();
   
     public LoginDeAcesso() {
         initComponents();
@@ -174,22 +176,22 @@ public class LoginDeAcesso extends javax.swing.JFrame {
     }//GEN-LAST:event_CapturaDeTXTUsuarioLoginActionPerformed
 
     private void BotaoLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLoginActionPerformed
-     String usuario = CapturaDeTXTUsuarioLogin.getText();
-    String senha = new String(CapturaDeTXTSenhaLogin.getPassword());
-
-    if (usuario.equalsIgnoreCase("Gerente") && senha.equals("Gerente2025")) {
-        // Abre a tela do gerente
-        Gerente telaGerente = new Gerente(usuario, senha);
-        telaGerente.setVisible(true);
-        this.dispose();
-    } else if (usuario.equalsIgnoreCase("Funcionario") && senha.equals("Funcionario2025")) {
-        // Abre a tela dos funcionários
-        Funcionarios telaFuncionario = new Funcionarios();
-        telaFuncionario.setVisible(true);
-        this.dispose();
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos!");
-    }
+    	String usuario = CapturaDeTXTUsuarioLogin.getText();
+	    String senha = new String(CapturaDeTXTSenhaLogin.getPassword());
+	
+	    if (usuario.equalsIgnoreCase("Gerente") && senha.equals("Gerente2025")) {
+	        // Abre a tela do gerente
+	        Gerente telaGerente = new Gerente(usuario, senha);
+	        telaGerente.setVisible(true);
+	        this.dispose();
+	    } else if (usuario.equalsIgnoreCase("Funcionario") && senha.equals("Funcionario2025")) {
+	        // Abre a tela dos funcionários
+	        Funcionarios telaFuncionario = new Funcionarios();
+	        telaFuncionario.setVisible(true);
+	        this.dispose();
+	    } else {
+	        javax.swing.JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos!");
+	    }
     }//GEN-LAST:event_BotaoLoginActionPerformed
 
     /**
