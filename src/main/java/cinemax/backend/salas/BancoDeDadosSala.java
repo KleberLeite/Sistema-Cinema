@@ -136,4 +136,9 @@ A 0  0
 		Sala sala = salas.get(idSala);
 		return sala.tentarDesbloquearLocal(linha, coluna);
 	}
+
+	@Override
+	public boolean existeSala(int idSala) {
+		return salas.containsKey(idSala);
+	}
 }

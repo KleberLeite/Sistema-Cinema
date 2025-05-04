@@ -89,10 +89,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			return -1;
 		}
 		
-		return adicionarFilme(nome, sinopse, generos, duracaoEmMinutos, classificacaoIndicativa);
+		return internoAdicionarFilme(nome, sinopse, generos, duracaoEmMinutos, classificacaoIndicativa);
 	}
 	
-	private int adicionarFilme(
+	protected int internoAdicionarFilme(
 		String nome,
 		String sinopse,
 		GeneroFilme[] generos,
@@ -201,8 +201,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		if(backend.diaEstaAberto()) {
 			return -1;
 		}
-		Sala sala = bancoDeDadosSala.obterSalaPorId(idSala);
-		if(sala == null) {
+		if(bancoDeDadosSala.existeSala(idSala)) {
 			return -1;
 		}
 		if(!filmes.containsKey(idFilme)) {
@@ -215,10 +214,11 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			return -1;
 		}
 		
-		return adicionarSessao(sala, idFilme, inicio);
+		return internoAdicionarSessao(idSala, idFilme, inicio);
 	}
 	
-	private int adicionarSessao(Sala sala, int idFilme, LocalDateTime inicio ) {
+	protected int internoAdicionarSessao(int idSala, int idFilme, LocalDateTime inicio ) {
+		Sala sala = bancoDeDadosSala.obterSalaPorId(idSala);
 		Filme filme = filmes.get(idFilme);
 		Sessao sessao = new Sessao(idSessoesAtual, sala, filme, inicio);
 		filme.adicionarSessao(sessao);
