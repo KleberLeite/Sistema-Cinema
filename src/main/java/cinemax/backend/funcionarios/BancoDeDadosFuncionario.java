@@ -201,7 +201,7 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 
 	@Override
 	public CargoFuncionario login(String usuario, String senha) {
-		if (usuario == USUARIO_ADMIN && senha == SENHA_ADMIN) {
+		if (usuario.equals(USUARIO_ADMIN) && senha.equals(SENHA_ADMIN)) {
 			return CargoFuncionario.Administrador;
 		}
 
