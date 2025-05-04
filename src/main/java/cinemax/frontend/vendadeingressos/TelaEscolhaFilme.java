@@ -30,6 +30,7 @@ import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.backend.salas.BancoDeDadosSala;
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.model.DadosFilme;
 import cinemax.frontend.model.ModeloTabela;
@@ -308,10 +309,7 @@ public class TelaEscolhaFilme extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gerente telaGerente = new Gerente("Gerente", "2391");
-				telaGerente.setLocationRelativeTo(null);
-				telaGerente.setVisible(true);
-				
+				PaginaPrincipal.abrirPaginaPrincipal();				
 				dispose();
 			}
 		});

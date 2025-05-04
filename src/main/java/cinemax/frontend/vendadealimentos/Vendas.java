@@ -4,6 +4,7 @@ import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.backend.core.Backend;
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
 
 import javax.swing.JOptionPane;
@@ -534,8 +535,7 @@ public class Vendas extends javax.swing.JFrame {
 
     private void ButaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoVoltarActionPerformed
         // Chamando a tela Gerente
-             Gerente telaGerente = new Gerente("usuario", "senha");
-            telaGerente.setVisible(true); // Torna a tela de Gerente visível
+		PaginaPrincipal.abrirPaginaPrincipal();
             dispose(); // Fecha a tela atual (VendasDeAlimentos)
     }//GEN-LAST:event_ButaoVoltarActionPerformed
 

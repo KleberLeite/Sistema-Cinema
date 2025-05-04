@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Filme;
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
 
 import java.awt.Color;
@@ -196,10 +197,7 @@ public class TelaCrudFilme extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gerente gerente = new Gerente("gerente123", "1234");
-				gerente.setLocationRelativeTo(null);
-				gerente.setVisible(true);
-				
+				PaginaPrincipal.abrirPaginaPrincipal();
 				dispose();
 				
 			}
