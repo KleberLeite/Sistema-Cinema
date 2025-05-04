@@ -63,7 +63,7 @@ public class Backend {
 			return false;
 		}
 		diaEstaAberto = true;
-		gerenciadorDeRelatorios.novoDia();
+		gerenciadorDeRelatorios.iniciarDia();
 		return true;
 	}
 	
@@ -72,6 +72,7 @@ public class Backend {
 			return false;
 		}
 		diaEstaAberto = false;
+		gerenciadorDeRelatorios.finalizarDia();
 		return true;
 	}
 

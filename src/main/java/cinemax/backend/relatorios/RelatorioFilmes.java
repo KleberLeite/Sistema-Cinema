@@ -7,6 +7,10 @@ public class RelatorioFilmes {
 	private ArrayList<Ingresso> vendas = new ArrayList<>();
 	private Relatorio relatorio;
 	
+	public RelatorioFilmes(Relatorio relatorio) {
+		this.relatorio = relatorio;
+	}
+	
 	public void adicionarVendas(List<Ingresso> venda) {		
 		if(!relatorio.estaFechado()) {
 			vendas.addAll(venda);

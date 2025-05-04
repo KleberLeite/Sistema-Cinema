@@ -6,8 +6,8 @@ public class Relatorio {
 	private boolean fechado;
 	
 	public Relatorio() {
-		this.relatorioAlimentos = new RelatorioAlimentos();
-		this.relatorioFilmes = new RelatorioFilmes();
+		this.relatorioAlimentos = new RelatorioAlimentos(this);
+		this.relatorioFilmes = new RelatorioFilmes(this);
 	}
 
 	public RelatorioAlimentos getRelatorioAlimentos() {
