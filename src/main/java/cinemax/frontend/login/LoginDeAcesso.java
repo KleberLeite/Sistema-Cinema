@@ -186,13 +186,14 @@ public class LoginDeAcesso extends javax.swing.JFrame {
 	    	return;
 	    }
 
+	    ControladorDeApp.getInstancia().onLogin(cargo);
 	    if (cargo == CargoFuncionario.Atendente) {
 	        // Abre a tela dos funcionários
 	        Funcionarios telaFuncionario = new Funcionarios();
 	        telaFuncionario.setVisible(true);
 	    } else {
 	        // Abre a tela do gerente/admin
-	        Gerente telaGerente = new Gerente(cpf, senha);
+	        Gerente telaGerente = new Gerente();
 	        telaGerente.setVisible(true);
 	    }
         this.dispose();

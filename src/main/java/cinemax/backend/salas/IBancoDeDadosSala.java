@@ -19,4 +19,7 @@ public interface IBancoDeDadosSala {
 	// Tenta desbloquear o local da sala a partir de seu ID
 	// baseado nas coordenadas passadas.
 	public boolean tentarDesbloquearLocal(int idSala, int linha, int coluna);
+	
+	//
+	boolean existeSala(int idSala);
 }

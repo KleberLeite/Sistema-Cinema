@@ -5,6 +5,7 @@
 package cinemax.frontend.vendadealimentos;
 
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.frontend.controller.ControladorDeApp;
@@ -419,8 +420,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 
 	private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bntVoltarActionPerformed
 		// Chamando a tela Gerente//
-		Gerente telaGerente = new Gerente("usuario", "senha");
-		telaGerente.setVisible(true);
+		PaginaPrincipal.abrirPaginaPrincipal();
 		dispose();
 	}// GEN-LAST:event_bntVoltarActionPerformed
 
