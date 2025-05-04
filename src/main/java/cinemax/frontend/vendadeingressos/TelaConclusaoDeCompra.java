@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -20,6 +21,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -54,6 +57,8 @@ public class TelaConclusaoDeCompra extends JFrame {
 		
 		app.getBackend().tentarAbrirDia();
 		
+		if(app.getBackend().diaEstaAberto())System.out.println("Estou abrido");
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
@@ -75,7 +80,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(carrinho.getIngressos().get(0).getSessao(),carrinho);
+				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(carrinho);
 				telaFinalizarCompra.setVisible(true);
 				telaFinalizarCompra.setLocationRelativeTo(null);
 				
@@ -90,13 +95,56 @@ public class TelaConclusaoDeCompra extends JFrame {
 		btnImprimir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia().getRelatorioFilmes().adicionarVendas(carrinho.getIngressos());
 				
-				TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
-				telaEscolhaFilme.setLocationRelativeTo(null);
-				telaEscolhaFilme.setVisible(true);
+				boolean sucessoCompras= true;
+				List<Ingresso> ingressosFinalizados = new ArrayList<>();
+				
+				for(Ingresso ingresso: carrinho.getIngressos()) {
+					
+					boolean sucesso = app.getBackend().getBancoFilmes().tentarReservar(
+							ingresso.getSessao().getFilme().getId(),
+							ingresso.getSessao().getId(), 
+							ingresso.getPoltrona().getLinha(), 
+							ingresso.getPoltrona().getColuna());
+					System.out.println(sucesso);
+					System.out.println(Integer.toString(ingresso.getSessao().getFilme().getId()));
+					System.out.println(Integer.toString(ingresso.getSessao().getId()));
+					System.out.println(Integer.toString(ingresso.getPoltrona().getLinha()));
+					System.out.println(Integer.toString(ingresso.getPoltrona().getColuna()));
+					sucessoCompras = sucessoCompras && sucesso;
+					if(sucesso) {
+						ingressosFinalizados.add(ingresso);
+					}else {
+						/*if(!ingressosFinalizados.isEmpty()) {
+							for(Ingresso ingressoAntigo: ingressosFinalizados) {
+								app.getBackend().getBancoFilmes().tentarDesreservar(
+										ingressoAntigo.getSessao().getFilme().getId(),
+										ingressoAntigo.getSessao().getId(),
+										ingressoAntigo.getPoltrona().getLinha(),
+										ingressoAntigo.getPoltrona().getColuna());
+							}
+						}*/
+						JOptionPane.showMessageDialog(null, "Erro ao reservar poltronas! Por favor, refaça", "Erro",
+								JOptionPane.ERROR_MESSAGE);
+						TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(carrinho);
+						telaFinalizarCompra.setVisible(true);
+						telaFinalizarCompra.setLocationRelativeTo(null);
+						
+						dispose();
+						break;
+						
+					}
+				}
+				
+				if(sucessoCompras){
+					app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia().getRelatorioFilmes().adicionarVendas(carrinho.getIngressos());
+					
+					TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
+					telaEscolhaFilme.setLocationRelativeTo(null);
+					telaEscolhaFilme.setVisible(true);
 
-			    dispose();
+				    dispose();
+				}
 			}
 		});
 		btnImprimir.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -144,7 +192,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 			lblTipo.setBounds(20, 85, 100, 20); // mais largura pro nome
 			card.add(lblTipo);
 			
-			JLabel lblPoltrona = new JLabel("Poltrona: " + ingresso.getPoltrona());
+			JLabel lblPoltrona = new JLabel("Poltrona: " + ingresso.getPoltrona().getIdentificador());
 			lblPoltrona.setBounds(20, 110, 100, 20);
 			card.add(lblPoltrona);
 			

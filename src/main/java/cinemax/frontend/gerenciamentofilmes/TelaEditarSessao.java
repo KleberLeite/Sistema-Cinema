@@ -32,7 +32,6 @@ public class TelaEditarSessao extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	private JPanel contentPane;
-	private TelaManutencaoFilme telaManutencaoFilme;
 	private JTextField textFieldMes;
 	private JTextField textFieldDia;
 	private JTextField textFieldHora;
@@ -108,11 +107,12 @@ public class TelaEditarSessao extends JFrame {
 			return false;
 		}
 
-		if (app.getBackend().getBancoFilmes().tentarAlterarInicioSessao(sessao.getFilme().getId(), sessao.getId(), novaData)) {
+		if (app.getBackend().getBancoFilmes().tentarAlterarInicioSessao(sessao.getFilme().getId(), sessao.getId(), novaData) &&
+				app.getBackend().getBancoFilmes().tentarAlterarSalaSessao(sessao.getFilme().getId(), sessao.getId(), idSala)) {
 			JOptionPane.showMessageDialog(null, "Sessão atualizada com sucesso!");
 			return true;
 		}
-		JOptionPane.showMessageDialog(null, "Data inválida! Imcompatibilidade de horário com outra sessão!", "Erro", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, "Data inválida! Por favor, coloque uma data válida!!", "Erro", JOptionPane.ERROR_MESSAGE);
 		return true;
 		
 	}
@@ -139,9 +139,8 @@ public class TelaEditarSessao extends JFrame {
 			this.sessao = sessaoAtual;
 		}
 		Sessao sessao = this.sessao;
-		this.telaManutencaoFilme = telaManutencaoFilme;
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 64, 128));

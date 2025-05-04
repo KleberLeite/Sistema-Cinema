@@ -45,6 +45,9 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 	private JTextField textFieldNome;
 	private JTextField textFieldDuracao;
 	private JPanel panelSessoes = new JPanel();
+	private TelaAdicionarSessao telaAdicionarSessao;
+	private TelaEditarSessao telaEditarSessao;
+
 
 	/**
 	 * Launch the application.
@@ -135,7 +138,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 			JButton btnEditar = new JButton(iconeEditar); // ou seu ícone
 			btnEditar.setBounds(110, 10, 40, 40);
 			btnEditar.addActionListener(e -> {
-				TelaEditarSessao telaEditarSessao = new TelaEditarSessao(sessao, TelaEditarFilme.this);
+				telaEditarSessao = new TelaEditarSessao(sessao, TelaEditarFilme.this);
 				telaEditarSessao.setLocationRelativeTo(null);
 				telaEditarSessao.setVisible(true);
 
@@ -248,7 +251,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		btnAdicionarSessao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaAdicionarSessao telaAdicionarSessao = new TelaAdicionarSessao(TelaEditarFilme.this,filme.getId());
+				telaAdicionarSessao = new TelaAdicionarSessao(TelaEditarFilme.this,filme.getId());
 				telaAdicionarSessao.setLocationRelativeTo(null);
 				telaAdicionarSessao.setVisible(true);
 				
@@ -321,6 +324,14 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 				telaCrudFilme.setVisible(true);
 				
 				dispose();
+				
+				if (telaAdicionarSessao != null && telaAdicionarSessao.isDisplayable()) {
+				    telaAdicionarSessao.dispose();
+				}
+				if (telaEditarSessao != null && telaEditarSessao.isDisplayable()) {
+					telaEditarSessao.dispose();
+				}
+
 				
 			}
 		});

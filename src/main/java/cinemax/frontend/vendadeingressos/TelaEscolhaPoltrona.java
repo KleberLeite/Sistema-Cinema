@@ -39,10 +39,8 @@ import java.awt.Font;
 public class TelaEscolhaPoltrona extends JFrame{
 
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
-	Backend bancos = app.getBackend();
 	private List<String> PoltronasSelecionadas = new ArrayList<>();
 	private JPanel panelPrincipal;
-	private Sessao sessao = bancos.getBancoFilmes().obterFilmePorId(0).obterSessao(0);
 	private CarrinhoIngressos carrinho = new CarrinhoIngressos();
 	private int poltronasRestantes = 8;//Contabiliza a quantidade de poltronas que ainda podem ser escolhidas
 	
@@ -68,11 +66,7 @@ public class TelaEscolhaPoltrona extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public TelaEscolhaPoltrona(Sessao sessaoAtual) {
-		if (sessaoAtual != null) {
-			this.sessao = sessaoAtual;
-	    } 
-		Sessao sessao = this.sessao;
+	public TelaEscolhaPoltrona(Sessao sessao) {
 		
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -148,11 +142,6 @@ public class TelaEscolhaPoltrona extends JFrame{
 		Image  imgIconeTomDeSelecionadoParcial = iconeTomDeSelecionadoParcial.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
 		ImageIcon IconeTomDeSelecionado = new ImageIcon(imgIconeTomDeSelecionadoParcial);
 		
-		ImageIcon[] iconesLivres = {iconePoltrona, iconePoltronaObesos, iconeLocalCadeirantes};
-		ImageIcon[] iconesOcupados = {iconePoltronaOcupada, iconePoltronaObesosOcupada, iconeLocalCadeirantesOcupado};
-		ImageIcon[] iconesSelecionados = {iconePoltronaSelecionada, iconePoltronaObesosSelecionada, iconeLocalCadeirantesSelecionado};
-		ImageIcon[] iconesUtilitarios = {iconeEspacoVazio, iconeBloqueada};
-		
 		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
@@ -220,11 +209,10 @@ public class TelaEscolhaPoltrona extends JFrame{
 		btnAvançar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao,carrinho);
+				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(carrinho);
 				telaFinalizarCompra.setVisible(true);
 				telaFinalizarCompra.setLocationRelativeTo(null);
 
-			    // Fecha a tela atual (opcional)
 			    dispose();
 				
 			}

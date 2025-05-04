@@ -31,9 +31,7 @@ public class TelaAdicionarSessao extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	private JPanel contentPane;
-	private TelaManutencaoFilme telaManutencaoFilme;
 	private int idFilme;
-	private int NumSalas = 4;
 	private JTextField textFieldMes;
 	private JTextField textFieldDia;
 	private JTextField textFieldHora;
@@ -111,7 +109,7 @@ public class TelaAdicionarSessao extends JFrame {
 		int idSessaoOuFalse = app.getBackend().getBancoFilmes().tentarAdicionarSessao(idSala, this.idFilme, novaData);
 
 		if (idSessaoOuFalse==-1) {
-			JOptionPane.showMessageDialog(null, "Data inválida! Imcompatibilidade de horário com outra sessão!", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Data inválida! Por favor, coloque uma data válida!", "Erro", JOptionPane.ERROR_MESSAGE);
 			return true;
 		}
 		JOptionPane.showMessageDialog(null, "Sessão Adicionada com sucesso!");
@@ -135,10 +133,9 @@ public class TelaAdicionarSessao extends JFrame {
 	 * @wbp.parser.constructor
 	 */
 	public TelaAdicionarSessao(TelaManutencaoFilme telaManutencaoFilme, int idFilme) {
-		this.telaManutencaoFilme = telaManutencaoFilme;
 		this.idFilme = idFilme;
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 64, 128));

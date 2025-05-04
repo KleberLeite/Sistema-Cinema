@@ -28,6 +28,8 @@ public class Ingresso {
 				", \nRG=" + RG + "]";
 	}
 	
+
+
 	public void setTipo(TipoDeIngresso tipo) {
 		this.tipo = tipo;
 	}

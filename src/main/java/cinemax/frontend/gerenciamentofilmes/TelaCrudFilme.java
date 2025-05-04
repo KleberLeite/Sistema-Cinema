@@ -30,7 +30,6 @@ public class TelaCrudFilme extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
-	private Backend bancos = app.getBackend();
 
 	// Launch the application.
 	public static void main(String[] args) {

@@ -64,7 +64,7 @@ public class TelaFinalizarCompra extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaFinalizarCompra frame = new TelaFinalizarCompra(null, null);
+					TelaFinalizarCompra frame = new TelaFinalizarCompra( null);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -160,8 +160,7 @@ public class TelaFinalizarCompra extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaFinalizarCompra(Sessao sessaoAtual, CarrinhoIngressos carrinho) {
-		this.sessao = sessaoAtual;
+	public TelaFinalizarCompra(CarrinhoIngressos carrinho) {
 		totalDeIngressosRestantes = carrinho.qtdeTotalIngressos();
 		System.out.println("Total de Ingressos: " + totalDeIngressosRestantes);
 
@@ -536,7 +535,7 @@ public class TelaFinalizarCompra extends JFrame {
 		panelMeias.add(btnMenosUmaMeia);
 		
 		
-		/*JButton btnTeste = new JButton("Teste");
+		JButton btnTeste = new JButton("Teste");
 		btnTeste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int contMeia = 0;
@@ -553,7 +552,7 @@ public class TelaFinalizarCompra extends JFrame {
 			}
 		});
 		btnTeste.setBounds(400, 310, 89, 23);
-		panelIngressos.add(btnTeste);*/
+		panelIngressos.add(btnTeste);
 
 	}
 }
