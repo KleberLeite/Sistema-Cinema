@@ -214,6 +214,11 @@ public class TelaFinalizarCompra extends JFrame {
 		JButton btnFinalizarCompra = new JButton("Finalizar Compra");
 		btnFinalizarCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(totalDeIngressosRestantes > 0) {
+					JOptionPane.showMessageDialog(null, "Adicione todos os ingressos antes de continuar!", "Erro",JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				if(validarRGs()) {
 					
 					adicionaRGaMeia(carrinho.getIngressosMeias());
