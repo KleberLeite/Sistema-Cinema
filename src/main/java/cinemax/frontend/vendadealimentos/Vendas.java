@@ -31,6 +31,13 @@ public class Vendas extends javax.swing.JFrame {
         initComponents();
         inicializarTabela();
         configurarListeners();
+        
+        
+           bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        bntRecarregarListaActionPerformed(evt);
+    }
+});
     }
 
     
@@ -89,6 +96,7 @@ public class Vendas extends javax.swing.JFrame {
         TXTProcurarCodigoAlimento = new javax.swing.JLabel();
         CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
         ButaoProcurarCodigoAlimento = new javax.swing.JButton();
+        bntRecarregarLista = new javax.swing.JButton();
         ButaoVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -195,6 +203,13 @@ public class Vendas extends javax.swing.JFrame {
             }
         });
 
+        bntRecarregarLista.setText("Recarregar Lista");
+        bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntRecarregarListaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -217,6 +232,10 @@ public class Vendas extends javax.swing.JFrame {
                     .addComponent(ButaoProcurarAlimentoNome)
                     .addComponent(ButaoProcurarCodigoAlimento))
                 .addContainerGap(12, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bntRecarregarLista)
+                .addGap(116, 116, 116))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,7 +250,9 @@ public class Vendas extends javax.swing.JFrame {
                     .addComponent(TXTProcurarCodigoAlimento)
                     .addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ButaoProcurarCodigoAlimento))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(bntRecarregarLista)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         ButaoVoltar.setText("Voltar");
@@ -287,9 +308,6 @@ public class Vendas extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(CapturaTXTNomeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,7 +319,10 @@ public class Vendas extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(CapturaTXTCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TXTCodigoAlimento))))
+                            .addComponent(TXTCodigoAlimento)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButaoCadastrarAlimento)
@@ -518,6 +539,11 @@ public class Vendas extends javax.swing.JFrame {
             dispose(); // Fecha a tela atual (VendasDeAlimentos)
     }//GEN-LAST:event_ButaoVoltarActionPerformed
 
+    private void bntRecarregarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRecarregarListaActionPerformed
+    atualizarTabela();  
+    limparCampos();  
+    }//GEN-LAST:event_bntRecarregarListaActionPerformed
+
       // ===================== MÉTODOS AUXILIARES ===================== //
     
     private void atualizarTabela() {
@@ -643,6 +669,7 @@ public class Vendas extends javax.swing.JFrame {
     private javax.swing.JLabel TXTPrecoAlimento;
     private javax.swing.JLabel TXTProcurarCodigoAlimento;
     private javax.swing.JLabel TXTProcurarNomeAlimento;
+    private javax.swing.JButton bntRecarregarLista;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
