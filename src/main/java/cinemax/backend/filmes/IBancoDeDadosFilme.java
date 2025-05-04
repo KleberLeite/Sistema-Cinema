@@ -2,7 +2,6 @@ package cinemax.backend.filmes;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public interface IBancoDeDadosFilme {
 	// ------- Filmes -------
@@ -33,14 +32,8 @@ public interface IBancoDeDadosFilme {
 	boolean tentarAlterarNome(int id, String novoNome);
 	
 	// Tenta adicionar o genero do filme com o respectivo id, retorna falso caso:
-	// 1. Não encontrar o filme;
-	// 2. Já existir o gênero.
-	boolean tentarAdicionarGenero(int idFilme, GeneroFilme novoGenero);
-	
-	// Tenta remover o genero do filme com o respectivo id, retorna falso caso:
-	// 1. Não encontrar o filme;
-	// 2. Não conter o gênero indicado.
-	boolean tentarRemoverGenero(int idFilme, GeneroFilme genero);
+	// 1. Não encontrar o filme.
+	boolean alterarGeneros(int idFilme, GeneroFilme[] generos);
 	
 	// Tenta alterar a sinopse do filme com o respectivo id, retorna falso caso:
 	// 1. Não encontrar o filme;
