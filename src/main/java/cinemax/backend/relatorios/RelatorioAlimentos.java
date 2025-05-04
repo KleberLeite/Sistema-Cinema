@@ -10,6 +10,10 @@ public class RelatorioAlimentos {
 	private Map<Alimento, Integer> vendas = new HashMap<>();
 	private Relatorio relatorio;
 	
+	public RelatorioAlimentos(Relatorio relatorio) {
+		this.relatorio = relatorio;
+	}
+	
 	public void adicionarVendas(Map<Alimento, Integer> venda) {		
 		if(relatorio.estaFechado()) {
 			return;

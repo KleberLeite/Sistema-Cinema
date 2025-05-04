@@ -1,8 +1,6 @@
 package cinemax.backend.core;
 
-import cinemax.backend.relatorios.CircularBuffer;
 import cinemax.backend.relatorios.GerenciadorDeRelatorios;
-import cinemax.backend.relatorios.Relatorio;
 
 public class GerenciadorDeRelatoriosBackend extends GerenciadorDeRelatorios {
 	protected GerenciadorDeRelatoriosBackend() {
@@ -13,8 +11,11 @@ public class GerenciadorDeRelatoriosBackend extends GerenciadorDeRelatorios {
 		super(gerenciador);
 	}
 
-	@Override
-	public void novoDia() {
-		super.novoDia();
+	protected void iniciarDia() {
+		super.gerarNovoRelatorio();
+	}
+	
+	protected void finalizarDia() {
+		super.finalizarRelatorioAtual();
 	}
 }

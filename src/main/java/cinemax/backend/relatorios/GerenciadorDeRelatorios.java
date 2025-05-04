@@ -20,7 +20,14 @@ public class GerenciadorDeRelatorios {
 		return relatorios.getAll();
 	}
 	
-	protected void novoDia() {
+	protected void gerarNovoRelatorio() {
 		relatorios.push(new Relatorio());
+	}
+	
+	protected void finalizarRelatorioAtual() {
+		Relatorio relatorio = relatorios.obterAtual();
+		if(relatorio != null) {
+			relatorio.fechar();
+		}
 	}
 }
