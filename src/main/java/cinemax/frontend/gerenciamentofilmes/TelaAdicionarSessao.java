@@ -110,7 +110,7 @@ public class TelaAdicionarSessao extends JFrame {
 
 		if (idSessaoOuFalse==-1) {
 			JOptionPane.showMessageDialog(null, "Data inválida! Por favor, coloque uma data válida!", "Erro", JOptionPane.ERROR_MESSAGE);
-			return true;
+			return false;
 		}
 		JOptionPane.showMessageDialog(null, "Sessão Adicionada com sucesso!");
 		return true;

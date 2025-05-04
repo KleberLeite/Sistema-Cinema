@@ -113,7 +113,7 @@ public class TelaEditarSessao extends JFrame {
 			return true;
 		}
 		JOptionPane.showMessageDialog(null, "Data inválida! Por favor, coloque uma data válida!!", "Erro", JOptionPane.ERROR_MESSAGE);
-		return true;
+		return false;
 		
 	}
 
