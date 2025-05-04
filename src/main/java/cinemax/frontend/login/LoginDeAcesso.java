@@ -179,23 +179,23 @@ public class LoginDeAcesso extends javax.swing.JFrame {
     	String cpf = CapturaDeTXTUsuarioLogin.getText();
 	    String senha = new String(CapturaDeTXTSenhaLogin.getPassword());
 	    
-	    if(!bancoFuncionarios.existeFuncionario(cpf, senha)) {
+	    CargoFuncionario cargo = bancoFuncionarios.login(cpf, senha);
+	    
+	    if(cargo == null) {
 	    	javax.swing.JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos!");
 	    	return;
 	    }
 
-	    Funcionario f = bancoFuncionarios.obterFuncionarioPorCPF(cpf);
-	    if (f.getCargo() == CargoFuncionario.Gerente) {
-	        // Abre a tela do gerente
-	        Gerente telaGerente = new Gerente(cpf, senha);
-	        telaGerente.setVisible(true);
-	        this.dispose();
-	    } else {
+	    if (cargo == CargoFuncionario.Atendente) {
 	        // Abre a tela dos funcionários
 	        Funcionarios telaFuncionario = new Funcionarios();
 	        telaFuncionario.setVisible(true);
-	        this.dispose();
+	    } else {
+	        // Abre a tela do gerente/admin
+	        Gerente telaGerente = new Gerente(cpf, senha);
+	        telaGerente.setVisible(true);
 	    }
+        this.dispose();
     }//GEN-LAST:event_BotaoLoginActionPerformed
 
     /**
