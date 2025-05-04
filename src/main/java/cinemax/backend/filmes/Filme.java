@@ -1,13 +1,16 @@
 package cinemax.backend.filmes;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.HashMap;
+import java.util.HashSet;
 
 // Mantém os dados do filme e suas sessões.
 public class Filme {
 	private int id;
 	private String nome;
 	private String sinopse;
+	private Set<GeneroFilme> generos;
 	private int duracaoEmMinutos;
 	private ClassificacaoIndicativa classificacaoIndicativa;
 	private Map<Integer, Sessao> sessoes = new HashMap<Integer, Sessao>();
@@ -16,14 +19,24 @@ public class Filme {
 		int id,
 		String nome,
 		String sinopse,
+		GeneroFilme[] generos,
 		int duracaoEmMinutos,
 		ClassificacaoIndicativa classificacaoIndicativa
 	) {
 		this.id = id;
 		this.nome = nome;
 		this.sinopse = sinopse;
+		this.generos = newHashSetGeneros(generos);
 		this.duracaoEmMinutos = duracaoEmMinutos;
 		this.classificacaoIndicativa = classificacaoIndicativa;
+	}
+	
+	private Set<GeneroFilme> newHashSetGeneros(GeneroFilme[] generos) {
+		Set<GeneroFilme> s = new HashSet<>();
+		for(GeneroFilme g : generos) {
+			s.add(g);
+		}
+		return s;
 	}
 
 	public String getNome() {
@@ -45,11 +58,23 @@ public class Filme {
 	public int getDuracaoEmMinutos() {
 		return duracaoEmMinutos;
 	}
-
+	
 	protected void setDuracaoEmMinutos(int duracaoEmMinutos) {
 		this.duracaoEmMinutos = duracaoEmMinutos;
 	}
 
+	public GeneroFilme[] getGeneros() {
+		return generos.toArray(new GeneroFilme[generos.size()]);
+	}
+	
+	protected boolean addGenero(GeneroFilme genero) {
+		return generos.add(genero);
+	}
+	
+	protected boolean removeGenero(GeneroFilme genero) {
+		return generos.remove(genero);
+	}
+	
 	public ClassificacaoIndicativa getClassificacaoIndicativa() {
 		return classificacaoIndicativa;
 	}

@@ -22,6 +22,7 @@ public interface IBancoDeDadosFilme {
 	int tentarAdicionarFilme(
 		String nome,
 		String sinopse,
+		GeneroFilme[] generos,
 		int duracaoEmMinutos,
 		ClassificacaoIndicativa classificacaoIndicativa
 	);
@@ -30,6 +31,16 @@ public interface IBancoDeDadosFilme {
 	// 1. Não encontrar o filme;
 	// 2. O novoNome ser inválido.
 	boolean tentarAlterarNome(int id, String novoNome);
+	
+	// Tenta adicionar o genero do filme com o respectivo id, retorna falso caso:
+	// 1. Não encontrar o filme;
+	// 2. Já existir o gênero.
+	boolean tentarAdicionarGenero(int idFilme, GeneroFilme novoGenero);
+	
+	// Tenta remover o genero do filme com o respectivo id, retorna falso caso:
+	// 1. Não encontrar o filme;
+	// 2. Não conter o gênero indicado.
+	boolean tentarRemoverGenero(int idFilme, GeneroFilme genero);
 	
 	// Tenta alterar a sinopse do filme com o respectivo id, retorna falso caso:
 	// 1. Não encontrar o filme;

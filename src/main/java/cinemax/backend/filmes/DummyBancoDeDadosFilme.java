@@ -9,12 +9,48 @@ public class DummyBancoDeDadosFilme extends BancoDeDadosFilme {
 	public DummyBancoDeDadosFilme(Backend backend, IBancoDeDadosSala bancoDeDadosSala) {
 		super(backend, bancoDeDadosSala);
 
-		this.tentarAdicionarFilme("Procurando Nemo", "Um peixe-palhaço cruza o oceano para resgatar seu filho.", 100, ClassificacaoIndicativa.AL);
-		this.tentarAdicionarFilme("Paddington 2", "O adorável urso Paddington tenta provar sua inocência após ser acusado injustamente.", 103, ClassificacaoIndicativa.AL10);
-		this.tentarAdicionarFilme("Pantera Negra", "O rei T'Challa luta para proteger Wakanda após a morte de seu pai.", 141, ClassificacaoIndicativa.AL12);
-		this.tentarAdicionarFilme("Jogos Vorazes", "Uma jovem participa de uma competição mortal televisionada.", 142, ClassificacaoIndicativa.AL14);
-		this.tentarAdicionarFilme("Coringa", "A origem sombria do vilão Coringa em uma sociedade caótica.", 122, ClassificacaoIndicativa.AL16);
-		this.tentarAdicionarFilme("O Lobo de Wall Street", "A ascensão e queda de um corretor da bolsa envolvido em excessos.", 360, ClassificacaoIndicativa.AL18);
+		this.tentarAdicionarFilme(
+			"Procurando Nemo",
+			"Um peixe-palhaço cruza o oceano para resgatar seu filho.",
+			new GeneroFilme[] { GeneroFilme.Infantil },
+			100,
+			ClassificacaoIndicativa.AL
+		);
+		this.tentarAdicionarFilme(
+			"Paddington 2",
+			"O adorável urso Paddington tenta provar sua inocência após ser acusado injustamente.",
+			new GeneroFilme[] { GeneroFilme.Infantil },			
+			103,
+			ClassificacaoIndicativa.AL10
+		);
+		this.tentarAdicionarFilme(
+			"Pantera Negra",
+			"O rei T'Challa luta para proteger Wakanda após a morte de seu pai.",
+			new GeneroFilme[] { GeneroFilme.Acao, GeneroFilme.Herois },	
+			141,
+			ClassificacaoIndicativa.AL12
+		);
+		this.tentarAdicionarFilme(
+			"Jogos Vorazes",
+			"Uma jovem participa de uma competição mortal televisionada.",
+			new GeneroFilme[] { GeneroFilme.Acao, GeneroFilme.Terror },	
+			142,
+			ClassificacaoIndicativa.AL14
+		);
+		this.tentarAdicionarFilme(
+			"Coringa",
+			"A origem sombria do vilão Coringa em uma sociedade caótica.",
+			new GeneroFilme[] { GeneroFilme.Acao, GeneroFilme.Herois },	
+			122,
+			ClassificacaoIndicativa.AL16
+		);
+		this.tentarAdicionarFilme(
+			"O Lobo de Wall Street",
+			"A ascensão e queda de um corretor da bolsa envolvido em excessos.",
+			new GeneroFilme[] { GeneroFilme.Documentario },	
+			360,
+			ClassificacaoIndicativa.AL18
+		);
 		
 		// Dia 1
 		this.tentarAdicionarSessao(0, 0, LocalDateTime.now().withHour(13).withMinute(0)); // Nemo: 13:00–14:40

@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.core.Backend;
 import cinemax.backend.salas.IBancoDeDadosSala;
 import cinemax.backend.salas.Sala;
@@ -70,6 +69,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	public int tentarAdicionarFilme(
 		String nome,
 		String sinopse,
+		GeneroFilme[] generos,
 		int duracaoEmMinutos,
 		ClassificacaoIndicativa classificacaoIndicativa
 	) {
@@ -89,12 +89,13 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			return -1;
 		}
 		
-		return adicionarFilme(nome, sinopse, duracaoEmMinutos, classificacaoIndicativa);
+		return adicionarFilme(nome, sinopse, generos, duracaoEmMinutos, classificacaoIndicativa);
 	}
 	
 	private int adicionarFilme(
 		String nome,
 		String sinopse,
+		GeneroFilme[] generos,
 		int duracaoEmMinutos,
 		ClassificacaoIndicativa classificacaoIndicativa
 	) {
@@ -102,6 +103,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			idFilmesAtual,
 			nome,
 			sinopse,
+			generos,
 			duracaoEmMinutos,
 			classificacaoIndicativa
 		);
@@ -387,6 +389,31 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		}
 		
 		return result.toArray(new Filme[result.size()]);
+	}
+	
+	// Tenta alterar o genero do filme com o respectivo id, retorna falso caso:
+	// 1. Não encontrar o filme.
+	@Override
+	public boolean tentarAdicionarGenero(int idFilme, GeneroFilme novoGenero) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
+		Filme f = filmes.getOrDefault(idFilme, null);
+		return f!= null && f.addGenero(novoGenero);
+	}
+
+	// Tenta remover o genero do filme com o respectivo id, retorna falso caso:
+	// 1. Não encontrar o filme;
+	// 2. Não conter o gênero indicado.
+	@Override
+	public boolean tentarRemoverGenero(int idFilme, GeneroFilme genero) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+		
+		Filme f = filmes.getOrDefault(idFilme, null);
+		return f!= null && f.removeGenero(genero);
 	}
 
 	// Retorna se existe outra sessao no mesmo lugar e hora,
