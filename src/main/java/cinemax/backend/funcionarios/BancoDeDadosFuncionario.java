@@ -45,19 +45,14 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 		Collection<Funcionario> collection = funcionarios.values();
 		return collection.toArray(new Funcionario[collection.size()]);
 	}
-
-	@Override
-	public boolean tentarAdicionarFuncionario(
+	
+	protected boolean internoAdicionarFuncionario(
 		String nome,
 		String cpf,
 		CargoFuncionario cargo,
 		String telefone,
 		String senha
 	) {
-		if(backend.diaEstaAberto()) {
-			return false;
-		}
-				
 		if(funcionarios.containsKey(cpf)) {
 			return false;
 		}
@@ -84,6 +79,21 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 		Funcionario funcionario = new Funcionario(nome, cpf, cargo, telefone, senha);
 		funcionarios.put(cpf, funcionario);
 		return true;
+	}
+
+	@Override
+	public boolean tentarAdicionarFuncionario(
+		String nome,
+		String cpf,
+		CargoFuncionario cargo,
+		String telefone,
+		String senha
+	) {
+		if(backend.diaEstaAberto()) {
+			return false;
+		}
+				
+		return internoAdicionarFuncionario(nome, cpf, cargo, telefone, senha);
 	}
 
 	@Override
@@ -199,7 +209,7 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 	@Override
 	public boolean existeFuncionario(String usuario, String senha) {
 		Funcionario f = funcionarios.getOrDefault(usuario, null);
-		return f != null && f.getSenha() == senha;
+		return f != null && f.getSenha().equals(senha);
 	}
 
 	private boolean eNomeValido(String nome) {
