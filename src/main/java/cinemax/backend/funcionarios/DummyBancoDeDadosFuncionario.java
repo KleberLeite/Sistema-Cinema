@@ -5,11 +5,11 @@ import cinemax.backend.core.Backend;
 public class DummyBancoDeDadosFuncionario extends BancoDeDadosFuncionario {
 	public DummyBancoDeDadosFuncionario(Backend backend) {
 		super(backend);
-		this.tentarAdicionarFuncionario("Pedro de Assis", "12345678912", CargoFuncionario.Gerente, "88927733", "@1234");
-		this.tentarAdicionarFuncionario("Paulo Fernande", "33345678912", CargoFuncionario.Gerente, "87147432", "@5138");
-		this.tentarAdicionarFuncionario("Maria Paula", "44445678912", CargoFuncionario.Atendente, "88997733", "1$#23213");
-		this.tentarAdicionarFuncionario("Mario Henrique", "55555678912", CargoFuncionario.Atendente, "88997733", "H@#sda4");
-		this.tentarAdicionarFuncionario("Joelma Alencar", "66666678912", CargoFuncionario.Atendente, "88997733", "@12#24");
-		this.tentarAdicionarFuncionario("Santos Dummond", "77777778912", CargoFuncionario.Atendente, "88997733", "@111");
+		this.internoAdicionarFuncionario("Pedro de Assis", "12345678912", CargoFuncionario.Gerente, "88988224456", "@1234");
+		this.internoAdicionarFuncionario("Paulo Fernande", "33345678912", CargoFuncionario.Gerente, "88988224455", "@5138");
+		this.internoAdicionarFuncionario("Maria Paula", "44445678912", CargoFuncionario.Atendente, "88988224454", "1$#23213");
+		this.internoAdicionarFuncionario("Mario Henrique", "55555678912", CargoFuncionario.Atendente, "88988224453", "H@#sda4");
+		this.internoAdicionarFuncionario("Joelma Alencar", "66666678912", CargoFuncionario.Atendente, "88988224452", "@12#24");
+		this.internoAdicionarFuncionario("Santos Dummond", "77777778912", CargoFuncionario.Atendente, "88988224451", "@111");
 	}
 }
