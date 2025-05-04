@@ -3,6 +3,7 @@ package cinemax.frontend.vendadeingressos;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.JFrame;
@@ -67,8 +68,12 @@ public class TelaEscolhaFilme extends JFrame {
 		});
 	}
 	
-	private void atualizarListaFilmes(JPanel painelListaFilmes) {
-		for (Filme filme : bancos.getBancoFilmes().obterTodosFilmes()) {
+	//Lista absolutamente todos os filmes
+	private void atualizarListaFilmesCompleta(JPanel painelListaFilmes) {
+		painelListaFilmes.removeAll();
+		
+		for (Filme filme : app.getBackend().getBancoFilmes().obterTodosFilmes()) {
+			
 			JPanel card = new JPanel();
 			card.setLayout(null); 
 			card.setPreferredSize(new Dimension(1355, 100));
@@ -127,7 +132,77 @@ public class TelaEscolhaFilme extends JFrame {
 		    painelListaFilmes.add(Box.createRigidArea(new Dimension(0, 10))); // espaço entre os cards
 		    painelListaFilmes.add(card);
 		}
+		painelListaFilmes.revalidate();
+		painelListaFilmes.repaint();
 	}
+	
+	//Colocar para rodar em função das sessoes assim o filtro funciona melhor
+	private void atualizarListaFilmesPorFiltro(Filme[] filmesNoDia, JPanel painelListaFilmes,LocalDate diaFiltro) {
+		painelListaFilmes.removeAll();
+		
+		for (Filme filme : filmesNoDia) {
+			JPanel card = new JPanel();
+			card.setLayout(null); 
+			card.setPreferredSize(new Dimension(1355, 100));
+			card.setMaximumSize(new Dimension(1355, 100));
+			card.setBackground(new Color(230, 230, 250));
+
+			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
+			card.setBorder(new EmptyBorder(10, 10, 10, 10)); // espaçamento interno
+
+			JLabel lblNome = new JLabel(filme.getNome());
+			lblNome.setBounds(20, 10, 400, 25); // mais largura pro nome
+			card.add(lblNome);
+
+			JLabel lblDuracao = new JLabel("Duração: " + filme.getDuracaoEmMinutos() + " min");
+			lblDuracao.setBounds(20, 35, 200, 20);
+			card.add(lblDuracao);
+
+			JLabel lblTituloSessoes = new JLabel("Sessões:");
+			lblTituloSessoes.setBounds(20, 60, 100, 20);
+			card.add(lblTituloSessoes);
+
+			JPanel painelSessoes = new JPanel();
+			painelSessoes.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
+			painelSessoes.setBounds(100, 60, 400, 25);
+			painelSessoes.setOpaque(false);
+			card.add(painelSessoes);
+
+
+		    for (Sessao sessao : app.getBackend().getBancoFilmes().obterTodasSessoesDoFilmeNoDia(filme.getId(), diaFiltro)) {
+		    	
+		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		    	String sessaoFormatada = sessao.getInicio().format(formatter);
+		    	
+		        //String sessao1 = s.getInicio().toLocalTime().toString(); // exibe só hora
+		        JButton btnSessao1 = new JButton(sessaoFormatada);
+				btnSessao1.setBounds(550, 65, 100, 25); // canto inferior direito do card
+				card.add(btnSessao1);
+				
+				btnSessao1.addActionListener(e -> {
+		                
+					TelaEscolhaPoltrona telaEscolhaPoltrona = new TelaEscolhaPoltrona(sessao);
+					telaEscolhaPoltrona.setLocationRelativeTo(null);
+					telaEscolhaPoltrona.setVisible(true);
+
+				    dispose();
+		               
+		        });
+		        
+		        painelSessoes.add(btnSessao1);
+		    }
+
+		    card.add(painelSessoes);
+		    
+
+		    
+		    painelListaFilmes.add(Box.createRigidArea(new Dimension(0, 10))); // espaço entre os cards
+		    painelListaFilmes.add(card);
+		}
+		painelListaFilmes.revalidate();
+		painelListaFilmes.repaint();
+	}
+	
 	
 	private void geraPanelFiltroDeData(JPanel panelDias,JPanel painelListaFilmes) {
 	    for (int i = 0 ; i < 7 ; i++) {
@@ -153,15 +228,16 @@ public class TelaEscolhaFilme extends JFrame {
 	        final LocalDate dataSelecionada = hoje;
 
 	        botaoDia.addActionListener(e -> {
+	        	Filme[] filmesNoDia = app.getBackend().getBancoFilmes().obterTodosFilmesNoDia(dataSelecionada);
 	        	
-	        	
-	        	
-	        	atualizarListaFilmes(painelListaFilmes);
+	        	atualizarListaFilmesPorFiltro(filmesNoDia,painelListaFilmes,dataSelecionada);
 	        });
 
 	        panelDias.add(painelDia);
 	    }
+	    
 	}
+	
 
 
 	/**
@@ -185,7 +261,7 @@ public class TelaEscolhaFilme extends JFrame {
 
 
 		// Criar os cards dos filmes
-		atualizarListaFilmes(painelListaFilmes);
+		atualizarListaFilmesCompleta(painelListaFilmes);
 
 		JPanel panelDatas = new JPanel();
 		panelDatas.setBounds(27, 11, 709, 69);
@@ -207,8 +283,18 @@ public class TelaEscolhaFilme extends JFrame {
 
 		JLabel lblSelecionarDia = new JLabel("Selecione o dia: ");
 		lblSelecionarDia.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSelecionarDia.setBounds(25, 11, 126, 30);
+		lblSelecionarDia.setBounds(24, 19, 126, 30);
 		panelDatas.add(lblSelecionarDia);
+		
+		JButton btnLimparFiltro = new JButton("Limpar");
+		btnLimparFiltro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				atualizarListaFilmesCompleta(painelListaFilmes);
+			}
+		});
+		btnLimparFiltro.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnLimparFiltro.setBounds(223, 24, 89, 23);
+		panelDatas.add(btnLimparFiltro);
 		
 		
 
