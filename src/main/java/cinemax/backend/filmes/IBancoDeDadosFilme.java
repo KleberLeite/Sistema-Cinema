@@ -2,6 +2,7 @@ package cinemax.backend.filmes;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public interface IBancoDeDadosFilme {
 	// ------- Filmes -------
@@ -48,7 +49,8 @@ public interface IBancoDeDadosFilme {
 	// 1. Não encontrar o filme.
 	boolean tentarRemoverFilme(int idFilme);
 	
-	
+	// Obtém todos os filmes com sessão no dia.
+	Filme[] obterTodosFilmesNoDia(LocalDate data);
 	
 	// ------- Sessao -------
 	// Obtém todas as sessoes no dia especificado.
