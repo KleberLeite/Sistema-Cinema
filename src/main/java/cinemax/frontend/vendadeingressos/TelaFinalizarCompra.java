@@ -46,16 +46,10 @@ public class TelaFinalizarCompra extends JFrame {
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	Backend bancos = app.getBackend();
 	private Sessao sessao = bancos.getBancoFilmes().obterFilmePorId(0).obterSessao(0);
-	private int qtdeMeias;
 
-	private int totalDeIngressosSelecionadosMeias;
-	private int totalDeIngressosSelecionadosInteiras;
-	private int totalDeIngressosSelecionadosTotal;
-	private int totalDeIngressosRestantes;
-	private int indexIngresso = 0;
-	private double somaInteira;
-	private double somaMeia;
-	private double somaTotal;
+	private int meiasCount;
+	private int inteirasCount;
+	private int totalCount;
 
 	/**
 	 * Launch the application.
@@ -75,15 +69,33 @@ public class TelaFinalizarCompra extends JFrame {
 	}
 	//MEthods utils ---------------------------------------------------------------------------------
 	
-	private void adicionaTipoIngresso(Ingresso ingresso, TipoDeIngresso tipo) {
-		ingresso.setTipo(tipo);
+	private int getRestanteCount() {
+		return totalCount - inteirasCount - meiasCount;
 	}
 	
-	public void atualizarListaDeRGs(JPanel panelRGs, int qtdeMeias) {
+	private double getSubprecoInteiras() {
+		return Ingresso.PRECO_INGRESSO * inteirasCount;
+	}
+	
+	private int getTotalSelecionadoCount() {
+		return meiasCount + inteirasCount;
+	}
+	
+	private double getSubprecoMeias() {
+		return Ingresso.PRECO_INGRESSO * meiasCount / 2; 
+	}
+	
+	private double getPrecoTotal() {
+		return getSubprecoInteiras() + getSubprecoMeias();
+	}
+	
+	public void atualizarListaDeRGs(JPanel panelRGs) {
+		ativaOuDesativaListaRGs();
+		
 	    panelRGs.removeAll();
 	    listaDeTextFieldsRGs.clear(); // Limpa os anteriores
 
-	    for (int i = 0; i < qtdeMeias; i++) {
+	    for (int i = 0; i < meiasCount; i++) {
 	        JPanel card = new JPanel();
 	        card.setLayout(null);
 	        card.setPreferredSize(new Dimension(400, 50));
@@ -114,7 +126,7 @@ public class TelaFinalizarCompra extends JFrame {
 	
 	public void ativaOuDesativaListaRGs() {
 		
-		if(totalDeIngressosSelecionadosMeias > 0) {
+		if(meiasCount > 0) {
 			panelMeias.setBounds(10, 79, 405, 272);
 			lblTotalDeIngressosRestantes.setBounds(10, 362, 234, 25);
 			scrollPaneRGs.setEnabled(true);
@@ -131,12 +143,10 @@ public class TelaFinalizarCompra extends JFrame {
 		
 	}
 	
-	public void adicionaRGaMeia(List<Ingresso> ingressos) {
-		
-		for(int i = 0 ; i < qtdeMeias; i++) {
+	public void configuraRGsMeia(List<Ingresso> ingressos) {
+		for(int i = 0 ; i < meiasCount; i++) {
 			ingressos.get(i).setRG(listaDeTextFieldsRGs.get(i).getText().trim());
-		}
-		
+		}		
 	}
 	
 	public boolean validarRGs() {
@@ -157,12 +167,21 @@ public class TelaFinalizarCompra extends JFrame {
 	    return todosValidos;
 	}
 
+	private void configuraTiposIngresso(List<Ingresso> ingressos) {
+		for(int i = 0; i < meiasCount; i++) {
+			ingressos.get(i).setTipo(TipoDeIngresso.Meia);
+		}
+		for(int i = meiasCount; i < totalCount; i++) {
+			ingressos.get(i).setTipo(TipoDeIngresso.Inteira);
+		}
+	}
+	
 	/**
 	 * Create the frame.
 	 */
 	public TelaFinalizarCompra(CarrinhoIngressos carrinho) {
-		totalDeIngressosRestantes = carrinho.qtdeTotalIngressos();
-		System.out.println("Total de Ingressos: " + totalDeIngressosRestantes);
+		this.totalCount = carrinho.qtdeTotalIngressos();
+		//System.out.println("Total de Ingressos: " + getRestanteCount());
 
 		Sessao sessao = this.sessao;
 
@@ -214,23 +233,23 @@ public class TelaFinalizarCompra extends JFrame {
 		JButton btnFinalizarCompra = new JButton("Finalizar Compra");
 		btnFinalizarCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(totalDeIngressosRestantes > 0) {
+				if(getRestanteCount() > 0) {
 					JOptionPane.showMessageDialog(null, "Adicione todos os ingressos antes de continuar!", "Erro",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
-				if(validarRGs()) {
-					
-					adicionaRGaMeia(carrinho.getIngressosMeias());
-					
-					TelaConclusaoDeCompra telaConclusaoDeCompra = new TelaConclusaoDeCompra(carrinho);
-					telaConclusaoDeCompra.setVisible(true);
-					telaConclusaoDeCompra.setLocationRelativeTo(null);
-					
-					dispose();
-				}else {
+				if(!validarRGs()) {
 					JOptionPane.showMessageDialog(null, "Aluns RGs estão incorretos, por favor, verifique-os!", "Erro",JOptionPane.ERROR_MESSAGE);
+					return;
 				}
+
+				configuraRGsMeia(carrinho.getIngressosMeias());
+				configuraTiposIngresso(carrinho.getIngressos());				
+				
+				TelaConclusaoDeCompra telaConclusaoDeCompra = new TelaConclusaoDeCompra(carrinho);
+				telaConclusaoDeCompra.setVisible(true);
+				telaConclusaoDeCompra.setLocationRelativeTo(null);
+				dispose();
 			}
 		});
 		btnFinalizarCompra.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -283,7 +302,7 @@ public class TelaFinalizarCompra extends JFrame {
 		imgMeia.setBounds(10, 13, 46, 35);
 		panelMeias.add(imgMeia);
 
-		String ingressosRestantes = String.format("Total de Ingressos Restantes: %d", totalDeIngressosRestantes);
+		String ingressosRestantes = String.format("Total de Ingressos Restantes: %d", getRestanteCount());
 		lblTotalDeIngressosRestantes = new JLabel(ingressosRestantes);
 		lblTotalDeIngressosRestantes.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTotalDeIngressosRestantes.setBounds(10, 147, 234, 25);
@@ -319,12 +338,12 @@ public class TelaFinalizarCompra extends JFrame {
 		lblTotalItens.setBounds(283, 397, 91, 14);
 		panelResumo.add(lblTotalItens);
 
-		JLabel lblInteiraResumo = new JLabel("Inteira");
+		JLabel lblInteiraResumo = new JLabel("0x Inteira");
 		lblInteiraResumo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblInteiraResumo.setBounds(10, 247, 83, 14);
 		panelResumo.add(lblInteiraResumo);
 
-		JLabel lblMeiaResumo = new JLabel("Meia");
+		JLabel lblMeiaResumo = new JLabel("0x Meia");
 		lblMeiaResumo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblMeiaResumo.setBounds(10, 272, 83, 14);
 		panelResumo.add(lblMeiaResumo);
@@ -362,43 +381,26 @@ public class TelaFinalizarCompra extends JFrame {
 		// Estilização e funcções dos botões
 		btnMaisUmaInteira.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				if (totalDeIngressosRestantes == 0) { 
+				inteirasCount++;
+				
+				if(getRestanteCount() == 0) {
 					btnMaisUmaInteira.setEnabled(false);
-					if(totalDeIngressosSelecionadosMeias == 0) {//desativa os bootões de meia se sua quantidade for nula
-						btnMaisUmaMeia.setEnabled(false);
-						btnMenosUmaMeia.setEnabled(false);
-					}
-					
+					btnMaisUmaMeia.setEnabled(false);
 				}
-				if (totalDeIngressosRestantes > 0) {
-					if (!btnMenosUmaInteira.isEnabled()) btnMenosUmaInteira.setEnabled(true);
-					double ingressoAtual = Ingresso.PRECO_INGRESSO;
-					somaInteira += ingressoAtual;
-					totalDeIngressosSelecionadosInteiras++;
-					somaTotal += ingressoAtual;
-					totalDeIngressosSelecionadosTotal++;
-					
-					//Altera o tipo de ingresso na lista para meia
-					adicionaTipoIngresso(carrinho.getIngressos().get(indexIngresso), TipoDeIngresso.Inteira);
-					indexIngresso++;
-
-					String subPrecoInteira = String.format("R$ %.2f", somaInteira);
-					String subPrecoTotal = String.format("R$ %.2f", somaTotal);
-					lblSubPrecoInteira.setText(subPrecoInteira);
-					lblPrecoTotal.setText(subPrecoTotal);
-
-					String qtdeInteiras = String.format("%dx Inteira", totalDeIngressosSelecionadosInteiras);
-					String qtdeIngressos = String.format("%d", totalDeIngressosSelecionadosTotal);
-					lblInteiraResumo.setText(qtdeInteiras);
-					lblTotalItens.setText(qtdeIngressos);
-
-					totalDeIngressosRestantes--;
-					String qtdeIngressosRestantes = String.format("Total de Ingressos Restantes: %d",
-							totalDeIngressosRestantes);
-					lblTotalDeIngressosRestantes.setText(qtdeIngressosRestantes);
+				
+				if(!btnMenosUmaInteira.isEnabled()) {
+					btnMenosUmaInteira.setEnabled(true);
 				}
+				
+				lblSubPrecoInteira.setText(String.format("R$ %.2f", getSubprecoInteiras()));
+				lblPrecoTotal.setText(String.format("R$ %.2f", getPrecoTotal()));
 
+				lblInteiraResumo.setText(String.format("%dx Inteira", inteirasCount));
+				lblTotalItens.setText(String.format("%d", getTotalSelecionadoCount()));
+
+				lblTotalDeIngressosRestantes.setText(
+					String.format("Total de Ingressos Restantes: %d", getRestanteCount())
+				);
 			}
 		});
 		btnMaisUmaInteira.setBounds(354, 17, 41, 23);
@@ -406,141 +408,89 @@ public class TelaFinalizarCompra extends JFrame {
 
 		btnMenosUmaInteira.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (totalDeIngressosSelecionadosInteiras == 0) { 
+				inteirasCount--;
+				
+				if(inteirasCount == 0) {
 					btnMenosUmaInteira.setEnabled(false);
-					if(totalDeIngressosSelecionadosTotal != 0) {//reativa o botão de mais uma meia caso ainda haja ingressos
-						btnMaisUmaMeia.setEnabled(true);
-					}
 				}
-				if (totalDeIngressosSelecionadosInteiras > 0) {
-					if (!btnMaisUmaInteira.isEnabled()) btnMaisUmaInteira.setEnabled(true);
-					if(totalDeIngressosRestantes == 0) {// reativa o botão de mais uma meia, pois vai ser a última rodada das inteira e vai liberar um ingresso
-						btnMaisUmaMeia.setEnabled(true);
-					}
-					double ingressoAtual = Ingresso.PRECO_INGRESSO;
-					somaInteira -= ingressoAtual;
-					totalDeIngressosSelecionadosInteiras--;
-					somaTotal -= ingressoAtual;
-					totalDeIngressosSelecionadosTotal--;
-					
-					//Apenas volta um no indice dos ingressos, não é necessário alterar de novo
-					//adicionaTipoIngresso(carrinho.getIngressos().get(indexIngresso), TipoDeIngresso.Inteira);
-					indexIngresso--;
+				
+				btnMaisUmaInteira.setEnabled(true);
+				btnMaisUmaMeia.setEnabled(true);
+				
+				lblSubPrecoInteira.setText(String.format("R$ %.2f", getSubprecoInteiras()));
+				lblPrecoTotal.setText(String.format("R$ %.2f", getPrecoTotal()));
 
-					String subPrecoInteira = String.format("R$ %.2f", somaInteira);
-					String subPrecoTotal = String.format("R$ %.2f", somaTotal);
-					lblSubPrecoInteira.setText(subPrecoInteira);
-					lblPrecoTotal.setText(subPrecoTotal);
+				lblInteiraResumo.setText(String.format("%dx Inteira", inteirasCount));
+				lblTotalItens.setText(String.format("%d", getTotalSelecionadoCount()));
 
-					String qtdeInteiras = String.format("%dx Inteira", totalDeIngressosSelecionadosInteiras);
-					String qtdeIngressos = String.format("%d", totalDeIngressosSelecionadosTotal);
-					lblInteiraResumo.setText(qtdeInteiras);
-					lblTotalItens.setText(qtdeIngressos);
-
-					totalDeIngressosRestantes++;
-					String qtdeIngressosRestantes = String.format("Total de Ingressos Restantes: %d",
-							totalDeIngressosRestantes);
-					lblTotalDeIngressosRestantes.setText(qtdeIngressosRestantes);
-				}
-
+				lblTotalDeIngressosRestantes.setText(
+					String.format("Total de Ingressos Restantes: %d", getRestanteCount())
+				);
 			}
 		});
 		btnMenosUmaInteira.setBounds(303, 17, 41, 23);
 		panelInteiras.add(btnMenosUmaInteira);
+		btnMenosUmaInteira.setEnabled(false);
 
 		btnMaisUmaMeia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (totalDeIngressosRestantes == 0 ) { 
+				meiasCount++;
+				
+				if(getRestanteCount() == 0) {
+					btnMaisUmaInteira.setEnabled(false);
 					btnMaisUmaMeia.setEnabled(false);
-					if(totalDeIngressosSelecionadosInteiras == 0) {//Desativa os botões das inteiras se o total deles for zero
-						btnMaisUmaInteira.setEnabled(false);
-						btnMenosUmaInteira.setEnabled(false);
-					}
 				}
-				if (totalDeIngressosRestantes > 0) {
-					if (!btnMenosUmaMeia.isEnabled()) btnMenosUmaMeia.setEnabled(true);
-					double ingressoAtual = Ingresso.PRECO_INGRESSO / 2;
-					somaMeia += ingressoAtual;
-					totalDeIngressosSelecionadosMeias++;
-					somaTotal += ingressoAtual;
-					totalDeIngressosSelecionadosTotal++;
-					
-					//Altera o tipo de ingresso na lista para inteira
-					adicionaTipoIngresso(carrinho.getIngressos().get(indexIngresso), TipoDeIngresso.Meia);
-					indexIngresso++;
-					qtdeMeias++;
-					ativaOuDesativaListaRGs();
-					atualizarListaDeRGs(panelRGs, qtdeMeias);
-					
-
-					String subPrecoMeia = String.format("R$ %.2f", somaMeia);
-					String precoTotal = String.format("R$ %.2f", somaTotal);
-					lblSubPrecoMeia.setText(subPrecoMeia);
-					lblPrecoTotal.setText(precoTotal);
-
-					String qtdeMeias = String.format("%dx Meia", totalDeIngressosSelecionadosMeias);
-					String qtdeIngressos = String.format("%d", totalDeIngressosSelecionadosTotal);
-					lblMeiaResumo.setText(qtdeMeias);
-					lblTotalItens.setText(qtdeIngressos);
-
-					totalDeIngressosRestantes--;
-					String qtdeIngressosRestantes = String.format("Total de Ingressos Restantes: %d",
-							totalDeIngressosRestantes);
-					lblTotalDeIngressosRestantes.setText(qtdeIngressosRestantes);
+				
+				if(!btnMenosUmaMeia.isEnabled()) {
+					btnMenosUmaMeia.setEnabled(true);
 				}
+				
+				lblSubPrecoMeia.setText(String.format("R$ %.2f", getSubprecoMeias()));
+				lblPrecoTotal.setText(String.format("R$ %.2f", getPrecoTotal()));
 
+				lblMeiaResumo.setText(String.format("%dx Meia", meiasCount));
+				lblTotalItens.setText(String.format("%d", getTotalSelecionadoCount()));
+
+				lblTotalDeIngressosRestantes.setText(
+					String.format("Total de Ingressos Restantes: %d", getRestanteCount())
+				);
+				
+				atualizarListaDeRGs(panelRGs);
 			}
 		});
-
 		btnMaisUmaMeia.setBounds(354, 17, 41, 23);
 		panelMeias.add(btnMaisUmaMeia);
 
 		btnMenosUmaMeia.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (totalDeIngressosSelecionadosMeias == 0) {
+				meiasCount--;
+				
+				if(meiasCount == 0) {
 					btnMenosUmaMeia.setEnabled(false);
 				}
-				if (totalDeIngressosSelecionadosMeias > 0) {
-					if (!btnMaisUmaMeia.isEnabled()) btnMaisUmaMeia.setEnabled(true);
-					if(totalDeIngressosRestantes == 0) {// reativa o botão de mais uma inteira, pois vai ser a última rodada das meia e vai liberar um ingresso
-						btnMaisUmaInteira.setEnabled(true);
-					}
-					double ingressoAtual = Ingresso.PRECO_INGRESSO / 2;
-					somaMeia -= ingressoAtual;
-					totalDeIngressosSelecionadosMeias--;
-					somaTotal -= ingressoAtual;
-					totalDeIngressosSelecionadosTotal--;
-					
-					//Apenas volta um no indice dos ingressos, não é necessário alterar de novo
-					//adicionaTipoIngresso(carrinho.getIngressos().get(indexIngresso), TipoDeIngresso.Meia);
-					indexIngresso--;
-					qtdeMeias--;
-					ativaOuDesativaListaRGs();
-					atualizarListaDeRGs(panelRGs, qtdeMeias);
+				
+				btnMaisUmaInteira.setEnabled(true);
+				btnMaisUmaMeia.setEnabled(true);
+				
+				lblSubPrecoMeia.setText(String.format("R$ %.2f", getSubprecoMeias()));
+				lblPrecoTotal.setText(String.format("R$ %.2f", getPrecoTotal()));
 
-					String subPrecoMeia = String.format("R$ %.2f", somaMeia);
-					String precoTotal = String.format("R$ %.2f", somaTotal);
-					lblSubPrecoMeia.setText(subPrecoMeia);
-					lblPrecoTotal.setText(precoTotal);
+				lblMeiaResumo.setText(String.format("%dx Meia", meiasCount));
+				lblTotalItens.setText(String.format("%d", getTotalSelecionadoCount()));
 
-					String qtdeMeias = String.format("%dx Meia", totalDeIngressosSelecionadosMeias);
-					String qtdeIngressos = String.format("%d", totalDeIngressosSelecionadosTotal);
-					lblMeiaResumo.setText(qtdeMeias);
-					lblTotalItens.setText(qtdeIngressos);
-
-					totalDeIngressosRestantes++;
-					String qtdeIngressosRestantes = String.format("Total de Ingressos Restantes: %d",
-							totalDeIngressosRestantes);
-					lblTotalDeIngressosRestantes.setText(qtdeIngressosRestantes);
-				}
-
+				lblTotalDeIngressosRestantes.setText(
+					String.format("Total de Ingressos Restantes: %d", getRestanteCount())
+				);
+				
+				atualizarListaDeRGs(panelRGs);
 			}
 		});
 		btnMenosUmaMeia.setBounds(303, 17, 41, 23);
 		panelMeias.add(btnMenosUmaMeia);
+		btnMenosUmaMeia.setEnabled(false);
 		
 		
-		JButton btnTeste = new JButton("Teste");
+		/*JButton btnTeste = new JButton("Teste");
 		btnTeste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int contMeia = 0;
@@ -557,7 +507,7 @@ public class TelaFinalizarCompra extends JFrame {
 			}
 		});
 		btnTeste.setBounds(400, 310, 89, 23);
-		panelIngressos.add(btnTeste);
+		panelIngressos.add(btnTeste);*/
 
 	}
 }
