@@ -148,11 +148,23 @@ public class TelaEscolhaFilme extends JFrame {
 			card.setBackground(new Color(230, 230, 250));
 
 			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
-			card.setBorder(new EmptyBorder(10, 10, 10, 10)); // espaçamento interno
+			card.setBorder(new EmptyBorder(100, 10, 10, 10)); // espaçamento interno
 
+			JPanel panelNomeEClassificacao = new JPanel();
+			panelNomeEClassificacao.setLayout(new FlowLayout(FlowLayout.LEFT)); 
+			panelNomeEClassificacao.setBounds(15, 10, 800, 25);
+			panelNomeEClassificacao.setBackground(new Color(230, 230, 250));
+			panelNomeEClassificacao.setBorder(new EmptyBorder(0, 0, 0, 0));
+			
 			JLabel lblNome = new JLabel(filme.getNome());
-			lblNome.setBounds(20, 10, 400, 25); // mais largura pro nome
-			card.add(lblNome);
+			lblNome.setBounds(20, 10, 490, 25); 
+			panelNomeEClassificacao.add(lblNome);
+			
+			JLabel lblClassificacao = new JLabel("     "+filme.getClassificacaoIndicativa().toString());
+			lblClassificacao.setBounds(20, 10, 400, 25); 
+			panelNomeEClassificacao.add(lblClassificacao);
+			
+			card.add(panelNomeEClassificacao);
 
 			JLabel lblDuracao = new JLabel("Duração: " + filme.getDuracaoEmMinutos() + " min");
 			lblDuracao.setBounds(20, 35, 200, 20);
@@ -170,26 +182,36 @@ public class TelaEscolhaFilme extends JFrame {
 
 
 		    for (Sessao sessao : app.getBackend().getBancoFilmes().obterTodasSessoesDoFilmeNoDia(filme.getId(), diaFiltro)) {
-		    	
 		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 		    	String sessaoFormatada = sessao.getInicio().format(formatter);
 		    	
-		        //String sessao1 = s.getInicio().toLocalTime().toString(); // exibe só hora
-		        JButton btnSessao1 = new JButton(sessaoFormatada);
-				btnSessao1.setBounds(550, 65, 100, 25); // canto inferior direito do card
-				card.add(btnSessao1);
+		    	JButton btnSessao1 = new JButton(sessaoFormatada);
 				
 				btnSessao1.addActionListener(e -> {
-		                
 					TelaEscolhaPoltrona telaEscolhaPoltrona = new TelaEscolhaPoltrona(sessao);
 					telaEscolhaPoltrona.setLocationRelativeTo(null);
 					telaEscolhaPoltrona.setVisible(true);
 
 				    dispose();
-		               
 		        });
-		        
 		        painelSessoes.add(btnSessao1);
+		    	
+		    	String salaFormatada = Integer.toString(sessao.getId());
+		    	JLabel sala = new JLabel(salaFormatada);
+		    	sala.setPreferredSize(new Dimension(60, 20));
+		    	sala.setHorizontalAlignment(SwingConstants.CENTER);
+		    	sala.setAlignmentX(Component.CENTER_ALIGNMENT);
+		    	
+		    	
+		        // Cria um painel vertical para colocar o label em cima do botão
+		        JPanel painelJuntaSessaoESala = new JPanel();
+		        painelJuntaSessaoESala.setLayout(new BoxLayout(painelJuntaSessaoESala, BoxLayout.Y_AXIS));
+		        painelJuntaSessaoESala.add(sala);
+		        painelJuntaSessaoESala.add(btnSessao1);
+		    	
+		    	
+		        painelSessoes.add(painelJuntaSessaoESala);
+		        
 		    }
 
 		    card.add(painelSessoes);
@@ -216,10 +238,10 @@ public class TelaEscolhaFilme extends JFrame {
 	        JButton botaoDia = new JButton(diaAtual);
 	        
 	        // Cria um painel vertical para colocar o label em cima do botão
-	        JPanel painelDia = new JPanel();
-	        painelDia.setLayout(new BoxLayout(painelDia, BoxLayout.Y_AXIS));
-	        painelDia.add(diaDaSemana);
-	        painelDia.add(botaoDia);
+	        JPanel painelJuntaDataEDia = new JPanel();
+	        painelJuntaDataEDia.setLayout(new BoxLayout(painelJuntaDataEDia, BoxLayout.Y_AXIS));
+	        painelJuntaDataEDia.add(diaDaSemana);
+	        painelJuntaDataEDia.add(botaoDia);
 	        
 	        // Centraliza os elementos no painel
 	        diaDaSemana.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -233,7 +255,7 @@ public class TelaEscolhaFilme extends JFrame {
 	        	atualizarListaFilmesPorFiltro(filmesNoDia,painelListaFilmes,dataSelecionada);
 	        });
 
-	        panelDias.add(painelDia);
+	        panelDias.add(painelJuntaDataEDia);
 	    }
 	    
 	}
