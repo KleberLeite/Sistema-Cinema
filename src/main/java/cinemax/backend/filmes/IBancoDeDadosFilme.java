@@ -53,8 +53,9 @@ public interface IBancoDeDadosFilme {
 	Filme[] obterTodosFilmesNoDia(LocalDate data);
 	
 	// ------- Sessao -------
-	// Obtém todas as sessoes no dia especificado.
-	Sessao[] obterSessoesNoDia(LocalDate data);
+	// Obtém todas as sessões no dia especificado, retornando null caso:
+	// 1. O filme não foi encontrado.
+	Sessao[] obterTodasSessoesDoFilmeNoDia(int idFilme, LocalDate data);
 	
 	// Tenta adicionar uma sessao para o respectivo filme e sala, no início indicado,
 	// retorna o id da sessão criada ou -1 caso:

@@ -240,15 +240,19 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		return filmes.get(idFilme).tentarRemoverSessao(idSessao);
 	}
 
-	// Obtém todas as sessoes no dia especificado.
+	// Obtém todas as sessões no dia especificado, retornando null caso:
+	// 1. O filme não foi encontrado.
 	@Override
-	public Sessao[] obterSessoesNoDia(LocalDate data) {
+	public Sessao[] obterTodasSessoesDoFilmeNoDia(int idFilme, LocalDate data) {
+		Filme f = filmes.getOrDefault(idFilme, null);
+		if(f == null) {
+			return null;
+		}
+		
 		List<Sessao> result = new ArrayList<Sessao>();
-		for(Filme f : filmes.values()) {
-			for(Sessao s : f.obterTodasSessoes()) {
-				if(data.equals(s.getInicio().toLocalDate())) {
-					result.add(s);
-				}
+		for(Sessao s : f.obterTodasSessoes()) {
+			if(data.equals(s.getInicio().toLocalDate())) {
+				result.add(s);
 			}
 		}
 		
