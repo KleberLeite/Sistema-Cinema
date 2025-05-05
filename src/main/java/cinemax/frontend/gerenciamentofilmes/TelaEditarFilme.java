@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.AbstractButton;
@@ -36,6 +37,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
@@ -213,7 +215,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 	}
 	
 	private void marcarGenerosSelecionados(Filme filme) {
-	    List<GeneroFilme> generosDoFilme = List.of(filme.getGeneros());
+		 List<GeneroFilme> generosDoFilme = Arrays.asList(filme.getGeneros());
 
 	    for (JCheckBox checkBox : checkBoxesGeneros) {
 	        GeneroFilme generoDoCheck = GeneroFilme.valueOf(checkBox.getActionCommand());

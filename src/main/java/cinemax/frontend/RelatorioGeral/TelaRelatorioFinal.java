@@ -7,18 +7,24 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.backend.alimentos.Alimento;
+import cinemax.backend.relatorios.Relatorio;
+import cinemax.backend.relatorios.RelatorioAlimentos;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 
-public class RelatórioFinal extends JFrame {
+public class TelaRelatorioFinal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private ControladorDeApp app = ControladorDeApp.getInstancia();
 
 	/**
 	 * Launch the application.
@@ -27,7 +33,7 @@ public class RelatórioFinal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RelatórioFinal frame = new RelatórioFinal();
+					TelaRelatorioFinal frame = new TelaRelatorioFinal();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
@@ -40,12 +46,22 @@ public class RelatórioFinal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RelatórioFinal() {
+	public TelaRelatorioFinal() {
+		Relatorio relatorio = app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia();
+		
+		RelatorioAlimentos relatorioAlimento = relatorio.getRelatorioAlimentos();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 64, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		for (Map.Entry<Alimento, Integer> entry : relatorioAlimento.obterVendas()) {
+		    Alimento alimento = entry.getKey(); // Chave (Alimento)
+		    Integer quantidade = entry.getValue(); // Valor (Quantidade)
+		    System.out.println("Alimento: " + alimento.getNome() +"     Preço R$"+alimento.getPreco()+ "     Quantidade: " + quantidade);
+		}
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

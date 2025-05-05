@@ -15,7 +15,7 @@ public class DummyRelatorioAlimentos extends RelatorioAlimentos {
 		Random random = new Random(42);
 
 		for (int i = 1; i < 10; i++) {
-			int n = random.nextInt(1, 7);
+			int n = random.nextInt(6)+1;
 			this.adicionarVendas(gerarCompraRandom(random, alimentos, n));
 		}		
 	}
@@ -23,7 +23,7 @@ public class DummyRelatorioAlimentos extends RelatorioAlimentos {
 	private Map<Alimento, Integer> gerarCompraRandom(Random random, Alimento[] alimentos, int n) {
 		Map<Alimento, Integer> compra = new HashMap<>();
 		for (int i = 0; i < n; i++) {
-			int index = random.nextInt(0, alimentos.length);
+			int index = random.nextInt(alimentos.length);
 			Alimento a = alimentos[index];
 			compra.put(a, compra.getOrDefault(a, 0) + 1);
 		}
