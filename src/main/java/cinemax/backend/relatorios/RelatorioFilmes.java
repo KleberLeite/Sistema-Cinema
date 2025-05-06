@@ -1,7 +1,12 @@
 package cinemax.backend.relatorios;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import cinemax.backend.filmes.Filme;
+import cinemax.backend.filmes.Sessao;
 
 public class RelatorioFilmes {
 	private ArrayList<Ingresso> vendas = new ArrayList<>();
@@ -17,8 +22,37 @@ public class RelatorioFilmes {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Ingresso> obterVendas() {
-		return (List<Ingresso>)vendas.clone();
+	private class TuplaIngressos {
+		private int inteiras;
+		private int meias;
+		
+		public TuplaIngressos(int inteiras, int meias) {
+			this.inteiras = inteiras;
+			this.meias = meias;
+		}
+		
+		public TuplaIngressos soma(int p, int q) {
+			return new TuplaIngressos(inteiras + p, meias + q);
+		}
+	}
+	
+	public List<VendasIngressos> obterVendas() {
+		Map<Filme, TuplaIngressos> aux = new HashMap<>();
+		
+		for(Ingresso i : vendas) {
+			Sessao s = i.getSessao();
+			int addInteira = i.getTipo() == TipoDeIngresso.Inteira ? 1 : 0;
+			int addMeia = addInteira == 1 ? 0 : 1;
+			aux.put(
+				s.getFilme(),
+				(TuplaIngressos)(aux.getOrDefault(s, new TuplaIngressos(0, 0))).soma(addInteira, addMeia)
+			);
+		}
+		
+		List<VendasIngressos> result = new ArrayList<>();
+		for(Map.Entry<Filme, TuplaIngressos> e : aux.entrySet()) {
+			result.add(new VendasIngressos(e.getKey(), e.getValue().inteiras, e.getValue().meias));
+		}
+		return result;
 	}
 }

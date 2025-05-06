@@ -17,7 +17,9 @@ public class PaginaPrincipal {
 		switch(cargo) {
 		case Administrador:
 		case Gerente:
-			new Gerente().setVisible(true);
+			Gerente telaGerente = new Gerente();
+			telaGerente.setVisible(true);
+			telaGerente.setLocationRelativeTo(null);
 			break;
 		case Atendente:
 			new Funcionarios().setVisible(true);

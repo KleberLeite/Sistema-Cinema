@@ -6,9 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Filme;
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
 
