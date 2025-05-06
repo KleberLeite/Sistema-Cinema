@@ -4,6 +4,7 @@
  */
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
+import cinemax.frontend.RelatorioGeral.TelaRelatorioFinal;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.Gerencia;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
@@ -100,6 +101,16 @@ public class Gerente extends javax.swing.JFrame {
         	}
         });
         botaoConsultarRelatorio = new javax.swing.JButton();
+        botaoConsultarRelatorio.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		TelaRelatorioFinal telaRelatorioFinal = new TelaRelatorioFinal();
+        		telaRelatorioFinal.setVisible(true);
+        		telaRelatorioFinal.setLocationRelativeTo(null);
+        		
+        		dispose();
+        	}
+        });
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
