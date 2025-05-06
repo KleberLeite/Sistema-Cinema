@@ -59,6 +59,14 @@ public class RelatórioFinal extends JFrame {
 		lblLinha.setBounds(5, 412, 864, 14);
 		panel.add(lblLinha);
 		
+		JPanel panelPrincipalRelatorioFilme = new JPanel();
+		panelPrincipalRelatorioFilme.setBounds(0, 0, 432, 423);
+		panel.add(panelPrincipalRelatorioFilme);
+		
+		JPanel panelPrincipalRelatórioAlimentos = new JPanel();
+		panelPrincipalRelatórioAlimentos.setBounds(431, 0, 432, 423);
+		panel.add(panelPrincipalRelatórioAlimentos);
+		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
