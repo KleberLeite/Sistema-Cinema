@@ -9,7 +9,6 @@ import cinemax.backend.filmes.IBancoDeDadosFilme;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.DummyBancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
-import cinemax.backend.relatorios.DummyGerenciadorDeRelatorios;
 import cinemax.backend.relatorios.GerenciadorDeRelatorios;
 import cinemax.backend.salas.BancoDeDadosSala;
 import cinemax.backend.salas.IBancoDeDadosSala;
@@ -54,7 +53,7 @@ public class Backend {
 		IBancoDeDadosFuncionario bancoFuncionarios = new DummyBancoDeDadosFuncionario(backend);
 		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala(backend);
 		IBancoDeDadosFilme bancoFilmes = new DummyBancoDeDadosFilme(backend, bancoSalas);
-		GerenciadorDeRelatorios gerenciadorDeRelatorios = DummyGerenciadorDeRelatorios.generate(bancoAlimentos);
+		GerenciadorDeRelatorios gerenciadorDeRelatorios = new GerenciadorDeRelatorios();
 		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas, gerenciadorDeRelatorios);
 		return backend;
 	}

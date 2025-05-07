@@ -25,7 +25,8 @@ public class GerenciadorDeRelatorios {
 	}
 	
 	protected void gerarNovoRelatorio() {
-		relatorios.push(new Relatorio());
+		System.out.println("[Log]: gerarNovoRelatorio");
+		relatorios.push(Relatorio.vazio());
 	}
 	
 	protected void finalizarRelatorioAtual() {
