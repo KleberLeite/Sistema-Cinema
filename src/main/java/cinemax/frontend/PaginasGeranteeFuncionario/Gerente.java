@@ -580,7 +580,7 @@ public class Gerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButaoAcessarGeranciaDeFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoAcessarGeranciaDeFuncionarioActionPerformed
-    Backend backend = new Backend();
+    Backend backend = app.getBackend();
     IBancoDeDadosFuncionario banco = new BancoDeDadosFuncionario(backend);
 
     Gerencia gerencia = new Gerencia(banco);

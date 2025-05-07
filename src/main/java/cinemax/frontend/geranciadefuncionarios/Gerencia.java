@@ -4,6 +4,7 @@ package cinemax.frontend.geranciadefuncionarios;
 import cinemax.backend.core.Backend;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
+import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.backend.funcionarios.CargoFuncionario;
 import cinemax.backend.funcionarios.Funcionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
@@ -58,6 +59,7 @@ public class Gerencia extends javax.swing.JFrame {
   private IBancoDeDadosFuncionario bancoDeDados;
     private int indiceSelecionado = -1;
     private Funcionario[] funcionariosLista;
+    private ControladorDeApp app = ControladorDeApp.getInstancia();
     
   
   
@@ -546,7 +548,8 @@ private boolean validarTelefone(String telefone) {
      * @param args the command line arguments
      */
    public static void main(String args[]) {
-    Backend backend = new Backend();
+	ControladorDeApp app2 = ControladorDeApp.getInstancia();
+    Backend backend = app2.getBackend();
     IBancoDeDadosFuncionario banco = new BancoDeDadosFuncionario(backend);
     
     // Teste: Verifique se há dados no banco
