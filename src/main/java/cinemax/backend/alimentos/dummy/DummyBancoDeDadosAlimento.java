@@ -1,5 +1,6 @@
-package cinemax.backend.alimentos;
+package cinemax.backend.alimentos.dummy;
 
+import cinemax.backend.alimentos.BancoDeDadosAlimento;
 import cinemax.backend.core.Backend;
 
 // Cria um banco de dados com alguns alimentos já preenchidos.

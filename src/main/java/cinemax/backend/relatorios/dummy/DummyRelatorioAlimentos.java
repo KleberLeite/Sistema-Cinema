@@ -1,4 +1,4 @@
-package cinemax.backend.relatorios;
+package cinemax.backend.relatorios.dummy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,10 +6,16 @@ import java.util.Random;
 
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
+import cinemax.backend.events.Event;
+import cinemax.backend.relatorios.alimentos.RelatorioAlimentos;
 
 public class DummyRelatorioAlimentos extends RelatorioAlimentos {
-	public DummyRelatorioAlimentos(IBancoDeDadosAlimento bancoAlimentos, Relatorio relatorio) {
-		super(relatorio);
+	public DummyRelatorioAlimentos(
+		boolean permitirAlteracoes,
+		Event<Boolean> aoAlterarPermissaoAlteracoes,
+		IBancoDeDadosAlimento bancoAlimentos
+	) {
+		super(permitirAlteracoes, aoAlterarPermissaoAlteracoes);
 
 		Alimento[] alimentos = bancoAlimentos.obterTodosAlimentos();
 		Random random = new Random(42);

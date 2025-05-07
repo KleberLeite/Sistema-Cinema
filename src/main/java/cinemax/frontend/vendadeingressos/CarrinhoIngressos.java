@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import cinemax.backend.alimentos.Alimento;
-import cinemax.backend.relatorios.Ingresso;
-import cinemax.backend.relatorios.TipoDeIngresso;
+import cinemax.backend.relatorios.filmes.Ingresso;
+import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 
 public class CarrinhoIngressos {
 	private List<Ingresso> ingressos;

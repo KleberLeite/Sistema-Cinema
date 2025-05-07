@@ -1,4 +1,4 @@
-package cinemax.backend.relatorios;
+package cinemax.backend.relatorios.filmes;
 
 public enum TipoDeIngresso {
 	Inteira,

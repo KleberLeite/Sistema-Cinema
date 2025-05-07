@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.filmes.Sessao;
-import cinemax.backend.relatorios.Ingresso;
+import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.frontend.controller.ControladorDeApp;
 
 import java.awt.Color;

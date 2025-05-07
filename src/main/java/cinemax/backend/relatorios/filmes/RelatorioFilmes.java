@@ -1,23 +1,24 @@
-package cinemax.backend.relatorios;
+package cinemax.backend.relatorios.filmes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cinemax.backend.events.Event;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
+import cinemax.backend.relatorios.BaseRelatorio;
 
-public class RelatorioFilmes {
+public class RelatorioFilmes extends BaseRelatorio {
 	private List<Ingresso> vendas = new ArrayList<>();
-	private Relatorio relatorio;
 	
-	public RelatorioFilmes(Relatorio relatorio) {
-		this.relatorio = relatorio;
+	public RelatorioFilmes(boolean permitirAlteracoes, Event<Boolean> aoAlterarPermissaoAlteracoes) {
+		super(permitirAlteracoes, aoAlterarPermissaoAlteracoes);
 	}
 	
 	public void adicionarVendas(List<Ingresso> venda) {		
-		if(!relatorio.estaFechado()) {
+		if(super.getPermitirAlteracoes()) {
 			vendas.addAll(venda);
 		}
 	}

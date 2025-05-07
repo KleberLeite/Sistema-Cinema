@@ -1,6 +1,8 @@
-package cinemax.backend.funcionarios;
+package cinemax.backend.funcionarios.dummy;
 
 import cinemax.backend.core.Backend;
+import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
+import cinemax.backend.funcionarios.CargoFuncionario;
 
 public class DummyBancoDeDadosFuncionario extends BancoDeDadosFuncionario {
 	public DummyBancoDeDadosFuncionario(Backend backend) {
