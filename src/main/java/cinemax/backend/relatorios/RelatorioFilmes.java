@@ -9,7 +9,7 @@ import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
 
 public class RelatorioFilmes {
-	private ArrayList<Ingresso> vendas = new ArrayList<>();
+	private List<Ingresso> vendas = new ArrayList<>();
 	private Relatorio relatorio;
 	
 	public RelatorioFilmes(Relatorio relatorio) {

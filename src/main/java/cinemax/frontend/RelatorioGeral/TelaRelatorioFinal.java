@@ -7,9 +7,12 @@ import javax.swing.border.EmptyBorder;
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.backend.alimentos.Alimento;
+import cinemax.backend.filmes.Filme;
+import cinemax.backend.relatorios.Ingresso;
 import cinemax.backend.relatorios.Relatorio;
 import cinemax.backend.relatorios.RelatorioAlimentos;
 import cinemax.backend.relatorios.RelatorioFilmes;
+import cinemax.backend.relatorios.VendasIngressos;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -60,11 +63,12 @@ public class TelaRelatorioFinal extends JFrame {
 	}
 
     public TelaRelatorioFinal() {
-    	 app.getBackend().tentarAbrirDia();
+    	
+    	app.getBackend().tentarAbrirDia();
     	
     	 Relatorio relatorio = app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia();
-         RelatorioAlimentos relatorioAlimento = relatorio.getRelatorioAlimentos();
-         RelatorioFilmes relatorioFilmes = relatorio.getRelatorioFilmes();
+         RelatorioAlimentos relatorioAlimento = new RelatorioAlimentos(relatorio);
+        // RelatorioFilmes relatorioFilmes = relatorio.getRelatorioFilmes();
     	
 
          	//GErando vendas alimentos ---------------------------------------------------------------------
@@ -79,7 +83,7 @@ public class TelaRelatorioFinal extends JFrame {
     	
     	
     	
-    	
+    		app.getBackend().tentarFecharDia();
     		
     	
     	
@@ -101,7 +105,6 @@ public class TelaRelatorioFinal extends JFrame {
     	
     	
     	
-    		app.getBackend().tentarFecharDia();    	
        
         
 
@@ -139,8 +142,11 @@ public class TelaRelatorioFinal extends JFrame {
 
         // Preencher com dados dos alimentos
         for (Map.Entry<Alimento, Integer> entry : relatorioAlimento.obterVendas()) {
+        	
             Alimento alimento = entry.getKey();
             Integer quantidade = entry.getValue();
+            System.out.println(""+alimento.getPreco());
+            System.out.println(""+alimento.getNome());
 
             // Total parcial
             double totalParcial = alimento.getPreco() * quantidade;
@@ -189,76 +195,6 @@ public class TelaRelatorioFinal extends JFrame {
             // Adiciona o painel do alimento ao painel geral
             panelPrincipalRelatórioAlimentos.add(painelAlimento);
         }
-
-        // Total geral fora do scroll
-        JLabel labelTotalAlimentos = new JLabel("Total Geral das Vendas de Alimentos: R$"+String.format("%.2f", totalAlimentos));
-        labelTotalAlimentos.setFont(new Font("Tahoma", Font.BOLD, 16));
-        labelTotalAlimentos.setForeground(Color.BLACK);
-        labelTotalAlimentos.setBounds(5, 389, 427, 30);
-        panelPrincipal.add(labelTotalAlimentos);
-        
-     // Painel para Alimentos
-        JScrollPane scrollPaneFilmes = new JScrollPane();
-        scrollPaneFilmes.setBounds(432, 28, 432, 350);
-        scrollPaneFilmes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPaneFilmes.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        panelPrincipal.add(scrollPaneFilmes);
-
-        JPanel panelPrincipalRelatorioFilmes = new JPanel();
-        panelPrincipalRelatorioFilmes.setLayout(new BoxLayout(panelPrincipalRelatorioFilmes, BoxLayout.Y_AXIS));
-        scrollPaneAlimentos.setViewportView(panelPrincipalRelatorioFilmes);
-/*
-        // Preencher com dados dos alimentos
-        for (Map.Entry<Alimento, Integer> entry : relatorioAlimento.obterVendas()) {
-            Alimento alimento = entry.getKey();
-            Integer quantidade = entry.getValue();
-
-            // Total parcial
-            double totalParcial = alimento.getPreco() * quantidade;
-            totalAlimentos += totalParcial;
-
-            // Painel horizontal para cada alimento
-            JPanel painelFilme = new JPanel();
-            painelFilme.setLayout(new BoxLayout(painelFilme, BoxLayout.X_AXIS));
-            painelFilme.setBackground(Color.WHITE);
-            painelFilme.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-            // Painel do nome
-            JPanel painelInteira = new JPanel();
-            painelInteira.setBackground(Color.LIGHT_GRAY);
-            JLabel labelNome = new JLabel(alimento.getNome());
-            labelNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            painelInteira.add(labelNome);
-
-            // Painel do preço
-            JPanel painelMeia = new JPanel();
-            painelMeia.setBackground(new Color(200, 255, 200));
-            JLabel labelPreco = new JLabel("R$" + String.format("%.2f", alimento.getPreco()));
-            labelPreco.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            painelMeia.add(labelPreco);
-
-            // Painel do total parcial
-            JPanel painelSubTotal = new JPanel();
-            painelSubTotal.setBackground(new Color(220, 220, 255));
-            JLabel labelTotal = new JLabel("Total: R$" + String.format("%.2f", totalParcial));
-            labelTotal.setFont(new Font("Tahoma", Font.PLAIN, 14));
-            painelSubTotal.add(labelTotal);
-
-            // Adiciona os subpainéis ao painel principal do alimento
-            painelFilme.add(painelInteira);
-            painelFilme.add(painelMeia);
-            painelFilme.add(painelSubTotal);
-
-            // Adiciona o painel do alimento ao painel geral
-            panelPrincipalRelatorioFilmes.add(painelFilme);
-        }*/
-
-        // Total geral fora do scroll
-        JLabel labelTotalFilmes = new JLabel("Total Geral das Vendas de Alimentos: R$"+String.format("%.2f", totalFilmes));
-        labelTotalFilmes.setFont(new Font("Tahoma", Font.BOLD, 16));
-        labelTotalFilmes.setForeground(Color.BLACK);
-        labelTotalFilmes.setBounds(437, 389, 427, 30);
-        panelPrincipal.add(labelTotalFilmes);
         
         JLabel lblNomeAlimento = new JLabel("Nome");
         lblNomeAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -287,6 +223,79 @@ public class TelaRelatorioFinal extends JFrame {
         lblPrecoAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblPrecoAlimento.setBounds(244, 0, 99, 30);
         panelPrincipal.add(lblPrecoAlimento);
+
+        // Total geral fora do scroll
+        JLabel labelTotalAlimentos = new JLabel("Total Geral das Vendas de Alimentos: R$"+String.format("%.2f", totalAlimentos));
+        labelTotalAlimentos.setFont(new Font("Tahoma", Font.BOLD, 16));
+        labelTotalAlimentos.setForeground(Color.BLACK);
+        labelTotalAlimentos.setBounds(5, 389, 427, 30);
+        panelPrincipal.add(labelTotalAlimentos);
+        
+     // Painel para Alimentos
+        JScrollPane scrollPaneFilmes = new JScrollPane();
+        scrollPaneFilmes.setBounds(432, 28, 432, 350);
+        scrollPaneFilmes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPaneFilmes.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        panelPrincipal.add(scrollPaneFilmes);
+
+        JPanel panelPrincipalRelatorioFilmes = new JPanel();
+        panelPrincipalRelatorioFilmes.setLayout(new BoxLayout(panelPrincipalRelatorioFilmes, BoxLayout.Y_AXIS));
+        scrollPaneFilmes.setViewportView(panelPrincipalRelatorioFilmes);
+/*
+        // Preencher com dados dos alimentos
+        for (VendasIngressos vendasIngressos : relatorioFilmes.obterVendas()) {
+            Filme filme = vendasIngressos.getFilme();
+            int qtdeInteiras = vendasIngressos.getQtdInteiras();
+            int qtdeMeias = vendasIngressos.getQtdMeias();
+
+            // Total parcial
+            double totalParcial = qtdeInteiras*Ingresso.PRECO_INGRESSO + qtdeMeias*Ingresso.PRECO_INGRESSO/2;
+            totalFilmes += totalParcial;
+
+            // Painel horizontal para cada alimento
+            JPanel painelFilme = new JPanel();
+            painelFilme.setLayout(new BoxLayout(painelFilme, BoxLayout.X_AXIS));
+            painelFilme.setBackground(Color.WHITE);
+            painelFilme.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+            // Painel do nome
+            JPanel painelNomeFilme = new JPanel();
+            painelNomeFilme.setBackground(Color.LIGHT_GRAY);
+            JLabel labelNomeFilme = new JLabel(filme.getNome());
+            labelNomeFilme.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            painelNomeFilme.add(labelNomeFilme);
+
+            // Painel do preço
+            JPanel painelMeia = new JPanel();
+            painelMeia.setBackground(new Color(200, 255, 200));
+            JLabel labelMeia = new JLabel("R$" + String.format("%.2f", qtdeMeias*Ingresso.PRECO_INGRESSO/2));
+            labelMeia.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            painelMeia.add(labelMeia);
+            
+            JPanel painelInteira = new JPanel();
+            painelInteira.setBackground(new Color(200, 255, 200));
+            JLabel labelInteira = new JLabel("R$" + String.format("%.2f", qtdeInteiras*Ingresso.PRECO_INGRESSO));
+            labelInteira.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            painelInteira.add(labelInteira);
+
+
+            // Painel do total parcial
+            JPanel painelSubTotal = new JPanel();
+            painelSubTotal.setBackground(new Color(220, 220, 255));
+            JLabel labelSubTotal = new JLabel("Total: R$" + String.format("%.2f", totalParcial));
+            labelSubTotal.setFont(new Font("Tahoma", Font.PLAIN, 14));
+            painelSubTotal.add(labelSubTotal);
+
+            // Adiciona os subpainéis ao painel principal do alimento
+            painelFilme.add(painelNomeFilme);
+            painelFilme.add(painelInteira);
+            painelFilme.add(painelSubTotal);
+
+            // Adiciona o painel do alimento ao painel geral
+            panelPrincipalRelatorioFilmes.add(painelFilme);
+        }
+*/
+        
         
         JLabel lblNomeFilme = new JLabel("Nome");
         lblNomeFilme.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -315,6 +324,13 @@ public class TelaRelatorioFinal extends JFrame {
         lblSubTotalFilme.setVerticalAlignment(SwingConstants.CENTER);   // (opcional) centraliza verticalmente
         lblSubTotalFilme.setBounds(765, 0, 99, 30);//+89
         panelPrincipal.add(lblSubTotalFilme);
+        
+        // Total geral fora do scroll
+        JLabel labelTotalFilmes = new JLabel("Total Geral das Vendas de Filmes: R$"+String.format("%.2f", totalFilmes));
+        labelTotalFilmes.setFont(new Font("Tahoma", Font.BOLD, 16));
+        labelTotalFilmes.setForeground(Color.BLACK);
+        labelTotalFilmes.setBounds(437, 389, 427, 30);
+        panelPrincipal.add(labelTotalFilmes);
         
         // Botão Voltar
         JButton btnVoltar = new JButton("Voltar");
