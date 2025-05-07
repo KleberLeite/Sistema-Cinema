@@ -9,7 +9,6 @@ import cinemax.backend.filmes.IBancoDeDadosFilme;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.DummyBancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
-import cinemax.backend.relatorios.DummyGerenciadorDeRelatorios;
 import cinemax.backend.relatorios.GerenciadorDeRelatorios;
 import cinemax.backend.salas.BancoDeDadosSala;
 import cinemax.backend.salas.IBancoDeDadosSala;

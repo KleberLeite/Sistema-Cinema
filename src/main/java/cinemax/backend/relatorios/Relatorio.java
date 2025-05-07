@@ -1,11 +1,11 @@
 package cinemax.backend.relatorios;
 
-import cinemax.backend.alimentos.IBancoDeDadosAlimento;
-
 public class Relatorio {
 	private RelatorioAlimentos relatorioAlimentos;
 	private RelatorioFilmes relatorioFilmes;
 	private boolean fechado;
+	
+	private Relatorio() { }
 	
 	protected static Relatorio vazio() {
 		Relatorio r = new Relatorio();
@@ -13,14 +13,6 @@ public class Relatorio {
 		r.relatorioFilmes = new RelatorioFilmes(r);
 		
 		return r;
-	}
-	
-	protected static Relatorio dummy(IBancoDeDadosAlimento bancoAlimentos) {
-		Relatorio r = new Relatorio();
-		r.relatorioAlimentos = new DummyRelatorioAlimentos(bancoAlimentos, r);
-		r.relatorioFilmes = new RelatorioFilmes(r);
-		
-		return r;		
 	}
 
 	public RelatorioAlimentos getRelatorioAlimentos() {
