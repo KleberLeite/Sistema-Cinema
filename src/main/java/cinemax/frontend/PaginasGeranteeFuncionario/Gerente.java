@@ -5,7 +5,9 @@
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
 import cinemax.frontend.RelatorioGeral.TelaEscolhaRelatorio;
-import cinemax.frontend.RelatorioGeral.TelaRelatorioFinal;
+import cinemax.backend.core.Backend;
+import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
+import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.Gerencia;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
@@ -578,7 +580,10 @@ public class Gerente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButaoAcessarGeranciaDeFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButaoAcessarGeranciaDeFuncionarioActionPerformed
-    Gerencia gerencia = new Gerencia();
+    Backend backend = new Backend();
+    IBancoDeDadosFuncionario banco = new BancoDeDadosFuncionario(backend);
+
+    Gerencia gerencia = new Gerencia(banco);
     gerencia.setLocationRelativeTo(null);
     gerencia.setVisible(true);
     this.dispose(); // Fecha a tela atual se quiser
