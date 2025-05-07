@@ -97,66 +97,10 @@ public class TelaRelatorioFinal extends JFrame {
 
     public TelaRelatorioFinal(Relatorio  relatorioDoDia) {
     	if(relatorioDoDia==null) relatorioDoDia = app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia();
-    	
-<<<<<<< HEAD
-=======
-    	//app.getBackend().tentarAbrirDia();
->>>>>>> fff20a550e95eabce8e935f2f3d7477bb682a706
-    	
-    	//app.getBackend().tentarAbrirDia();
-    	
+     	
     	Relatorio relatorio = relatorioDoDia;
         RelatorioAlimentos relatorioAlimento = relatorio.getRelatorioAlimentos();
         RelatorioFilmes relatorioFilmes = relatorio.getRelatorioFilmes();
-    	
-<<<<<<< HEAD
-/*
-=======
-        /*
->>>>>>> fff20a550e95eabce8e935f2f3d7477bb682a706
-         	//GErando vendas alimentos ---------------------------------------------------------------------
-    		Alimento[] alimentos = app.getBackend().getBancoAlimentos().obterTodosAlimentos();
-    		Random random = new Random(42);
-
-    		for (int i = 1; i < 10; i++) {
-    			int n = random.nextInt(10)+1;
-    			relatorioAlimento.adicionarVendas(gerarCompraRandomAlimento(random, alimentos, n));
-    		}
-    		//GErando vendas alimentos ---------------------------------------------------------------------
-    		
-    		relatorioFilmes.adicionarVendas(simularVendasFilmes());
-    	
-    		app.getBackend().tentarFecharDia();
-    		
-    		for(Ingresso ingresso : simularVendasFilmes() ) {
-    			System.out.println(ingresso.toString());
-    		}
-<<<<<<< HEAD
-    		
-    	*/
-=======
-    	*/	
-    	
->>>>>>> fff20a550e95eabce8e935f2f3d7477bb682a706
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-       
-        
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 600);

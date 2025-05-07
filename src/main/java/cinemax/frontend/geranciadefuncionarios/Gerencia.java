@@ -43,62 +43,9 @@ import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
 public class Gerencia extends javax.swing.JFrame {
-<<<<<<< HEAD
-  private IBancoDeDadosFuncionario bancoDeDados;
-    private int indiceSelecionado = -1;
-    private Funcionario[] funcionariosLista;
-    private ControladorDeApp app = ControladorDeApp.getInstancia();
-    
-  
-  
-    public Gerencia(IBancoDeDadosFuncionario bancoDeDados) {
-        this.bancoDeDados = bancoDeDados;
-    initComponents();
-    DefaultTableModel model = (DefaultTableModel) PlanilhaGerenciaFuncionarios.getModel();
-    model.setRowCount(0);
-    atualizarTabela(); 
-       
-        
-      
-    }
-private void atualizarTabela() {
-    System.out.println("Iniciando atualização da tabela...");
-    
-    try {
-        funcionariosLista = bancoDeDados.obterTodosFuncionarios();
-        System.out.println("Número de funcionários encontrados: " + funcionariosLista.length);
-        
-        DefaultTableModel model = (DefaultTableModel) PlanilhaGerenciaFuncionarios.getModel();
-        model.setRowCount(0);
-        
-        for (Funcionario funcionario : funcionariosLista) {
-            System.out.println("Adicionando: " + funcionario.getNome());
-            model.addRow(new Object[]{
-                funcionario.getNome(),
-                funcionario.getCpf(),
-                funcionario.getCargo().toString(),
-                funcionario.getTelefone(),
-                funcionario.getSenha()
-            });
-        }
-        
-        model.fireTableDataChanged();
-        System.out.println("Tabela atualizada com sucesso!");
-        
-    } catch (Exception e) {
-        System.err.println("Erro ao atualizar tabela: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
-   
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-=======
 	private IBancoDeDadosFuncionario bancoDeDados;
 	private int indiceSelecionado = -1;
 	private Funcionario[] funcionariosLista;
->>>>>>> 4913f9afefa42b990ba4706c63dc3d82f9901dfc
 
 	public Gerencia(IBancoDeDadosFuncionario bancoDeDados) {
 		this.bancoDeDados = bancoDeDados;
@@ -519,65 +466,6 @@ private void atualizarTabela() {
 			return false;
 		}
 
-<<<<<<< HEAD
-    return true;
-}
-
-private boolean validarCPF(String cpf) {
-    cpf = cpf.replaceAll("[^0-9]", "");
-    return cpf.length() == 11;
-}
-
-private boolean validarTelefone(String telefone) {
-    telefone = telefone.replaceAll("[^0-9]", "");
-    return telefone.length() == 10 || telefone.length() == 11;
-}
-
-
-
- 
-        
-       
-    /**
-     * @param args the command line arguments
-     */
-   public static void main(String args[]) {
-	ControladorDeApp app2 = ControladorDeApp.getInstancia();
-    Backend backend = app2.getBackend();
-    IBancoDeDadosFuncionario banco = new BancoDeDadosFuncionario(backend);
-    
-    // Teste: Verifique se há dados no banco
-    System.out.println("Funcionários no banco: " + banco.obterTodosFuncionarios().length);
-    
-    java.awt.EventQueue.invokeLater(() -> {
-        Gerencia tela = new Gerencia(banco);
-        tela.setVisible(true);
-    });
-}
-
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoCadastrarFuncionarios;
-    private javax.swing.JButton BotaoEditarFuncionarios;
-    private javax.swing.JButton BotaoRemoverFuncionarios;
-    private javax.swing.JButton ButaoVoltar;
-    private javax.swing.JTextField CapturarTXTCPFFuncionarios;
-    private javax.swing.JTextField CapturarTXTCargoFuncionarios;
-    private javax.swing.JTextField CapturarTXTNomeFuncionarios;
-    private javax.swing.JTextField CapturarTXTSenhaFuncionarios;
-    private javax.swing.JTextField CapturarTXTTelefoneFuncionarios;
-    private javax.swing.JTable PlanilhaGerenciaFuncionarios;
-    private javax.swing.JLabel TXTCPFFuncionarios;
-    private javax.swing.JLabel TXTCargoFuncionarios;
-    private javax.swing.JLabel TXTNomeFuncionarios;
-    private javax.swing.JLabel TXTSenhaFuncionarios;
-    private javax.swing.JLabel TXTTelefoneFuncionarios;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration//GEN-END:variables
-=======
 		try {
 			CargoFuncionario.valueOf(cargoStr);
 		} catch (IllegalArgumentException e) {
@@ -626,5 +514,4 @@ private boolean validarTelefone(String telefone) {
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JScrollPane jScrollPane1;
 	// End of variables declaration//GEN-END:variables
->>>>>>> 4913f9afefa42b990ba4706c63dc3d82f9901dfc
 }

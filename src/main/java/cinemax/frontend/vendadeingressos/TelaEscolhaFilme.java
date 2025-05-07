@@ -81,36 +81,9 @@ public class TelaEscolhaFilme extends JFrame {
 		painelListaFilmes.removeAll();
 
 		for (Filme filme : filmesNoDia) {
-<<<<<<< HEAD
-			JPanel card = new JPanel();
-			card.setLayout(null); 
-			card.setPreferredSize(new Dimension(1355, 120));
-			card.setMaximumSize(new Dimension(1355, 120));
-			card.setBackground(new Color(230, 230, 250));
-
-			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
-			card.setBorder(new EmptyBorder(100, 10, 10, 10)); // espaçamento interno
-
-			JPanel panelNomeEClassificacao = new JPanel();
-			panelNomeEClassificacao.setLayout(new FlowLayout(FlowLayout.LEFT)); 
-			panelNomeEClassificacao.setBounds(15, 10, 800, 25);
-			panelNomeEClassificacao.setBackground(new Color(230, 230, 250));
-			panelNomeEClassificacao.setBorder(new EmptyBorder(0, 0, 0, 0));
-			
-			JLabel lblNome = new JLabel(filme.getNome());
-			lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
-			lblNome.setBounds(20, 10, 490, 25); 
-			panelNomeEClassificacao.add(lblNome);
-			
-			JLabel lblClassificacao = new JLabel("     "+filme.getClassificacaoIndicativa().toString());
-			lblClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
-			lblClassificacao.setBounds(20, 10, 400, 25); 
-			panelNomeEClassificacao.add(lblClassificacao);
-=======
 			JPanel card = gerarCardFilme();
 			
 			JPanel panelNomeEClassificacao = gerarPanelNomeEClassificacao(filme);
->>>>>>> 4913f9afefa42b990ba4706c63dc3d82f9901dfc
 			card.add(panelNomeEClassificacao);
 
 			JLabel lblDuracao = new JLabel("Duração: " + filme.getDuracaoEmMinutos() + " min");
@@ -122,52 +95,7 @@ public class TelaEscolhaFilme extends JFrame {
 			lblTituloSessoes.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblTituloSessoes.setBounds(20, 72, 100, 20);
 			card.add(lblTituloSessoes);
-
-<<<<<<< HEAD
-			JPanel painelSessoes = new JPanel();
-			painelSessoes.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
-			painelSessoes.setBounds(100, 60, 600, 50); // altura maior
-			painelSessoes.setOpaque(false);
-			card.add(painelSessoes);
 			
-			for (Sessao sessao : app.getBackend().getBancoFilmes().obterTodasSessoesDoFilmeNoDia(filme.getId(), diaFiltro)) {
-			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-			    String sessaoFormatada = sessao.getInicio().format(formatter);
-
-			    JButton btnSessao = new JButton(sessaoFormatada);
-			    btnSessao.addActionListener(e -> {
-			        TelaEscolhaPoltrona telaEscolhaPoltrona = new TelaEscolhaPoltrona(sessao);
-			        telaEscolhaPoltrona.setLocationRelativeTo(null);
-			        telaEscolhaPoltrona.setVisible(true);
-			        dispose();
-			    });
-
-			    String salaFormatada = Integer.toString(sessao.getSala().getIdSala());
-			    JLabel sala = new JLabel("Sala " + salaFormatada, SwingConstants.CENTER);
-
-			    JPanel painelJuntaSessaoESala = new JPanel();
-			    painelJuntaSessaoESala.setLayout(new BoxLayout(painelJuntaSessaoESala, BoxLayout.Y_AXIS));
-			    painelJuntaSessaoESala.add(sala);
-			    painelJuntaSessaoESala.add(btnSessao);
-
-			    sala.setAlignmentX(Component.CENTER_ALIGNMENT);
-			    btnSessao.setAlignmentX(Component.CENTER_ALIGNMENT);
-			    
-			    /*
-		        String data = sessao.getInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-		        System.out.println("============================================================");
-				System.out.println("-----------------------------------------------------");
-				System.out.println("Id Sessao: "+ sessao.getId());
-				System.out.println("Id Filme: "+ sessao.getFilme().getId());
-				System.out.println("Sala: "+ sessao.getSala().getIdSala());
-				System.out.println("Inicio: "+ data);
-				System.out.println("Filme: "+ sessao.getFilme().getNome());
-				System.out.println("-----------------------------------------------------");
-				System.out.println("============================================================");*/
-
-			    painelSessoes.add(painelJuntaSessaoESala);
-			}
-=======
 			JPanel painelSessoes = gerarPainelSessoes();
 			card.add(painelSessoes);
 
@@ -184,7 +112,6 @@ public class TelaEscolhaFilme extends JFrame {
 
 				String salaFormatada = Integer.toString(sessao.getSala().getIdSala());
 				JLabel sala = new JLabel("Sala " + salaFormatada, SwingConstants.CENTER);
->>>>>>> 4913f9afefa42b990ba4706c63dc3d82f9901dfc
 
 				// Cria um painel vertical para colocar o label em cima do botão
 				JPanel painelJuntaSessaoESala = new JPanel();
@@ -206,44 +133,6 @@ public class TelaEscolhaFilme extends JFrame {
 		painelListaFilmes.revalidate();
 		painelListaFilmes.repaint();
 	}
-	
-<<<<<<< HEAD
-	
-	private void geraPanelFiltroDeData(JPanel panelDias,JPanel painelListaFilmes) {
-	    for (int i = 0 ; i < 7 ; i++) {
-	        LocalDate hoje = LocalDate.now().plusDays(i);
-	        
-	        String diaFormatado = hoje.getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("pt", "BR")).toUpperCase();
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-	        String diaAtual = hoje.format(formatter);
-	        
-	        JLabel diaDaSemana = new JLabel(diaFormatado, SwingConstants.CENTER);//Deixar o texto no centro do label
-	        JButton botaoDia = new JButton(diaAtual);
-	        
-	        // Cria um painel vertical para colocar o label em cima do botão
-	        JPanel painelJuntaDataEDia = new JPanel();
-	        painelJuntaDataEDia.setLayout(new BoxLayout(painelJuntaDataEDia, BoxLayout.Y_AXIS));
-	        painelJuntaDataEDia.setBounds(100, 60, 400, 40);
-	        painelJuntaDataEDia.add(diaDaSemana);
-	        painelJuntaDataEDia.add(botaoDia);
-	        
-	        // Centraliza os elementos no painel
-	        diaDaSemana.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        botaoDia.setAlignmentX(Component.CENTER_ALIGNMENT);
-	        
-	        final LocalDate dataSelecionada = hoje;
-
-	        botaoDia.addActionListener(e -> {
-	        	lblUseOFiltro.setVisible(false);
-	        	Filme[] filmesNoDia = app.getBackend().getBancoFilmes().obterTodosFilmesNoDia(dataSelecionada);
-	        	
-	        	atualizarListaFilmesPorFiltro(filmesNoDia,painelListaFilmes,dataSelecionada);
-	        });
-
-	        panelDias.add(painelJuntaDataEDia);
-	    }
-	    
-=======
 	private JPanel gerarCardFilme() {
 		JPanel card = new JPanel();
 		card.setLayout(null);
@@ -252,7 +141,6 @@ public class TelaEscolhaFilme extends JFrame {
 		card.setBackground(new Color(230, 230, 250));
 		card.setBorder(new EmptyBorder(100, 10, 10, 10));
 		return card;
->>>>>>> 4913f9afefa42b990ba4706c63dc3d82f9901dfc
 	}
 	
 	private JPanel gerarPanelNomeEClassificacao(Filme filme) {
