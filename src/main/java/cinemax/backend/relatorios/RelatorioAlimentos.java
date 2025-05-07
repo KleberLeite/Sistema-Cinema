@@ -22,7 +22,7 @@ public class RelatorioAlimentos {
 	
 	protected void internoAdicionarVendas(Map<Alimento, Integer> venda) {
 		for(Map.Entry<Alimento, Integer> e : venda.entrySet()) {
-			vendas.put(e.getKey(), vendas.getOrDefault(e, 0) + e.getValue());
+			vendas.put(e.getKey(), vendas.getOrDefault(e.getKey(), 0) + e.getValue());
 		}
 	}
 	

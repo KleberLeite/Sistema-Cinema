@@ -58,16 +58,4 @@ public class CarrinhoIngressos {
 	public List<Ingresso> getIngressos() {
 		return ingressos;
 	}
-	
-	public List<Ingresso> getIngressosMeias() {
-		List<Ingresso> ingressosMeias = new ArrayList<>();
-		
-		for(Ingresso ingresso : ingressos) {
-			if(ingresso.getTipo() == TipoDeIngresso.Meia) {				
-				ingressosMeias.add(ingresso);
-			}
-		}
-		
-		return ingressosMeias;
-	}
 }
