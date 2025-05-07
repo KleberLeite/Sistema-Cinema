@@ -21,6 +21,8 @@ public class Backend {
 	private IBancoDeDadosSala bancoSalas;
 	private GerenciadorDeRelatoriosBackend gerenciadorDeRelatorios;
 	
+	private Backend() { }
+	
 	private void setup(
 		IBancoDeDadosFilme bancoFilmes,
 		IBancoDeDadosFuncionario bancoFuncionarios,
