@@ -18,7 +18,6 @@ import cinemax.backend.filmes.Sessao;
 import cinemax.backend.relatorios.Ingresso;
 import cinemax.backend.salas.Poltrona;
 import cinemax.backend.salas.Sala;
-import cinemax.backend.salas.TipoDeEstrutura;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -262,45 +261,67 @@ public class TelaEscolhaPoltrona extends JFrame {
 
 			for (int j = 0; j < sala.getColunas(); j++) {
 
-				JButton botao;
+				JButton botao = null;
 				String poltronaSelecionada = sala.obterTipoDeEstrutura(i, j).getIdentificador();
 
-				if (TipoDeEstrutura.Vazio == sala.obterTipoDeEstrutura(i, j).getTipo()) {
+				switch(sala.obterTipoDeEstrutura(i, j).getTipo()) {
+				case Vazio:
 					botao = new JButton();
 					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
-					botao.setVisible(false);
-				} else if (TipoDeEstrutura.Poltrona == sala.obterTipoDeEstrutura(i, j).getTipo()) {
-					botao = new JButton(iconePoltrona);
-					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
-				} else if (TipoDeEstrutura.PoltronaObesos == sala.obterTipoDeEstrutura(i, j).getTipo()) {
-					botao = new JButton(iconePoltronaObesos);
-					botao.setBounds(3 + j * (tamanho + espaco), 3 + i * (tamanho + espaco), tamanho + 5, tamanho + 5);
-				} else {
-					botao = new JButton(iconeLocalCadeirantes);
-					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
-				}
+					botao.setEnabled(false);
+					break;
+				case Poltrona:
+					if(sessao.estaReservado(i, j)) {
+						botao = new JButton(iconePoltronaOcupada);
+						botao.setEnabled(false);
+					} else {						
+						botao = new JButton(iconePoltrona);
+					}
 
+					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
+					break;
+				case PoltronaObesos:
+					if(sessao.estaReservado(i, j)) {
+						botao = new JButton(iconePoltronaObesosOcupada);
+						botao.setEnabled(false);
+					} else {						
+						botao = new JButton(iconePoltronaObesos);
+					}
+					botao.setBounds(3 + j * (tamanho + espaco), 3 + i * (tamanho + espaco), tamanho + 5, tamanho + 5);
+					break;
+				case LocalCadeirantes:
+					if(sessao.estaReservado(i, j)) {
+						botao = new JButton(iconeLocalCadeirantesOcupado);
+						botao.setEnabled(false);
+					} else {						
+						botao = new JButton(iconeLocalCadeirantes);
+					}
+					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
+					break;
+				}
+				
 				botao.setBackground(Color.WHITE);
 				botao.setBorderPainted(false);
 
 				// Ação do botão
 				final int auxI = i;
 				final int auxJ = j;
+				final JButton auxBotao = botao;
 				botao.addActionListener(e -> {
 					Poltrona poltrona = (Poltrona) sala.obterTipoDeEstrutura(auxI, auxJ);
 
-					boolean isSelecionada = botao.getIcon().equals(iconePoltronaSelecionada)
-							|| botao.getIcon().equals(iconePoltronaObesosSelecionada)
-							|| botao.getIcon().equals(iconeLocalCadeirantesSelecionado);
+					boolean isSelecionada = auxBotao.getIcon().equals(iconePoltronaSelecionada)
+							|| auxBotao.getIcon().equals(iconePoltronaObesosSelecionada)
+							|| auxBotao.getIcon().equals(iconeLocalCadeirantesSelecionado);
 
 					// Se já está selecionada, desmarcar
 					if (isSelecionada) {
-						if (botao.getIcon().equals(iconePoltronaSelecionada)) {
-							botao.setIcon(iconePoltrona);
-						} else if (botao.getIcon().equals(iconePoltronaObesosSelecionada)) {
-							botao.setIcon(iconePoltronaObesos);
+						if (auxBotao.getIcon().equals(iconePoltronaSelecionada)) {
+							auxBotao.setIcon(iconePoltrona);
+						} else if (auxBotao.getIcon().equals(iconePoltronaObesosSelecionada)) {
+							auxBotao.setIcon(iconePoltronaObesos);
 						} else {
-							botao.setIcon(iconeLocalCadeirantes);
+							auxBotao.setIcon(iconeLocalCadeirantes);
 						}
 						modeloLista.removeElement(poltronaSelecionada);
 						poltronas.remove(poltrona);
@@ -308,12 +329,12 @@ public class TelaEscolhaPoltrona extends JFrame {
 					}
 					// Se ainda pode selecionar, marcar
 					else if (poltronasRestantes > 0) {
-						if (botao.getIcon().equals(iconePoltrona)) {
-							botao.setIcon(iconePoltronaSelecionada);
-						} else if (botao.getIcon().equals(iconePoltronaObesos)) {
-							botao.setIcon(iconePoltronaObesosSelecionada);
-						} else if (botao.getIcon().equals(iconeLocalCadeirantes)) {
-							botao.setIcon(iconeLocalCadeirantesSelecionado);
+						if (auxBotao.getIcon().equals(iconePoltrona)) {
+							auxBotao.setIcon(iconePoltronaSelecionada);
+						} else if (auxBotao.getIcon().equals(iconePoltronaObesos)) {
+							auxBotao.setIcon(iconePoltronaObesosSelecionada);
+						} else if (auxBotao.getIcon().equals(iconeLocalCadeirantes)) {
+							auxBotao.setIcon(iconeLocalCadeirantesSelecionado);
 						}
 						modeloLista.addElement(poltronaSelecionada);
 						poltronas.add(poltrona);
@@ -333,7 +354,6 @@ public class TelaEscolhaPoltrona extends JFrame {
 		panelResumo.add(scrollPanePoltronas);
 
 		// Estilizando a lista:
-		@SuppressWarnings("serial")
 		DefaultListCellRenderer defaultListCellRenderer = new DefaultListCellRenderer() {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
 					boolean cellHasFocus) {

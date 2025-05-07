@@ -39,7 +39,7 @@ public class TelaFinalizarCompra extends JFrame {
 	private JPanel contentPane;
 	JPanel panelMeias;
 	JPanel panelRGs;
-	private java.util.List<JTextField> listaDeTextFieldsRGs = new ArrayList<>();
+	private List<JTextField> listaDeTextFieldsRGs = new ArrayList<>();
 	JLabel lblTotalDeIngressosRestantes;
 	JScrollPane scrollPaneRGs;
 	JTextField textFieldRGs;
@@ -49,7 +49,9 @@ public class TelaFinalizarCompra extends JFrame {
 	private int meiasCount;
 	private int inteirasCount;
 	private int totalCount;
-
+	
+	private List<JPanel> rgCards = new ArrayList<>();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -78,12 +80,60 @@ public class TelaFinalizarCompra extends JFrame {
 		return getSubprecoInteiras() + getSubprecoMeias();
 	}
 	
-	public void atualizarListaDeRGs(JPanel panelRGs) {
-		ativaOuDesativaListaRGs();
-		
-	    panelRGs.removeAll();
-	    listaDeTextFieldsRGs.clear(); // Limpa os anteriores
+	public void adicionarRGLista(JPanel panelRGs) {
+		JPanel card = new JPanel();
+        card.setLayout(null);
+        card.setPreferredSize(new Dimension(400, 50));
+        card.setMaximumSize(new Dimension(400, 50));
+        card.setBackground(new Color(230, 210, 250));
+        card.setBorder(new EmptyBorder(5, 5, 5, 5));
+        
+        JLabel lblRG = new JLabel("RG:");
+        lblRG.setFont(new Font("Tahoma", Font.BOLD, 14));
+        lblRG.setBounds(10, 10, 40, 25);
+        card.add(lblRG);
 
+        JTextField textField = new JTextField();
+        textField.setBounds(60, 10, 100, 25);
+        card.add(textField);
+        
+        rgCards.add(card);
+        listaDeTextFieldsRGs.add(textField);
+
+        panelRGs.add(Box.createRigidArea(new Dimension(0, 10)));
+        panelRGs.add(card);
+	    
+	    ativaOuDesativaListaRGs();
+	}
+	
+	public void removeUltimoRGLista(JPanel panelRGs) {
+		JPanel lastCard = rgCards.get(rgCards.size()-1);
+		
+		rgCards.remove(rgCards.size()-1);
+		listaDeTextFieldsRGs.remove(listaDeTextFieldsRGs.size()-1);
+		
+		panelRGs.remove(lastCard);
+	    panelRGs.revalidate();
+	    panelRGs.repaint();
+	    
+	    ativaOuDesativaListaRGs();
+	}
+	
+	/*public void atualizarListaDeRGs(JPanel panelRGs) {
+		String[] valoresAntigos = new String[meiasCount];
+		System.out.println(listaDeTextFieldsRGs.size());
+		for(int j = 0; j < meiasCount; j++) {			
+			valoresAntigos[j] = listaDeTextFieldsRGs.get(j).getText();
+			j++;
+		}
+		
+		ativaOuDesativaListaRGs();		
+
+		panelRGs.removeAll();
+	    listaDeTextFieldsRGs.clear();
+
+	    
+	    
 	    for (int i = 0; i < meiasCount; i++) {
 	        JPanel card = new JPanel();
 	        card.setLayout(null);
@@ -97,7 +147,7 @@ public class TelaFinalizarCompra extends JFrame {
 	        lblRG.setBounds(10, 10, 40, 25);
 	        card.add(lblRG);
 
-	        JTextField textField = new JTextField();
+	        JTextField textField = new JTextField(valoresAntigos[i]);
 	        textField.setBounds(60, 10, 100, 25);
 	        card.add(textField);
 
@@ -109,7 +159,7 @@ public class TelaFinalizarCompra extends JFrame {
 
 	    panelRGs.revalidate();
 	    panelRGs.repaint();
-	}
+	}*/
 	
 	//-----------------------------------------------------------------------------------------------
 	
@@ -231,8 +281,8 @@ public class TelaFinalizarCompra extends JFrame {
 					return;
 				}
 
-				configuraRGsMeia(carrinho.getIngressosMeias());
-				configuraTiposIngresso(carrinho.getIngressos());				
+				configuraTiposIngresso(carrinho.getIngressos());	
+				configuraRGsMeia(carrinho.getIngressos());			
 				
 				TelaConclusaoDeCompra telaConclusaoDeCompra = new TelaConclusaoDeCompra(sessao, carrinho);
 				telaConclusaoDeCompra.setVisible(true);
@@ -443,7 +493,7 @@ public class TelaFinalizarCompra extends JFrame {
 					String.format("Total de Ingressos Restantes: %d", getRestanteCount())
 				);
 				
-				atualizarListaDeRGs(panelRGs);
+				adicionarRGLista(panelRGs);
 			}
 		});
 		btnMaisUmaMeia.setBounds(354, 17, 41, 23);
@@ -470,7 +520,7 @@ public class TelaFinalizarCompra extends JFrame {
 					String.format("Total de Ingressos Restantes: %d", getRestanteCount())
 				);
 				
-				atualizarListaDeRGs(panelRGs);
+				removeUltimoRGLista(panelRGs);
 			}
 		});
 		btnMenosUmaMeia.setBounds(303, 17, 41, 23);
