@@ -8,8 +8,8 @@ import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.Sessao;
-import cinemax.backend.relatorios.Ingresso;
-import cinemax.backend.relatorios.TipoDeIngresso;
+import cinemax.backend.relatorios.filmes.Ingresso;
+import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 import cinemax.frontend.controller.ControladorDeApp;
 
 import java.awt.Color;

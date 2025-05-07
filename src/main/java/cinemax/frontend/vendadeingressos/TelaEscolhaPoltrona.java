@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.filmes.Sessao;
-import cinemax.backend.relatorios.Ingresso;
+import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.salas.Poltrona;
 import cinemax.backend.salas.Sala;
 

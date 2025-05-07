@@ -9,12 +9,12 @@ import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
-import cinemax.backend.relatorios.Ingresso;
 import cinemax.backend.relatorios.Relatorio;
-import cinemax.backend.relatorios.RelatorioAlimentos;
-import cinemax.backend.relatorios.RelatorioFilmes;
-import cinemax.backend.relatorios.TipoDeIngresso;
-import cinemax.backend.relatorios.VendasIngressos;
+import cinemax.backend.relatorios.alimentos.RelatorioAlimentos;
+import cinemax.backend.relatorios.filmes.Ingresso;
+import cinemax.backend.relatorios.filmes.RelatorioFilmes;
+import cinemax.backend.relatorios.filmes.TipoDeIngresso;
+import cinemax.backend.relatorios.filmes.VendasIngressos;
 import cinemax.backend.salas.Sala;
 
 import java.awt.Color;
@@ -98,6 +98,10 @@ public class TelaRelatorioFinal extends JFrame {
     public TelaRelatorioFinal(Relatorio  relatorioDoDia) {
     	if(relatorioDoDia==null) relatorioDoDia = app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia();
     	
+<<<<<<< HEAD
+=======
+    	//app.getBackend().tentarAbrirDia();
+>>>>>>> fff20a550e95eabce8e935f2f3d7477bb682a706
     	
     	//app.getBackend().tentarAbrirDia();
     	
@@ -105,7 +109,11 @@ public class TelaRelatorioFinal extends JFrame {
         RelatorioAlimentos relatorioAlimento = relatorio.getRelatorioAlimentos();
         RelatorioFilmes relatorioFilmes = relatorio.getRelatorioFilmes();
     	
+<<<<<<< HEAD
 /*
+=======
+        /*
+>>>>>>> fff20a550e95eabce8e935f2f3d7477bb682a706
          	//GErando vendas alimentos ---------------------------------------------------------------------
     		Alimento[] alimentos = app.getBackend().getBancoAlimentos().obterTodosAlimentos();
     		Random random = new Random(42);
@@ -123,8 +131,13 @@ public class TelaRelatorioFinal extends JFrame {
     		for(Ingresso ingresso : simularVendasFilmes() ) {
     			System.out.println(ingresso.toString());
     		}
+<<<<<<< HEAD
     		
     	*/
+=======
+    	*/	
+    	
+>>>>>>> fff20a550e95eabce8e935f2f3d7477bb682a706
     	
     	
     	

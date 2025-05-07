@@ -1,14 +1,14 @@
 package cinemax.backend.core;
 
 import cinemax.backend.alimentos.BancoDeDadosAlimento;
-import cinemax.backend.alimentos.DummyBancoDeDadosAlimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
+import cinemax.backend.alimentos.dummy.DummyBancoDeDadosAlimento;
 import cinemax.backend.filmes.BancoDeDadosFilme;
-import cinemax.backend.filmes.DummyBancoDeDadosFilme;
 import cinemax.backend.filmes.IBancoDeDadosFilme;
+import cinemax.backend.filmes.dummy.DummyBancoDeDadosFilme;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
-import cinemax.backend.funcionarios.DummyBancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
+import cinemax.backend.funcionarios.dummy.DummyBancoDeDadosFuncionario;
 import cinemax.backend.relatorios.GerenciadorDeRelatorios;
 import cinemax.backend.salas.BancoDeDadosSala;
 import cinemax.backend.salas.IBancoDeDadosSala;
@@ -35,7 +35,7 @@ public class Backend {
 		this.bancoFuncionarios = bancoFuncionarios;
 		this.bancoAlimentos = bancoAlimentos;
 		this.bancoSalas = bancoSalas;
-		this.gerenciadorDeRelatorios = new GerenciadorDeRelatoriosBackend(gerenciadorDeRelatorios);
+		this.gerenciadorDeRelatorios = new GerenciadorDeRelatoriosBackend();
 	}
 	
 	public static Backend vazio() {
@@ -44,7 +44,7 @@ public class Backend {
 		IBancoDeDadosFuncionario bancoFuncionarios = new BancoDeDadosFuncionario(backend);
 		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala(backend);
 		IBancoDeDadosFilme bancoFilmes = new BancoDeDadosFilme(backend, bancoSalas);
-		GerenciadorDeRelatorios gerenciadorDeRelatorios = new GerenciadorDeRelatorios();
+		GerenciadorDeRelatorios gerenciadorDeRelatorios = new GerenciadorDeRelatoriosBackend();
 		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas, gerenciadorDeRelatorios);
 		return backend;
 	}
@@ -55,7 +55,7 @@ public class Backend {
 		IBancoDeDadosFuncionario bancoFuncionarios = new DummyBancoDeDadosFuncionario(backend);
 		IBancoDeDadosSala bancoSalas = new BancoDeDadosSala(backend);
 		IBancoDeDadosFilme bancoFilmes = new DummyBancoDeDadosFilme(backend, bancoSalas);
-		GerenciadorDeRelatorios gerenciadorDeRelatorios = new GerenciadorDeRelatorios();
+		GerenciadorDeRelatorios gerenciadorDeRelatorios = new GerenciadorDeRelatoriosBackend();
 		backend.setup(bancoFilmes, bancoFuncionarios, bancoAlimentos, bancoSalas, gerenciadorDeRelatorios);
 		return backend;
 	}

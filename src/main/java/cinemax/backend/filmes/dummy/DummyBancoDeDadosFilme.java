@@ -1,8 +1,11 @@
-package cinemax.backend.filmes;
+package cinemax.backend.filmes.dummy;
 
 import java.time.LocalDateTime;
 
 import cinemax.backend.core.Backend;
+import cinemax.backend.filmes.BancoDeDadosFilme;
+import cinemax.backend.filmes.ClassificacaoIndicativa;
+import cinemax.backend.filmes.GeneroFilme;
 import cinemax.backend.salas.IBancoDeDadosSala;
 
 public class DummyBancoDeDadosFilme extends BancoDeDadosFilme {
