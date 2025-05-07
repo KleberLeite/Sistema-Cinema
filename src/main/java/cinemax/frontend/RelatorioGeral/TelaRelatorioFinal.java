@@ -8,18 +8,23 @@ import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.filmes.Filme;
+import cinemax.backend.filmes.Sessao;
 import cinemax.backend.relatorios.Ingresso;
 import cinemax.backend.relatorios.Relatorio;
 import cinemax.backend.relatorios.RelatorioAlimentos;
 import cinemax.backend.relatorios.RelatorioFilmes;
+import cinemax.backend.relatorios.TipoDeIngresso;
 import cinemax.backend.relatorios.VendasIngressos;
+import cinemax.backend.salas.Sala;
 
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.awt.event.ActionEvent;
@@ -52,9 +57,10 @@ public class TelaRelatorioFinal extends JFrame {
     //Ingresso
     //Filme - Sessao
     
-    private Map<Alimento, Integer> gerarCompraRandom(Random random, Alimento[] alimentos, int n) {
+    private Map<Alimento, Integer> gerarCompraRandomAlimento(Random random, Alimento[] alimentos, int n) {
 		Map<Alimento, Integer> compra = new HashMap<>();
 		for (int i = 0; i < n; i++) {
+			
 			int index = random.nextInt(alimentos.length);
 			Alimento a = alimentos[index];
 			compra.put(a, compra.getOrDefault(a, 0) + 1);
@@ -62,13 +68,40 @@ public class TelaRelatorioFinal extends JFrame {
 		return compra;
 	}
 
+
+    public List<Ingresso> simularVendasFilmes() {
+        List<Ingresso> ingressos = new ArrayList<>();
+
+        for(Filme filme : app.getBackend().getBancoFilmes().obterTodosFilmes()) {
+	        for (Sessao sessao : filme.obterTodasSessoes()) {
+	            Sala sala = sessao.getSala();
+	
+	            // Vamos simular venda de 5 ingressos por sessão
+	            for (int i = 0; i < 5; i++) {
+	                int linha = i / sala.getColunas(); // Simplesmente para variar
+	                int coluna = i % sala.getColunas();
+	                
+	                Ingresso ingresso = new Ingresso(sessao);
+	                ingresso.setTipo(i % 2 == 0 ? TipoDeIngresso.Inteira : TipoDeIngresso.Meia);
+	                ingresso.setRG("12345678" + i);
+	
+	                ingressos.add(ingresso);
+	            }
+	        }
+        }
+        return ingressos;
+        
+    }
+
+
+
     public TelaRelatorioFinal() {
     	
     	app.getBackend().tentarAbrirDia();
     	
-    	 Relatorio relatorio = app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia();
-         RelatorioAlimentos relatorioAlimento = new RelatorioAlimentos(relatorio);
-        // RelatorioFilmes relatorioFilmes = relatorio.getRelatorioFilmes();
+    	Relatorio relatorio = app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia();
+        RelatorioAlimentos relatorioAlimento = relatorio.getRelatorioAlimentos();
+        RelatorioFilmes relatorioFilmes = relatorio.getRelatorioFilmes();
     	
 
          	//GErando vendas alimentos ---------------------------------------------------------------------
@@ -76,17 +109,19 @@ public class TelaRelatorioFinal extends JFrame {
     		Random random = new Random(42);
 
     		for (int i = 1; i < 10; i++) {
-    			int n = random.nextInt(6)+1;
-    			relatorioAlimento.adicionarVendas(gerarCompraRandom(random, alimentos, n));
+    			int n = random.nextInt(10)+1;
+    			relatorioAlimento.adicionarVendas(gerarCompraRandomAlimento(random, alimentos, n));
     		}
     		//GErando vendas alimentos ---------------------------------------------------------------------
-    	
-    	
+    		
+    		relatorioFilmes.adicionarVendas(simularVendasFilmes());
     	
     		app.getBackend().tentarFecharDia();
     		
-    	
-    	
+    		for(Ingresso ingresso : simularVendasFilmes() ) {
+    			System.out.println(ingresso.toString());
+    		}
+    		
     	
     	
     	
@@ -114,11 +149,7 @@ public class TelaRelatorioFinal extends JFrame {
         contentPane.setBackground(new Color(0, 64, 128));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-        contentPane.setLayout(null);
-
-        
-        //scrollPaneFilmes.setBounds(432, 0, 432, 424);
-        
+        contentPane.setLayout(null);        
         
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setBounds(10, 11, 864, 499);
@@ -145,8 +176,6 @@ public class TelaRelatorioFinal extends JFrame {
         	
             Alimento alimento = entry.getKey();
             Integer quantidade = entry.getValue();
-            System.out.println(""+alimento.getPreco());
-            System.out.println(""+alimento.getNome());
 
             // Total parcial
             double totalParcial = alimento.getPreco() * quantidade;
@@ -241,7 +270,7 @@ public class TelaRelatorioFinal extends JFrame {
         JPanel panelPrincipalRelatorioFilmes = new JPanel();
         panelPrincipalRelatorioFilmes.setLayout(new BoxLayout(panelPrincipalRelatorioFilmes, BoxLayout.Y_AXIS));
         scrollPaneFilmes.setViewportView(panelPrincipalRelatorioFilmes);
-/*
+
         // Preencher com dados dos alimentos
         for (VendasIngressos vendasIngressos : relatorioFilmes.obterVendas()) {
             Filme filme = vendasIngressos.getFilme();
@@ -268,13 +297,13 @@ public class TelaRelatorioFinal extends JFrame {
             // Painel do preço
             JPanel painelMeia = new JPanel();
             painelMeia.setBackground(new Color(200, 255, 200));
-            JLabel labelMeia = new JLabel("R$" + String.format("%.2f", qtdeMeias*Ingresso.PRECO_INGRESSO/2));
+            JLabel labelMeia = new JLabel(String.format("%d", qtdeMeias));
             labelMeia.setFont(new Font("Tahoma", Font.PLAIN, 14));
             painelMeia.add(labelMeia);
             
             JPanel painelInteira = new JPanel();
             painelInteira.setBackground(new Color(200, 255, 200));
-            JLabel labelInteira = new JLabel("R$" + String.format("%.2f", qtdeInteiras*Ingresso.PRECO_INGRESSO));
+            JLabel labelInteira = new JLabel(String.format("%d", qtdeInteiras));
             labelInteira.setFont(new Font("Tahoma", Font.PLAIN, 14));
             painelInteira.add(labelInteira);
 
@@ -289,12 +318,13 @@ public class TelaRelatorioFinal extends JFrame {
             // Adiciona os subpainéis ao painel principal do alimento
             painelFilme.add(painelNomeFilme);
             painelFilme.add(painelInteira);
+            painelFilme.add(painelMeia);
             painelFilme.add(painelSubTotal);
 
             // Adiciona o painel do alimento ao painel geral
             panelPrincipalRelatorioFilmes.add(painelFilme);
         }
-*/
+
         
         
         JLabel lblNomeFilme = new JLabel("Nome");

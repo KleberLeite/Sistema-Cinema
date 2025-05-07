@@ -16,6 +16,11 @@ public class Ingresso {
 		this.sessao = sessao;
 		this.poltrona = poltrona;
 	}	
+	
+	public Ingresso(Sessao sessao) {
+		super();
+		this.sessao = sessao;
+	}
 
 	@Override
 	public String toString() {
@@ -23,8 +28,8 @@ public class Ingresso {
 				", \nSessao=" + sessao.getId() + 
 				", \nFilme=" + sessao.getFilme().getNome() + 
 				", \nPreco=" + getPreco() + 
-				", \nTipo=" + tipo + 
-				", \nPoltrona=" + poltrona.getIdentificador() + 
+				", \nTipo=" + tipo /*+ 
+				", \nPoltrona=" + poltrona.getIdentificador()*/ + 
 				", \nRG=" + RG + "]";
 	}
 	
