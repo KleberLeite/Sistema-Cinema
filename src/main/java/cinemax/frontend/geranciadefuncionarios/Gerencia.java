@@ -1,11 +1,15 @@
 
 package cinemax.frontend.geranciadefuncionarios;
 
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.backend.core.Backend;
+import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
-import cinemax.frontend.model.Funcionarios;
-import cinemax.frontend.model.FuncionariosModel;
+import cinemax.backend.funcionarios.CargoFuncionario;
+import cinemax.backend.funcionarios.Funcionario;
+import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 
 
 /**
@@ -51,18 +55,51 @@ import javax.swing.JOptionPane;
 
 
 public class Gerencia extends javax.swing.JFrame {
- FuncionariosModel model=new FuncionariosModel();
-  private int indiceSelecionado = -1;
+  private IBancoDeDadosFuncionario bancoDeDados;
+    private int indiceSelecionado = -1;
+    private Funcionario[] funcionariosLista;
     
   
   
-    public Gerencia() {
-         initComponents();
-       PlanilhaGerenciaFuncionarios.setModel(model);
+    public Gerencia(IBancoDeDadosFuncionario bancoDeDados) {
+        this.bancoDeDados = bancoDeDados;
+    initComponents();
+    DefaultTableModel model = (DefaultTableModel) PlanilhaGerenciaFuncionarios.getModel();
+    model.setRowCount(0);
+    atualizarTabela(); 
+       
         
       
     }
-
+private void atualizarTabela() {
+    System.out.println("Iniciando atualização da tabela...");
+    
+    try {
+        funcionariosLista = bancoDeDados.obterTodosFuncionarios();
+        System.out.println("Número de funcionários encontrados: " + funcionariosLista.length);
+        
+        DefaultTableModel model = (DefaultTableModel) PlanilhaGerenciaFuncionarios.getModel();
+        model.setRowCount(0);
+        
+        for (Funcionario funcionario : funcionariosLista) {
+            System.out.println("Adicionando: " + funcionario.getNome());
+            model.addRow(new Object[]{
+                funcionario.getNome(),
+                funcionario.getCpf(),
+                funcionario.getCargo().toString(),
+                funcionario.getTelefone(),
+                funcionario.getSenha()
+            });
+        }
+        
+        model.fireTableDataChanged();
+        System.out.println("Tabela atualizada com sucesso!");
+        
+    } catch (Exception e) {
+        System.err.println("Erro ao atualizar tabela: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -280,23 +317,29 @@ public class Gerencia extends javax.swing.JFrame {
     
                         
     private void BotaoCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoCadastrarFuncionariosActionPerformed
-         BotaoCadastrarFuncionarios.setEnabled(true);  
-        String nome= CapturarTXTNomeFuncionarios.getText();
-        String cpf =CapturarTXTCPFFuncionarios.getText();
-        String cargo=CapturarTXTCargoFuncionarios.getText();
-        String telefone=CapturarTXTTelefoneFuncionarios.getText();
-        String senha=CapturarTXTSenhaFuncionarios.getText();
+       String nome = CapturarTXTNomeFuncionarios.getText();
+        String cpf = CapturarTXTCPFFuncionarios.getText();
+        String cargoStr = CapturarTXTCargoFuncionarios.getText();
+        String telefone = CapturarTXTTelefoneFuncionarios.getText();
+        String senha = CapturarTXTSenhaFuncionarios.getText();
         
-      
-     if (validarCampos(nome, cpf, cargo, telefone, senha)) {
-    Funcionarios f = new Funcionarios(nome, cpf, cargo, telefone, senha);
-    this.model.CadastrarFuncionario(f);
-   
-    limparTextos();
-   } else {
-    JOptionPane.showMessageDialog(this, "Preencha todos os campos obrigatórios!", "Erro", JOptionPane.ERROR_MESSAGE);
-     }          
-              
+        if (!validarCampos(nome, cpf, cargoStr, telefone, senha)) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            CargoFuncionario cargo = CargoFuncionario.valueOf(cargoStr);
+            if (bancoDeDados.tentarAdicionarFuncionario(nome, cpf, cargo, telefone, senha)) {
+                JOptionPane.showMessageDialog(this, "Funcionário cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                limparTextos();
+                atualizarTabela();
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao cadastrar funcionário. Verifique se o CPF já existe ou se o dia está aberto.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Cargo inválido! Valores aceitos: Administrador, Gerente, Atendente", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
 
@@ -317,27 +360,28 @@ public class Gerencia extends javax.swing.JFrame {
         CapturarTXTCargoFuncionarios.setText("");
         CapturarTXTTelefoneFuncionarios.setText("");
         CapturarTXTSenhaFuncionarios.setText("");
+        BotaoCadastrarFuncionarios.setEnabled(true);
     }//GEN-LAST:event_BotaoCadastrarFuncionariosActionPerformed
    
         
         // 02 //
     private void PlanilhaGerenciaFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PlanilhaGerenciaFuncionariosMouseClicked
-                                           
-    int index = PlanilhaGerenciaFuncionarios.getSelectedRow();
-    if (index >= 0) {
-        Funcionarios f = this.model.returnFuncionario(index);
-        CapturarTXTNomeFuncionarios.setText(f.getNome());
-        CapturarTXTCPFFuncionarios.setText(f.getCpf());
-        CapturarTXTCargoFuncionarios.setText(f.getCargo());
-        CapturarTXTTelefoneFuncionarios.setText(f.getTelefone());
-        CapturarTXTSenhaFuncionarios.setText(f.getSenha());
-        
-        // Define o índice do funcionário selecionado para edição//
-            indiceSelecionado = index;
-             BotaoCadastrarFuncionarios.setEnabled(false);
+           int row = PlanilhaGerenciaFuncionarios.getSelectedRow();
+        if (row >= 0 && row < funcionariosLista.length) {
+            indiceSelecionado = row;
+            Funcionario f = funcionariosLista[row];
+            
+            CapturarTXTNomeFuncionarios.setText(f.getNome());
+            CapturarTXTCPFFuncionarios.setText(f.getCpf());
+            CapturarTXTCargoFuncionarios.setText(f.getCargo().toString());
+            CapturarTXTTelefoneFuncionarios.setText(f.getTelefone());
+            CapturarTXTSenhaFuncionarios.setText(f.getSenha());
+            
+            BotaoCadastrarFuncionarios.setEnabled(false);
+        }                                
+   
              
-             
-    }
+    
              
 
     }//GEN-LAST:event_PlanilhaGerenciaFuncionariosMouseClicked
@@ -350,44 +394,51 @@ public class Gerencia extends javax.swing.JFrame {
     
     
     private void BotaoEditarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEditarFuncionariosActionPerformed
-           if (indiceSelecionado >= 0) {
-        String nome = CapturarTXTNomeFuncionarios.getText();
-        String cpf = CapturarTXTCPFFuncionarios.getText();
-        String cargo = CapturarTXTCargoFuncionarios.getText();
-        String telefone = CapturarTXTTelefoneFuncionarios.getText();
-        String senha = CapturarTXTSenhaFuncionarios.getText();
-
-        if (!validarCampos(nome, cpf, cargo, telefone, senha)) {
-            JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+         BotaoCadastrarFuncionarios.setEnabled(false);
+            BotaoRemoverFuncionarios.setEnabled(false);
+        if (indiceSelecionado < 0) {
+            JOptionPane.showMessageDialog(this, "Selecione um funcionário para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-      
-        Funcionarios f = model.returnFuncionario(indiceSelecionado);
+        String nome = CapturarTXTNomeFuncionarios.getText();
+        String cpf = CapturarTXTCPFFuncionarios.getText();
+        String cargoStr = CapturarTXTCargoFuncionarios.getText();
+        String telefone = CapturarTXTTelefoneFuncionarios.getText();
+        String senha = CapturarTXTSenhaFuncionarios.getText();
         
-        // Atualizar os dados desse funcionário//
-        f.setNome(nome);
-        f.setCpf(cpf);
-        f.setCargo(cargo);
-        f.setTelefone(telefone);
-        f.setSenha(senha);
+        if (!validarCampos(nome, cpf, cargoStr, telefone, senha)) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-        // Atualizar a tabela//
-        model.fireTableRowsUpdated(indiceSelecionado, indiceSelecionado);
-        
-      
-        limparTextos();
-        indiceSelecionado = -1;
+        try {
+            CargoFuncionario cargo = CargoFuncionario.valueOf(cargoStr);
+            String cpfOriginal = funcionariosLista[indiceSelecionado].getCpf();
+            
+            boolean sucesso = true;
+            sucesso &= bancoDeDados.tentarAlterarNome(cpfOriginal, nome);
+            sucesso &= bancoDeDados.tentarAlterarCargo(cpfOriginal, cargo);
+            sucesso &= bancoDeDados.tentarAlterarTelefone(cpfOriginal, telefone);
+            sucesso &= bancoDeDados.tentarAlterarSenha(cpfOriginal, senha);
+            
+            if (!cpf.equals(cpfOriginal)) {
+                sucesso &= bancoDeDados.tentarAlterarCPF(cpfOriginal, cpf);
+            }
+
+            if (sucesso) {
+                JOptionPane.showMessageDialog(this, "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                limparTextos();
+                atualizarTabela();
+                indiceSelecionado = -1;
+            } else {
+                JOptionPane.showMessageDialog(this, "Erro ao atualizar funcionário. Verifique se o dia está aberto.", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Cargo inválido! Valores aceitos: Administrador, Gerente, Atendente", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
         BotaoCadastrarFuncionarios.setEnabled(true);
          BotaoRemoverFuncionarios.setEnabled(true);
-         
-         
-    } else {
-        JOptionPane.showMessageDialog(this, 
-            "Selecione um funcionário na tabela para editar.", 
-            "Aviso", 
-            JOptionPane.WARNING_MESSAGE);
-    }
     }//GEN-LAST:event_BotaoEditarFuncionariosActionPerformed
 
     
@@ -406,60 +457,27 @@ public class Gerencia extends javax.swing.JFrame {
     
     
     private void BotaoRemoverFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoRemoverFuncionariosActionPerformed
-        //1. //
-    if (indiceSelecionado < 0) {
-        JOptionPane.showMessageDialog(
-            this, 
-            "Por favor, selecione um funcionário na tabela para remover.", 
-            "Nenhum Selecionado", 
-            JOptionPane.WARNING_MESSAGE);
+       if (indiceSelecionado < 0) {
+        JOptionPane.showMessageDialog(this, "Selecione um funcionário para remover.", "Aviso", JOptionPane.WARNING_MESSAGE);
         return;
     }
-    
-    // 2. //
-    Funcionarios funcionario = model.returnFuncionario(indiceSelecionado);
-    
-    // 3. //
-    int confirmacao = JOptionPane.showConfirmDialog(
-        this,
-        "Deseja realmente remover o funcionário?\n\n" +
-        "Nome: " + funcionario.getNome() + "\n" +
-        "CPF: " + funcionario.getCpf() + "\n" +
-        "Cargo: " + funcionario.getCargo(),
+
+    Funcionario funcionario = funcionariosLista[indiceSelecionado];
+    int confirm = JOptionPane.showConfirmDialog(
+        this, 
+        "Deseja realmente remover o funcionário?\nNome: " + funcionario.getNome() + "\nCPF: " + funcionario.getCpf(),
         "Confirmar Remoção",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE);
+        JOptionPane.YES_NO_OPTION);
     
-    // 4. //
-    if (confirmacao == JOptionPane.YES_OPTION) {
-        try {
-            // 4.1 //
-            model.removerFuncionario(indiceSelecionado);
-            
-            // 4.2 //
-            model.fireTableDataChanged();
-            
-            // 4.3 //
+    if (confirm == JOptionPane.YES_OPTION) {
+        if (bancoDeDados.tentarRemoverFuncionarioPorCPF(funcionario.getCpf())) {
+            JOptionPane.showMessageDialog(this, "Funcionário removido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limparTextos();
+            atualizarTabela();
             indiceSelecionado = -1;
-           
-            
-            // 4.4 //
-            JOptionPane.showMessageDialog(
-                this,
-                "Funcionário removido com sucesso!",
-                "Sucesso",
-                JOptionPane.INFORMATION_MESSAGE);
-                
-        } catch (Exception e) {
-            
-            JOptionPane.showMessageDialog(
-                this,
-                "Erro ao remover funcionário:\n" + e.getMessage(),
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao remover funcionário. Verifique se o dia está aberto.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        BotaoCadastrarFuncionarios.setEnabled(true);
     }
     }//GEN-LAST:event_BotaoRemoverFuncionariosActionPerformed
 
@@ -478,78 +496,69 @@ public class Gerencia extends javax.swing.JFrame {
 // Verifica se algum campo obrigatório está vazio;
 // -------------------------------------------------------------------------------//
     
-    
+    private boolean validarCampos(String nome, String cpf, String cargoStr, String telefone, String senha) {
+    if (nome.trim().isEmpty() || cpf.trim().isEmpty() || cargoStr.trim().isEmpty() || 
+        telefone.trim().isEmpty() || senha.trim().isEmpty()) {
+        return false;
+    }
 
-public boolean validarCampos(String nome, String cpf, String cargo, String telefone, String senha) {
-    
-    if (nome.trim().isEmpty() || 
-        cpf.trim().isEmpty() || 
-        cargo.trim().isEmpty() || 
-        telefone.trim().isEmpty() || 
-        senha.trim().isEmpty()) {
-        return false;
-    }
-    
-    // Validações específicas para cada campo//
-    
-    
-    
     if (!validarCPF(cpf)) {
-        JOptionPane.showMessageDialog(this, "CPF inválido!", "Erro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "CPF inválido! Deve conter 11 dígitos.", "Erro", JOptionPane.ERROR_MESSAGE);
         return false;
     }
-    
+
     if (!validarTelefone(telefone)) {
-        JOptionPane.showMessageDialog(this, "Telefone inválido! Formato esperado: (XX) XXXX-XXXX", "Erro", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Telefone inválido! Deve conter 10 ou 11 dígitos.", "Erro", JOptionPane.ERROR_MESSAGE);
         return false;
     }
-    
+
     if (senha.length() < 6) {
         JOptionPane.showMessageDialog(this, "Senha deve ter no mínimo 6 caracteres!", "Erro", JOptionPane.ERROR_MESSAGE);
         return false;
     }
-    
+
+    try {
+        CargoFuncionario.valueOf(cargoStr);
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, "Cargo inválido! Valores aceitos: Administrador, Gerente, Atendente", "Erro", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
     return true;
 }
 
-/**
- * Valida o formato do CPF (apenas estrutura, não calcula dígitos verificadores)
- * @param cpf CPF a ser validado
- * @return true se o CPF estiver no formato correto
- */
 private boolean validarCPF(String cpf) {
-    // Remove caracteres não numéricos
     cpf = cpf.replaceAll("[^0-9]", "");
-    // Verifica se tem 11 dígitos
     return cpf.length() == 11;
 }
 
-/**
- * Valida o formato do telefone
- * @param telefone Telefone a ser validado
- * @return true se o telefone estiver em um formato aceitável
- */
 private boolean validarTelefone(String telefone) {
-    // Remove caracteres não numéricos
     telefone = telefone.replaceAll("[^0-9]", "");
-    // Verifica se tem entre 10 e 11 dígitos (incluindo DDD)
-    return telefone.length() >= 10 && telefone.length() <= 11;
+    return telefone.length() == 10 || telefone.length() == 11;
 }
-        
+
+
+
  
         
        
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-      
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Gerencia().setVisible(true);
-            }
-        });
-    }
+   public static void main(String args[]) {
+    Backend backend = new Backend();
+    IBancoDeDadosFuncionario banco = new BancoDeDadosFuncionario(backend);
+    
+    // Teste: Verifique se há dados no banco
+    System.out.println("Funcionários no banco: " + banco.obterTodosFuncionarios().length);
+    
+    java.awt.EventQueue.invokeLater(() -> {
+        Gerencia tela = new Gerencia(banco);
+        tela.setVisible(true);
+    });
+}
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotaoCadastrarFuncionarios;
