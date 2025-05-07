@@ -102,7 +102,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 					System.out.println(Integer.toString(ingresso.getSessao().getId()));
 					System.out.println(Integer.toString(ingresso.getPoltrona().getLinha()));
 					System.out.println(Integer.toString(ingresso.getPoltrona().getColuna()));
-					sucessoCompras = sucessoCompras && sucesso;
+					sucessoCompras &= sucesso;
 					if(sucesso) {
 						ingressosFinalizados.add(ingresso);
 					}else {
