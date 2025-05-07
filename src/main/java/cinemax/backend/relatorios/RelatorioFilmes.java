@@ -45,7 +45,7 @@ public class RelatorioFilmes {
 			int addMeia = addInteira == 1 ? 0 : 1;
 			aux.put(
 				s.getFilme(),
-				(TuplaIngressos)(aux.getOrDefault(s, new TuplaIngressos(0, 0))).soma(addInteira, addMeia)
+				(TuplaIngressos)(aux.getOrDefault(s.getFilme(), new TuplaIngressos(0, 0))).soma(addInteira, addMeia)
 			);
 		}
 		

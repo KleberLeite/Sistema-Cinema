@@ -130,11 +130,6 @@ public class TelaEscolhaPoltrona extends JFrame {
 				.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
 		ImageIcon iconeLocalCadeirantesOcupado = new ImageIcon(imgIconeLocalCadeirantesOcupadoParcial);
 
-		ImageIcon iconeEspacoVazioParcial = new ImageIcon(getClass().getResource("/img/EspacoVazio.png"));
-		Image imgIconeEspacoVazioParcial = iconeEspacoVazioParcial.getImage().getScaledInstance(15, 15,
-				Image.SCALE_SMOOTH);
-		ImageIcon iconeEspacoVazio = new ImageIcon(imgIconeEspacoVazioParcial);
-
 		ImageIcon iconeBloqueadoParcial = new ImageIcon(getClass().getResource("/img/PoltronaBloqueada.png"));
 		Image imgIconeBloqueadoParcial = iconeBloqueadoParcial.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
 		ImageIcon iconeBloqueada = new ImageIcon(imgIconeBloqueadoParcial);
@@ -215,17 +210,21 @@ public class TelaEscolhaPoltrona extends JFrame {
 		btnAvançar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				CarrinhoIngressos carrinho = new CarrinhoIngressos();
-				for(Poltrona p : poltronas) {
-					carrinho.adicionaIngresso(new Ingresso(sessao, p));
+				if(poltronasRestantes >= 0 && poltronasRestantes!=8) {
+					CarrinhoIngressos carrinho = new CarrinhoIngressos();
+					for(Poltrona p : poltronas) {
+						carrinho.adicionaIngresso(new Ingresso(sessao, p));
+					}
+					
+					TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
+					telaFinalizarCompra.setVisible(true);
+					telaFinalizarCompra.setLocationRelativeTo(null);
+	
+					dispose();
+				}else {
+					JOptionPane.showMessageDialog(null, "Escolha ao menos uma poltrona para avançar!", "Aviso",
+							JOptionPane.WARNING_MESSAGE);
 				}
-				
-				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
-				telaFinalizarCompra.setVisible(true);
-				telaFinalizarCompra.setLocationRelativeTo(null);
-
-				dispose();
-
 			}
 		});
 		btnAvançar.setBounds(674, 612, 89, 23);
@@ -267,9 +266,9 @@ public class TelaEscolhaPoltrona extends JFrame {
 				String poltronaSelecionada = sala.obterTipoDeEstrutura(i, j).getIdentificador();
 
 				if (TipoDeEstrutura.Vazio == sala.obterTipoDeEstrutura(i, j).getTipo()) {
-					botao = new JButton(iconeEspacoVazio);
+					botao = new JButton();
 					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
-					botao.setEnabled(false);
+					botao.setVisible(false);
 				} else if (TipoDeEstrutura.Poltrona == sala.obterTipoDeEstrutura(i, j).getTipo()) {
 					botao = new JButton(iconePoltrona);
 					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);

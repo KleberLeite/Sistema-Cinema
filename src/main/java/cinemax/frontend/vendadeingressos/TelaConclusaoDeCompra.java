@@ -45,9 +45,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaConclusaoDeCompra(Sessao sessao, CarrinhoIngressos carrinho) {		
-		
-		app.getBackend().tentarAbrirDia();
-		
+				
 		if(app.getBackend().diaEstaAberto())System.out.println("Estou abrido");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

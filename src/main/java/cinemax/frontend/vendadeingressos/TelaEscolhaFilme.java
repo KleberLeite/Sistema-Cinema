@@ -89,8 +89,8 @@ public class TelaEscolhaFilme extends JFrame {
 		for (Filme filme : filmesNoDia) {
 			JPanel card = new JPanel();
 			card.setLayout(null); 
-			card.setPreferredSize(new Dimension(1355, 100));
-			card.setMaximumSize(new Dimension(1355, 100));
+			card.setPreferredSize(new Dimension(1355, 120));
+			card.setMaximumSize(new Dimension(1355, 120));
 			card.setBackground(new Color(230, 230, 250));
 
 			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
@@ -103,57 +103,56 @@ public class TelaEscolhaFilme extends JFrame {
 			panelNomeEClassificacao.setBorder(new EmptyBorder(0, 0, 0, 0));
 			
 			JLabel lblNome = new JLabel(filme.getNome());
+			lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblNome.setBounds(20, 10, 490, 25); 
 			panelNomeEClassificacao.add(lblNome);
 			
 			JLabel lblClassificacao = new JLabel("     "+filme.getClassificacaoIndicativa().toString());
+			lblClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblClassificacao.setBounds(20, 10, 400, 25); 
 			panelNomeEClassificacao.add(lblClassificacao);
-			
 			card.add(panelNomeEClassificacao);
 
 			JLabel lblDuracao = new JLabel("Duração: " + filme.getDuracaoEmMinutos() + " min");
+			lblDuracao.setFont(new Font("Tahoma", Font.BOLD, 13));
 			lblDuracao.setBounds(20, 35, 200, 20);
 			card.add(lblDuracao);
 
 			JLabel lblTituloSessoes = new JLabel("Sessões:");
-			lblTituloSessoes.setBounds(20, 60, 100, 20);
+			lblTituloSessoes.setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblTituloSessoes.setBounds(20, 72, 100, 20);
 			card.add(lblTituloSessoes);
 
 			JPanel painelSessoes = new JPanel();
 			painelSessoes.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
-			painelSessoes.setBounds(100, 60, 400, 25);
+			painelSessoes.setBounds(100, 60, 600, 50); // altura maior
 			painelSessoes.setOpaque(false);
 			card.add(painelSessoes);
 			
-		    for (Sessao sessao : app.getBackend().getBancoFilmes().obterTodasSessoesDoFilmeNoDia(filme.getId(), diaFiltro)) {
-		    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-		    	String sessaoFormatada = sessao.getInicio().format(formatter);
-		    	
-		    	JButton btnSessao = new JButton(sessaoFormatada);
-				
-				btnSessao.addActionListener(e -> {
-					TelaEscolhaPoltrona telaEscolhaPoltrona = new TelaEscolhaPoltrona(sessao);
-					telaEscolhaPoltrona.setLocationRelativeTo(null);
-					telaEscolhaPoltrona.setVisible(true);
+			for (Sessao sessao : app.getBackend().getBancoFilmes().obterTodasSessoesDoFilmeNoDia(filme.getId(), diaFiltro)) {
+			    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			    String sessaoFormatada = sessao.getInicio().format(formatter);
 
-				    dispose();
-		        });
-		        painelSessoes.add(btnSessao);
-		        
-		    	
-		    	String salaFormatada = Integer.toString(sessao.getSala().getIdSala());
-		    	JLabel sala = new JLabel("Sala "+salaFormatada, SwingConstants.CENTER);
-		    	
-		        // Cria um painel vertical para colocar o label em cima do botão
-		        JPanel painelJuntaSessaoESala = new JPanel();
-		        painelJuntaSessaoESala.setLayout(new BoxLayout(painelJuntaSessaoESala, BoxLayout.Y_AXIS));
-		        painelJuntaSessaoESala.add(sala);
-		        painelJuntaSessaoESala.add(btnSessao);
-		    	
-		        sala.setAlignmentX(Component.CENTER_ALIGNMENT);
-		        btnSessao.setAlignmentX(Component.CENTER_ALIGNMENT);
-		        
+			    JButton btnSessao = new JButton(sessaoFormatada);
+			    btnSessao.addActionListener(e -> {
+			        TelaEscolhaPoltrona telaEscolhaPoltrona = new TelaEscolhaPoltrona(sessao);
+			        telaEscolhaPoltrona.setLocationRelativeTo(null);
+			        telaEscolhaPoltrona.setVisible(true);
+			        dispose();
+			    });
+
+			    String salaFormatada = Integer.toString(sessao.getSala().getIdSala());
+			    JLabel sala = new JLabel("Sala " + salaFormatada, SwingConstants.CENTER);
+
+			    JPanel painelJuntaSessaoESala = new JPanel();
+			    painelJuntaSessaoESala.setLayout(new BoxLayout(painelJuntaSessaoESala, BoxLayout.Y_AXIS));
+			    painelJuntaSessaoESala.add(sala);
+			    painelJuntaSessaoESala.add(btnSessao);
+
+			    sala.setAlignmentX(Component.CENTER_ALIGNMENT);
+			    btnSessao.setAlignmentX(Component.CENTER_ALIGNMENT);
+			    
+			    /*
 		        String data = sessao.getInicio().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 		        System.out.println("============================================================");
 				System.out.println("-----------------------------------------------------");
@@ -163,13 +162,10 @@ public class TelaEscolhaFilme extends JFrame {
 				System.out.println("Inicio: "+ data);
 				System.out.println("Filme: "+ sessao.getFilme().getNome());
 				System.out.println("-----------------------------------------------------");
-				System.out.println("============================================================");
-		        
-		       
-		    	
-		        painelSessoes.add(painelJuntaSessaoESala);
-		        
-		    }
+				System.out.println("============================================================");*/
+
+			    painelSessoes.add(painelJuntaSessaoESala);
+			}
 
 		    card.add(painelSessoes);
 		    
@@ -197,6 +193,7 @@ public class TelaEscolhaFilme extends JFrame {
 	        // Cria um painel vertical para colocar o label em cima do botão
 	        JPanel painelJuntaDataEDia = new JPanel();
 	        painelJuntaDataEDia.setLayout(new BoxLayout(painelJuntaDataEDia, BoxLayout.Y_AXIS));
+	        painelJuntaDataEDia.setBounds(100, 60, 400, 40);
 	        painelJuntaDataEDia.add(diaDaSemana);
 	        painelJuntaDataEDia.add(botaoDia);
 	        
@@ -239,7 +236,6 @@ public class TelaEscolhaFilme extends JFrame {
 		painelListaFilmes.setBackground(Color.WHITE);
 		painelListaFilmes.setBorder(new EmptyBorder(10, 10, 10, 10)); // margem geral
 
-
 		// Criar os cards dos filmes
 		atualizarListaFilmesParaOHoje(painelListaFilmes);
 
@@ -258,7 +254,7 @@ public class TelaEscolhaFilme extends JFrame {
 		// Criando um JScrollPane para rolar horizontalmente o painel de dias da semana
 		JScrollPane scrollPane_1 = new JScrollPane(panelDias, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setBounds(322, 0, 358, 69);
+		scrollPane_1.setBounds(322, 0, 358, 70);
 		panelDatas.add(scrollPane_1);
 
 		JLabel lblSelecionarDia = new JLabel("Selecione o dia: ");

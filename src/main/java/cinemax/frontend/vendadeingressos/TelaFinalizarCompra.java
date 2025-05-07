@@ -134,6 +134,7 @@ public class TelaFinalizarCompra extends JFrame {
 	
 	public void configuraRGsMeia(List<Ingresso> ingressos) {
 		for(int i = 0 ; i < meiasCount; i++) {
+			System.out.println(listaDeTextFieldsRGs.get(i).getText().trim());
 			ingressos.get(i).setRG(listaDeTextFieldsRGs.get(i).getText().trim());
 		}		
 	}
@@ -477,7 +478,7 @@ public class TelaFinalizarCompra extends JFrame {
 		btnMenosUmaMeia.setEnabled(false);
 		
 		
-		/*JButton btnTeste = new JButton("Teste");
+		JButton btnTeste = new JButton("Teste");
 		btnTeste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int contMeia = 0;
@@ -494,7 +495,7 @@ public class TelaFinalizarCompra extends JFrame {
 			}
 		});
 		btnTeste.setBounds(400, 310, 89, 23);
-		panelIngressos.add(btnTeste);*/
+		panelIngressos.add(btnTeste);
 
 	}
 }

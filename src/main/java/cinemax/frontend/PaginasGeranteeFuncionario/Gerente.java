@@ -4,6 +4,7 @@
  */
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
+import cinemax.frontend.RelatorioGeral.TelaEscolhaRelatorio;
 import cinemax.frontend.RelatorioGeral.TelaRelatorioFinal;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.Gerencia;
@@ -104,9 +105,9 @@ public class Gerente extends javax.swing.JFrame {
         botaoConsultarRelatorio.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
-        		TelaRelatorioFinal telaRelatorioFinal = new TelaRelatorioFinal();
-        		telaRelatorioFinal.setVisible(true);
-        		telaRelatorioFinal.setLocationRelativeTo(null);
+        		TelaEscolhaRelatorio telaEscolhaRelatorio = new TelaEscolhaRelatorio();
+        		telaEscolhaRelatorio.setVisible(true);
+        		telaEscolhaRelatorio.setLocationRelativeTo(null);
         		
         		dispose();
         	}

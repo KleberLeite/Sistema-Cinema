@@ -44,7 +44,7 @@ public class TelaRelatorioFinal extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TelaRelatorioFinal frame = new TelaRelatorioFinal();
+                    TelaRelatorioFinal frame = new TelaRelatorioFinal(null);
                     frame.setVisible(true);
                     frame.setLocationRelativeTo(null);
                 } catch (Exception e) {
@@ -95,15 +95,17 @@ public class TelaRelatorioFinal extends JFrame {
 
 
 
-    public TelaRelatorioFinal() {
+    public TelaRelatorioFinal(Relatorio  relatorioDoDia) {
+    	if(relatorioDoDia==null) relatorioDoDia = app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia();
     	
-    	app.getBackend().tentarAbrirDia();
     	
-    	Relatorio relatorio = app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia();
+    	//app.getBackend().tentarAbrirDia();
+    	
+    	Relatorio relatorio = relatorioDoDia;
         RelatorioAlimentos relatorioAlimento = relatorio.getRelatorioAlimentos();
         RelatorioFilmes relatorioFilmes = relatorio.getRelatorioFilmes();
     	
-
+/*
          	//GErando vendas alimentos ---------------------------------------------------------------------
     		Alimento[] alimentos = app.getBackend().getBancoAlimentos().obterTodosAlimentos();
     		Random random = new Random(42);
@@ -122,7 +124,7 @@ public class TelaRelatorioFinal extends JFrame {
     			System.out.println(ingresso.toString());
     		}
     		
-    	
+    	*/
     	
     	
     	
@@ -236,7 +238,7 @@ public class TelaRelatorioFinal extends JFrame {
         lblQuantidadeAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
         lblQuantidadeAlimento.setHorizontalAlignment(SwingConstants.CENTER); // Centraliza horizontalmente
         lblQuantidadeAlimento.setVerticalAlignment(SwingConstants.CENTER);   // (opcional) centraliza verticalmente
-        lblQuantidadeAlimento.setBounds(133, 0, 115, 30);
+        lblQuantidadeAlimento.setBounds(242, 0, 108, 30);
         panelPrincipal.add(lblQuantidadeAlimento);
         
         JLabel lblSubTotalAlimento = new JLabel("SubTotal");
@@ -250,14 +252,16 @@ public class TelaRelatorioFinal extends JFrame {
         lblPrecoAlimento.setVerticalAlignment(SwingConstants.CENTER);
         lblPrecoAlimento.setHorizontalAlignment(SwingConstants.CENTER);
         lblPrecoAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblPrecoAlimento.setBounds(244, 0, 99, 30);
+        lblPrecoAlimento.setBounds(133, 0, 99, 30);
         panelPrincipal.add(lblPrecoAlimento);
 
         // Total geral fora do scroll
         JLabel labelTotalAlimentos = new JLabel("Total Geral das Vendas de Alimentos: R$"+String.format("%.2f", totalAlimentos));
+        labelTotalAlimentos.setVerticalAlignment(SwingConstants.CENTER);
+        labelTotalAlimentos.setHorizontalAlignment(SwingConstants.CENTER);
         labelTotalAlimentos.setFont(new Font("Tahoma", Font.BOLD, 16));
         labelTotalAlimentos.setForeground(Color.BLACK);
-        labelTotalAlimentos.setBounds(5, 389, 427, 30);
+        labelTotalAlimentos.setBounds(0, 389, 432, 30);
         panelPrincipal.add(labelTotalAlimentos);
         
      // Painel para Alimentos
@@ -296,7 +300,7 @@ public class TelaRelatorioFinal extends JFrame {
 
             // Painel do preço
             JPanel painelMeia = new JPanel();
-            painelMeia.setBackground(new Color(200, 255, 200));
+            painelMeia.setBackground(new Color(212, 245, 220));
             JLabel labelMeia = new JLabel(String.format("%d", qtdeMeias));
             labelMeia.setFont(new Font("Tahoma", Font.PLAIN, 14));
             painelMeia.add(labelMeia);
@@ -357,18 +361,29 @@ public class TelaRelatorioFinal extends JFrame {
         
         // Total geral fora do scroll
         JLabel labelTotalFilmes = new JLabel("Total Geral das Vendas de Filmes: R$"+String.format("%.2f", totalFilmes));
+        labelTotalFilmes.setVerticalAlignment(SwingConstants.CENTER);
+        labelTotalFilmes.setHorizontalAlignment(SwingConstants.CENTER);
         labelTotalFilmes.setFont(new Font("Tahoma", Font.BOLD, 16));
         labelTotalFilmes.setForeground(Color.BLACK);
-        labelTotalFilmes.setBounds(437, 389, 427, 30);
+        labelTotalFilmes.setBounds(432, 389, 432, 30);
         panelPrincipal.add(labelTotalFilmes);
+        
+        JLabel lblTotalDeVendas = new JLabel("Total de Vendas no dia: R$"+String.format("%.2f", totalFilmes+totalAlimentos));
+        lblTotalDeVendas.setVerticalAlignment(SwingConstants.CENTER);
+        lblTotalDeVendas.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTotalDeVendas.setForeground(Color.BLACK);
+        lblTotalDeVendas.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblTotalDeVendas.setBounds(0, 445, 864, 30);
+        panelPrincipal.add(lblTotalDeVendas);
         
         // Botão Voltar
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Gerente telaGerente = new Gerente();
-                telaGerente.setVisible(true);
-                telaGerente.setLocationRelativeTo(null);
+                TelaEscolhaRelatorio telaEscolhaRelatorio = new TelaEscolhaRelatorio();
+                telaEscolhaRelatorio.setVisible(true);
+                telaEscolhaRelatorio.setLocationRelativeTo(null);
+                
                 dispose();
             }
         });
