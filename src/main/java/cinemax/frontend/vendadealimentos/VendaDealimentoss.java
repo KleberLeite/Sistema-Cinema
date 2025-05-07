@@ -28,7 +28,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 	/**
 	 * Creates new form VendaDealimentoss
 	 */
-	public VendaDealimentoss() {		
+	public VendaDealimentoss() {
 		initComponents();
 		inicializarTabela();
 		configurarListeners();
@@ -47,17 +47,15 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 				decrementarItem();
 			}
 		});
-		/*BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				BotaoComprarActionPerformed(evt);
-			}
-		});
-
-		bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				bntRecarregarListaActionPerformed(evt);
-			}
-		});*/
+		/*
+		 * BotaoComprar.addActionListener(new java.awt.event.ActionListener() { public
+		 * void actionPerformed(java.awt.event.ActionEvent evt) {
+		 * BotaoComprarActionPerformed(evt); } });
+		 * 
+		 * bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
+		 * public void actionPerformed(java.awt.event.ActionEvent evt) {
+		 * bntRecarregarListaActionPerformed(evt); } });
+		 */
 	}
 
 	// ___________________________________________///
@@ -99,9 +97,9 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 	private void incrementarItem() {
 		int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
 		if (linhaSelecionada != -1) {
-			int codigo = (int)PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 2);
+			int codigo = (int) PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 2);
 			Alimento a = bancoDados.obterAlimentoPorCodigo(codigo);
-			if(a != null) {
+			if (a != null) {
 				// Incrementar quantidade
 				carrinho.put(a, carrinho.getOrDefault(a, 0) + 1);
 
@@ -115,13 +113,13 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 	private void decrementarItem() {
 		int linhaSelecionada = PlanilhaDeAlimentos.getSelectedRow();
 		if (linhaSelecionada != -1) {
-			int codigo = (int)PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 2);
+			int codigo = (int) PlanilhaDeAlimentos.getValueAt(linhaSelecionada, 2);
 			Alimento a = bancoDados.obterAlimentoPorCodigo(codigo);
-			
-			if(a == null) {
+
+			if (a == null) {
 				return;
 			}
-			
+
 			if (carrinho.containsKey(a)) {
 				int qtdAtual = carrinho.get(a);
 				if (qtdAtual > 1) {
@@ -146,7 +144,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 		TXTQuantidadeDeitemTotaisSelecionados.setText(String.valueOf(total));
 
 		// Opcional: imprime no console para depuração
-		//System.out.println("Total de itens no carrinho: " + total);
+		// System.out.println("Total de itens no carrinho: " + total);
 	}
 
 	private void atualizarPrecoTotal() {
@@ -197,8 +195,16 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 		jPanel1.setBackground(new java.awt.Color(2, 32, 64));
 
 		PlanilhaDeAlimentos.setModel(
-				new javax.swing.table.DefaultTableModel(new Object[][] { { null, null, null }, { null, null, null },
-						{ null, null, null }, { null, null, null } }, new String[] { "Nome", "Preço", "Código" }));
+			new javax.swing.table.DefaultTableModel(
+				new Object[][] { { null, null, null }, { null, null, null }, { null, null, null }, { null, null, null } },
+				new String[] { "Nome", "Preço", "Código" }
+			) {
+				@Override
+			    public boolean isCellEditable(int row, int column) {
+			        return false;
+			    }
+			}
+		);
 		PlanilhaDeAlimentos.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				PlanilhaDeAlimentosMouseClicked(evt);
@@ -500,20 +506,21 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 		limparCampos();
 	}// GEN-LAST:event_bntRecarregarListaActionPerformed
 
-	private void salvarCompraNoHistorico() {		
-		app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia()
-			.getRelatorioAlimentos().adicionarVendas(carrinho);
-		/*for (Map.Entry<String, Integer> entry : carrinho.entrySet()) {
-			String nomeProduto = entry.getKey();
-			int quantidade = entry.getValue();
-
-			// Aqui você pode chamar seu backend para salvar no banco
-			System.out.println("Salvando compra: " + nomeProduto + " - Qtd: " + quantidade);
-
-			// Exemplo fictício (substitua com o real):
-			// app.getBackend().getHistoricoCompras().registrarCompra(nomeProduto,
-			// quantidade);
-		}*/
+	private void salvarCompraNoHistorico() {
+		app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia().getRelatorioAlimentos()
+				.adicionarVendas(carrinho);
+		/*
+		 * for (Map.Entry<String, Integer> entry : carrinho.entrySet()) { String
+		 * nomeProduto = entry.getKey(); int quantidade = entry.getValue();
+		 * 
+		 * // Aqui você pode chamar seu backend para salvar no banco
+		 * System.out.println("Salvando compra: " + nomeProduto + " - Qtd: " +
+		 * quantidade);
+		 * 
+		 * // Exemplo fictício (substitua com o real): //
+		 * app.getBackend().getHistoricoCompras().registrarCompra(nomeProduto, //
+		 * quantidade); }
+		 */
 
 		// Posteriormente o RelatorioGeral pode consultar esse histórico
 	}

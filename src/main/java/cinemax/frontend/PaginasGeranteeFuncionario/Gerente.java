@@ -85,6 +85,9 @@ public class Gerente extends javax.swing.JFrame {
                 
         	}
         });
+        if(app.getBackend().diaEstaAberto()) {
+        	botaoIniciarDia.setEnabled(false);
+        }
         
         botaoTerminoDia = new javax.swing.JButton();
         botaoTerminoDia.addActionListener(new ActionListener() {
@@ -102,6 +105,9 @@ public class Gerente extends javax.swing.JFrame {
                 
         	}
         });
+        if(!app.getBackend().diaEstaAberto()) {
+        	botaoTerminoDia.setEnabled(false);
+        }
         botaoConsultarRelatorio = new javax.swing.JButton();
         botaoConsultarRelatorio.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
