@@ -107,15 +107,15 @@ public class Gerencia extends javax.swing.JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Funcionários");
 
-		PlanilhaGerenciaFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
+		PlanilhaGerenciaFuncionarios.setModel(
+			new javax.swing.table.DefaultTableModel(
 				new Object[][] { { null, null, null, null, null }, { null, null, null, null, null },
 						{ null, null, null, null, null }, { null, null, null, null, null } },
-				new String[] { "Nome", "CPF", "Cargo", "Teléfone", "Senha" }) {
-			boolean[] canEdit = new boolean[] { false, false, false, false, false };
-
-			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return canEdit[columnIndex];
-			}
+				new String[] { "Nome", "CPF", "Cargo", "Teléfone", "Senha" }
+			) {	
+				public boolean isCellEditable(int rowIndex, int columnIndex) {
+					return false;
+				}
 		});
 		PlanilhaGerenciaFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
