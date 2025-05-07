@@ -277,7 +277,7 @@ public class TelaFinalizarCompra extends JFrame {
 				}
 				
 				if(!validarRGs()) {
-					JOptionPane.showMessageDialog(null, "Aluns RGs estão incorretos, por favor, verifique-os!", "Erro",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Alguns RGs estão incorretos, por favor, verifique-os!", "Erro",JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 

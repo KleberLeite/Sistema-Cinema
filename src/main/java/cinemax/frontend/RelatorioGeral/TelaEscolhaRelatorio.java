@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.relatorios.Relatorio;
+import cinemax.backend.relatorios.RelatorioFilmes;
 import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
 
@@ -80,29 +81,32 @@ public class TelaEscolhaRelatorio extends JFrame {
 		panelMostrarRelatorios.setBounds(149, 154, 272, 317);
 		panelPrincipal.add(panelMostrarRelatorios);
 		
-		for(int i = 0; i < app.getBackend().getGerenciadorRelatorios().obterTodos().size(); i++) {
-			 	LocalDate hoje = LocalDate.now().plusDays(i);
-		        
-		        String diaFormatado = hoje.getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("pt", "BR")).toUpperCase();
-		        
-		        JButton botaoDia = new JButton("Relatório de "+diaFormatado);
-		        
-		        botaoDia.setAlignmentX(Component.CENTER_ALIGNMENT);
-		        
-		        final int indexRelatorio = i;
-		        
-		        botaoDia.addActionListener(e -> {
-		        	
-		        	Relatorio relatorioDoDia = app.getBackend().getGerenciadorRelatorios().obterTodos().get(indexRelatorio);
-		        	
-		        	TelaRelatorioFinal telaRelatorioFinal = new TelaRelatorioFinal(relatorioDoDia);
-		        	telaRelatorioFinal.setVisible(true);
-		        	telaRelatorioFinal.setLocationRelativeTo(null);
-		        	
-		        	dispose();
-		        	
-		        });
+		JButton botaoDia1 = new JButton("nbuton");
+		panelPrincipal.add(botaoDia1);
+		
+		for (int i = 0; i < app.getBackend().getGerenciadorRelatorios().obterTodos().size(); i++) {
+		    
+			Relatorio relatoriaAtual = app.getBackend().getGerenciadorRelatorios().obterTodos().get(i);
+			RelatorioFilmes rela =  app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia().getRelatorioFilmes();
+			
+		    DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+		    DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM");
+		    
+		    String diaFormatado = relatoriaAtual.getIncio().format(formatterData);
+		   		    
+		    JButton botaoDia = new JButton("Relatório de " + diaFormatado);
+		    botaoDia.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+
+		    botaoDia.addActionListener(e -> {
+		        Relatorio relatorioDoDia = app.getBackend().getGerenciadorRelatorios().obterTodos().get(i);
+		        TelaRelatorioFinal telaRelatorioFinal = new TelaRelatorioFinal(relatorioDoDia);
+		        telaRelatorioFinal.setVisible(true);
+		        telaRelatorioFinal.setLocationRelativeTo(null);
+		        dispose();
+		    });
+
+		    panelMostrarRelatorios.add(botaoDia); // <-- ESSA LINHA É ESSENCIAL
 		}
 		
 		JButton btnVoltar = new JButton("Voltar");

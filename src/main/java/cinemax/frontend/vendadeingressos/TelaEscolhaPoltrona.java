@@ -268,7 +268,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 				case Vazio:
 					botao = new JButton();
 					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
-					botao.setEnabled(false);
+					botao.setVisible(false);
 					break;
 				case Poltrona:
 					if(sessao.estaReservado(i, j)) {
