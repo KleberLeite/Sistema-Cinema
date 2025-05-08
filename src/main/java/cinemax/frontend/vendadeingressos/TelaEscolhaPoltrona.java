@@ -2,6 +2,7 @@ package cinemax.frontend.vendadeingressos;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
 
@@ -18,7 +19,10 @@ import cinemax.backend.filmes.Sessao;
 import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.salas.Poltrona;
 import cinemax.backend.salas.Sala;
+import cinemax.frontend.controller.ControladorDeApp;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -33,6 +37,7 @@ import java.awt.Font;
 @SuppressWarnings("serial")
 public class TelaEscolhaPoltrona extends JFrame {
 	private JPanel panelPrincipal;
+	ControladorDeApp app = ControladorDeApp.getInstancia();
 	private List<Poltrona> poltronas = new ArrayList<>();
 	private int poltronasRestantes;// Contabiliza a quantidade de poltronas que ainda podem ser escolhidas
 
@@ -57,7 +62,22 @@ public class TelaEscolhaPoltrona extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public TelaEscolhaPoltrona(Sessao sessao) {
+	public TelaEscolhaPoltrona(Sessao sessao1) {
+		if(sessao1==null) sessao1 = app.getBackend().getBancoFilmes().obterFilmePorId(0).obterSessao(0);
+		final Sessao sessao = sessao1;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		poltronasRestantes = 8;
 		
 		getContentPane().setLayout(null);
@@ -204,6 +224,52 @@ public class TelaEscolhaPoltrona extends JFrame {
 		lblLegenda.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblLegenda.setBounds(10, 478, 91, 14);
 		panelPoltronas.add(lblLegenda);
+		
+		JLabel lblNewLabel = new JLabel("P");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel.setBounds(412, 8, 15, 14);
+		panelPoltronas.add(lblNewLabel);
+		
+		JPanel panelLetras = new JPanel();
+		panelLetras.setBounds(406, 56, 19, 340);
+		panelLetras.setBackground(new Color(255, 255, 255));
+		panelLetras.setLayout(new BoxLayout(panelLetras, BoxLayout.Y_AXIS)); // Layout vertical
+
+		// Gera letras de B até O
+		for (char letra = 'O'; letra >= 'B'; letra--) {
+		    JLabel label = new JLabel(String.valueOf(letra));
+		    label.setAlignmentX(Component.CENTER_ALIGNMENT); // Centraliza horizontalmente
+		    panelLetras.add(label);
+		    
+		    
+		        panelLetras.add(Box.createRigidArea(new Dimension(0, 9))); // Espaço vertical
+		    
+		    
+		}
+		panelPoltronas.add(panelLetras);
+		
+		JLabel lblA = new JLabel("A");
+		lblA.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblA.setBounds(412, 430, 15, 14);
+		panelPoltronas.add(lblA);
+		
+		JPanel panelNumeros = new JPanel();
+		panelNumeros.setBounds(8, 449, 396, 19);
+		panelNumeros.setBackground(new Color(255, 255, 255));
+		panelNumeros.setLayout(new BoxLayout(panelNumeros, BoxLayout.X_AXIS)); // Layout horizontal
+
+		for (int i = 1; i <= 16; i++) {
+		    JLabel label = new JLabel("  "+String.valueOf(i));
+		    label.setAlignmentY(Component.CENTER_ALIGNMENT); // Alinha verticalmente
+		    panelNumeros.add(label);
+
+		    // Adiciona espaço à direita, exceto no último
+		    if (i != 16) {
+		        panelNumeros.add(Box.createRigidArea(new Dimension(11, 0))); // Espaço horizontal
+		    }
+		}
+
+		panelPoltronas.add(panelNumeros);
 
 		JButton btnAvançar = new JButton("Avançar");
 		btnAvançar.addActionListener(new ActionListener() {
