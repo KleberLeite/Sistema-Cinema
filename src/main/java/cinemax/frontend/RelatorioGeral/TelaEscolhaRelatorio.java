@@ -176,7 +176,7 @@ public class TelaEscolhaRelatorio extends JFrame {
 		scrollPaneRelatorios.setBounds(149, 154, 272, 317);
 		scrollPaneRelatorios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneRelatorios.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		contentPane.add(scrollPaneRelatorios);
+		panelPrincipal.add(scrollPaneRelatorios);
 		
 		for (int i = 0; i < app.getBackend().getGerenciadorRelatorios().obterTodos().size(); i++) {
 		    Relatorio relatoriaAtual = app.getBackend().getGerenciadorRelatorios().obterTodos().get(i);

@@ -32,4 +32,6 @@ public abstract class Estrutura {
 	protected abstract boolean tentarBloquear();
 	
 	protected abstract boolean tentarDesbloquear();
+	
+	public abstract boolean getBloqueado() ;
 }

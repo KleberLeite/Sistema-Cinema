@@ -14,4 +14,9 @@ public class EstruturaPassagem extends Estrutura {
 	public boolean tentarDesbloquear() {
 		return false;
 	}
+
+	@Override
+	public boolean getBloqueado() {
+		return false;
+	}
 }

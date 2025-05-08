@@ -137,11 +137,11 @@ public class TelaEscolhaPoltrona extends JFrame {
 				15, Image.SCALE_SMOOTH);
 		ImageIcon iconeLocalCadeirantes = new ImageIcon(imgIconeLocalCadeirantesLivreParcial);
 
-		ImageIcon iconeLocalCadeirantesParcial = new ImageIcon(
+		ImageIcon iconeLocalCadeiranteSelecionado = new ImageIcon(
 				getClass().getResource("/img/LocalCadeiranteSelecionado.png"));
-		Image imgIconeLocalCadeirantesParcial = iconeLocalCadeirantesParcial.getImage().getScaledInstance(15, 15,
+		Image imgIconeLocalCadeiranteSelecionado = iconeLocalCadeiranteSelecionado.getImage().getScaledInstance(15, 15,
 				Image.SCALE_SMOOTH);
-		ImageIcon iconeLocalCadeirantesSelecionado = new ImageIcon(imgIconeLocalCadeirantesParcial);
+		ImageIcon iconeLocalCadeirantesSelecionado = new ImageIcon(imgIconeLocalCadeiranteSelecionado);
 
 		ImageIcon iconeLocalCadeirantesOcupadoParcial = new ImageIcon(
 				getClass().getResource("/img/LocalCadeiranteOcupado.png"));
@@ -227,17 +227,18 @@ public class TelaEscolhaPoltrona extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("P");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel.setBounds(412, 8, 15, 14);
+		lblNewLabel.setBounds(10, 9, 15, 14);
 		panelPoltronas.add(lblNewLabel);
 		
 		JPanel panelLetras = new JPanel();
-		panelLetras.setBounds(406, 56, 19, 340);
+		panelLetras.setBounds(5, 55, 19, 340);
 		panelLetras.setBackground(new Color(255, 255, 255));
 		panelLetras.setLayout(new BoxLayout(panelLetras, BoxLayout.Y_AXIS)); // Layout vertical
 
 		// Gera letras de B até O
 		for (char letra = 'O'; letra >= 'B'; letra--) {
 		    JLabel label = new JLabel(String.valueOf(letra));
+		    label.setFont(new Font("Tahoma", Font.BOLD, 13));
 		    label.setAlignmentX(Component.CENTER_ALIGNMENT); // Centraliza horizontalmente
 		    panelLetras.add(label);
 		    
@@ -250,22 +251,23 @@ public class TelaEscolhaPoltrona extends JFrame {
 		
 		JLabel lblA = new JLabel("A");
 		lblA.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblA.setBounds(412, 430, 15, 14);
+		lblA.setBounds(10, 436, 15, 14);
 		panelPoltronas.add(lblA);
 		
 		JPanel panelNumeros = new JPanel();
-		panelNumeros.setBounds(8, 449, 396, 19);
+		panelNumeros.setBounds(32, 449, 389, 19);
 		panelNumeros.setBackground(new Color(255, 255, 255));
 		panelNumeros.setLayout(new BoxLayout(panelNumeros, BoxLayout.X_AXIS)); // Layout horizontal
 
 		for (int i = 1; i <= 16; i++) {
-		    JLabel label = new JLabel("  "+String.valueOf(i));
+		    JLabel label = new JLabel(String.valueOf(i));
 		    label.setAlignmentY(Component.CENTER_ALIGNMENT); // Alinha verticalmente
 		    panelNumeros.add(label);
 
 		    // Adiciona espaço à direita, exceto no último
 		    if (i != 16) {
-		        panelNumeros.add(Box.createRigidArea(new Dimension(11, 0))); // Espaço horizontal
+		        if(i>=1 && i<=8)panelNumeros.add(Box.createRigidArea(new Dimension(18, 0))); // Espaço horizontal
+		        else panelNumeros.add(Box.createRigidArea(new Dimension(16, 0)));
 		    }
 		}
 
@@ -329,11 +331,12 @@ public class TelaEscolhaPoltrona extends JFrame {
 
 				JButton botao = null;
 				String poltronaSelecionada = sala.obterTipoDeEstrutura(i, j).getIdentificador();
-
+				int deslocamentoEmX = 25;
+				
 				switch(sala.obterTipoDeEstrutura(i, j).getTipo()) {
 				case Vazio:
 					botao = new JButton();
-					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
+					botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
 					botao.setVisible(false);
 					break;
 				case Poltrona:
@@ -344,7 +347,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 						botao = new JButton(iconePoltrona);
 					}
 
-					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
+					botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
 					break;
 				case PoltronaObesos:
 					if(sessao.estaReservado(i, j)) {
@@ -353,7 +356,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 					} else {						
 						botao = new JButton(iconePoltronaObesos);
 					}
-					botao.setBounds(3 + j * (tamanho + espaco), 3 + i * (tamanho + espaco), tamanho + 5, tamanho + 5);
+					botao.setBounds(deslocamentoEmX-2 + j * (tamanho + espaco), 3 + i * (tamanho + espaco), tamanho + 5, tamanho + 5);
 					break;
 				case LocalCadeirantes:
 					if(sessao.estaReservado(i, j)) {
@@ -362,7 +365,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 					} else {						
 						botao = new JButton(iconeLocalCadeirantes);
 					}
-					botao.setBounds(5 + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
+					botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
 					break;
 				}
 				

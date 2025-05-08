@@ -3,6 +3,7 @@ package cinemax.backend.salas;
 public class Sala {
 	private int idSala;
 	private Estrutura[][] estrutura;
+	private boolean[][] bloqueados;
 	private int linhas;
 	private int colunas;
 
@@ -11,6 +12,7 @@ public class Sala {
 		this.estrutura = estrutura;
 		this.linhas = linhas;
 		this.colunas = colunas;
+		this.bloqueados = new boolean[linhas][colunas];
 	}
 	
 	public int getLinhas() {
@@ -24,12 +26,23 @@ public class Sala {
 	public int getIdSala() {
 		return idSala;
 	}
+	
+	public boolean estaBloqueado(int linha, int coluna) {
+		if(!estaDentroDaSala(linha, coluna)) {
+			return false;
+		}
+		return bloqueados[linha][coluna];
+	}
+	
 	// Tenta desbloquear o local, retornando falso apenas se a linha e coluna
 	// indicada estiver fora dos limites da sala ou se já estiver bloqueada.
 	protected boolean tentarBloquearLocal(int linha, int coluna) {
 		if(!estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
+		
+		bloqueados[linha][coluna] = true;
+		
 		return estrutura[linha][coluna].tentarBloquear();
 	}
 
@@ -39,6 +52,9 @@ public class Sala {
 		if(!estaDentroDaSala(linha, coluna)) {
 			return false;
 		}
+		
+		bloqueados[linha][coluna] = false;
+		
 		return estrutura[linha][coluna].tentarDesbloquear();
 	}
 

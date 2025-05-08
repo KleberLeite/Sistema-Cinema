@@ -24,4 +24,11 @@ public class Poltrona extends Estrutura {
 		bloqueado = false;
 		return true;
 	}
+	
+	public boolean getBloqueado() {
+		return this.bloqueado;
+	}
+	
+	
+	
 }
