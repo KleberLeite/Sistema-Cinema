@@ -56,6 +56,10 @@ public interface IBancoDeDadosFilme {
 	// Obtém todos os filmes com sessão no dia.
 	Filme[] obterTodosFilmesNoDia(LocalDate data);
 	
+
+	// Obtém todos os filmes com sessão no dia com os gêneros.
+	Filme[] obterTodosFilmesNoDia(LocalDate data, GeneroFilme[] generos);
+	
 	// ------- Sessao -------
 	// Obtém todas as sessões no dia especificado, retornando null caso:
 	// 1. O filme não foi encontrado.

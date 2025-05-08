@@ -404,6 +404,39 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		return true;
 	}
 
+
+	// Obtém todos os filmes com sessão no dia com os gêneros.
+	@Override
+	public Filme[] obterTodosFilmesNoDia(LocalDate data, GeneroFilme[] generos) {
+		Set<Filme> result = new HashSet<Filme>();
+		for(Filme f : filmes.values()) {
+			for(Sessao s : f.obterTodasSessoes()) {
+				if(data.equals(s.getInicio().toLocalDate()) && filtroGenero(f, generos)) {
+					result.add(f);
+					break;
+				}				
+			}
+		}
+		
+		return result.toArray(new Filme[result.size()]);
+	}
+	
+	private boolean filtroGenero(Filme filme, GeneroFilme[] generos) {
+		for(GeneroFilme g : generos) {
+			boolean achou = false;
+			for(GeneroFilme outro : filme.getGeneros()) {
+				if(g == outro) {
+					achou = true;
+					break;
+				}
+			}
+			if(!achou) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	// Retorna se existe outra sessao no mesmo lugar e hora,
 	// ignorando a sessao de id ignoreIdSessao.
 	private boolean existeOutraSessaoNoMesmoLugarHora(int idSala, LocalDateTime inicio, int ignoreIdSessao) {
