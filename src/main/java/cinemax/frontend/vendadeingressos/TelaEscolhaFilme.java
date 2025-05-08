@@ -43,7 +43,9 @@ public class TelaEscolhaFilme extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblUseOFiltro = new JLabel();
+	private LocalDate diaSelecionado;
 	private List<JCheckBox> checkBoxesGeneros;
+	JPanel painelListaFilmes;
 	private IBancoDeDadosFilme bancoFilmes = ControladorDeApp.getInstancia().getBackend().getBancoFilmes();
 
 	// Launch the application.
@@ -76,14 +78,14 @@ public class TelaEscolhaFilme extends JFrame {
 	        checkBoxesGeneros.add(checkBox);
 
 	        checkBox.addItemListener(e -> {
-	            long selecionados = checkBoxesGeneros.stream()
-	                                    .filter(AbstractButton::isSelected)
-	                                    .count();
+	            
+	        	Filme[] filmesHoje;
+	    		GeneroFilme[] generosSelecionados = pegaOsGeneros(checkBoxesGeneros);
+	    		if(checkBoxesGeneros==null) filmesHoje = bancoFilmes.obterTodosFilmesNoDia(diaSelecionado);
+	    		else filmesHoje = bancoFilmes.obterTodosFilmesNoDia(diaSelecionado, generosSelecionados);
 
-	            if (selecionados > 3) {
-	                checkBox.setSelected(false);
-	                JOptionPane.showMessageDialog(null, "Você só pode selecionar até 3 gêneros.", "Limite atingido", JOptionPane.WARNING_MESSAGE);
-	            }
+	    		atualizarListaFilmesPorFiltroDia(filmesHoje, painelListaFilmes, diaSelecionado);
+	        	
 	        });
 	    }
 
@@ -91,21 +93,36 @@ public class TelaEscolhaFilme extends JFrame {
 	        panelGeneros.add(checkBox);
 	    }
 	}
+	
+	private GeneroFilme[] pegaOsGeneros(List<JCheckBox> checkBoxesGeneros) {
+		List<GeneroFilme> generosSelecionados = new ArrayList<>();
+
+		for (JCheckBox checkBox : checkBoxesGeneros) {
+		    if (checkBox.isSelected()) {
+		        generosSelecionados.add(GeneroFilme.valueOf(checkBox.getActionCommand()));
+		    }
+		}
+		return  generosSelecionados.toArray(new GeneroFilme[0]);
+	}
 
 	// Lista todos os filmes
 	private void atualizarListaFilmesParaOHoje(JPanel painelListaFilmes) {
 		painelListaFilmes.removeAll();
 
 		LocalDate hoje = LocalDate.now();
-		Filme[] filmesHoje = bancoFilmes.obterTodosFilmesNoDia(hoje);
+		diaSelecionado = hoje;
+		Filme[] filmesHoje;
+		GeneroFilme[] generosSelecionados = pegaOsGeneros(checkBoxesGeneros);
+		if(checkBoxesGeneros==null) filmesHoje = bancoFilmes.obterTodosFilmesNoDia(hoje);
+		else filmesHoje = bancoFilmes.obterTodosFilmesNoDia(hoje, generosSelecionados);
 
-		atualizarListaFilmesPorFiltro(filmesHoje, painelListaFilmes, hoje);
+		atualizarListaFilmesPorFiltroDia(filmesHoje, painelListaFilmes, hoje);
 
 		painelListaFilmes.revalidate();
 		painelListaFilmes.repaint();
 	}
 
-	private void atualizarListaFilmesPorFiltro(
+	private void atualizarListaFilmesPorFiltroDia(
 		Filme[] filmesNoDia,
 		JPanel painelListaFilmes,
 		LocalDate diaFiltro
@@ -235,10 +252,14 @@ public class TelaEscolhaFilme extends JFrame {
 			final LocalDate dataSelecionada = hoje;
 
 			botaoDia.addActionListener(e -> {
+				diaSelecionado = dataSelecionada;
 				lblUseOFiltro.setVisible(false);
-				Filme[] filmesNoDia = bancoFilmes.obterTodosFilmesNoDia(dataSelecionada);
+				Filme[] filmesNoDia;
+				GeneroFilme[] generosSelecionados = pegaOsGeneros(checkBoxesGeneros);
+				if(checkBoxesGeneros==null) filmesNoDia = bancoFilmes.obterTodosFilmesNoDia(dataSelecionada);
+				else filmesNoDia = bancoFilmes.obterTodosFilmesNoDia(dataSelecionada, generosSelecionados);
 
-				atualizarListaFilmesPorFiltro(filmesNoDia, painelListaFilmes, dataSelecionada);
+				atualizarListaFilmesPorFiltroDia(filmesNoDia, painelListaFilmes, dataSelecionada);
 			});
 
 			panelDias.add(painelJuntaDataEDia);
@@ -250,13 +271,31 @@ public class TelaEscolhaFilme extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
+		contentPane.setForeground(new Color(255, 255, 255));
 		contentPane.setBackground(new Color(0, 64, 128));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		JLabel lblFiltroGenero = new JLabel("Filtro por gênero:");
+		lblFiltroGenero.setForeground(new Color(255, 255, 255));
+		lblFiltroGenero.setFont(new Font("Sitka Heading", Font.BOLD, 15));
+		lblFiltroGenero.setBounds(630, 57, 144, 23);
+		contentPane.add(lblFiltroGenero);
+		
+		JScrollPane scrollPaneGeneros = new JScrollPane();
+		scrollPaneGeneros.setBounds(595, 91, 179, 222);
+		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		contentPane.add(scrollPaneGeneros);
+		
+		JPanel panelGeneros = new JPanel();
+		scrollPaneGeneros.setViewportView(panelGeneros);
+		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
+				
+		geraCheckBoxesGeneros(panelGeneros);
 
-		JPanel painelListaFilmes = new JPanel();
+		painelListaFilmes = new JPanel();
 		painelListaFilmes.setLayout(new BoxLayout(painelListaFilmes, BoxLayout.Y_AXIS)); // lista vertical
 		painelListaFilmes.setBackground(Color.WHITE);
 		painelListaFilmes.setBorder(new EmptyBorder(10, 10, 10, 10)); // margem geral
@@ -295,16 +334,7 @@ public class TelaEscolhaFilme extends JFrame {
 		scrollPaneFilmes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPaneFilmes);
 		
-		JScrollPane scrollPaneGeneros = new JScrollPane();
-		scrollPaneGeneros.setBounds(595, 91, 179, 222);
-		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		contentPane.add(scrollPaneGeneros);
 		
-		JPanel panelGeneros = new JPanel();
-		scrollPaneGeneros.setViewportView(panelGeneros);
-		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
-				
-		geraCheckBoxesGeneros(panelGeneros);
 
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -321,6 +351,8 @@ public class TelaEscolhaFilme extends JFrame {
 		lblUseOFiltro.setForeground(new Color(255, 255, 255));
 		lblUseOFiltro.setBounds(150, 432, 449, 18);
 		contentPane.add(lblUseOFiltro);
+		
+		
 		
 		
 	}

@@ -41,6 +41,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 
@@ -210,16 +211,12 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 	    for (GeneroFilme genero : GeneroFilme.values()) {
 	        JCheckBox checkBox = new JCheckBox(genero.toString());
 	        checkBox.setActionCommand(genero.name()); 
-	        checkBoxesGeneros.add(checkBox);
 
 	        checkBox.addItemListener(e -> {
-	            long selecionados = checkBoxesGeneros.stream()
-	                                    .filter(AbstractButton::isSelected)
-	                                    .count();
-
-	            if (selecionados > 3) {
-	                checkBox.setSelected(false);
-	                JOptionPane.showMessageDialog(null, "Você só pode selecionar até 3 gêneros.", "Limite atingido", JOptionPane.WARNING_MESSAGE);
+	        	if (e.getStateChange() == ItemEvent.SELECTED) {
+	        		checkBoxesGeneros.add(checkBox);
+	            } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+	            	checkBoxesGeneros.remove(checkBox);
 	            }
 	        });
 	    }
