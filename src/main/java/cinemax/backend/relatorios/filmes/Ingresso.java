@@ -62,4 +62,12 @@ public class Ingresso {
 	public Poltrona getPoltrona() {
 		return poltrona;
 	}
+	
+	public String getCodigoIngresso() {
+		return "S" + sessao.getId() + poltrona.getIdentificador() + getIdentificadorTipoIngresso();
+	}
+	
+	private String getIdentificadorTipoIngresso() {
+		return tipo == TipoDeIngresso.Meia ? "M" : "I"; 
+	}
 }
