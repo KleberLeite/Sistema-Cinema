@@ -2,6 +2,8 @@ package cinemax.frontend.vendadeingressos;
 
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.JFrame;
@@ -14,11 +16,15 @@ import java.awt.Dimension;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
 import cinemax.backend.filmes.Filme;
+import cinemax.backend.filmes.GeneroFilme;
 import cinemax.backend.filmes.IBancoDeDadosFilme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
@@ -37,6 +43,7 @@ public class TelaEscolhaFilme extends JFrame {
 
 	private JPanel contentPane;
 	private JLabel lblUseOFiltro = new JLabel();
+	private List<JCheckBox> checkBoxesGeneros;
 	private IBancoDeDadosFilme bancoFilmes = ControladorDeApp.getInstancia().getBackend().getBancoFilmes();
 
 	// Launch the application.
@@ -58,6 +65,31 @@ public class TelaEscolhaFilme extends JFrame {
 	// Create the frame.
 	public TelaEscolhaFilme() {				
 		gerarTela();
+	}
+	
+	private void geraCheckBoxesGeneros(JPanel panelGeneros) {
+	    checkBoxesGeneros = new ArrayList<>();
+
+	    for (GeneroFilme genero : GeneroFilme.values()) {
+	        JCheckBox checkBox = new JCheckBox(genero.toString());
+	        checkBox.setActionCommand(genero.name()); 
+	        checkBoxesGeneros.add(checkBox);
+
+	        checkBox.addItemListener(e -> {
+	            long selecionados = checkBoxesGeneros.stream()
+	                                    .filter(AbstractButton::isSelected)
+	                                    .count();
+
+	            if (selecionados > 3) {
+	                checkBox.setSelected(false);
+	                JOptionPane.showMessageDialog(null, "Você só pode selecionar até 3 gêneros.", "Limite atingido", JOptionPane.WARNING_MESSAGE);
+	            }
+	        });
+	    }
+
+	    for (JCheckBox checkBox : checkBoxesGeneros) {
+	        panelGeneros.add(checkBox);
+	    }
 	}
 
 	// Lista todos os filmes
@@ -136,12 +168,13 @@ public class TelaEscolhaFilme extends JFrame {
 	private JPanel gerarCardFilme() {
 		JPanel card = new JPanel();
 		card.setLayout(null);
-		card.setPreferredSize(new Dimension(1355, 100));
-		card.setMaximumSize(new Dimension(1355, 100));
+		card.setPreferredSize(new Dimension(1355, 120)); // Altura aumentada
+		card.setMaximumSize(new Dimension(1355, 120));
 		card.setBackground(new Color(230, 230, 250));
 		card.setBorder(new EmptyBorder(100, 10, 10, 10));
 		return card;
 	}
+
 	
 	private JPanel gerarPanelNomeEClassificacao(Filme filme) {
 		JPanel panelNomeEClassificacao = new JPanel();
@@ -164,7 +197,7 @@ public class TelaEscolhaFilme extends JFrame {
 	private JPanel gerarPainelSessoes() {
 		JPanel painelSessoes = new JPanel();
 		painelSessoes.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
-		painelSessoes.setBounds(100, 60, 400, 25);
+		painelSessoes.setBounds(100, 60, 400, 50);
 		painelSessoes.setOpaque(false);
 		return painelSessoes;
 	}
@@ -232,22 +265,23 @@ public class TelaEscolhaFilme extends JFrame {
 		atualizarListaFilmesParaOHoje(painelListaFilmes);
 
 		JPanel panelDatas = new JPanel();
-		panelDatas.setBounds(27, 11, 709, 69);
+		panelDatas.setBounds(27, 11, 558, 69);
 		contentPane.add(panelDatas);
 		panelDatas.setLayout(null);
 
-		// Criando o painel geral do filtro dos dias da semana
-		JPanel panelDias = new JPanel();
-		panelDias.setLayout(new FlowLayout(FlowLayout.LEFT)); // Usando FlowLayout para disposição horizontal
-
-		// Criando os botões para cada dia da semana
-		geraPanelFiltroDeData(panelDias, painelListaFilmes);
-
 		// Criando um JScrollPane para rolar horizontalmente o painel de dias da semana
-		JScrollPane scrollPane_1 = new JScrollPane(panelDias, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+		JScrollPane scrollPaneDatas = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.setBounds(322, 0, 358, 70);
-		panelDatas.add(scrollPane_1);
+		scrollPaneDatas.setBounds(200, 0, 358, 70);
+		panelDatas.add(scrollPaneDatas);
+		
+				// Criando o painel geral do filtro dos dias da semana
+				JPanel panelDias = new JPanel();
+				scrollPaneDatas.setViewportView(panelDias);
+				panelDias.setLayout(new FlowLayout(FlowLayout.LEFT)); // Usando FlowLayout para disposição horizontal
+				
+						// Criando os botões para cada dia da semana
+						geraPanelFiltroDeData(panelDias, painelListaFilmes);
 
 		JLabel lblSelecionarDia = new JLabel("Selecione o dia: ");
 		lblSelecionarDia.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -256,10 +290,21 @@ public class TelaEscolhaFilme extends JFrame {
 
 		// Agora colocar isso num JScrollPane
 		JScrollPane scrollPaneFilmes = new JScrollPane(painelListaFilmes);
-		scrollPaneFilmes.setBounds(27, 91, 720, 330);
+		scrollPaneFilmes.setBounds(27, 91, 558, 330);
 		scrollPaneFilmes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneFilmes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPaneFilmes);
+		
+		JScrollPane scrollPaneGeneros = new JScrollPane();
+		scrollPaneGeneros.setBounds(595, 91, 179, 222);
+		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		contentPane.add(scrollPaneGeneros);
+		
+		JPanel panelGeneros = new JPanel();
+		scrollPaneGeneros.setViewportView(panelGeneros);
+		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
+				
+		geraCheckBoxesGeneros(panelGeneros);
 
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -274,7 +319,9 @@ public class TelaEscolhaFilme extends JFrame {
 		lblUseOFiltro.setText("AVISO: Atualize a lista de filme através dos filtros");
 		lblUseOFiltro.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblUseOFiltro.setForeground(new Color(255, 255, 255));
-		lblUseOFiltro.setBounds(236, 432, 449, 18);
+		lblUseOFiltro.setBounds(150, 432, 449, 18);
 		contentPane.add(lblUseOFiltro);
+		
+		
 	}
 }
