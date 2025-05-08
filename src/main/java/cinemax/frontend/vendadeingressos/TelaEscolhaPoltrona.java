@@ -283,7 +283,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 						carrinho.adicionaIngresso(new Ingresso(sessao, p));
 					}
 					
-					TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
+					TelaEscolhaMeiaOuInteira telaFinalizarCompra = new TelaEscolhaMeiaOuInteira(sessao, carrinho);
 					telaFinalizarCompra.setVisible(true);
 					telaFinalizarCompra.setLocationRelativeTo(null);
 	

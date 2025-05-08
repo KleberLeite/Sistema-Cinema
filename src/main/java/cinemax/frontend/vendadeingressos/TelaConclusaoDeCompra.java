@@ -69,7 +69,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
+				TelaEscolhaMeiaOuInteira telaFinalizarCompra = new TelaEscolhaMeiaOuInteira(sessao, carrinho);
 				telaFinalizarCompra.setVisible(true);
 				telaFinalizarCompra.setLocationRelativeTo(null);
 				
@@ -115,7 +115,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 						}*/
 						JOptionPane.showMessageDialog(null, "Erro ao reservar poltronas! Por favor, refaça", "Erro",
 								JOptionPane.ERROR_MESSAGE);
-						TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
+						TelaEscolhaMeiaOuInteira telaFinalizarCompra = new TelaEscolhaMeiaOuInteira(sessao, carrinho);
 						telaFinalizarCompra.setVisible(true);
 						telaFinalizarCompra.setLocationRelativeTo(null);
 						

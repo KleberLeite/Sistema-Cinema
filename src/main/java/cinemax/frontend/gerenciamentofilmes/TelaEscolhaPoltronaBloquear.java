@@ -30,7 +30,7 @@ import cinemax.backend.salas.Sala;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.vendadeingressos.CarrinhoIngressos;
 import cinemax.frontend.vendadeingressos.TelaEscolhaFilme;
-import cinemax.frontend.vendadeingressos.TelaFinalizarCompra;
+import cinemax.frontend.vendadeingressos.TelaEscolhaMeiaOuInteira;
 
 public class TelaEscolhaPoltronaBloquear extends JFrame {
 

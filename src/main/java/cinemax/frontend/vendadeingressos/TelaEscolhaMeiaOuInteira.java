@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
 
-public class TelaFinalizarCompra extends JFrame {
+public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -219,7 +219,7 @@ public class TelaFinalizarCompra extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TelaFinalizarCompra(Sessao sessao, CarrinhoIngressos carrinho) {
+	public TelaEscolhaMeiaOuInteira(Sessao sessao, CarrinhoIngressos carrinho) {
 		this.totalCount = carrinho.qtdeTotalIngressos();
 		//System.out.println("Total de Ingressos: " + getRestanteCount());
 
