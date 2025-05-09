@@ -45,13 +45,11 @@ public class TelaConclusaoDeCompra extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaConclusaoDeCompra(Sessao sessao, CarrinhoIngressos carrinho) {		
-				
-		if(app.getBackend().diaEstaAberto())System.out.println("Estou abrido");
-		
+						
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
+		contentPane.setBackground(new Color(2, 18, 27));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -59,12 +57,14 @@ public class TelaConclusaoDeCompra extends JFrame {
 		
 		JScrollPane scrollPanePrincipal = new JScrollPane();
 		scrollPanePrincipal.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPanePrincipal.setBounds(10, 11, 764, 388);
+		scrollPanePrincipal.setBounds(87, 11, 602, 388);
 		contentPane.add(scrollPanePrincipal);
 		
 		JPanel panelPrincipal = new JPanel();
-		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
 		scrollPanePrincipal.setViewportView(panelPrincipal);
+		panelPrincipal.setBackground(new Color(255, 255, 255));
+		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
 		
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -104,15 +104,6 @@ public class TelaConclusaoDeCompra extends JFrame {
 					if(sucesso) {
 						ingressosFinalizados.add(ingresso);
 					}else {
-						/*if(!ingressosFinalizados.isEmpty()) {
-							for(Ingresso ingressoAntigo: ingressosFinalizados) {
-								app.getBackend().getBancoFilmes().tentarDesreservar(
-										ingressoAntigo.getSessao().getFilme().getId(),
-										ingressoAntigo.getSessao().getId(),
-										ingressoAntigo.getPoltrona().getLinha(),
-										ingressoAntigo.getPoltrona().getColuna());
-							}
-						}*/
 						JOptionPane.showMessageDialog(null, "Erro ao reservar poltronas! Por favor, refaça", "Erro",
 								JOptionPane.ERROR_MESSAGE);
 						TelaEscolhaMeiaOuInteira telaFinalizarCompra = new TelaEscolhaMeiaOuInteira(sessao, carrinho);
@@ -143,9 +134,9 @@ public class TelaConclusaoDeCompra extends JFrame {
 		for (Ingresso ingresso : carrinho.getIngressos()) {
 			JPanel card = new JPanel();
 			card.setLayout(null); 
-			card.setPreferredSize(new Dimension(1355, 165));
-			card.setMaximumSize(new Dimension(1355, 165));
-			card.setBackground(new Color(230, 230, 250));
+			card.setPreferredSize(new Dimension(1150, 165));
+			card.setMaximumSize(new Dimension(1150, 165));
+			card.setBackground(new Color(192, 192, 192));
 			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
 			card.setBorder(new EmptyBorder(10, 10, 10, 10)); // espaçamento interno
 			

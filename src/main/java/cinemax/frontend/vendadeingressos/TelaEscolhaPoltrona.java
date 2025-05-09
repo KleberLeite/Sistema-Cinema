@@ -2,8 +2,10 @@ package cinemax.frontend.vendadeingressos;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
@@ -20,6 +22,7 @@ import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.salas.Poltrona;
 import cinemax.backend.salas.Sala;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.gerenciamentofilmes.TelaDetalhesFilme;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -29,6 +32,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -40,6 +45,9 @@ public class TelaEscolhaPoltrona extends JFrame {
 	ControladorDeApp app = ControladorDeApp.getInstancia();
 	private List<Poltrona> poltronas = new ArrayList<>();
 	private int poltronasRestantes;// Contabiliza a quantidade de poltronas que ainda podem ser escolhidas
+	private TelaDetalhesFilme telaDetalhesFilme;
+	private JLabel lblTotalItens;
+	private int totalItens;
 
 	/**
 	 * Launch the application.
@@ -81,7 +89,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(-14, -42, 800, 700);
 		panelPrincipal = new JPanel();
-		panelPrincipal.setBackground(new Color(0, 64, 128));
+		panelPrincipal.setBackground(new Color(2, 18, 27));
 		panelPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(panelPrincipal);
@@ -303,6 +311,8 @@ public class TelaEscolhaPoltrona extends JFrame {
 				telaEscolhaFilme.setVisible(true);
 
 				dispose();
+				
+				telaDetalhesFilme.dispose();
 
 			}
 		});
@@ -401,6 +411,8 @@ public class TelaEscolhaPoltrona extends JFrame {
 						modeloLista.removeElement(poltronaSelecionada);
 						poltronas.remove(poltrona);
 						poltronasRestantes++;
+						totalItens--;
+						lblTotalItens.setText(Integer.toString(totalItens));
 					}
 					// Se ainda pode selecionar, marcar
 					else if (poltronasRestantes > 0) {
@@ -414,6 +426,8 @@ public class TelaEscolhaPoltrona extends JFrame {
 						modeloLista.addElement(poltronaSelecionada);
 						poltronas.add(poltrona);
 						poltronasRestantes--;
+						totalItens++;
+						lblTotalItens.setText(Integer.toString(totalItens));
 					} else {
 						JOptionPane.showMessageDialog(null, "Limite de  8 poltronas atingido!", "Aviso",
 								JOptionPane.WARNING_MESSAGE);
@@ -425,9 +439,9 @@ public class TelaEscolhaPoltrona extends JFrame {
 		}
 
 		JScrollPane scrollPanePoltronas = new JScrollPane();
-		scrollPanePoltronas.setBounds(38, 191, 250, 100);
+		scrollPanePoltronas.setBounds(0, 205, 329, 53);
 		panelResumo.add(scrollPanePoltronas);
-
+		
 		// Estilizando a lista:
 		DefaultListCellRenderer defaultListCellRenderer = new DefaultListCellRenderer() {
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected,
@@ -441,17 +455,108 @@ public class TelaEscolhaPoltrona extends JFrame {
 				return label;
 			}
 		};
+		
+				JList<String> listPoltronasSelecionadas = new JList<String>(modeloLista);
+				scrollPanePoltronas.setViewportView(listPoltronasSelecionadas);
+				listPoltronasSelecionadas.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+				listPoltronasSelecionadas.setVisibleRowCount(-1); // -1 significa que ele vai quebrar sozinho
+				listPoltronasSelecionadas.setFixedCellWidth(50); // Largura de cada "item" (ajuste como quiser)
+				listPoltronasSelecionadas.setCellRenderer(defaultListCellRenderer);
+		
 
-		JList<String> listPoltronasSelecionadas = new JList<String>(modeloLista);
-		scrollPanePoltronas.setViewportView(listPoltronasSelecionadas);
-		listPoltronasSelecionadas.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		listPoltronasSelecionadas.setVisibleRowCount(-1); // -1 significa que ele vai quebrar sozinho
-		listPoltronasSelecionadas.setFixedCellWidth(50); // Largura de cada "item" (ajuste como quiser)
-		listPoltronasSelecionadas.setCellRenderer(defaultListCellRenderer);
+		
+		
+
+		
 
 		JLabel lblLinha_1 = new JLabel("______________________________________________");
-		lblLinha_1.setBounds(4, 343, 329, 14);
+		lblLinha_1.setBounds(0, 372, 329, 14);
 		panelResumo.add(lblLinha_1);
+		
+		JPanel panelResumoFIlme = new JPanel();
+		panelResumoFIlme.setBackground(new Color(255, 255, 255));
+		panelResumoFIlme.setBounds(0, 32, 329, 145);
+		panelResumo.add(panelResumoFIlme);
+		panelResumoFIlme.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(10, 11, 114, 123);
+		panelResumoFIlme.add(panel);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel_2 = new JLabel("Suposta Imagem");
+		lblNewLabel_2.setBounds(10, 53, 80, 14);
+		panel.add(lblNewLabel_2);
+		
+		JPanel panelNomeEClassificacao = new JPanel();
+		panelNomeEClassificacao.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelNomeEClassificacao.setBackground(new Color(255, 255, 255));
+		panelNomeEClassificacao.setBounds(134, 11, 185, 56);
+		panelNomeEClassificacao.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panelResumoFIlme.add(panelNomeEClassificacao);
+		
+		JLabel lblNome = new JLabel(sessao.getFilme().getNome());
+		lblNome.setBounds(20, 10, 490, 25);
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panelNomeEClassificacao.add(lblNome);
+		
+		JLabel lblClassificacao = new JLabel("     " + sessao.getFilme().getClassificacaoIndicativa().name());
+		lblClassificacao.setBounds(20, 10, 400, 25);
+		lblClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panelNomeEClassificacao.add(lblClassificacao);
+		
+		JLabel lblNewLabel_3 = new JLabel("Cinemax");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_3.setBounds(134, 74, 185, 24);
+		panelResumoFIlme.add(lblNewLabel_3);
+		
+		JLabel lblVerDetalhes = new JLabel("Ver detalhes...");
+		lblVerDetalhes.setForeground(new Color(0, 12, 159));
+		lblVerDetalhes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblVerDetalhes.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		    	
+		        telaDetalhesFilme = new TelaDetalhesFilme(sessao.getFilme());
+		        telaDetalhesFilme.setVisible(true);
+		        telaDetalhesFilme.setLocationRelativeTo(null);
+		        
+		    }
+		});
+
+		lblVerDetalhes.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblVerDetalhes.setBounds(134, 108, 78, 26);
+		panelResumoFIlme.add(lblVerDetalhes);
+		
+		JLabel lblNewLabel_1 = new JLabel("Resumo do Pedido:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_1.setBounds(4, 0, 233, 31);
+		panelResumo.add(lblNewLabel_1);
+				
+				JLabel lblNewLabel_4 = new JLabel("Poltronas");
+				lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
+				lblNewLabel_4.setBounds(4, 180, 124, 24);
+				panelResumo.add(lblNewLabel_4);
+				
+				JLabel lblItens = new JLabel("Itens");
+				lblItens.setFont(new Font("Tahoma", Font.BOLD, 13));
+				lblItens.setBounds(10, 397, 83, 14);
+				panelResumo.add(lblItens);
+				
+				JLabel lblTotal = new JLabel("Total:");
+				lblTotal.setFont(new Font("Tahoma", Font.BOLD, 13));
+				lblTotal.setBounds(10, 424, 83, 14);
+				panelResumo.add(lblTotal);
+				
+				lblTotalItens = new JLabel("0");
+				lblTotalItens.setFont(new Font("Tahoma", Font.BOLD, 13));
+				lblTotalItens.setBounds(280, 397, 91, 14);
+				panelResumo.add(lblTotalItens);
+				
+				JLabel lblPrecoTotal = new JLabel("R$ 0.00");
+				lblPrecoTotal.setFont(new Font("Tahoma", Font.BOLD, 13));
+				lblPrecoTotal.setBounds(262, 425, 91, 14);
+				panelResumo.add(lblPrecoTotal);
 
 		/*
 		 * Checa se tá achando a imagem mesmo java.net.URL url =

@@ -144,7 +144,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 			card.setLayout(null);
 			card.setPreferredSize(new Dimension(400, 30));
 			card.setMaximumSize(new Dimension(400, 30));
-			card.setBackground(new Color(230, 210, 250));
+			card.setBackground(new Color(192, 192, 192));
 			card.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm");

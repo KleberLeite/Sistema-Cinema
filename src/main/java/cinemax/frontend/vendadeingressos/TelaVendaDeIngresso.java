@@ -75,6 +75,7 @@ public class TelaVendaDeIngresso extends JFrame {
 	    for (GeneroFilme genero : GeneroFilme.values()) {
 	        JCheckBox checkBox = new JCheckBox(genero.toString());
 	        checkBox.setActionCommand(genero.name()); 
+	        checkBox.setBackground(new Color(255, 255, 255));
 	        checkBoxesGeneros.add(checkBox);
 
 	        checkBox.addItemListener(e -> {
@@ -133,6 +134,7 @@ public class TelaVendaDeIngresso extends JFrame {
 			JPanel card = gerarCardFilme();
 			
 			JPanel panelNomeEClassificacao = gerarPanelNomeEClassificacao(filme);
+			panelNomeEClassificacao.setBackground(new Color(192, 192, 192));
 			card.add(panelNomeEClassificacao);
 
 			JLabel lblDuracao = new JLabel("Duração: " + filme.getDuracaoEmMinutos() + " min");
@@ -165,6 +167,7 @@ public class TelaVendaDeIngresso extends JFrame {
 				// Cria um painel vertical para colocar o label em cima do botão
 				JPanel painelJuntaSessaoESala = new JPanel();
 				painelJuntaSessaoESala.setLayout(new BoxLayout(painelJuntaSessaoESala, BoxLayout.Y_AXIS));
+				painelJuntaSessaoESala.setBackground(new Color(255, 255, 255)); //talvez seja interessante
 				painelJuntaSessaoESala.add(sala);
 				painelJuntaSessaoESala.add(btnSessao);
 
@@ -187,7 +190,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		card.setLayout(null);
 		card.setPreferredSize(new Dimension(1355, 120)); // Altura aumentada
 		card.setMaximumSize(new Dimension(1355, 120));
-		card.setBackground(new Color(230, 230, 250));
+		card.setBackground(new Color(192, 192, 192));
 		card.setBorder(new EmptyBorder(100, 10, 10, 10));
 		return card;
 	}
@@ -202,10 +205,12 @@ public class TelaVendaDeIngresso extends JFrame {
 		
 		JLabel lblNome = new JLabel(filme.getNome());
 		lblNome.setBounds(20, 10, 490, 25);
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panelNomeEClassificacao.add(lblNome);
 		
 		JLabel lblClassificacao = new JLabel("     " + filme.getClassificacaoIndicativa().toString());
 		lblClassificacao.setBounds(20, 10, 400, 25);
+		lblClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panelNomeEClassificacao.add(lblClassificacao);
 		
 		return panelNomeEClassificacao;
@@ -242,6 +247,7 @@ public class TelaVendaDeIngresso extends JFrame {
 			// Cria um painel vertical para colocar o label em cima do botão
 			JPanel painelJuntaDataEDia = new JPanel();
 			painelJuntaDataEDia.setLayout(new BoxLayout(painelJuntaDataEDia, BoxLayout.Y_AXIS));
+			painelJuntaDataEDia.setBackground(new Color(255, 255, 255));
 			painelJuntaDataEDia.add(diaDaSemana);
 			painelJuntaDataEDia.add(botaoDia);
 
@@ -272,7 +278,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(255, 255, 255));
-		contentPane.setBackground(new Color(0, 64, 128));
+		contentPane.setBackground(new Color(2, 18, 27));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -290,6 +296,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		contentPane.add(scrollPaneGeneros);
 		
 		JPanel panelGeneros = new JPanel();
+		panelGeneros.setBackground(new Color(255, 255, 255));
 		scrollPaneGeneros.setViewportView(panelGeneros);
 		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
 				
@@ -297,13 +304,14 @@ public class TelaVendaDeIngresso extends JFrame {
 
 		painelListaFilmes = new JPanel();
 		painelListaFilmes.setLayout(new BoxLayout(painelListaFilmes, BoxLayout.Y_AXIS)); // lista vertical
-		painelListaFilmes.setBackground(Color.WHITE);
+		painelListaFilmes.setBackground(new Color(255, 255, 255));
 		painelListaFilmes.setBorder(new EmptyBorder(10, 10, 10, 10)); // margem geral
 
 		// Criar os cards dos filmes
 		atualizarListaFilmesParaOHoje(painelListaFilmes);
 
 		JPanel panelDatas = new JPanel();
+		panelDatas.setBackground(new Color(255, 255, 255));
 		panelDatas.setBounds(27, 11, 558, 69);
 		contentPane.add(panelDatas);
 		panelDatas.setLayout(null);
@@ -316,6 +324,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		
 				// Criando o painel geral do filtro dos dias da semana
 				JPanel panelDias = new JPanel();
+				panelDias.setBackground(new Color(255, 255, 255));
 				scrollPaneDatas.setViewportView(panelDias);
 				panelDias.setLayout(new FlowLayout(FlowLayout.LEFT)); // Usando FlowLayout para disposição horizontal
 				
@@ -323,6 +332,7 @@ public class TelaVendaDeIngresso extends JFrame {
 						geraPanelFiltroDeData(panelDias, painelListaFilmes);
 
 		JLabel lblSelecionarDia = new JLabel("Selecione o dia: ");
+		lblSelecionarDia.setBackground(new Color(255, 255, 255));
 		lblSelecionarDia.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblSelecionarDia.setBounds(24, 19, 126, 30);
 		panelDatas.add(lblSelecionarDia);
@@ -337,6 +347,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		
 
 		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PaginaPrincipal.abrirPaginaPrincipal();
