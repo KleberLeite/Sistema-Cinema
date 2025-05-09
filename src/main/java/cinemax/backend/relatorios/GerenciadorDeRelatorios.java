@@ -9,7 +9,11 @@ import cinemax.backend.relatorios.filmes.RelatorioFilmes;
 public class GerenciadorDeRelatorios {
 	private CircularBuffer<Relatorio> relatorios = new CircularBuffer<Relatorio>(7);
 	
-	protected GerenciadorDeRelatorios() { }
+	public GerenciadorDeRelatorios() { }
+	
+	public GerenciadorDeRelatorios(CircularBuffer<Relatorio> relatorios) {
+		this.relatorios = relatorios;
+	}
 	
 	public Relatorio obterRelatorioDoDia() {
 		return relatorios.obterAtual();
@@ -20,21 +24,25 @@ public class GerenciadorDeRelatorios {
 		return relatorios.getAll();
 	}
 	
-	protected void gerarNovoRelatorio() {
+	public void gerarNovoRelatorio() {
 		Event<Boolean> aoAlterarPermissaoAlteracoes = new Event<>();
 		RelatorioAlimentos relatorioAlimentos = new RelatorioAlimentos(true, aoAlterarPermissaoAlteracoes);
 		RelatorioFilmes relatorioFilmes = new RelatorioFilmes(true, aoAlterarPermissaoAlteracoes);
-		Relatorio relatorio = new Relatorio(aoAlterarPermissaoAlteracoes, relatorioAlimentos, relatorioFilmes);
+		Relatorio relatorio = new Relatorio(true, aoAlterarPermissaoAlteracoes, relatorioAlimentos, relatorioFilmes);
 		
 		relatorios.push(relatorio);
 		System.out.println("[Log:GerenciadorDeRelatorios]: Um novo relatório foi gerado!");
 	}
 	
-	protected void finalizarRelatorioAtual() {
+	public void finalizarRelatorioAtual() {
 		Relatorio relatorio = relatorios.obterAtual();
 		if(relatorio != null) {
 			relatorio.finalizar();
 			System.out.println("[Log:GerenciadorDeRelatorios]: O relatório atual foi finalizado!");
 		}
+	}
+	
+	public int size() {
+		return relatorios.size();
 	}
 }

@@ -119,6 +119,9 @@ public class Gerente extends javax.swing.JFrame {
         		dispose();
         	}
         });
+        if(app.getBackend().getGerenciadorRelatorios().size() > 0 && !app.getBackend().diaEstaAberto()) {
+        	botaoConsultarRelatorio.setEnabled(true);
+        }
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -205,8 +208,8 @@ public class Gerente extends javax.swing.JFrame {
 		else
 			botaoTerminoDia.setEnabled(true);
 
-		botaoConsultarRelatorio.setText("Consulatar relatório");
-		botaoConsultarRelatorio.setEnabled(false);
+		botaoConsultarRelatorio.setText("Consultar relatório");
+		//botaoConsultarRelatorio.setEnabled(false);
 
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(Alignment.TRAILING).addGroup(jPanel3Layout

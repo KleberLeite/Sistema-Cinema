@@ -11,6 +11,15 @@ import cinemax.backend.relatorios.BaseRelatorio;
 public class RelatorioAlimentos extends BaseRelatorio {
 	private Map<Alimento, Integer> vendas = new HashMap<>();
 
+	protected RelatorioAlimentos(
+		boolean permitirAlteracoes,
+		Event<Boolean> aoAlterarPermissaoAlteracoes,
+		Map<Alimento, Integer> vendas
+	) {
+		super(permitirAlteracoes, aoAlterarPermissaoAlteracoes);
+		this.vendas = vendas;
+	}
+	
 	public RelatorioAlimentos(boolean permitirAlteracoes, Event<Boolean> aoAlterarPermissaoAlteracoes) {
 		super(permitirAlteracoes, aoAlterarPermissaoAlteracoes);
 	}

@@ -21,10 +21,6 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 		this.backend = backend;
 	}
 
-    public BancoDeDadosAlimento() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 	// Retorna o alimento por seu código ou null caso não ache.
 	@Override
 	public Alimento obterAlimentoPorCodigo(int codigo) {
@@ -84,11 +80,11 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 			return false;
 		}
 		
-		adicionarAlimento(nome, preco, codigo);
+		internoAdicionarAlimento(nome, preco, codigo);
 		return true;
 	}
 	
-	private void adicionarAlimento(String nome, double preco, int codigo) {
+	protected void internoAdicionarAlimento(String nome, double preco, int codigo) {
 		Alimento novoAlimento = new Alimento(nome, preco, codigo);
 		alimentos.put(codigo, novoAlimento);
 	}

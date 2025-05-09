@@ -13,6 +13,15 @@ import cinemax.backend.relatorios.BaseRelatorio;
 public class RelatorioFilmes extends BaseRelatorio {
 	private List<Ingresso> vendas = new ArrayList<>();
 	
+	protected RelatorioFilmes(
+		boolean permitirAlteracoes,
+		Event<Boolean> aoAlterarPermissaoAlteracoes,
+		List<Ingresso> vendas
+	) {
+		super(permitirAlteracoes, aoAlterarPermissaoAlteracoes);
+		this.vendas = vendas;
+	}
+	
 	public RelatorioFilmes(boolean permitirAlteracoes, Event<Boolean> aoAlterarPermissaoAlteracoes) {
 		super(permitirAlteracoes, aoAlterarPermissaoAlteracoes);
 	}

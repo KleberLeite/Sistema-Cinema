@@ -2,7 +2,7 @@ package cinemax.backend.relatorios;
 
 import cinemax.backend.events.Event;
 
-public class BaseRelatorio {
+public abstract class BaseRelatorio {
 	private boolean permitirAlteracoes;
 	
 	public BaseRelatorio(boolean permitirAlteracoes, Event<Boolean> aoAlterarPermissaoAlteracoes) {
