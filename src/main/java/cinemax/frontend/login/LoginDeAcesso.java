@@ -12,6 +12,10 @@ import cinemax.frontend.controller.ControladorDeApp;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -49,17 +53,31 @@ public class LoginDeAcesso extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 32, 64));
+        
+        JButton btnFecharSistema = new JButton("Fechar Sistema");
+        btnFecharSistema.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		dispose();
+        	}
+        });
+        btnFecharSistema.setFont(new Font("Tahoma", Font.BOLD, 13));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(21)
+        			.addComponent(btnFecharSistema, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(254, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(584)
+        			.addComponent(btnFecharSistema)
+        			.addContainerGap(21, Short.MAX_VALUE))
         );
+        jPanel1.setLayout(jPanel1Layout);
 
         TXTLoginAcessso.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         TXTLoginAcessso.setText("Login");
@@ -159,6 +177,7 @@ public class LoginDeAcesso extends javax.swing.JFrame {
 	        // Abre a tela dos funcionários
 	        Funcionarios telaFuncionario = new Funcionarios();
 	        telaFuncionario.setVisible(true);
+	        telaFuncionario.setLocationRelativeTo(null);
 	    } else {
 	        // Abre a tela do gerente/admin
 	        Gerente telaGerente = new Gerente();
@@ -197,7 +216,9 @@ public class LoginDeAcesso extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginDeAcesso().setVisible(true);
+            	LoginDeAcesso loginDeAcesso =new LoginDeAcesso();
+            	loginDeAcesso.setVisible(true);
+            	loginDeAcesso.setLocationRelativeTo(null);
             }
         });
     }
@@ -212,5 +233,4 @@ public class LoginDeAcesso extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    // End of variables declaration//GEN-END:variables
 }

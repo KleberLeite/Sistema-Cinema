@@ -357,10 +357,5 @@ public class TelaRelatorioFinal extends JFrame {
         btnVoltar.setBounds(10, 527, 89, 23);
         contentPane.add(btnVoltar);
 
-        // Botão Fechar Sistema
-        JButton btnFecharSistema = new JButton("Fechar Sistema");
-        btnFecharSistema.setFont(new Font("Tahoma", Font.BOLD, 13));
-        btnFecharSistema.setBounds(720, 528, 154, 23);
-        contentPane.add(btnFecharSistema);
     }
 }

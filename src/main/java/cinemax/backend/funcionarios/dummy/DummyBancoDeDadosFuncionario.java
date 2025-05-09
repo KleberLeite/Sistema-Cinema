@@ -12,6 +12,6 @@ public class DummyBancoDeDadosFuncionario extends BancoDeDadosFuncionario {
 		this.internoAdicionarFuncionario("Maria Paula", "44445678912", CargoFuncionario.Atendente, "88988224454", "1$#23213");
 		this.internoAdicionarFuncionario("Mario Henrique", "55555678912", CargoFuncionario.Atendente, "88988224453", "H@#sda4");
 		this.internoAdicionarFuncionario("Joelma Alencar", "66666678912", CargoFuncionario.Atendente, "88988224452", "@12#24");
-		this.internoAdicionarFuncionario("Santos Dummond", "77777778912", CargoFuncionario.Atendente, "88988224451", "@111");
+		this.internoAdicionarFuncionario("Santos Dummond", "21987654321", CargoFuncionario.Atendente, "88988224451", "@111");
 	}
 }
