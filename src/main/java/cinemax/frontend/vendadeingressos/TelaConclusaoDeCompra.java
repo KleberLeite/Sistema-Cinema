@@ -69,7 +69,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
+				TelaEscolhaMeiaOuInteira telaFinalizarCompra = new TelaEscolhaMeiaOuInteira(sessao, carrinho);
 				telaFinalizarCompra.setVisible(true);
 				telaFinalizarCompra.setLocationRelativeTo(null);
 				
@@ -115,7 +115,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 						}*/
 						JOptionPane.showMessageDialog(null, "Erro ao reservar poltronas! Por favor, refaça", "Erro",
 								JOptionPane.ERROR_MESSAGE);
-						TelaFinalizarCompra telaFinalizarCompra = new TelaFinalizarCompra(sessao, carrinho);
+						TelaEscolhaMeiaOuInteira telaFinalizarCompra = new TelaEscolhaMeiaOuInteira(sessao, carrinho);
 						telaFinalizarCompra.setVisible(true);
 						telaFinalizarCompra.setLocationRelativeTo(null);
 						
@@ -143,55 +143,47 @@ public class TelaConclusaoDeCompra extends JFrame {
 		for (Ingresso ingresso : carrinho.getIngressos()) {
 			JPanel card = new JPanel();
 			card.setLayout(null); 
-			card.setPreferredSize(new Dimension(1355, 140));
-			card.setMaximumSize(new Dimension(1355, 140));
+			card.setPreferredSize(new Dimension(1355, 165));
+			card.setMaximumSize(new Dimension(1355, 165));
 			card.setBackground(new Color(230, 230, 250));
-			
-			if(ingresso.getRG()!=null) {
-				card.setPreferredSize(new Dimension(1355, 190));
-				card.setMaximumSize(new Dimension(1355, 190));
-				
-				JLabel lblRG = new JLabel("RG: "+ingresso.getRG());
-				lblRG.setBounds(20, 135, 100, 20); // mais largura pro nome
-				card.add(lblRG);
-				JLabel lblAviso = new JLabel("AVISO: Entrada permitida apenas com o porte do RG");
-				lblAviso.setForeground(Color.RED);
-				lblAviso.setBounds(20, 160, 300, 20); // mais largura pro nome
-				card.add(lblAviso);
-			}
-
 			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
 			card.setBorder(new EmptyBorder(10, 10, 10, 10)); // espaçamento interno
+			
+
+			JLabel lblCodigoIngresso = new JLabel("Código do Ingresso: "+ ingresso.getCodigoIngresso());
+			lblCodigoIngresso.setBounds(20, 10, 200, 20);
+			card.add(lblCodigoIngresso);
+			
 
 			JLabel lblIdSala = new JLabel("Sala: "+Integer.toString(ingresso.getSessao().getSala().getIdSala()));
-			lblIdSala.setBounds(20, 10, 100, 20); // mais largura pro nome
+			lblIdSala.setBounds(20, 35, 100, 20); // mais largura pro nome
 			card.add(lblIdSala);
 			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM//yyyy HH:mm");
 
 			JLabel lblIdSessao = new JLabel("Sessão: "+ ingresso.getSessao().getInicio().format(formatter));
-			lblIdSessao.setBounds(20, 35, 200, 20);
+			lblIdSessao.setBounds(20, 60, 200, 20);
 			card.add(lblIdSessao);
 			
 			JLabel lblFilme = new JLabel("Filme: "+ingresso.getSessao().getFilme().getNome());
-			lblFilme.setBounds(20, 60, 400, 20); // mais largura pro nome
+			lblFilme.setBounds(20, 85, 400, 20); // mais largura pro nome
 			card.add(lblFilme);
 			
 			JLabel lblTipo = new JLabel("Tipo: "+ingresso.getTipo().name());
-			lblTipo.setBounds(20, 85, 100, 20); // mais largura pro nome
+			lblTipo.setBounds(20, 110, 100, 20); // mais largura pro nome
 			card.add(lblTipo);
 			
 			JLabel lblPoltrona = new JLabel("Poltrona: " + ingresso.getPoltrona().getIdentificador());
-			lblPoltrona.setBounds(20, 110, 100, 20);
+			lblPoltrona.setBounds(20, 135, 100, 20);
 			card.add(lblPoltrona);
 			
 			if(ingresso.getRG()!=null) {
 				JLabel lblRG = new JLabel("RG: "+ingresso.getRG());
-				lblRG.setBounds(20, 135, 100, 20); // mais largura pro nome
+				lblRG.setBounds(20, 160, 100, 20); // mais largura pro nome
 				card.add(lblRG);
 				JLabel lblAviso = new JLabel("AVISO: Entrada permitida apenas com o porte do RG");
 				lblAviso.setForeground(Color.RED);
-				lblAviso.setBounds(20, 160, 300, 20); // mais largura pro nome
+				lblAviso.setBounds(20, 185, 300, 20); // mais largura pro nome
 				card.add(lblAviso);
 			}
 		    

@@ -137,6 +137,26 @@ public class TelaCrudFilme extends JFrame {
 		setContentPane(contentPanel);
 		contentPanel.setLayout(null);
 		
+		JButton button = new JButton("New button");
+		button.setBounds(685, 427, -118, 9);
+		contentPanel.add(button);
+		{
+			JButton btnGerenciamentoDeSalas = new JButton("Gerenciamento de Salas");
+			btnGerenciamentoDeSalas.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					TelaEscolhaSalaBloquear telaEscolhaSalaBloquear = new TelaEscolhaSalaBloquear();
+					telaEscolhaSalaBloquear.setVisible(true);
+					telaEscolhaSalaBloquear.setLocationRelativeTo(null);
+					
+					dispose();
+				}
+			});
+			btnGerenciamentoDeSalas.setFont(new Font("Tahoma", Font.BOLD, 13));
+			btnGerenciamentoDeSalas.setBounds(577, 429, 197, 23);
+			contentPanel.add(btnGerenciamentoDeSalas);
+		}
+		
 		return contentPanel;
 	}
 	

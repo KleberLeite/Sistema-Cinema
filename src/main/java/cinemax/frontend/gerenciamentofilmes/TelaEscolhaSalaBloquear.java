@@ -110,9 +110,9 @@ public class TelaEscolhaSalaBloquear extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gerente telaGerente = new Gerente();
-                telaGerente.setVisible(true);
-                telaGerente.setLocationRelativeTo(null);
+				TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
+                telaCrudFilme.setVisible(true);
+                telaCrudFilme.setLocationRelativeTo(null);
                 dispose();
 			}
 		});

@@ -9,9 +9,9 @@ import cinemax.backend.core.Backend;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.geranciadefuncionarios.Gerencia;
+import cinemax.frontend.geranciadefuncionarios.TelaCrudFuncionario;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
-import cinemax.frontend.vendadealimentos.Vendas;
+import cinemax.frontend.vendadealimentos.TelaCrudAlimento;
 import cinemax.frontend.vendadealimentos.VendaDealimentoss;
 import cinemax.frontend.vendadeingressos.TelaEscolhaFilme;
 import java.awt.event.ActionListener;
@@ -411,67 +411,83 @@ public class Gerente extends javax.swing.JFrame {
 		});
 
 		jLabel4 = new JLabel();
-		jLabel4.setText("Seção Gerência de vendas de Alimentos");
+		jLabel4.setText("Seção Gerenciamento de Alimentos");
 		jLabel4.setForeground(Color.WHITE);
 		jLabel4.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		GroupLayout gl_jPanel2_2 = new GroupLayout(jPanel2_2);
-		gl_jPanel2_2
-				.setHorizontalGroup(gl_jPanel2_2.createParallelGroup(Alignment.LEADING)
+		gl_jPanel2_2.setHorizontalGroup(
+			gl_jPanel2_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPanel2_2.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(jPanel6_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(BotaoAcessarGeranciaDeAlimentos)
+					.addGap(116))
+				.addGroup(gl_jPanel2_2.createSequentialGroup()
+					.addGap(21)
+					.addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(73, Short.MAX_VALUE))
+		);
+		gl_jPanel2_2.setVerticalGroup(
+			gl_jPanel2_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_jPanel2_2.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_jPanel2_2.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_jPanel2_2.createSequentialGroup()
-								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(jPanel6_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(18).addComponent(BotaoAcessarGeranciaDeAlimentos).addGap(116))
-						.addGroup(gl_jPanel2_2.createSequentialGroup().addContainerGap()
-								.addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(84, Short.MAX_VALUE)));
-		gl_jPanel2_2.setVerticalGroup(gl_jPanel2_2.createParallelGroup(Alignment.LEADING).addGroup(gl_jPanel2_2
-				.createSequentialGroup().addContainerGap()
-				.addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_jPanel2_2.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_jPanel2_2.createSequentialGroup().addGap(36).addComponent(jPanel6_2,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_jPanel2_2.createSequentialGroup().addGap(46)
-								.addComponent(BotaoAcessarGeranciaDeAlimentos)))
-				.addContainerGap(31, Short.MAX_VALUE)));
+							.addGap(36)
+							.addComponent(jPanel6_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_jPanel2_2.createSequentialGroup()
+							.addGap(46)
+							.addComponent(BotaoAcessarGeranciaDeAlimentos)))
+					.addContainerGap(31, Short.MAX_VALUE))
+		);
 		jPanel2_2.setLayout(gl_jPanel2_2);
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+		jPanel1Layout.setHorizontalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
 				.addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE)
-				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap()
-						.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 1186, Short.MAX_VALUE).addContainerGap())
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(36).addGroup(jPanel1Layout
-						.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup().addGap(98)
-								.addComponent(jPanel2_1, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-								.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-								.addGap(116)
-								.addComponent(jPanel2_2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
-								.addGap(124))
-						.addGroup(jPanel1Layout.createSequentialGroup().addGap(41)
-								.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(328)
-								.addComponent(jPanel10, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap()))));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING).addGroup(jPanel1Layout
-				.createSequentialGroup()
-				.addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 1186, Short.MAX_VALUE)
+					.addContainerGap())
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addGap(36)
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(jPanel1Layout.createSequentialGroup()
+							.addGap(98)
+							.addComponent(jPanel2_1, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+							.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+							.addGap(116)
+							.addComponent(jPanel2_2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
+							.addGap(124))
+						.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+							.addGap(49)
+							.addComponent(jPanel10, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
+							.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(55))))
+		);
+		jPanel1Layout.setVerticalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(jPanel2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
 						.addComponent(jPanel2_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
 						.addComponent(jPanel2_1, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(jPanel10, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(jPanel8, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGap(35)
-				.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-				.addGap(43)));
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(jPanel10, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+						.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(43))
+		);
 		jPanel1.setLayout(jPanel1Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -490,14 +506,14 @@ public class Gerente extends javax.swing.JFrame {
 		IBancoDeDadosFuncionario banco = ControladorDeApp.getInstancia()
 										.getBackend().getBancoFuncionarios();
 		
-		Gerencia gerencia = new Gerencia(banco);
-		gerencia.setLocationRelativeTo(null);
-		gerencia.setVisible(true);
+		TelaCrudFuncionario telaCrudFuncionario = new TelaCrudFuncionario(banco);
+		telaCrudFuncionario.setLocationRelativeTo(null);
+		telaCrudFuncionario.setVisible(true);
 		this.dispose(); // Fecha a tela atual se quiser
 	}// GEN-LAST:event_ButaoAcessarGeranciaDeFuncionarioActionPerformed
 
 	private void ButaoAcessarGeranciaDeAlimentosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ButaoAcessarGeranciaDeAlimentosActionPerformed
-		Vendas gerenciamento = new Vendas();
+		TelaCrudAlimento gerenciamento = new TelaCrudAlimento();
 		gerenciamento.setLocationRelativeTo(null);
 		gerenciamento.setVisible(true); // Torna a janela Vendas visível
 		this.dispose(); // Fecha a janela atual
