@@ -80,11 +80,11 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 			return false;
 		}
 		
-		adicionarAlimento(nome, preco, codigo);
+		internoAdicionarAlimento(nome, preco, codigo);
 		return true;
 	}
 	
-	private void adicionarAlimento(String nome, double preco, int codigo) {
+	protected void internoAdicionarAlimento(String nome, double preco, int codigo) {
 		Alimento novoAlimento = new Alimento(nome, preco, codigo);
 		alimentos.put(codigo, novoAlimento);
 	}
