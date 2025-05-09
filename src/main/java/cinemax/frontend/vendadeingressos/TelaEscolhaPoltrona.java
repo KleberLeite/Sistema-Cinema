@@ -75,9 +75,6 @@ public class TelaEscolhaPoltrona extends JFrame {
 		
 		
 		
-		
-		
-		
 		poltronasRestantes = 8;
 		
 		getContentPane().setLayout(null);
@@ -333,41 +330,50 @@ public class TelaEscolhaPoltrona extends JFrame {
 				String poltronaSelecionada = sala.obterTipoDeEstrutura(i, j).getIdentificador();
 				int deslocamentoEmX = 25;
 				
-				switch(sala.obterTipoDeEstrutura(i, j).getTipo()) {
-				case Vazio:
-					botao = new JButton();
+				
+				if(sala.obterTipoDeEstrutura(i, j).getBloqueado()) {
+					botao = new JButton(iconeBloqueada);
 					botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
-					botao.setVisible(false);
-					break;
-				case Poltrona:
-					if(sessao.estaReservado(i, j)) {
-						botao = new JButton(iconePoltronaOcupada);
-						botao.setEnabled(false);
-					} else {						
-						botao = new JButton(iconePoltrona);
-					}
+					botao.setEnabled(false);
+				} else {
+					switch(sala.obterTipoDeEstrutura(i, j).getTipo()) {
+					case Vazio:
+						botao = new JButton();
+						botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
+						botao.setVisible(false);
+						break;
+					case Poltrona:
+						if(sessao.estaReservado(i, j)) {
+							botao = new JButton(iconePoltronaOcupada);
+							botao.setEnabled(false);
+						} else {						
+							botao = new JButton(iconePoltrona);
+						}
 
-					botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
-					break;
-				case PoltronaObesos:
-					if(sessao.estaReservado(i, j)) {
-						botao = new JButton(iconePoltronaObesosOcupada);
-						botao.setEnabled(false);
-					} else {						
-						botao = new JButton(iconePoltronaObesos);
+						botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
+						break;
+					case PoltronaObesos:
+						if(sessao.estaReservado(i, j)) {
+							botao = new JButton(iconePoltronaObesosOcupada);
+							botao.setEnabled(false);
+						} else {						
+							botao = new JButton(iconePoltronaObesos);
+						}
+						botao.setBounds(deslocamentoEmX-2 + j * (tamanho + espaco), 3 + i * (tamanho + espaco), tamanho + 5, tamanho + 5);
+						break;
+					case LocalCadeirantes:
+						if(sessao.estaReservado(i, j)) {
+							botao = new JButton(iconeLocalCadeirantesOcupado);
+							botao.setEnabled(false);
+						} else {						
+							botao = new JButton(iconeLocalCadeirantes);
+						}
+						botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
+						break;
 					}
-					botao.setBounds(deslocamentoEmX-2 + j * (tamanho + espaco), 3 + i * (tamanho + espaco), tamanho + 5, tamanho + 5);
-					break;
-				case LocalCadeirantes:
-					if(sessao.estaReservado(i, j)) {
-						botao = new JButton(iconeLocalCadeirantesOcupado);
-						botao.setEnabled(false);
-					} else {						
-						botao = new JButton(iconeLocalCadeirantes);
-					}
-					botao.setBounds(deslocamentoEmX + j * (tamanho + espaco), 5 + i * (tamanho + espaco), tamanho, tamanho);
-					break;
 				}
+				
+				
 				
 				botao.setBackground(Color.WHITE);
 				botao.setBorderPainted(false);
