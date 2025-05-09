@@ -12,8 +12,8 @@ import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.TelaCrudFuncionario;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
 import cinemax.frontend.vendadealimentos.TelaCrudAlimento;
-import cinemax.frontend.vendadealimentos.VendaDealimentoss;
-import cinemax.frontend.vendadeingressos.TelaEscolhaFilme;
+import cinemax.frontend.vendadealimentos.TelaVendaDeAlimento;
+import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout.Alignment;
@@ -134,7 +134,7 @@ public class Gerente extends javax.swing.JFrame {
         botaoAcessoCompraDeIngresos = new javax.swing.JButton();
         botaoAcessoCompraDeIngresos.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
+        		TelaVendaDeIngresso telaEscolhaFilme = new TelaVendaDeIngresso();
             	telaEscolhaFilme.setLocationRelativeTo(null);
             	telaEscolhaFilme.setVisible(true);
             	
@@ -520,7 +520,7 @@ public class Gerente extends javax.swing.JFrame {
 	}// GEN-LAST:event_ButaoAcessarGeranciaDeAlimentosActionPerformed
 
 	private void BotaoVendaDealimentosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotaoVendaDealimentosActionPerformed
-		VendaDealimentoss vendas = new VendaDealimentoss();
+		TelaVendaDeAlimento vendas = new TelaVendaDeAlimento();
 		vendas.setLocationRelativeTo(null);
 		vendas.setVisible(true); // Torna a janela Vendas visível
 		this.dispose(); // Fecha a janela atual

@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * @author geral
  */
-public class VendaDealimentoss extends javax.swing.JFrame {
+public class TelaVendaDeAlimento extends javax.swing.JFrame {
 	private Map<Alimento, Integer> carrinho = new HashMap<>();
 
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
@@ -27,7 +27,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 	/**
 	 * Creates new form VendaDealimentoss
 	 */
-	public VendaDealimentoss() {
+	public TelaVendaDeAlimento() {
 		initComponents();
                 
                 PlanilhaDeAlimentos.setModel(new javax.swing.table.DefaultTableModel(
@@ -574,16 +574,16 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE,
+			java.util.logging.Logger.getLogger(TelaVendaDeAlimento.class.getName()).log(java.util.logging.Level.SEVERE,
 					null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE,
+			java.util.logging.Logger.getLogger(TelaVendaDeAlimento.class.getName()).log(java.util.logging.Level.SEVERE,
 					null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE,
+			java.util.logging.Logger.getLogger(TelaVendaDeAlimento.class.getName()).log(java.util.logging.Level.SEVERE,
 					null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(VendaDealimentoss.class.getName()).log(java.util.logging.Level.SEVERE,
+			java.util.logging.Logger.getLogger(TelaVendaDeAlimento.class.getName()).log(java.util.logging.Level.SEVERE,
 					null, ex);
 		}
 		// </editor-fold>
@@ -591,7 +591,7 @@ public class VendaDealimentoss extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new VendaDealimentoss().setVisible(true);
+				new TelaVendaDeAlimento().setVisible(true);
 			}
 		});
 	}

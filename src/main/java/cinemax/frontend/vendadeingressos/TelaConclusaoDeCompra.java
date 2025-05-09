@@ -128,7 +128,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 				if(sucessoCompras){
 					app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia().getRelatorioFilmes().adicionarVendas(carrinho.getIngressos());
 					
-					TelaEscolhaFilme telaEscolhaFilme = new TelaEscolhaFilme();
+					TelaVendaDeIngresso telaEscolhaFilme = new TelaVendaDeIngresso();
 					telaEscolhaFilme.setLocationRelativeTo(null);
 					telaEscolhaFilme.setVisible(true);
 

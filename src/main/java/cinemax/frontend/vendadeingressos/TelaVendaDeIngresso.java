@@ -38,7 +38,7 @@ import java.time.format.TextStyle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class TelaEscolhaFilme extends JFrame {
+public class TelaVendaDeIngresso extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
@@ -53,7 +53,7 @@ public class TelaEscolhaFilme extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaEscolhaFilme frame = new TelaEscolhaFilme();
+					TelaVendaDeIngresso frame = new TelaVendaDeIngresso();
 					frame.setLocationRelativeTo(null);
 					frame.setSize(800, 500);
 					frame.setVisible(true);
@@ -65,7 +65,7 @@ public class TelaEscolhaFilme extends JFrame {
 	}
 
 	// Create the frame.
-	public TelaEscolhaFilme() {				
+	public TelaVendaDeIngresso() {				
 		gerarTela();
 	}
 	

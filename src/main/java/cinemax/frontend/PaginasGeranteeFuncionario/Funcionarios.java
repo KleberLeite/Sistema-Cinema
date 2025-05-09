@@ -5,7 +5,7 @@
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.vendadealimentos.VendaDealimentoss;
+import cinemax.frontend.vendadealimentos.VendaDeAlimentos;
 import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -189,7 +189,7 @@ public class Funcionarios extends javax.swing.JFrame {
 	}// GEN-LAST:event_BotaoVendasDeIngressosActionPerformed
 
 	private void BotaoAcessarVendaDeAlimentosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotaoAcessarVendaDeAlimentosActionPerformed
-		VendaDealimentoss vendass = new VendaDealimentoss();
+		VendaDeAlimentos vendass = new VendaDeAlimentos();
 		vendass.setLocationRelativeTo(null);
 		vendass.setVisible(true); // Torna a janela Vendas visível
 		this.dispose();
