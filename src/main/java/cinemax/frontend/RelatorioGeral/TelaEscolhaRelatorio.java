@@ -149,7 +149,7 @@ public class TelaEscolhaRelatorio extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
+		contentPane.setBackground(new Color(2, 18, 27));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -167,16 +167,17 @@ public class TelaEscolhaRelatorio extends JFrame {
 		lblEscolhaORelatorio.setBounds(102, 91, 356, 52);
 		panelPrincipal.add(lblEscolhaORelatorio);
 		
-		
-		
-		JPanel panelMostrarRelatorios = new JPanel();
-		panelMostrarRelatorios.setLayout(new BoxLayout(panelMostrarRelatorios, BoxLayout.Y_AXIS));
-		
-		JScrollPane scrollPaneRelatorios = new JScrollPane(panelMostrarRelatorios);
-		scrollPaneRelatorios.setBounds(149, 154, 272, 317);
+		JScrollPane scrollPaneRelatorios = new JScrollPane();
+		scrollPaneRelatorios.setBounds(180, 154, 195, 286);
 		scrollPaneRelatorios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneRelatorios.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panelPrincipal.add(scrollPaneRelatorios);
+		
+		
+		
+		JPanel panelMostrarRelatorios = new JPanel();
+		scrollPaneRelatorios.setViewportView(panelMostrarRelatorios);
+		panelMostrarRelatorios.setLayout(new BoxLayout(panelMostrarRelatorios, BoxLayout.Y_AXIS));
 		
 		for (int i = 0; i < app.getBackend().getGerenciadorRelatorios().obterTodos().size(); i++) {
 		    Relatorio relatoriaAtual = app.getBackend().getGerenciadorRelatorios().obterTodos().get(i);
@@ -196,7 +197,7 @@ public class TelaEscolhaRelatorio extends JFrame {
 
 		    JButton botaoRelatorio = new JButton(textoBotao);
 		    botaoRelatorio.setAlignmentX(Component.CENTER_ALIGNMENT);
-		    botaoRelatorio.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		    botaoRelatorio.setFont(new Font("Tahoma", Font.BOLD, 13));
 		    botaoRelatorio.setMaximumSize(new java.awt.Dimension(150, 60));
 
 		    final int indexRelatorio = i;

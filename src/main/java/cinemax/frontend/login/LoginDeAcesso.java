@@ -11,11 +11,15 @@ import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.JLabel;
 
 /**
  *
@@ -52,7 +56,7 @@ public class LoginDeAcesso extends javax.swing.JFrame {
         setTitle("Login de Acesso");
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(0, 32, 64));
+        jPanel1.setBackground(new Color(2, 18, 27));
         
         JButton btnFecharSistema = new JButton("Fechar Sistema");
         btnFecharSistema.addActionListener(new ActionListener() {
@@ -61,21 +65,31 @@ public class LoginDeAcesso extends javax.swing.JFrame {
         	}
         });
         btnFecharSistema.setFont(new Font("Tahoma", Font.BOLD, 13));
+        
+        ImageIcon iconeLogoParcial = new ImageIcon(getClass().getResource("/img/Logo.png"));
+    	Image imgIconeLogoParcial = iconeLogoParcial.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+    	ImageIcon iconeLogo = new ImageIcon(imgIconeLogoParcial);
+        
+        JLabel lblLogo = new JLabel(iconeLogo);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
-        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(jPanel1Layout.createSequentialGroup()
+        	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
         			.addGap(21)
-        			.addComponent(btnFecharSistema, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(254, Short.MAX_VALUE))
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(btnFecharSistema, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
         	jPanel1Layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanel1Layout.createSequentialGroup()
-        			.addGap(584)
+        			.addGap(124)
+        			.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
+        			.addGap(97)
         			.addComponent(btnFecharSistema)
-        			.addContainerGap(21, Short.MAX_VALUE))
+        			.addContainerGap(19, Short.MAX_VALUE))
         );
         jPanel1.setLayout(jPanel1Layout);
 

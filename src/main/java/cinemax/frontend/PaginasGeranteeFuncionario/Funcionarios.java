@@ -12,10 +12,14 @@ import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
 import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import java.awt.Color;
 
 /**
  *
@@ -27,6 +31,7 @@ public class Funcionarios extends javax.swing.JFrame {
 	 * Creates new form Funcionarios
 	 */
 	public Funcionarios() {
+		getContentPane().setBackground(new Color(2, 18, 27));
 		initComponents();
 	}
 
@@ -43,22 +48,20 @@ public class Funcionarios extends javax.swing.JFrame {
 		jPanel1 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
 		jPanel2 = new javax.swing.JPanel();
-		jPanel4 = new javax.swing.JPanel();
 		BotaoAcessarVendaDeAlimentos = new javax.swing.JButton();
 		BotaoAcessarVendaDeAlimentos.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jLabel2 = new javax.swing.JLabel();
 		jPanel3 = new javax.swing.JPanel();
-		jPanel5 = new javax.swing.JPanel();
 		jLabel3 = new javax.swing.JLabel();
 		BotaoVendasDeIngressos = new javax.swing.JButton();
 		BotaoVendasDeIngressos.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-		jPanel1.setBackground(new java.awt.Color(0, 32, 64));
+		jPanel1.setBackground(new Color(255, 255, 255));
 
 		jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-		jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+		jLabel1.setForeground(new java.awt.Color(0, 0, 0));
 		jLabel1.setText("Área do funcionário");
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -70,14 +73,7 @@ public class Funcionarios extends javax.swing.JFrame {
 				.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addComponent(jLabel1)
 						.addContainerGap(16, Short.MAX_VALUE)));
 
-		jPanel2.setBackground(new java.awt.Color(0, 32, 64));
-
-		javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-		jPanel4.setLayout(jPanel4Layout);
-		jPanel4Layout.setHorizontalGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 68, Short.MAX_VALUE));
-		jPanel4Layout.setVerticalGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 55, Short.MAX_VALUE));
+		jPanel2.setBackground(new Color(255, 255, 255));
 
 		BotaoAcessarVendaDeAlimentos.setText("Acessar");
 		BotaoAcessarVendaDeAlimentos.addActionListener(new java.awt.event.ActionListener() {
@@ -88,42 +84,51 @@ public class Funcionarios extends javax.swing.JFrame {
 		BotaoAcessarVendaDeAlimentos.setEnabled(
 				ControladorDeApp.getInstancia().getBackend().diaEstaAberto());
 
-		jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-		jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+		jLabel2.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
+		jLabel2.setForeground(new java.awt.Color(0, 0, 0));
 		jLabel2.setText("Vendas de Alimentos");
-
+		
+		ImageIcon iconeVendaDeIngressoParcial = new ImageIcon(getClass().getResource("/img/VendaDeIngresso.png"));
+    	Image imgIconeVendaDeIngressoParcial = iconeVendaDeIngressoParcial.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+    	ImageIcon iconeVendaDeIngresso = new ImageIcon(imgIconeVendaDeIngressoParcial);
+		
+		lblVendaDeIngresso = new JLabel(iconeVendaDeIngresso);
+		
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+		jPanel2Layout.setHorizontalGroup(
+			jPanel2Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(jPanel2Layout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblVendaDeIngresso, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+							.addComponent(jLabel2)
+							.addGap(66))
+						.addGroup(Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+							.addComponent(BotaoAcessarVendaDeAlimentos)
+							.addGap(85))))
+		);
+		jPanel2Layout.setVerticalGroup(
+			jPanel2Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(jPanel2Layout.createSequentialGroup()
+					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(jPanel2Layout.createSequentialGroup()
+							.addGap(63)
+							.addComponent(jLabel2)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(BotaoAcessarVendaDeAlimentos))
+						.addGroup(jPanel2Layout.createSequentialGroup()
+							.addGap(38)
+							.addComponent(lblVendaDeIngresso, GroupLayout.PREFERRED_SIZE, 117, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(28, Short.MAX_VALUE))
+		);
 		jPanel2.setLayout(jPanel2Layout);
-		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel2Layout.createSequentialGroup().addGroup(jPanel2Layout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(jPanel2Layout.createSequentialGroup().addGap(17, 17, 17)
-								.addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(47, 47, 47).addComponent(BotaoAcessarVendaDeAlimentos))
-						.addGroup(jPanel2Layout.createSequentialGroup().addGap(111, 111, 111).addComponent(jLabel2)))
-						.addContainerGap(115, Short.MAX_VALUE)));
-		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel2Layout.createSequentialGroup().addGap(47, 47, 47).addComponent(jLabel2)
-						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(jPanel2Layout.createSequentialGroup().addGap(34, 34, 34)
-										.addComponent(BotaoAcessarVendaDeAlimentos))
-								.addGroup(jPanel2Layout.createSequentialGroup().addGap(18, 18, 18).addComponent(jPanel4,
-										javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-										javax.swing.GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-		jPanel3.setBackground(new java.awt.Color(0, 32, 64));
+		jPanel3.setBackground(new Color(255, 255, 255));
 
-		javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-		jPanel5.setLayout(jPanel5Layout);
-		jPanel5Layout.setHorizontalGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 68, Short.MAX_VALUE));
-		jPanel5Layout.setVerticalGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGap(0, 54, Short.MAX_VALUE));
-
-		jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-		jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+		jLabel3.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
+		jLabel3.setForeground(new java.awt.Color(0, 0, 0));
 		jLabel3.setText("Vendas de Ingressos");
 
 		BotaoVendasDeIngressos.setText("Acessar");
@@ -134,27 +139,42 @@ public class Funcionarios extends javax.swing.JFrame {
 		});
 		BotaoVendasDeIngressos.setEnabled(
 			ControladorDeApp.getInstancia().getBackend().diaEstaAberto());
-
+		
+		ImageIcon iconeVendaDeAlimentoParcial = new ImageIcon(getClass().getResource("/img/VendaDeAlimento.png"));
+    	Image imgIconeVendaDeAlimentoParcial = iconeVendaDeAlimentoParcial.getImage().getScaledInstance(100, 60, Image.SCALE_SMOOTH);
+    	ImageIcon iconeVendaDeAlimento = new ImageIcon(imgIconeVendaDeAlimentoParcial);
+		
+		lblVendaDeAlimento = new JLabel(iconeVendaDeAlimento);
+		
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+		jPanel3Layout.setHorizontalGroup(
+			jPanel3Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel3Layout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblVendaDeAlimento, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+					.addGroup(jPanel3Layout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(jPanel3Layout.createSequentialGroup()
+							.addComponent(jLabel3)
+							.addGap(77))
+						.addGroup(jPanel3Layout.createSequentialGroup()
+							.addComponent(BotaoVendasDeIngressos)
+							.addGap(92))))
+		);
+		jPanel3Layout.setVerticalGroup(
+			jPanel3Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel3Layout.createSequentialGroup()
+					.addContainerGap(59, Short.MAX_VALUE)
+					.addComponent(jLabel3)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(BotaoVendasDeIngressos)
+					.addGap(74))
+				.addGroup(Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+					.addGap(27)
+					.addComponent(lblVendaDeAlimento, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(40, Short.MAX_VALUE))
+		);
 		jPanel3.setLayout(jPanel3Layout);
-		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel3Layout.createSequentialGroup().addGap(20, 20, 20)
-						.addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(64, 64, 64).addComponent(BotaoVendasDeIngressos).addContainerGap(119, Short.MAX_VALUE))
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-						jPanel3Layout.createSequentialGroup()
-								.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(jLabel3).addGap(109, 109, 109)));
-		jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-						.addContainerGap(43, Short.MAX_VALUE).addComponent(jLabel3).addGap(19, 19, 19)
-						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGroup(jPanel3Layout.createSequentialGroup().addGap(15, 15, 15)
-										.addComponent(BotaoVendasDeIngressos)))
-						.addGap(51, 51, 51)));
 		
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -265,8 +285,8 @@ public class Funcionarios extends javax.swing.JFrame {
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JPanel jPanel2;
 	private javax.swing.JPanel jPanel3;
-	private javax.swing.JPanel jPanel4;
-	private javax.swing.JPanel jPanel5;
 	private JButton btnVoltar;
+	private JLabel lblVendaDeIngresso;
+	private JLabel lblVendaDeAlimento;
 	// End of variables declaration//GEN-END:variables
 }

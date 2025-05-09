@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 import java.util.Map;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  *
@@ -183,29 +185,39 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         PlanilhaDeAlimentos = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         TxtnomeDoalimento = new javax.swing.JLabel();
+        TxtnomeDoalimento.setFont(new Font("Tahoma", Font.BOLD, 13));
         TXTcodigodoalimento = new javax.swing.JLabel();
+        TXTcodigodoalimento.setFont(new Font("Tahoma", Font.BOLD, 13));
         CapturaTXTProcurarNomeAlimento = new javax.swing.JTextField();
         CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
         bntProcurarnomeAliemnto = new javax.swing.JButton();
+        bntProcurarnomeAliemnto.setFont(new Font("Tahoma", Font.BOLD, 12));
         bntProvurarcodigo = new javax.swing.JButton();
+        bntProvurarcodigo.setFont(new Font("Tahoma", Font.BOLD, 12));
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel4.setFont(new Font("Tahoma", Font.BOLD, 13));
         TXTitemSelecionado = new javax.swing.JLabel();
         TXTAcrementoDeItem = new javax.swing.JLabel();
         TXTDecrementoDeItem = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel8.setFont(new Font("Tahoma", Font.BOLD, 13));
         jLabel9 = new javax.swing.JLabel();
+        jLabel9.setFont(new Font("Tahoma", Font.BOLD, 13));
         TXTQuantidadeDeitemTotaisSelecionados = new javax.swing.JLabel();
         TXTPrecoTotalDeTodosOsItems = new javax.swing.JLabel();
         BotaoComprar = new javax.swing.JButton();
+        BotaoComprar.setFont(new Font("Tahoma", Font.BOLD, 13));
         bntRecarregarLista = new javax.swing.JButton();
+        bntRecarregarLista.setFont(new Font("Tahoma", Font.BOLD, 12));
         bntVoltar = new javax.swing.JButton();
+        bntVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(2, 32, 64));
 
-        jPanel1.setBackground(new java.awt.Color(2, 32, 64));
+        jPanel1.setBackground(new Color(2, 18, 27));
 
         PlanilhaDeAlimentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -247,7 +259,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 
         jLabel4.setText("Item Selecionado:");
 
-        TXTitemSelecionado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        TXTitemSelecionado.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
 
         TXTAcrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TXTAcrementoDeItem.setText("+");

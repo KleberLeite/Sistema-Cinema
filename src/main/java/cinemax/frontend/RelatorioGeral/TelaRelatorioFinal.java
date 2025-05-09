@@ -114,7 +114,7 @@ public class TelaRelatorioFinal extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 600);
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(0, 64, 128));
+        contentPane.setBackground(new Color(2, 18, 27));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);        

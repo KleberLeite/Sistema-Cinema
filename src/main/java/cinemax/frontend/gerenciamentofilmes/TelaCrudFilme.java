@@ -50,7 +50,7 @@ public class TelaCrudFilme extends JFrame {
 	    card.setLayout(null); 
 	    card.setPreferredSize(new Dimension(1400, 50));
 	    card.setMaximumSize(new Dimension(1400, 50));
-	    card.setBackground(new Color(230, 210, 250));
+	    card.setBackground(new Color(192, 192, 192));
 	    card.setBorder(new EmptyBorder(10, 30, 10, 10));
 	    return card;
 	}
@@ -73,7 +73,7 @@ public class TelaCrudFilme extends JFrame {
 	    	 dispose();
                
         });
-	    btnEditar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    btnEditar.setFont(new Font("Tahoma", Font.BOLD, 12));
 	    btnEditar.setBounds(500, 10, 80, 30);
 	    card.add(btnEditar);
 	}
@@ -88,7 +88,7 @@ public class TelaCrudFilme extends JFrame {
 	    	 }
              
         });
-	    btnExcluir.setFont(new Font("Tahoma", Font.PLAIN, 12));
+	    btnExcluir.setFont(new Font("Tahoma", Font.BOLD, 12));
 	    btnExcluir.setBounds(590, 10, 80, 30);
 	    card.add(btnExcluir);
 	}
@@ -131,37 +131,35 @@ public class TelaCrudFilme extends JFrame {
 	
 	private JPanel gerarContentPane() {
 		JPanel contentPanel = new JPanel();
-		contentPanel.setBackground(new Color(0, 64, 128));
+		contentPanel.setBackground(new Color(2, 18, 27));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPanel);
 		contentPanel.setLayout(null);
 		
-		JButton button = new JButton("New button");
-		button.setBounds(685, 427, -118, 9);
-		contentPanel.add(button);
-		{
-			JButton btnGerenciamentoDeSalas = new JButton("Gerenciamento de Salas");
-			btnGerenciamentoDeSalas.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
+
+		JButton btnGerenciamentoDeSalas = new JButton("Gerenciamento de Salas");
+		btnGerenciamentoDeSalas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 					
-					TelaEscolhaSalaBloquear telaEscolhaSalaBloquear = new TelaEscolhaSalaBloquear();
-					telaEscolhaSalaBloquear.setVisible(true);
-					telaEscolhaSalaBloquear.setLocationRelativeTo(null);
+				TelaEscolhaSalaBloquear telaEscolhaSalaBloquear = new TelaEscolhaSalaBloquear();
+				telaEscolhaSalaBloquear.setVisible(true);
+				telaEscolhaSalaBloquear.setLocationRelativeTo(null);
 					
-					dispose();
-				}
-			});
-			btnGerenciamentoDeSalas.setFont(new Font("Tahoma", Font.BOLD, 13));
-			btnGerenciamentoDeSalas.setBounds(577, 429, 197, 23);
-			contentPanel.add(btnGerenciamentoDeSalas);
-		}
+				dispose();
+			}
+		});
+		btnGerenciamentoDeSalas.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnGerenciamentoDeSalas.setBounds(577, 429, 197, 23);
+		contentPanel.add(btnGerenciamentoDeSalas);
+		
 		
 		return contentPanel;
 	}
 	
 	private JPanel gerarPanelPrincipal(JPanel contentPanel) {
 		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setBackground(new Color(255, 255, 255));
 		panelPrincipal.setBounds(10, 11, 764, 405);
 		contentPanel.add(panelPrincipal);
 		panelPrincipal.setLayout(null);
@@ -178,11 +176,11 @@ public class TelaCrudFilme extends JFrame {
 		
 		return scrollPane;
 	}
-
+	
 	private JPanel gerarPanelListaFilmes(JScrollPane scrollPane) {
 		JPanel panelListaFilmes = new JPanel();
+		panelListaFilmes.setBackground(new Color(255, 255, 255));
 		panelListaFilmes.setLayout(new BoxLayout(panelListaFilmes, BoxLayout.Y_AXIS));
-		//panelListaFilmes.setBackground(new Color(0, 64, 128)); // mesma cor do fundo
 		scrollPane.setViewportView(panelListaFilmes);
 		
 		return panelListaFilmes;
@@ -206,6 +204,7 @@ public class TelaCrudFilme extends JFrame {
 	
 	private void adicionarLabel(JPanel panelPrincipal) {
 		JLabel lblListaDosFilmes = new JLabel("Lista dos Filmes Cadastrados:");
+		lblListaDosFilmes.setBackground(new Color(255, 255, 255));
 		lblListaDosFilmes.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblListaDosFilmes.setBounds(10, 21, 513, 40);
 		panelPrincipal.add(lblListaDosFilmes);

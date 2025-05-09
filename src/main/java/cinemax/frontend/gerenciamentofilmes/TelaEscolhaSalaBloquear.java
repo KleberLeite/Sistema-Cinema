@@ -54,7 +54,7 @@ public class TelaEscolhaSalaBloquear extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 600, 600);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
+		contentPane.setBackground(new Color(2, 18, 27));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -73,7 +73,7 @@ public class TelaEscolhaSalaBloquear extends JFrame {
 		panelPrincipal.add(lblEscolhaORelatorio);
 		
 		JScrollPane scrollPaneRelatorios = new JScrollPane();
-		scrollPaneRelatorios.setBounds(168, 154, 225, 315);
+		scrollPaneRelatorios.setBounds(195, 154, 179, 246);
 		scrollPaneRelatorios.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panelPrincipal.add(scrollPaneRelatorios);
 		

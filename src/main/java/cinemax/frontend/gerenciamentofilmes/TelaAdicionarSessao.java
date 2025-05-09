@@ -138,7 +138,7 @@ public class TelaAdicionarSessao extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 600, 300);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
+		contentPane.setBackground(new Color(2, 18, 27));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -174,20 +174,24 @@ public class TelaAdicionarSessao extends JFrame {
 		panel.add(textFieldMinuto);
 		textFieldMinuto.setColumns(10);
 
-		JLabel lblMes = new JLabel("Mes");
+		JLabel lblMes = new JLabel("Mês:");
+		lblMes.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblMes.setBounds(132, 83, 46, 14);
 		panel.add(lblMes);
 
-		JLabel lblDia = new JLabel("Dia");
+		JLabel lblDia = new JLabel("Dia:");
+		lblDia.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblDia.setBounds(24, 83, 46, 14);
 		panel.add(lblDia);
 
-		JLabel lblHora = new JLabel("Hora");
+		JLabel lblHora = new JLabel("Hora:");
+		lblHora.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblHora.setBounds(238, 83, 46, 14);
 		panel.add(lblHora);
 
-		JLabel lblMinuto = new JLabel("Minuto");
-		lblMinuto.setBounds(344, 83, 46, 14);
+		JLabel lblMinuto = new JLabel("Minuto:");
+		lblMinuto.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblMinuto.setBounds(344, 83, 59, 14);
 		panel.add(lblMinuto);
 		
 		JComboBox comboBoxSala = new JComboBox();
@@ -198,6 +202,7 @@ public class TelaAdicionarSessao extends JFrame {
 		panel.add(comboBoxSala);
 		
 		JLabel lblSala = new JLabel("Salas:");
+		lblSala.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblSala.setBounds(456, 83, 46, 14);
 		panel.add(lblSala);
 

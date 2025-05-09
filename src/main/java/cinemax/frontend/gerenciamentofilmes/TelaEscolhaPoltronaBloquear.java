@@ -64,13 +64,11 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 
 		Sala salaAtual = salaEntrada;
 
-		app.getBackend().getBancoSalas().tentarBloquearLocal(salaAtual.getIdSala(), 0, 0);
-
 		getContentPane().setLayout(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(-14, -42, 900, 800);
+		setBounds(-14, -42, 900, 700);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
+		contentPane.setBackground(new Color(2, 18, 27));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -78,7 +76,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 
 		JPanel panelPoltronas = new JPanel();
 		panelPoltronas.setBackground(new Color(255, 255, 255));
-		panelPoltronas.setBounds(10, 11, 619, 705);
+		panelPoltronas.setBounds(255, 11, 619, 637);
 		contentPane.add(panelPoltronas);
 
 		// --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -137,7 +135,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 		panelPoltronas.setLayout(null);
 
 		JPanel panelLetras = new JPanel();
-		panelLetras.setBounds(0, 78, 34, 521);
+		panelLetras.setBounds(0, 74, 34, 483);
 		panelPoltronas.add(panelLetras);
 		panelLetras.setBackground(new Color(255, 255, 255));
 		panelLetras.setLayout(new BoxLayout(panelLetras, BoxLayout.Y_AXIS)); // Layout vertical
@@ -149,12 +147,12 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 			label.setAlignmentX(Component.CENTER_ALIGNMENT); // Centraliza horizontalmente
 			panelLetras.add(label);
 
-			panelLetras.add(Box.createRigidArea(new Dimension(0, 15))); // Espaço vertical
+			panelLetras.add(Box.createRigidArea(new Dimension(0, 13))); // Espaço vertical
 
 		}
 
 		JPanel panelNumeros = new JPanel();
-		panelNumeros.setBounds(33, 628, 566, 34);
+		panelNumeros.setBounds(32, 592, 566, 34);
 		panelNumeros.setBackground(new Color(255, 255, 255));
 		panelNumeros.setLayout(new BoxLayout(panelNumeros, BoxLayout.X_AXIS)); // Layout horizontal
 
@@ -166,7 +164,8 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 
 			// Adiciona espaço à direita, exceto no último
 			if (i != 16) {
-				panelNumeros.add(Box.createRigidArea(new Dimension(11, 0))); // Espaço horizontal
+				if(i>=1 && i<=9)panelNumeros.add(Box.createRigidArea(new Dimension(11, 0))); // Espaço horizontal
+				else panelNumeros.add(Box.createRigidArea(new Dimension(10, 0)));
 			}
 		}
 
@@ -178,11 +177,61 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 		lblP.setFont(new Font("Tahoma", Font.BOLD, 16));
 
 		JLabel lblA = new JLabel("A");
-		lblA.setBounds(10, 610, 15, 14);
+		lblA.setBounds(10, 573, 15, 14);
 		lblA.setFont(new Font("Tahoma", Font.BOLD, 16));
 		panelPoltronas.add(lblA);
-
-		JButton btnVoltar = new JButton("Voltar");
+																						
+																								JPanel panel = new JPanel();
+																								panel.setBounds(10, 11, 235, 372);
+																								contentPane.add(panel);
+																								panel.setBackground(new Color(255, 255, 255));
+																								panel.setLayout(null);
+																								
+																										JLabel lblLegenda = new JLabel("Legenda");
+																										lblLegenda.setBounds(66, 11, 91, 21);
+																										panel.add(lblLegenda);
+																										lblLegenda.setFont(new Font("Tahoma", Font.BOLD, 17));
+																										
+																												JLabel imgPoltrona = new JLabel(iconePoltrona);
+																												imgPoltrona.setBounds(28, 45, 29, 29);
+																												panel.add(imgPoltrona);
+																												
+																														JLabel imgBloqueado = new JLabel(iconeBloqueada);
+																														imgBloqueado.setBounds(28, 165, 29, 29);
+																														panel.add(imgBloqueado);
+																														
+																																JLabel lblBloqueado = new JLabel("Bloqueado");
+																																lblBloqueado.setFont(new Font("Tahoma", Font.PLAIN, 14));
+																																lblBloqueado.setBounds(66, 165, 91, 29);
+																																panel.add(lblBloqueado);
+																																
+																																		JLabel imgLocalCadeirantes = new JLabel(iconeLocalCadeirantes);
+																																		imgLocalCadeirantes.setBounds(28, 125, 29, 29);
+																																		panel.add(imgLocalCadeirantes);
+																																		
+																																				JLabel lblLocalPCadeirantes = new JLabel("Local p/ Cadeirantes");
+																																				lblLocalPCadeirantes.setFont(new Font("Tahoma", Font.PLAIN, 14));
+																																				lblLocalPCadeirantes.setBounds(66, 125, 131, 29);
+																																				panel.add(lblLocalPCadeirantes);
+																																				
+																																						JLabel lblPoltronaPObesos = new JLabel("Poltrona p/ Obesos");
+																																						lblPoltronaPObesos.setFont(new Font("Tahoma", Font.PLAIN, 14));
+																																						lblPoltronaPObesos.setBounds(66, 85, 121, 29);
+																																						panel.add(lblPoltronaPObesos);
+																																						
+																																								JLabel imgPoltronaObesos = new JLabel(iconePoltronaObesos);
+																																								imgPoltronaObesos.setBounds(28, 85, 29, 29);
+																																								panel.add(imgPoltronaObesos);
+																																								
+																																										JLabel lblDisponivel = new JLabel("Disponível");
+																																										lblDisponivel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+																																										lblDisponivel.setBounds(66, 43, 84, 31);
+																																										panel.add(lblDisponivel);
+																																										
+																																												JButton btnVoltar = new JButton("Voltar");
+																																												btnVoltar.setBounds(24, 614, 89, 23);
+																																												contentPane.add(btnVoltar);
+																																												btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -194,59 +243,10 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 
 			}
 		});
-		btnVoltar.setBounds(10, 727, 89, 23);
-		contentPane.add(btnVoltar);
-
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(639, 11, 235, 372);
-		contentPane.add(panel);
-		panel.setLayout(null);
-
-		JLabel lblLegenda = new JLabel("Legenda");
-		lblLegenda.setBounds(66, 11, 91, 21);
-		panel.add(lblLegenda);
-		lblLegenda.setFont(new Font("Tahoma", Font.BOLD, 17));
-
-		JLabel imgPoltrona = new JLabel(iconePoltrona);
-		imgPoltrona.setBounds(28, 45, 29, 29);
-		panel.add(imgPoltrona);
-
-		JLabel imgBloqueado = new JLabel(iconeBloqueada);
-		imgBloqueado.setBounds(28, 165, 29, 29);
-		panel.add(imgBloqueado);
-
-		JLabel lblBloqueado = new JLabel("Bloqueado");
-		lblBloqueado.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblBloqueado.setBounds(66, 169, 91, 14);
-		panel.add(lblBloqueado);
-
-		JLabel imgLocalCadeirantes = new JLabel(iconeLocalCadeirantes);
-		imgLocalCadeirantes.setBounds(28, 125, 29, 29);
-		panel.add(imgLocalCadeirantes);
-
-		JLabel lblLocalPCadeirantes = new JLabel("Local p/ Cadeirantes");
-		lblLocalPCadeirantes.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblLocalPCadeirantes.setBounds(66, 129, 131, 14);
-		panel.add(lblLocalPCadeirantes);
-
-		JLabel lblPoltronaPObesos = new JLabel("Poltrona p/ Obesos");
-		lblPoltronaPObesos.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPoltronaPObesos.setBounds(66, 89, 121, 14);
-		panel.add(lblPoltronaPObesos);
-
-		JLabel imgPoltronaObesos = new JLabel(iconePoltronaObesos);
-		imgPoltronaObesos.setBounds(28, 85, 29, 29);
-		panel.add(imgPoltronaObesos);
-
-		JLabel lblDisponivel = new JLabel("Disponível");
-		lblDisponivel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDisponivel.setBounds(66, 49, 84, 14);
-		panel.add(lblDisponivel);
 
 		Sala sala = salaAtual;
 		int espaco = 10;
-		int tamanho = 25;
+		int tamanho = 23;
 
 		for (int i = 0; i < sala.getLinhas(); i++) {
 
@@ -259,7 +259,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 				switch (sala.obterTipoDeEstrutura(i, j).getTipo()) {
 				case Vazio:
 					botao = new JButton();
-					botao.setBounds(deslocamentoX + j * (tamanho + espaco), 8 + i * (tamanho + espaco), tamanho,
+					botao.setBounds(deslocamentoX + j * (tamanho + espaco+2), 8 + i * (tamanho + espaco), tamanho,
 							tamanho);
 					botao.setVisible(false);
 					break;
@@ -270,7 +270,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 						botao = new JButton(iconePoltrona);
 					}
 
-					botao.setBounds(deslocamentoX + j * (tamanho + espaco), 8 + i * (tamanho + espaco), tamanho,
+					botao.setBounds(deslocamentoX + j * (tamanho + espaco+2), 8 + i * (tamanho + espaco), tamanho,
 							tamanho);
 					break;
 				case PoltronaObesos:
@@ -279,7 +279,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 					} else {
 						botao = new JButton(iconePoltronaObesos);
 					}
-					botao.setBounds(deslocamentoX - 2 + j * (tamanho + espaco), 8 + i * (tamanho + espaco), tamanho + 5,
+					botao.setBounds(deslocamentoX - 2 + j * (tamanho + espaco+2), 5 + i * (tamanho + espaco), tamanho + 5,
 							tamanho + 5);
 					break;
 				case LocalCadeirantes:
@@ -288,7 +288,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 					} else {
 						botao = new JButton(iconeLocalCadeirantes);
 					}
-					botao.setBounds(deslocamentoX + j * (tamanho + espaco), 8 + i * (tamanho + espaco), tamanho,
+					botao.setBounds(deslocamentoX + j * (tamanho + espaco+2), 8 + i * (tamanho + espaco), tamanho,
 							tamanho);
 					break;
 				}

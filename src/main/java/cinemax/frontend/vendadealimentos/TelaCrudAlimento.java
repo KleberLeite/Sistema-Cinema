@@ -10,6 +10,10 @@ import cinemax.frontend.controller.ControladorDeApp;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import java.awt.Font;
 
 /**
  *
@@ -84,17 +88,24 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 		CapturaTXTNomeAlimento = new javax.swing.JTextField();
 		CapturaTXTPrecoAlimento = new javax.swing.JTextField();
 		ButaoCadastrarAlimento = new javax.swing.JButton();
+		ButaoCadastrarAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ButaoEditarAlimento = new javax.swing.JButton();
+		ButaoEditarAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ButaoRemoverAlimento = new javax.swing.JButton();
+		ButaoRemoverAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
 		jPanel3 = new javax.swing.JPanel();
 		CapturaTXTProcurarNomeAlimento = new javax.swing.JTextField();
 		ButaoProcurarAlimentoNome = new javax.swing.JButton();
+		ButaoProcurarAlimentoNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		TXTProcurarNomeAlimento = new javax.swing.JLabel();
 		TXTProcurarCodigoAlimento = new javax.swing.JLabel();
 		CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
 		ButaoProcurarCodigoAlimento = new javax.swing.JButton();
+		ButaoProcurarCodigoAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
 		bntRecarregarLista = new javax.swing.JButton();
+		bntRecarregarLista.setFont(new Font("Tahoma", Font.BOLD, 13));
 		ButaoVoltar = new javax.swing.JButton();
+		ButaoVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Venda De Alimentos");
@@ -103,18 +114,26 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 
 		TXTGenrenciAlimentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 		TXTGenrenciAlimentos.setForeground(new java.awt.Color(0, 32, 64));
-		TXTGenrenciAlimentos.setText("Gerência de Alimentos");
+		TXTGenrenciAlimentos.setText("Gerenciamento de Alimentos");
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		jPanel1Layout.setHorizontalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+					.addContainerGap(279, Short.MAX_VALUE)
+					.addComponent(TXTGenrenciAlimentos)
+					.addGap(275))
+		);
+		jPanel1Layout.setVerticalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(TXTGenrenciAlimentos)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
 		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(290, 290, 290).addComponent(TXTGenrenciAlimentos)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-						.addContainerGap(10, Short.MAX_VALUE).addComponent(TXTGenrenciAlimentos).addContainerGap()));
 
-		jPanel2.setBackground(new java.awt.Color(0, 32, 64));
+		jPanel2.setBackground(new Color(2, 18, 27));
 		jPanel2.setForeground(new java.awt.Color(0, 32, 64));
 
 		PlanilhaAlimento.setBackground(new java.awt.Color(242, 242, 242));

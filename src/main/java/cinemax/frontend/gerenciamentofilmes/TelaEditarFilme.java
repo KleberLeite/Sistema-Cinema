@@ -79,11 +79,11 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 	// ------------------------------------------------------------------------------------------------------------------
 
 	ImageIcon iconeEditarParcial = new ImageIcon(getClass().getResource("/img/Editar.png"));
-	Image imgIconeEditarParcial = iconeEditarParcial.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+	Image imgIconeEditarParcial = iconeEditarParcial.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	ImageIcon iconeEditar = new ImageIcon(imgIconeEditarParcial);
 
 	ImageIcon iconeExcluirParcial = new ImageIcon(getClass().getResource("/img/Excluir.png"));
-	Image imgIconeExcluirParcial = iconeExcluirParcial.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+	Image imgIconeExcluirParcial = iconeExcluirParcial.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
 	ImageIcon iconeExcluir = new ImageIcon(imgIconeExcluirParcial);
 
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -132,21 +132,21 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		for (Sessao sessao : filme.obterTodasSessoes()) {
 			JPanel card = new JPanel();
 			card.setLayout(null);
-			card.setPreferredSize(new Dimension(400, 50));
-			card.setMaximumSize(new Dimension(400, 50));
-			card.setBackground(new Color(230, 210, 250));
+			card.setPreferredSize(new Dimension(400, 30));
+			card.setMaximumSize(new Dimension(400, 30));
+			card.setBackground(new Color(192, 192, 192));
 			card.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm");
 			String sessaoFormatada = sessao.getInicio().format(formatter);
 
 			JLabel lblSessao = new JLabel(sessaoFormatada);
 			lblSessao.setFont(new Font("Tahoma", Font.BOLD, 14));
-			lblSessao.setBounds(20, 10, 400, 25);
+			lblSessao.setBounds(20, 2, 400, 25);
 			card.add(lblSessao);
 
 			JButton btnEditar = new JButton(iconeEditar); // ou seu ícone
-			btnEditar.setBounds(110, 10, 40, 40);
+			btnEditar.setBounds(125, 4, 20, 20);
 			btnEditar.addActionListener(e -> {
 				telaEditarSessao = new TelaEditarSessao(sessao, TelaEditarFilme.this);
 				telaEditarSessao.setLocationRelativeTo(null);
@@ -158,7 +158,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 			
 			
 			JButton btnExcluir = new JButton(iconeExcluir); // ou seu ícone
-			btnExcluir.setBounds(160, 10, 40, 40);
+			btnExcluir.setBounds(160, 4, 20, 20);
 			btnExcluir.addActionListener(e -> {
 				boolean sucesso = app.getBackend().getBancoFilmes().tentarRemoverSessao(sessao.getId(), filme.getId());
 				if (!sucesso) {
@@ -240,7 +240,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 64, 128));
+		contentPane.setBackground(new Color(2, 18, 27));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -256,12 +256,14 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		panelPrincipal.add(textFieldNome);
 		textFieldNome.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("Nome");
-		lblNewLabel.setBounds(30, 13, 46, 14);
+		JLabel lblNewLabel = new JLabel("Nome:");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel.setBounds(30, 13, 117, 26);
 		panelPrincipal.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Sinopse");
-		lblNewLabel_1.setBounds(30, 76, 46, 14);
+		JLabel lblNewLabel_1 = new JLabel("Sinopse:");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_1.setBounds(30, 76, 117, 26);
 		panelPrincipal.add(lblNewLabel_1);
 
 		JTextArea textAreaSinopse = new JTextArea(filme.getSinopse());
@@ -279,8 +281,9 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 
 		String duracao = Integer.toString(filme.getDuracaoEmMinutos());
 
-		JLabel lblDurao = new JLabel("Duração(min)");
-		lblDurao.setBounds(30, 186, 78, 14);
+		JLabel lblDurao = new JLabel("Duração(min):");
+		lblDurao.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblDurao.setBounds(30, 186, 104, 26);
 		panelPrincipal.add(lblDurao);
 
 		textFieldDuracao = new JTextField(duracao);
@@ -289,7 +292,8 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		panelPrincipal.add(textFieldDuracao);
 
 		JLabel lblSessoes = new JLabel("Sessoes:");
-		lblSessoes.setBounds(425, 13, 64, 14);
+		lblSessoes.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSessoes.setBounds(425, 13, 78, 26);
 		panelPrincipal.add(lblSessoes);
 
 		JScrollPane scrollPaneSessoes = new JScrollPane();
@@ -327,8 +331,9 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		comboBoxClassificacaoIndicativa.setBounds(155, 211, 92, 26);
 		panelPrincipal.add(comboBoxClassificacaoIndicativa);
 		
-		JLabel lblGenero = new JLabel("Gênero");
-		lblGenero.setBounds(30, 248, 117, 14);
+		JLabel lblGenero = new JLabel("Gênero:");
+		lblGenero.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblGenero.setBounds(30, 248, 117, 26);
 		panelPrincipal.add(lblGenero);
 
 		JScrollPane scrollPaneGeneros = new JScrollPane();
@@ -345,8 +350,9 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		
 		marcarGenerosSelecionados(filme);
 		
-		JLabel lblNewLabel_2 = new JLabel("Classificação Indicativa");
-		lblNewLabel_2.setBounds(155, 186, 155, 14);
+		JLabel lblNewLabel_2 = new JLabel("Classificação Indicativa:");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblNewLabel_2.setBounds(155, 186, 155, 26);
 		panelPrincipal.add(lblNewLabel_2);
 
 		JButton btnAtualizar = new JButton("Atualizar");

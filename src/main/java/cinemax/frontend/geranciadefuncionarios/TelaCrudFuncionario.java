@@ -8,6 +8,7 @@ import cinemax.backend.funcionarios.Funcionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
 
 /**
  * @author Geraldo Luiz
@@ -161,7 +162,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 			}
 		});
 
-		jPanel1.setBackground(new java.awt.Color(0, 32, 64));
+		jPanel1.setBackground(new Color(2, 18, 27));
 
 		jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 		jLabel1.setForeground(new java.awt.Color(255, 255, 255));
