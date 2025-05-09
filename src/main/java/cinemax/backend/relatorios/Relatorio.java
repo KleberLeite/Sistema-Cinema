@@ -11,17 +11,26 @@ public class Relatorio {
 	private RelatorioFilmes relatorioFilmes;
 	private LocalDateTime inicio;
 	private LocalDateTime fim;
-	
+
 	private boolean fechado;
 	private boolean permitirAlteracoes;
-	
+
 	public final Event<Boolean> aoAlterarPermissaoAlteracoes;
-	
-	protected Relatorio(
-		Event<Boolean> aoAlterarPermissaoAlteracoes,
-		RelatorioAlimentos relatorioAlimentos,
-		RelatorioFilmes relatorioFilmes
-	) {
+
+	protected Relatorio(Event<Boolean> aoAlterarPermissaoAlteracoes, RelatorioAlimentos relatorioAlimentos,
+			RelatorioFilmes relatorioFilmes, LocalDateTime inicio, LocalDateTime fim) {
+		this.permitirAlteracoes = false;
+		this.inicio = inicio;
+		this.fim = fim;
+		this.fechado = true;
+		this.relatorioAlimentos = relatorioAlimentos;
+		this.relatorioFilmes = relatorioFilmes;
+		this.aoAlterarPermissaoAlteracoes = aoAlterarPermissaoAlteracoes;
+	}
+
+	protected Relatorio(boolean permitirAlteracoes, Event<Boolean> aoAlterarPermissaoAlteracoes,
+			RelatorioAlimentos relatorioAlimentos, RelatorioFilmes relatorioFilmes) {
+		this.permitirAlteracoes = permitirAlteracoes;
 		this.inicio = LocalDateTime.now();
 		this.relatorioAlimentos = relatorioAlimentos;
 		this.relatorioFilmes = relatorioFilmes;
@@ -31,26 +40,26 @@ public class Relatorio {
 	public RelatorioAlimentos getRelatorioAlimentos() {
 		return relatorioAlimentos;
 	}
-	
+
 	public RelatorioFilmes getRelatorioFilmes() {
 		return relatorioFilmes;
 	}
-	
+
 	public LocalDateTime getInicio() {
 		return inicio;
 	}
-	
+
 	public LocalDateTime getFim() {
 		return fim;
 	}
-	
+
 	protected void setPermitirAlteracoes(boolean permitirAlteracoes) {
-		if(!fechado && this.permitirAlteracoes != permitirAlteracoes) {
+		if (!fechado && this.permitirAlteracoes != permitirAlteracoes) {
 			this.permitirAlteracoes = permitirAlteracoes;
 			aoAlterarPermissaoAlteracoes.raiseEvent(permitirAlteracoes);
 		}
 	}
-	
+
 	protected void finalizar() {
 		setPermitirAlteracoes(false);
 		fechado = true;

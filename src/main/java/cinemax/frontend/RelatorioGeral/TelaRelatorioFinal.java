@@ -103,13 +103,13 @@ public class TelaRelatorioFinal extends JFrame {
         RelatorioFilmes relatorioFilmes = relatorio.getRelatorioFilmes();
         
         
-        relatorioFilmes.adicionarVendas(simularVendasFilmes());
+        /*relatorioFilmes.adicionarVendas(simularVendasFilmes());
     	
 		app.getBackend().tentarFecharDia();
 		
 		for(Ingresso ingresso : simularVendasFilmes() ) {
 			System.out.println(ingresso.toString());
-		}
+		}*/
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 900, 600);

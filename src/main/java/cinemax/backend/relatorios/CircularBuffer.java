@@ -35,4 +35,8 @@ public class CircularBuffer<T> {
 	public T obterAtual() {
 		return tamanho == 0 ? null : (T)buffer[0];
 	}
+	
+	public int size() {
+		return tamanho;
+	}
 }
