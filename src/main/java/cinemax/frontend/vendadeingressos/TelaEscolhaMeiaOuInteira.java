@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import java.awt.Dimension;
 
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
@@ -352,8 +353,9 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		panelResumo.setBounds(445, 7, 329, 453);
 		contentPane_1.add(panelResumo);
 
-		JLabel lblLinha = new JLabel("_____________________________________________________");
-		lblLinha.setBounds(5, 372, 329, 14);
+		JLabel lblLinha = new JLabel("_____________________________________________");
+		lblLinha.setHorizontalAlignment(SwingConstants.CENTER); 
+		lblLinha.setBounds(0, 372, 329, 14);
 		panelResumo.add(lblLinha);
 
 		JLabel lblTotal = new JLabel("Total:");
@@ -527,25 +529,5 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		panelMeias.add(btnMenosUmaMeia);
 		btnMenosUmaMeia.setEnabled(false);
 		
-		
-		JButton btnTeste = new JButton("Teste");
-		btnTeste.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int contMeia = 0;
-				int contInteira = 0;
-				for(Ingresso ingresso : carrinho.getIngressos()) {
-					if(ingresso.getTipo() == TipoDeIngresso.Inteira) contInteira++;
-					else contMeia++;
-					System.out.println("-----------------------------------------");
-					System.out.println(ingresso.toString());
-					System.out.println("-----------------------------------------");
-				}
-				System.out.println("Quantidade de meia:"+contMeia);
-				System.out.println("Quantidade de Inteira:"+contInteira);
-			}
-		});
-		btnTeste.setBounds(400, 310, 89, 23);
-		panelIngressos.add(btnTeste);
-
 	}
 }
