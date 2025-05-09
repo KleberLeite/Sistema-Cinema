@@ -42,12 +42,12 @@ import javax.swing.table.DefaultTableModel;
 //_______________________________________________________//
 
 @SuppressWarnings("serial")
-public class Gerencia extends javax.swing.JFrame {
+public class TelaCrudFuncionario extends javax.swing.JFrame {
 	private IBancoDeDadosFuncionario bancoDeDados;
 	private int indiceSelecionado = -1;
 	private Funcionario[] funcionariosLista;
 
-	public Gerencia(IBancoDeDadosFuncionario bancoDeDados) {
+	public TelaCrudFuncionario(IBancoDeDadosFuncionario bancoDeDados) {
 		this.bancoDeDados = bancoDeDados;
 		initComponents();
 		DefaultTableModel model = (DefaultTableModel) PlanilhaGerenciaFuncionarios.getModel();

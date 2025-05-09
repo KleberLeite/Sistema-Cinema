@@ -9,7 +9,7 @@ import cinemax.backend.core.Backend;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.geranciadefuncionarios.Gerencia;
+import cinemax.frontend.geranciadefuncionarios.TelaCrudFuncionario;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
 import cinemax.frontend.vendadealimentos.TelaCrudAlimento;
 import cinemax.frontend.vendadealimentos.VendaDealimentoss;
@@ -506,9 +506,9 @@ public class Gerente extends javax.swing.JFrame {
 		IBancoDeDadosFuncionario banco = ControladorDeApp.getInstancia()
 										.getBackend().getBancoFuncionarios();
 		
-		Gerencia gerencia = new Gerencia(banco);
-		gerencia.setLocationRelativeTo(null);
-		gerencia.setVisible(true);
+		TelaCrudFuncionario telaCrudFuncionario = new TelaCrudFuncionario(banco);
+		telaCrudFuncionario.setLocationRelativeTo(null);
+		telaCrudFuncionario.setVisible(true);
 		this.dispose(); // Fecha a tela atual se quiser
 	}// GEN-LAST:event_ButaoAcessarGeranciaDeFuncionarioActionPerformed
 
