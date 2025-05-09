@@ -4,6 +4,7 @@
  */
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
+import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.vendadealimentos.VendaDealimentoss;
 
 /**
@@ -72,6 +73,8 @@ public class Funcionarios extends javax.swing.JFrame {
 				BotaoAcessarVendaDeAlimentosActionPerformed(evt);
 			}
 		});
+		BotaoAcessarVendaDeAlimentos.setEnabled(
+				ControladorDeApp.getInstancia().getBackend().diaEstaAberto());
 
 		jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 		jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,6 +120,8 @@ public class Funcionarios extends javax.swing.JFrame {
 				BotaoVendasDeIngressosActionPerformed(evt);
 			}
 		});
+		BotaoVendasDeIngressos.setEnabled(
+			ControladorDeApp.getInstancia().getBackend().diaEstaAberto());
 
 		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
 		jPanel3.setLayout(jPanel3Layout);
