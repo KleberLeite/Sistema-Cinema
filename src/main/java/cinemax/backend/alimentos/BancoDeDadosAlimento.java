@@ -21,10 +21,6 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 		this.backend = backend;
 	}
 
-    public BancoDeDadosAlimento() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 	// Retorna o alimento por seu código ou null caso não ache.
 	@Override
 	public Alimento obterAlimentoPorCodigo(int codigo) {
