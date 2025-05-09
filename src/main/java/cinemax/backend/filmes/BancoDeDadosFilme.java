@@ -201,7 +201,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		if(backend.diaEstaAberto()) {
 			return -1;
 		}
-		if(bancoDeDadosSala.existeSala(idSala)) {
+		if(!bancoDeDadosSala.existeSala(idSala)) {
 			return -1;
 		}
 		if(!filmes.containsKey(idFilme)) {
@@ -453,8 +453,6 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 				LocalDateTime inicioSessaoExistente = sessao.getInicio();
 				LocalDateTime fimSessaoExistente = sessao.getInicio().plusMinutes(filme.getDuracaoEmMinutos() + TEMPO_LIMPEZA);
 				if(haChoqueDeHorario(inicio, fimNovaSessao, inicioSessaoExistente, fimSessaoExistente)) {
-					System.out.println("Choque com: " + filme.getNome());
-					System.out.println("Inicio desejado: " + inicio);
 					return true;
 				}
 			}
