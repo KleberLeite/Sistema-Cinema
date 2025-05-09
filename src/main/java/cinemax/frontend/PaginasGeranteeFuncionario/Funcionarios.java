@@ -5,12 +5,17 @@
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.vendadealimentos.VendaDeAlimentos;
+import cinemax.frontend.login.LoginDeAcesso;
+import cinemax.frontend.vendadealimentos.TelaVendaDeAlimento;
+import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
+
 import javax.swing.JButton;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -40,11 +45,13 @@ public class Funcionarios extends javax.swing.JFrame {
 		jPanel2 = new javax.swing.JPanel();
 		jPanel4 = new javax.swing.JPanel();
 		BotaoAcessarVendaDeAlimentos = new javax.swing.JButton();
+		BotaoAcessarVendaDeAlimentos.setFont(new Font("Tahoma", Font.BOLD, 12));
 		jLabel2 = new javax.swing.JLabel();
 		jPanel3 = new javax.swing.JPanel();
 		jPanel5 = new javax.swing.JPanel();
 		jLabel3 = new javax.swing.JLabel();
 		BotaoVendasDeIngressos = new javax.swing.JButton();
+		BotaoVendasDeIngressos.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,7 +59,7 @@ public class Funcionarios extends javax.swing.JFrame {
 
 		jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 		jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-		jLabel1.setText("Ária do funcionário");
+		jLabel1.setText("Área do funcionário");
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
@@ -150,6 +157,15 @@ public class Funcionarios extends javax.swing.JFrame {
 						.addGap(51, 51, 51)));
 		
 		btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginDeAcesso loginDeAcesso = new LoginDeAcesso();
+				loginDeAcesso.setVisible(true);
+				loginDeAcesso.setLocationRelativeTo(null);
+				
+				dispose();
+			}
+		});
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -185,11 +201,14 @@ public class Funcionarios extends javax.swing.JFrame {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void BotaoVendasDeIngressosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotaoVendasDeIngressosActionPerformed
-		// TODO add your handling code here:
+		TelaVendaDeIngresso telaEscolhaFilme = new TelaVendaDeIngresso();
+		telaEscolhaFilme.setLocationRelativeTo(null);
+		telaEscolhaFilme.setVisible(true); // Torna a janela Vendas visível
+		this.dispose();
 	}// GEN-LAST:event_BotaoVendasDeIngressosActionPerformed
 
 	private void BotaoAcessarVendaDeAlimentosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotaoAcessarVendaDeAlimentosActionPerformed
-		VendaDeAlimentos vendass = new VendaDeAlimentos();
+		TelaVendaDeAlimento vendass = new TelaVendaDeAlimento();
 		vendass.setLocationRelativeTo(null);
 		vendass.setVisible(true); // Torna a janela Vendas visível
 		this.dispose();

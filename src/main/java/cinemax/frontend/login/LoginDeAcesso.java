@@ -182,6 +182,7 @@ public class LoginDeAcesso extends javax.swing.JFrame {
 	        // Abre a tela do gerente/admin
 	        Gerente telaGerente = new Gerente();
 	        telaGerente.setVisible(true);
+	        telaGerente.setLocationRelativeTo(null);
 	    }
         this.dispose();
     }//GEN-LAST:event_BotaoLoginActionPerformed

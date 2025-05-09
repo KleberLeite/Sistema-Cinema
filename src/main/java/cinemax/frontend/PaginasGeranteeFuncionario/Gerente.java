@@ -11,6 +11,7 @@ import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.TelaCrudFuncionario;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
+import cinemax.frontend.login.LoginDeAcesso;
 import cinemax.frontend.vendadealimentos.TelaCrudAlimento;
 import cinemax.frontend.vendadealimentos.TelaVendaDeAlimento;
 import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
@@ -54,13 +55,16 @@ public class Gerente extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         BotaoAcessarGeranciaFuncinario = new javax.swing.JButton();
+        BotaoAcessarGeranciaFuncinario.setFont(new Font("Tahoma", Font.BOLD, 11));
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         botaoIniciarDia = new javax.swing.JButton();
+        botaoIniciarDia.setFont(new Font("Tahoma", Font.BOLD, 12));
         JButton BotaoAcessarGeranciaDeFilmes = new JButton();
+        BotaoAcessarGeranciaDeFilmes.setFont(new Font("Tahoma", Font.BOLD, 12));
         BotaoAcessarGeranciaDeFilmes.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		TelaCrudFilme telaCrudFilme = new TelaCrudFilme();
@@ -90,6 +94,7 @@ public class Gerente extends javax.swing.JFrame {
         }
         
         botaoTerminoDia = new javax.swing.JButton();
+        botaoTerminoDia.setFont(new Font("Tahoma", Font.BOLD, 12));
         botaoTerminoDia.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		app.getBackend().tentarFecharDia();
@@ -109,6 +114,7 @@ public class Gerente extends javax.swing.JFrame {
         	botaoTerminoDia.setEnabled(false);
         }
         botaoConsultarRelatorio = new javax.swing.JButton();
+        botaoConsultarRelatorio.setFont(new Font("Tahoma", Font.BOLD, 12));
         botaoConsultarRelatorio.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		
@@ -127,11 +133,13 @@ public class Gerente extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         TXTVendaDeAlimentos = new javax.swing.JLabel();
         BotaoAcessarVendaDeAlimentos = new javax.swing.JButton();
+        BotaoAcessarVendaDeAlimentos.setFont(new Font("Tahoma", Font.BOLD, 12));
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         botaoAcessoCompraDeIngresos = new javax.swing.JButton();
+        botaoAcessoCompraDeIngresos.setFont(new Font("Tahoma", Font.PLAIN, 12));
         botaoAcessoCompraDeIngresos.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		TelaVendaDeIngresso telaEscolhaFilme = new TelaVendaDeIngresso();
@@ -398,6 +406,7 @@ public class Gerente extends javax.swing.JFrame {
 				.addGap(0, 100, Short.MAX_VALUE).addGap(0, 100, Short.MAX_VALUE));
 		jPanel6_2.setLayout(gl_jPanel6_2);
 		BotaoAcessarGeranciaDeAlimentos = new javax.swing.JButton();
+		BotaoAcessarGeranciaDeAlimentos.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		BotaoAcessarGeranciaDeAlimentos.setText("Acessar");
 		if (!app.getBackend().diaEstaAberto())
@@ -444,18 +453,28 @@ public class Gerente extends javax.swing.JFrame {
 					.addContainerGap(31, Short.MAX_VALUE))
 		);
 		jPanel2_2.setLayout(gl_jPanel2_2);
+		
+		btnNewButton = new JButton("Voltar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				LoginDeAcesso loginDeAcesso = new LoginDeAcesso();
+				loginDeAcesso.setVisible(true);
+				loginDeAcesso.setLocationRelativeTo(null);
+				
+				dispose();
+				
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(
 			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
 				.addComponent(jPanel5, GroupLayout.DEFAULT_SIZE, 1206, Short.MAX_VALUE)
 				.addGroup(jPanel1Layout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 1186, Short.MAX_VALUE)
-					.addContainerGap())
-				.addGroup(jPanel1Layout.createSequentialGroup()
 					.addGap(36)
-					.addGroup(jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
 						.addGroup(jPanel1Layout.createSequentialGroup()
 							.addGap(98)
 							.addComponent(jPanel2_1, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)
@@ -464,12 +483,20 @@ public class Gerente extends javax.swing.JFrame {
 							.addGap(116)
 							.addComponent(jPanel2_2, GroupLayout.PREFERRED_SIZE, 240, GroupLayout.PREFERRED_SIZE)
 							.addGap(124))
-						.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+						.addGroup(jPanel1Layout.createSequentialGroup()
 							.addGap(49)
 							.addComponent(jPanel10, GroupLayout.PREFERRED_SIZE, 365, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, 335, Short.MAX_VALUE)
 							.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(55))))
+				.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(jPanel1Layout.createSequentialGroup()
+							.addGap(10)
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 1186, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		jPanel1Layout.setVerticalGroup(
 			jPanel1Layout.createParallelGroup(Alignment.LEADING)
@@ -485,8 +512,10 @@ public class Gerente extends javax.swing.JFrame {
 						.addComponent(jPanel10, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
 						.addComponent(jPanel8, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(18)
-					.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(43))
+					.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnNewButton)
+					.addGap(25))
 		);
 		jPanel1.setLayout(jPanel1Layout);
 
@@ -595,4 +624,5 @@ public class Gerente extends javax.swing.JFrame {
 	private JPanel jPanel2_2;
 	private JPanel jPanel6_2;
 	private JLabel jLabel4;
+	private JButton btnNewButton;
 }
