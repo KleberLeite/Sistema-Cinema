@@ -38,6 +38,7 @@ public class TelaCrudFilme extends JFrame {
 					TelaCrudFilme frame = new TelaCrudFilme();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

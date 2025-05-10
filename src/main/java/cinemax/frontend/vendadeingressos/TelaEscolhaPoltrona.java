@@ -58,8 +58,8 @@ public class TelaEscolhaPoltrona extends JFrame {
 				try {
 					TelaEscolhaPoltrona frame = new TelaEscolhaPoltrona(null);
 					frame.setVisible(true);
-					frame.setSize(800, 700);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

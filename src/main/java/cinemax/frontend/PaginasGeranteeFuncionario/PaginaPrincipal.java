@@ -17,12 +17,12 @@ public class PaginaPrincipal {
 		switch(cargo) {
 		case Administrador:
 		case Gerente:
-			Gerente telaGerente = new Gerente();
+			TelaGerente telaGerente = new TelaGerente();
 			telaGerente.setVisible(true);
 			telaGerente.setLocationRelativeTo(null);
 			break;
 		case Atendente:
-			new Funcionarios().setVisible(true);
+			new TelaFuncionario().setVisible(true);
 			break;
 		}
 	}

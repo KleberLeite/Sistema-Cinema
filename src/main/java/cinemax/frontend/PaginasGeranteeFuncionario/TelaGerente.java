@@ -11,7 +11,7 @@ import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.geranciadefuncionarios.TelaCrudFuncionario;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
-import cinemax.frontend.login.LoginDeAcesso;
+import cinemax.frontend.login.TelaLogin;
 import cinemax.frontend.vendadealimentos.TelaCrudAlimento;
 import cinemax.frontend.vendadealimentos.TelaVendaDeAlimento;
 import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
@@ -33,14 +33,14 @@ import java.awt.Image;
  * @author Geraldo
  */
 @SuppressWarnings("serial")
-public class Gerente extends javax.swing.JFrame {
+public class TelaGerente extends javax.swing.JFrame {
 
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	
 	/**
 	 * Creates new form Gerente
 	 */
-	public Gerente() {
+	public TelaGerente() {
 		initComponents();
 	}
 
@@ -152,6 +152,7 @@ public class Gerente extends javax.swing.JFrame {
         });
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setTitle("Cinemax");
 
 		jPanel2.setBackground(new Color(255, 255, 255));
 
@@ -484,7 +485,7 @@ public class Gerente extends javax.swing.JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				LoginDeAcesso loginDeAcesso = new LoginDeAcesso();
+				TelaLogin loginDeAcesso = new TelaLogin();
 				loginDeAcesso.setVisible(true);
 				loginDeAcesso.setLocationRelativeTo(null);
 				

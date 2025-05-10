@@ -47,6 +47,7 @@ public class TelaAdicionarSessao extends JFrame {
 					TelaAdicionarSessao frame = new TelaAdicionarSessao(null,0);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

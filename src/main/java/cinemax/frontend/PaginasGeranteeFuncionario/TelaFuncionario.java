@@ -5,7 +5,7 @@
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.login.LoginDeAcesso;
+import cinemax.frontend.login.TelaLogin;
 import cinemax.frontend.vendadealimentos.TelaVendaDeAlimento;
 import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
 
@@ -25,12 +25,12 @@ import java.awt.Color;
  *
  * @author geral
  */
-public class Funcionarios extends javax.swing.JFrame {
+public class TelaFuncionario extends javax.swing.JFrame {
 
 	/**
 	 * Creates new form Funcionarios
 	 */
-	public Funcionarios() {
+	public TelaFuncionario() {
 		getContentPane().setBackground(new Color(2, 18, 27));
 		initComponents();
 	}
@@ -57,6 +57,7 @@ public class Funcionarios extends javax.swing.JFrame {
 		BotaoVendasDeIngressos.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setTitle("Cinemax");
 
 		jPanel1.setBackground(new Color(255, 255, 255));
 
@@ -179,7 +180,7 @@ public class Funcionarios extends javax.swing.JFrame {
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoginDeAcesso loginDeAcesso = new LoginDeAcesso();
+				TelaLogin loginDeAcesso = new TelaLogin();
 				loginDeAcesso.setVisible(true);
 				loginDeAcesso.setLocationRelativeTo(null);
 				
@@ -254,16 +255,16 @@ public class Funcionarios extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Funcionarios.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Funcionarios.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Funcionarios.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Funcionarios.class.getName()).log(java.util.logging.Level.SEVERE, null,
+			java.util.logging.Logger.getLogger(TelaFuncionario.class.getName()).log(java.util.logging.Level.SEVERE, null,
 					ex);
 		}
 		// </editor-fold>
@@ -271,7 +272,7 @@ public class Funcionarios extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new Funcionarios().setVisible(true);
+				new TelaFuncionario().setVisible(true);
 			}
 		});
 	}

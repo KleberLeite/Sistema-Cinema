@@ -106,7 +106,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		ButaoVoltar = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("Funcionários");
+		setTitle("Cinemax");
 
 		PlanilhaGerenciaFuncionarios.setModel(
 			new javax.swing.table.DefaultTableModel(

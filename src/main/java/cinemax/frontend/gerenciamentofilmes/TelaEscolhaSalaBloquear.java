@@ -20,7 +20,7 @@ import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.relatorios.Relatorio;
 import cinemax.backend.salas.Sala;
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.RelatorioGeral.TelaRelatorioFinal;
 import cinemax.frontend.controller.ControladorDeApp;
 
@@ -40,6 +40,7 @@ public class TelaEscolhaSalaBloquear extends JFrame {
 					TelaEscolhaSalaBloquear frame = new TelaEscolhaSalaBloquear();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

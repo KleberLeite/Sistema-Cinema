@@ -47,6 +47,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 	public TelaConclusaoDeCompra(Sessao sessao, CarrinhoIngressos carrinho) {		
 						
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Cinemax");
 		setBounds(100, 100, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(2, 18, 27));

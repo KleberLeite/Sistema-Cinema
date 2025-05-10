@@ -215,6 +215,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         bntVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cinemax");
         setBackground(new java.awt.Color(2, 32, 64));
 
         jPanel1.setBackground(new Color(2, 18, 27));

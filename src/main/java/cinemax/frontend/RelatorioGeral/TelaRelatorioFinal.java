@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.filmes.Filme;
@@ -47,6 +47,7 @@ public class TelaRelatorioFinal extends JFrame {
                     TelaRelatorioFinal frame = new TelaRelatorioFinal(null);
                     frame.setVisible(true);
                     frame.setLocationRelativeTo(null);
+                    frame.setTitle("Cinemax");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

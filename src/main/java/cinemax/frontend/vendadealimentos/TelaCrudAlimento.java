@@ -4,7 +4,7 @@ package cinemax.frontend.vendadealimentos;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.backend.core.Backend;
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
 
@@ -108,7 +108,7 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 		ButaoVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("Venda De Alimentos");
+		setTitle("Cinemax");
 
 		jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

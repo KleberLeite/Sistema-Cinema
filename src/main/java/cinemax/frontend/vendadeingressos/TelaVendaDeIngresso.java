@@ -55,8 +55,8 @@ public class TelaVendaDeIngresso extends JFrame {
 				try {
 					TelaVendaDeIngresso frame = new TelaVendaDeIngresso();
 					frame.setLocationRelativeTo(null);
-					frame.setSize(800, 500);
 					frame.setVisible(true);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

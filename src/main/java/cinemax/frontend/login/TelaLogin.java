@@ -6,8 +6,8 @@ package cinemax.frontend.login;
 import cinemax.backend.funcionarios.CargoFuncionario;
 import cinemax.backend.funcionarios.Funcionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
-import cinemax.frontend.PaginasGeranteeFuncionario.Funcionarios;
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.TelaFuncionario;
+import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -25,11 +25,11 @@ import javax.swing.JLabel;
  *
  * @author geral
  */
-public class LoginDeAcesso extends javax.swing.JFrame {
+public class TelaLogin extends javax.swing.JFrame {
 	private IBancoDeDadosFuncionario bancoFuncionarios = ControladorDeApp.getInstancia()
 			.getBackend().getBancoFuncionarios();
   
-    public LoginDeAcesso() {
+    public TelaLogin() {
         initComponents();
     }
 
@@ -53,7 +53,7 @@ public class LoginDeAcesso extends javax.swing.JFrame {
         CapturaDeTXTSenhaLogin = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Login de Acesso");
+        setTitle("Cinemax");
         setResizable(false);
 
         jPanel1.setBackground(new Color(2, 18, 27));
@@ -189,12 +189,12 @@ public class LoginDeAcesso extends javax.swing.JFrame {
 	    ControladorDeApp.getInstancia().onLogin(cargo);
 	    if (cargo == CargoFuncionario.Atendente) {
 	        // Abre a tela dos funcionários
-	        Funcionarios telaFuncionario = new Funcionarios();
+	        TelaFuncionario telaFuncionario = new TelaFuncionario();
 	        telaFuncionario.setVisible(true);
 	        telaFuncionario.setLocationRelativeTo(null);
 	    } else {
 	        // Abre a tela do gerente/admin
-	        Gerente telaGerente = new Gerente();
+	        TelaGerente telaGerente = new TelaGerente();
 	        telaGerente.setVisible(true);
 	        telaGerente.setLocationRelativeTo(null);
 	    }
@@ -218,20 +218,20 @@ public class LoginDeAcesso extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginDeAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginDeAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginDeAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginDeAcesso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	LoginDeAcesso loginDeAcesso =new LoginDeAcesso();
+            	TelaLogin loginDeAcesso =new TelaLogin();
             	loginDeAcesso.setVisible(true);
             	loginDeAcesso.setLocationRelativeTo(null);
             }

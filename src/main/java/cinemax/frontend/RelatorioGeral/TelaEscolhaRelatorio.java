@@ -18,7 +18,7 @@ import cinemax.backend.relatorios.Relatorio;
 import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 import cinemax.backend.salas.Sala;
-import cinemax.frontend.PaginasGeranteeFuncionario.Gerente;
+import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
 
 import javax.swing.JLabel;
@@ -54,6 +54,7 @@ public class TelaEscolhaRelatorio extends JFrame {
 					TelaEscolhaRelatorio frame = new TelaEscolhaRelatorio();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -217,7 +218,7 @@ public class TelaEscolhaRelatorio extends JFrame {
 		JButton btnVoltar = new JButton("Voltar");
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Gerente telaGerente = new Gerente();
+				TelaGerente telaGerente = new TelaGerente();
                 telaGerente.setVisible(true);
                 telaGerente.setLocationRelativeTo(null);
                 dispose();

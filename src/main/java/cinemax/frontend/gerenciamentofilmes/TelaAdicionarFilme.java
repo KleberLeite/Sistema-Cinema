@@ -72,6 +72,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 					TelaAdicionarFilme frame = new TelaAdicionarFilme();
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

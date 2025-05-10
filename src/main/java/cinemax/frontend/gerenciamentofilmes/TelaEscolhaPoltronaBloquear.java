@@ -48,6 +48,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 					TelaEscolhaPoltronaBloquear frame = new TelaEscolhaPoltronaBloquear(null);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

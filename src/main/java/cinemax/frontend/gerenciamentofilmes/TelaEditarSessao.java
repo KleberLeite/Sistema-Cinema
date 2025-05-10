@@ -48,6 +48,7 @@ public class TelaEditarSessao extends JFrame {
 					TelaEditarSessao frame = new TelaEditarSessao(null, null);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

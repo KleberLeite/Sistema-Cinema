@@ -39,6 +39,7 @@ public class TelaDetalhesFilme extends JFrame {
 					TelaDetalhesFilme frame = new TelaDetalhesFilme(null);
 					frame.setVisible(true);
 					frame.setLocationRelativeTo(null);
+					frame.setTitle("Cinemax");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
