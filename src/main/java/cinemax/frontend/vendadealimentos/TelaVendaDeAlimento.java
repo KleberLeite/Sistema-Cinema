@@ -8,7 +8,8 @@ import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -215,7 +216,14 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         bntRecarregarLista.setFont(new Font("Tahoma", Font.BOLD, 12));
         bntVoltar = new javax.swing.JButton();
         bntVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
-
+        /*
+        Estilizador.aplicarEstiloBotao(BotaoComprar, EstiloBotao.PADRAO_ESCURECIDO);
+        Estilizador.aplicarEstiloBotao(bntProcurarnomeAliemnto, EstiloBotao.PADRAO_ESCURECIDO);
+        Estilizador.aplicarEstiloBotao(bntProvurarcodigo, EstiloBotao.PADRAO_ESCURECIDO);
+        Estilizador.aplicarEstiloBotao(bntRecarregarLista, EstiloBotao.PADRAO_ESCURECIDO);
+        Estilizador.aplicarEstiloBotao(bntVoltar, EstiloBotao.CLARO_UNIFICADO);
+        */
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinemax");
         setBackground(new java.awt.Color(2, 32, 64));

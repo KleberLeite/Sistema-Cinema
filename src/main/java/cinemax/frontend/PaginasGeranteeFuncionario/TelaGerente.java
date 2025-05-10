@@ -9,6 +9,8 @@ import cinemax.backend.core.Backend;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.frontend.geranciadefuncionarios.TelaCrudFuncionario;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
 import cinemax.frontend.login.TelaLogin;
@@ -58,14 +60,17 @@ public class TelaGerente extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         BotaoAcessarGeranciaFuncinario = new javax.swing.JButton();
+        Estilizador.aplicarEstiloBotao(BotaoAcessarGeranciaFuncinario, EstiloBotao.PADRAO_ESCURECIDO);
         BotaoAcessarGeranciaFuncinario.setFont(new Font("Tahoma", Font.BOLD, 11));
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         botaoIniciarDia = new javax.swing.JButton();
+        Estilizador.aplicarEstiloBotao(botaoIniciarDia, EstiloBotao.PADRAO_ESCURECIDO);
         botaoIniciarDia.setFont(new Font("Tahoma", Font.BOLD, 12));
         JButton BotaoAcessarGeranciaDeFilmes = new JButton();
+        Estilizador.aplicarEstiloBotao(BotaoAcessarGeranciaDeFilmes, EstiloBotao.PADRAO_ESCURECIDO);
         BotaoAcessarGeranciaDeFilmes.setFont(new Font("Tahoma", Font.BOLD, 12));
         BotaoAcessarGeranciaDeFilmes.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -96,6 +101,7 @@ public class TelaGerente extends javax.swing.JFrame {
         }
         
         botaoTerminoDia = new javax.swing.JButton();
+        Estilizador.aplicarEstiloBotao(botaoTerminoDia, EstiloBotao.PADRAO_ESCURECIDO);
         botaoTerminoDia.setFont(new Font("Tahoma", Font.BOLD, 12));
         botaoTerminoDia.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -116,6 +122,7 @@ public class TelaGerente extends javax.swing.JFrame {
         	botaoTerminoDia.setEnabled(false);
         }
         botaoConsultarRelatorio = new javax.swing.JButton();
+        Estilizador.aplicarEstiloBotao(botaoConsultarRelatorio, EstiloBotao.PADRAO_ESCURECIDO);
         botaoConsultarRelatorio.setFont(new Font("Tahoma", Font.BOLD, 12));
         botaoConsultarRelatorio.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -135,10 +142,12 @@ public class TelaGerente extends javax.swing.JFrame {
         jPanel8 = new javax.swing.JPanel();
         TXTVendaDeAlimentos = new javax.swing.JLabel();
         BotaoAcessarVendaDeAlimentos = new javax.swing.JButton();
+        Estilizador.aplicarEstiloBotao(BotaoAcessarVendaDeAlimentos, EstiloBotao.PADRAO_ESCURECIDO);
         BotaoAcessarVendaDeAlimentos.setFont(new Font("Tahoma", Font.BOLD, 12));
         jPanel10 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         botaoAcessoCompraDeIngresos = new javax.swing.JButton();
+        Estilizador.aplicarEstiloBotao(botaoAcessoCompraDeIngresos, EstiloBotao.PADRAO_ESCURECIDO);
         botaoAcessoCompraDeIngresos.setFont(new Font("Tahoma", Font.BOLD, 12));
         botaoAcessoCompraDeIngresos.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -428,6 +437,7 @@ public class TelaGerente extends javax.swing.JFrame {
 		jPanel2_2 = new JPanel();
 		jPanel2_2.setBackground(new Color(255, 255, 255));
 		BotaoAcessarGeranciaDeAlimentos = new javax.swing.JButton();
+		Estilizador.aplicarEstiloBotao(BotaoAcessarGeranciaDeAlimentos, EstiloBotao.PADRAO_ESCURECIDO);
 		BotaoAcessarGeranciaDeAlimentos.setFont(new Font("Tahoma", Font.BOLD, 12));
 
 		BotaoAcessarGeranciaDeAlimentos.setText("Acessar");
@@ -481,8 +491,9 @@ public class TelaGerente extends javax.swing.JFrame {
 		);
 		jPanel2_2.setLayout(gl_jPanel2_2);
 		
-		btnNewButton = new JButton("Voltar");
-		btnNewButton.addActionListener(new ActionListener() {
+		btnVoltar = new JButton("Voltar");
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
+		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				TelaLogin loginDeAcesso = new TelaLogin();
@@ -493,7 +504,7 @@ public class TelaGerente extends javax.swing.JFrame {
 				
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
 		jPanel1Layout.setHorizontalGroup(
@@ -524,7 +535,7 @@ public class TelaGerente extends javax.swing.JFrame {
 					.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
 						.addGroup(jPanel1Layout.createSequentialGroup()
 							.addGap(10)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
+							.addComponent(btnVoltar, GroupLayout.PREFERRED_SIZE, 82, GroupLayout.PREFERRED_SIZE))
 						.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 1217, Short.MAX_VALUE))
 					.addContainerGap())
 		);
@@ -544,7 +555,7 @@ public class TelaGerente extends javax.swing.JFrame {
 					.addGap(18)
 					.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnNewButton)
+					.addComponent(btnVoltar)
 					.addGap(25))
 		);
 		jPanel1.setLayout(jPanel1Layout);
@@ -650,7 +661,7 @@ public class TelaGerente extends javax.swing.JFrame {
 	private javax.swing.JPanel jPanel8;
 	private JPanel jPanel2_2;
 	private JLabel jLabel4;
-	private JButton btnNewButton;
+	private JButton btnVoltar;
 	private JLabel lblVendaDeIngresso;
 	private JLabel lblGerenciamentoDeFilme;
 	private JLabel lblGerenciamentoDeFuncionario;

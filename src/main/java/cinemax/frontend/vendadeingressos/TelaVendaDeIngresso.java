@@ -30,7 +30,8 @@ import cinemax.backend.filmes.IBancoDeDadosFilme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 
 import javax.swing.JScrollPane;
 import java.awt.Font;
@@ -67,7 +68,8 @@ public class TelaVendaDeIngresso extends JFrame {
 	}
 
 	// Create the frame.
-	public TelaVendaDeIngresso() {				
+	public TelaVendaDeIngresso() {	
+		Estilizador.estilizarCheckBoxCinza();
 		gerarTela();
 	}
 	
@@ -88,7 +90,7 @@ public class TelaVendaDeIngresso extends JFrame {
 	    for (GeneroFilme genero : GeneroFilme.values()) {
 	        JCheckBox checkBox = new JCheckBox(genero.toString());
 	        checkBox.setActionCommand(genero.name()); 
-	        checkBox.setBackground(new Color(255, 255, 255));
+	        Estilizador.estilizarCheckBox(checkBox, Color.WHITE, Color.BLACK, new Font("Tahoma", Font.BOLD, 13));
 	        checkBoxesGeneros.add(checkBox);
 
 	        checkBox.addItemListener(e -> {
@@ -127,8 +129,9 @@ public class TelaVendaDeIngresso extends JFrame {
 		diaSelecionado = hoje;
 		Filme[] filmesHoje;
 		GeneroFilme[] generosSelecionados = pegaOsGeneros(checkBoxesGeneros);
-		if(checkBoxesGeneros==null) filmesHoje = bancoFilmes.obterTodosFilmesNoDia(hoje);
-		else filmesHoje = bancoFilmes.obterTodosFilmesNoDia(hoje, generosSelecionados);
+		if (generosSelecionados.length == 0) filmesHoje = bancoFilmes.obterTodosFilmesNoDia(diaSelecionado);
+		 else  filmesHoje = bancoFilmes.obterTodosFilmesNoDia(diaSelecionado, generosSelecionados);
+		
 
 		atualizarListaFilmesPorFiltroDia(filmesHoje, painelListaFilmes, hoje);
 
@@ -170,6 +173,7 @@ public class TelaVendaDeIngresso extends JFrame {
 				String sessaoFormatada = sessao.getInicio().format(formatter);
 
 				JButton btnSessao = new JButton(sessaoFormatada);
+				Estilizador.aplicarEstiloBotao(btnSessao, EstiloBotao.PADRAO_ESCURECIDO);
 
 				btnSessao.addActionListener(e -> {
 					aoSelecionarSessao(sessao);
@@ -181,8 +185,8 @@ public class TelaVendaDeIngresso extends JFrame {
 
 				// Cria um painel vertical para colocar o label em cima do botão
 				JPanel painelJuntaSessaoESala = new JPanel();
+				painelJuntaSessaoESala = Estilizador.criarPainelArredondado(new Color(255, 255, 255), 10);
 				painelJuntaSessaoESala.setLayout(new BoxLayout(painelJuntaSessaoESala, BoxLayout.Y_AXIS));
-				painelJuntaSessaoESala.setBackground(new Color(255, 255, 255)); //talvez seja interessante
 				painelJuntaSessaoESala.add(sala);
 				painelJuntaSessaoESala.add(btnSessao);
 
@@ -200,6 +204,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		painelListaFilmes.revalidate();
 		painelListaFilmes.repaint();
 	}
+	
 	private JPanel gerarCardFilme() {
 		JPanel card = new JPanel();
 		card.setLayout(null);
@@ -275,6 +280,7 @@ public class TelaVendaDeIngresso extends JFrame {
 
 			JLabel diaDaSemana = new JLabel(diaFormatado, SwingConstants.CENTER);// Deixar o texto no centro do label
 			JButton botaoDia = new JButton(diaAtual);
+			Estilizador.aplicarEstiloBotao(botaoDia, EstiloBotao.CLARO_UNIFICADO);
 
 			// Cria um painel vertical para colocar o label em cima do botão
 			JPanel painelJuntaDataEDia = new JPanel();
@@ -382,7 +388,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		
 
 		JButton btnVoltar = new JButton("Voltar");
-		Estilizador.estilizarBotao(btnVoltar, new Color(170,170,170), new Color(255,255,255), 10);
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

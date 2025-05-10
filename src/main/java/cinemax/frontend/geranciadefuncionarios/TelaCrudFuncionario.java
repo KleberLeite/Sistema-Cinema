@@ -3,7 +3,8 @@ package cinemax.frontend.geranciadefuncionarios;
 
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.backend.funcionarios.CargoFuncionario;
 import cinemax.backend.funcionarios.Funcionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
@@ -105,7 +106,13 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		jPanel1 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
 		ButaoVoltar = new javax.swing.JButton();
-
+		
+		
+		Estilizador.aplicarEstiloBotao(ButaoVoltar, EstiloBotao.PADRAO_ESCURECIDO);
+		Estilizador.aplicarEstiloBotao(BotaoCadastrarFuncionarios, EstiloBotao.PADRAO_ESCURECIDO);
+		Estilizador.aplicarEstiloBotao(BotaoEditarFuncionarios, EstiloBotao.PADRAO_ESCURECIDO);
+		Estilizador.aplicarEstiloBotao(BotaoRemoverFuncionarios, EstiloBotao.PADRAO_ESCURECIDO);
+		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Cinemax");
 
@@ -125,7 +132,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 			}
 		});
 		jScrollPane1.setViewportView(PlanilhaGerenciaFuncionarios);
-		//jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
+		jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 
 		BotaoCadastrarFuncionarios.setText("Cadastrar");
 		BotaoCadastrarFuncionarios.addActionListener(new java.awt.event.ActionListener() {

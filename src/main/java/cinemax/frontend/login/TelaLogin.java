@@ -9,6 +9,9 @@ import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.frontend.PaginasGeranteeFuncionario.TelaFuncionario;
 import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -52,6 +55,8 @@ public class TelaLogin extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         CapturaDeTXTSenhaLogin = new javax.swing.JPasswordField();
 
+        Estilizador.aplicarEstiloBotao(BotaoLogin, EstiloBotao.PADRAO_ESCURECIDO);
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cinemax");
         setResizable(false);
@@ -59,6 +64,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jPanel1.setBackground(new Color(2, 18, 27));
         
         JButton btnFecharSistema = new JButton("Fechar Sistema");
+        Estilizador.aplicarEstiloBotao(btnFecharSistema, EstiloBotao.CLARO_UNIFICADO);
         btnFecharSistema.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		dispose();
@@ -74,12 +80,12 @@ public class TelaLogin extends javax.swing.JFrame {
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
-        	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-        		.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addGap(21)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(btnFecharSistema, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(btnFecharSistema, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 351, GroupLayout.PREFERRED_SIZE))
         			.addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -87,20 +93,20 @@ public class TelaLogin extends javax.swing.JFrame {
         		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addGap(124)
         			.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 363, GroupLayout.PREFERRED_SIZE)
-        			.addGap(97)
+        			.addPreferredGap(ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
         			.addComponent(btnFecharSistema)
-        			.addContainerGap(19, Short.MAX_VALUE))
+        			.addGap(20))
         );
         jPanel1.setLayout(jPanel1Layout);
 
-        TXTLoginAcessso.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        TXTLoginAcessso.setFont(new Font("Segoe UI", Font.BOLD, 30)); // NOI18N
         TXTLoginAcessso.setText("Login");
 
-        TXTUsuarioLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        TXTUsuarioLogin.setText("Usuario");
+        TXTUsuarioLogin.setFont(new Font("Segoe UI", Font.BOLD, 14)); // NOI18N
+        TXTUsuarioLogin.setText("Usuário:");
 
-        TXTSenhaLogin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        TXTSenhaLogin.setText("Senha");
+        TXTSenhaLogin.setFont(new Font("Segoe UI", Font.BOLD, 14)); // NOI18N
+        TXTSenhaLogin.setText("Senha:");
 
         CapturaDeTXTUsuarioLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,8 +114,8 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
-        BotaoLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        BotaoLogin.setText("Entar");
+        BotaoLogin.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
+        BotaoLogin.setText("Entrar");
         BotaoLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotaoLoginActionPerformed(evt);

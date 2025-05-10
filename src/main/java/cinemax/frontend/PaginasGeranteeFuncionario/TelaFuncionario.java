@@ -5,6 +5,8 @@
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.frontend.login.TelaLogin;
 import cinemax.frontend.vendadealimentos.TelaVendaDeAlimento;
 import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
@@ -56,6 +58,9 @@ public class TelaFuncionario extends javax.swing.JFrame {
 		BotaoVendasDeIngressos = new javax.swing.JButton();
 		BotaoVendasDeIngressos.setFont(new Font("Tahoma", Font.BOLD, 12));
 
+		Estilizador.aplicarEstiloBotao(BotaoAcessarVendaDeAlimentos, EstiloBotao.PADRAO_ESCURECIDO);
+		Estilizador.aplicarEstiloBotao(BotaoVendasDeIngressos, EstiloBotao.PADRAO_ESCURECIDO);
+		
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Cinemax");
 

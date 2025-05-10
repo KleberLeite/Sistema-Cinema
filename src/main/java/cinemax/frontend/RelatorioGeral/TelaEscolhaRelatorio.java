@@ -20,7 +20,8 @@ import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 import cinemax.backend.salas.Sala;
 import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -198,13 +199,14 @@ public class TelaEscolhaRelatorio extends JFrame {
 		        + horaFormatadoInicio + " - " + horaFormatadoFim
 		        + "</div></html>";
 
-		    JButton botaoRelatorio = new JButton(textoBotao);
-		    botaoRelatorio.setAlignmentX(Component.CENTER_ALIGNMENT);
-		    botaoRelatorio.setFont(new Font("Tahoma", Font.BOLD, 13));
-		    botaoRelatorio.setMaximumSize(new java.awt.Dimension(150, 60));
+		    JButton btnRelatorio = new JButton(textoBotao);
+		    Estilizador.aplicarEstiloBotao(btnRelatorio, EstiloBotao.PADRAO_ESCURECIDO);
+		    btnRelatorio.setAlignmentX(Component.CENTER_ALIGNMENT);
+		    btnRelatorio.setFont(new Font("Tahoma", Font.BOLD, 13));
+		    btnRelatorio.setMaximumSize(new java.awt.Dimension(150, 60));
 
 		    final int indexRelatorio = i;
-		    botaoRelatorio.addActionListener(e -> {
+		    btnRelatorio.addActionListener(e -> {
 		        Relatorio relatorioDoDia = app.getBackend().getGerenciadorRelatorios().obterTodos().get(indexRelatorio);
 		        TelaRelatorioFinal telaRelatorioFinal = new TelaRelatorioFinal(relatorioDoDia);
 		        telaRelatorioFinal.setVisible(true);
@@ -212,12 +214,13 @@ public class TelaEscolhaRelatorio extends JFrame {
 		        dispose();
 		    });
 
-		    panelMostrarRelatorios.add(botaoRelatorio);
+		    panelMostrarRelatorios.add(btnRelatorio);
 		    panelMostrarRelatorios.add(javax.swing.Box.createVerticalStrut(10)); // espaço entre botões
 		}
 
 		
 		JButton btnVoltar = new JButton("Voltar");
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaGerente telaGerente = new TelaGerente();

@@ -10,8 +10,10 @@ import javax.swing.border.EmptyBorder;
 
 import cinemax.backend.filmes.Sessao;
 import cinemax.backend.relatorios.filmes.Ingresso;
+import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -70,6 +72,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 		panelPrincipal.setLayout(new BoxLayout(panelPrincipal, BoxLayout.Y_AXIS));
 		
 		JButton btnVoltar = new JButton("Voltar");
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaEscolhaMeiaOuInteira telaFinalizarCompra = new TelaEscolhaMeiaOuInteira(sessao, carrinho);
@@ -84,6 +87,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 		contentPane.add(btnVoltar);
 		
 		JButton btnImprimir = new JButton("Imprimir");
+		Estilizador.aplicarEstiloBotao(btnImprimir, EstiloBotao.CLARO_UNIFICADO);
 		btnImprimir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -143,6 +147,17 @@ public class TelaConclusaoDeCompra extends JFrame {
 			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
 			card.setBorder(new EmptyBorder(10, 10, 10, 10)); // espaçamento interno
 			
+			if(ingresso.getTipo() == TipoDeIngresso.Meia) {
+				card.setPreferredSize(new Dimension(1150, 215));
+				card.setMaximumSize(new Dimension(1150, 215));
+				JLabel lblRG = new JLabel("RG: "+ingresso.getRG());
+				lblRG.setBounds(20, 160, 100, 20); // mais largura pro nome
+				card.add(lblRG);
+				JLabel lblAviso = new JLabel("AVISO: Entrada permitida apenas com o porte do RG");
+				lblAviso.setForeground(Color.RED);
+				lblAviso.setBounds(20, 185, 300, 20); // mais largura pro nome
+				card.add(lblAviso);
+			}
 
 			JLabel lblCodigoIngresso = new JLabel("Código do Ingresso: "+ ingresso.getCodigoIngresso());
 			lblCodigoIngresso.setBounds(20, 10, 200, 20);
@@ -171,16 +186,6 @@ public class TelaConclusaoDeCompra extends JFrame {
 			lblPoltrona.setBounds(20, 135, 100, 20);
 			card.add(lblPoltrona);
 			
-			if(ingresso.getRG()!=null) {
-				JLabel lblRG = new JLabel("RG: "+ingresso.getRG());
-				lblRG.setBounds(20, 160, 100, 20); // mais largura pro nome
-				card.add(lblRG);
-				JLabel lblAviso = new JLabel("AVISO: Entrada permitida apenas com o porte do RG");
-				lblAviso.setForeground(Color.RED);
-				lblAviso.setBounds(20, 185, 300, 20); // mais largura pro nome
-				card.add(lblAviso);
-			}
-		    
 		    panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10))); // espaço entre os cards
 		    panelPrincipal.add(card);
 		}

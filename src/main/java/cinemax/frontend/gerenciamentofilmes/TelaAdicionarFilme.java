@@ -29,7 +29,8 @@ import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.GeneroFilme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.frontend.vendadeingressos.TelaEscolhaPoltrona;
 
 import javax.swing.JTextField;
@@ -52,7 +53,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 	private JPanel contentPane;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
 	private int idFilme = -1;
-	private JButton btnAdicionarSessao = new JButton("+");;
+	private JButton btnAdicionarSessao;
 	private JTextField textFieldNome;
 	private JTextField textFieldDuracao;
 	private JTextArea textAreaSinopse;
@@ -169,7 +170,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 			card.add(btnEditar);
 			
 			
-			JButton btnExcluir = new JButton(iconeExcluir); // ou seu ícone
+			JButton btnExcluir = new JButton(iconeExcluir);
 			btnExcluir.setBounds(160, 4, 20, 20);
 			btnExcluir.addActionListener(e -> {
 				boolean sucesso = app.getBackend().getBancoFilmes().tentarRemoverSessao(sessao.getId(), filme.getId());
@@ -213,6 +214,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 	    for (GeneroFilme genero : GeneroFilme.values()) {
 	        JCheckBox checkBox = new JCheckBox(genero.toString());
 	        checkBox.setActionCommand(genero.name()); 
+	        Estilizador.estilizarCheckBox(checkBox, Color.WHITE, Color.BLACK, new Font("Tahoma", Font.BOLD, 13));
 	        checkBoxesGeneros.add(checkBox);
 
 	        checkBox.addItemListener(e -> {
@@ -239,6 +241,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 	 * Create the frame.
 	 */
 	public TelaAdicionarFilme() {
+		Estilizador.estilizarCheckBoxCinza();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
@@ -311,7 +314,8 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 
 		scrollPaneSessoes.setViewportView(panelSessoes);
 
-		//btnAdicionarSessao = new JButton("+");
+		btnAdicionarSessao = new JButton("+");
+		Estilizador.aplicarEstiloBotao(btnAdicionarSessao, EstiloBotao.PADRAO_ESCURECIDO);
 		btnAdicionarSessao.setEnabled(false);
 		btnAdicionarSessao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -343,17 +347,20 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		JScrollPane scrollPaneGeneros = new JScrollPane();
 		scrollPaneGeneros = Estilizador.estilizandoScrollBarVertEHori(scrollPaneGeneros);
 		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneGeneros.setBounds(30, 271, 120, 100); // ajuste o tamanho
+		scrollPaneGeneros.setBounds(30, 271, 145, 100);
+		scrollPaneGeneros.setBackground(new Color( 255, 255, 255));
 		panelPrincipal.add(scrollPaneGeneros);
 		
 		panelGeneros = new JPanel();
 		scrollPaneGeneros.setViewportView(panelGeneros);
+		panelGeneros.setBackground(new Color( 255, 255, 255));
 		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
 		
 		// Lista para guardar os checkboxes
 		geraCheckBoxesGeneros();
 
 		JButton btnAtualizar = new JButton("Atualizar");
+		Estilizador.aplicarEstiloBotao(btnAtualizar, EstiloBotao.PADRAO_ESCURECIDO);
 		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String novoNome = textFieldNome.getText();
@@ -386,6 +393,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		panelPrincipal.add(btnAtualizar);
 		
 		JButton btnVoltar = new JButton("Voltar");
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

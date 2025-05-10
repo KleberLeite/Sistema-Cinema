@@ -22,7 +22,8 @@ import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.salas.Poltrona;
 import cinemax.backend.salas.Sala;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -284,6 +285,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 		panelPoltronas.add(panelNumeros);
 
 		JButton btnAvançar = new JButton("Avançar");
+		Estilizador.aplicarEstiloBotao(btnAvançar, EstiloBotao.CLARO_UNIFICADO);
 		btnAvançar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -308,6 +310,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 		panelPrincipal.add(btnAvançar);
 
 		JButton btnVoltar = new JButton("Voltar");
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 

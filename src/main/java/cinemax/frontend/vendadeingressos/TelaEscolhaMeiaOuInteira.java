@@ -11,7 +11,8 @@ import cinemax.backend.filmes.Sessao;
 import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -268,6 +269,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		// ------------------------------------------------------------------------------------------------------------------
 
 		JButton btnVoltar = new JButton("Voltar");
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -284,6 +286,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		contentPane_1.add(btnVoltar);
 
 		JButton btnFinalizarCompra = new JButton("Concluir Compra");
+		Estilizador.aplicarEstiloBotao(btnFinalizarCompra, EstiloBotao.CLARO_UNIFICADO);
 		btnFinalizarCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (getRestanteCount() > 0) {
@@ -546,9 +549,13 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 		// Declaração dos botões de + e -
 		JButton btnMaisUmaInteira = new JButton("+");
+		Estilizador.aplicarEstiloBotao(btnMaisUmaInteira, EstiloBotao.PADRAO_ESCURECIDO);
 		JButton btnMenosUmaInteira = new JButton("-");
+		Estilizador.aplicarEstiloBotao(btnMenosUmaInteira, EstiloBotao.PADRAO_ESCURECIDO);
 		JButton btnMaisUmaMeia = new JButton("+");
+		Estilizador.aplicarEstiloBotao(btnMaisUmaMeia, EstiloBotao.PADRAO_ESCURECIDO);
 		JButton btnMenosUmaMeia = new JButton("-");
+		Estilizador.aplicarEstiloBotao(btnMenosUmaMeia, EstiloBotao.PADRAO_ESCURECIDO);
 
 		// Estilização e funcções dos botões
 		btnMaisUmaInteira.addActionListener(new ActionListener() {

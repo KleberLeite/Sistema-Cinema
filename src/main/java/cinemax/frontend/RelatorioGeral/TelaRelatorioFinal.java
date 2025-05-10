@@ -6,7 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.utils.Estilizador;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
@@ -348,6 +349,7 @@ public class TelaRelatorioFinal extends JFrame {
         
         // Botão Voltar
         JButton btnVoltar = new JButton("Voltar");
+        Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
         btnVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 TelaEscolhaRelatorio telaEscolhaRelatorio = new TelaEscolhaRelatorio();

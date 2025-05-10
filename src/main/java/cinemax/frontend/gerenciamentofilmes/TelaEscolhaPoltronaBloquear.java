@@ -28,6 +28,8 @@ import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.salas.Poltrona;
 import cinemax.backend.salas.Sala;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.frontend.vendadeingressos.CarrinhoIngressos;
 import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
 import cinemax.frontend.vendadeingressos.TelaEscolhaMeiaOuInteira;
@@ -110,7 +112,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 		panelPoltronas.setLayout(null);
 
 		JPanel panelLetras = new JPanel();
-		panelLetras.setBounds(0, 74, 34, 483);
+		panelLetras.setBounds(0, 78, 34, 483);
 		panelPoltronas.add(panelLetras);
 		panelLetras.setBackground(new Color(255, 255, 255));
 		panelLetras.setLayout(new BoxLayout(panelLetras, BoxLayout.Y_AXIS)); // Layout vertical
@@ -209,6 +211,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 		panel.add(lblDisponivel);
 
 		JButton btnVoltar = new JButton("Voltar");
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
 		btnVoltar.setBounds(24, 614, 89, 23);
 		contentPane.add(btnVoltar);
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));

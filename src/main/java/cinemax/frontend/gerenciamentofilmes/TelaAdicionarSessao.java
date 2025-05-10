@@ -11,6 +11,8 @@ import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.backend.salas.Sala;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -207,8 +209,9 @@ public class TelaAdicionarSessao extends JFrame {
 		lblSala.setBounds(456, 83, 46, 14);
 		panel.add(lblSala);
 
-		JButton btnNewButton = new JButton("Atualizar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnAtualizar = new JButton("Atualizar");
+		Estilizador.aplicarEstiloBotao(btnAtualizar, EstiloBotao.PADRAO_ESCURECIDO);
+		btnAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String diaTexto = textFieldDia.getText();
 				String MesTexto = textFieldMes.getText();
@@ -224,9 +227,9 @@ public class TelaAdicionarSessao extends JFrame {
 
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.setBounds(207, 168, 161, 35);
-		panel.add(btnNewButton);
+		btnAtualizar.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnAtualizar.setBounds(207, 168, 161, 35);
+		panel.add(btnAtualizar);
 		
 		
 	}
