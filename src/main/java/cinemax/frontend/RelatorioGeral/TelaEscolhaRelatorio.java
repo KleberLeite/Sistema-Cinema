@@ -20,6 +20,7 @@ import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 import cinemax.backend.salas.Sala;
 import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -169,6 +170,7 @@ public class TelaEscolhaRelatorio extends JFrame {
 		panelPrincipal.add(lblEscolhaORelatorio);
 		
 		JScrollPane scrollPaneRelatorios = new JScrollPane();
+		scrollPaneRelatorios = Estilizador.estilizandoScrollBarVertEHori(scrollPaneRelatorios);
 		scrollPaneRelatorios.setBounds(180, 154, 195, 286);
 		scrollPaneRelatorios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneRelatorios.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

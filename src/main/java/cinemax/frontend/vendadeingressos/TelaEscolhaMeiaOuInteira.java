@@ -11,7 +11,7 @@ import cinemax.backend.filmes.Sessao;
 import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.gerenciamentofilmes.TelaDetalhesFilme;
+import cinemax.frontend.utils.Estilizador;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -27,6 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -38,8 +39,11 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import javax.swing.JList;
@@ -64,6 +68,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 	private int totalCount;
 
 	private List<JPanel> rgCards = new ArrayList<>();
+	private List<Component> rgSpacers = new ArrayList<>(); 
 
 	/**
 	 * Launch the application.
@@ -95,42 +100,48 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 	}
 
 	public void adicionarRGLista(JPanel panelRGs) {
-		JPanel card = new JPanel();
-		card.setLayout(null);
-		card.setPreferredSize(new Dimension(400, 50));
-		card.setMaximumSize(new Dimension(400, 50));
-		card.setBackground(new Color(230, 210, 250));
-		card.setBorder(new EmptyBorder(5, 5, 5, 5));
+	    Component spacer = Box.createRigidArea(new Dimension(0, 5));
+	    JPanel card = new JPanel();
+	    card.setLayout(null);
+	    card.setPreferredSize(new Dimension(350, 40));
+	    card.setMaximumSize(new Dimension(350, 40));
+	    card.setBackground(new Color(192, 192, 192));
+	    card.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		JLabel lblRG = new JLabel("RG:");
-		lblRG.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblRG.setBounds(10, 10, 40, 25);
-		card.add(lblRG);
+	    JLabel lblRG = new JLabel("RG:");
+	    lblRG.setFont(new Font("Tahoma", Font.BOLD, 14));
+	    lblRG.setBounds(10, 8, 40, 25);
+	    card.add(lblRG);
 
-		JTextField textField = new JTextField();
-		textField.setBounds(60, 10, 100, 25);
-		card.add(textField);
+	    JTextField textField = new JTextField();
+	    textField.setBounds(60, 8, 100, 25);
+	    card.add(textField);
 
-		rgCards.add(card);
-		listaDeTextFieldsRGs.add(textField);
+	    rgCards.add(card);
+	    rgSpacers.add(spacer); // salva o espaçador
+	    listaDeTextFieldsRGs.add(textField);
 
-		panelRGs.add(Box.createRigidArea(new Dimension(0, 10)));
-		panelRGs.add(card);
+	    panelRGs.add(spacer);
+	    panelRGs.add(card);
 
-		ativaOuDesativaListaRGs();
+	    ativaOuDesativaListaRGs();
 	}
 
 	public void removeUltimoRGLista(JPanel panelRGs) {
-		JPanel lastCard = rgCards.get(rgCards.size() - 1);
+	    if (!rgCards.isEmpty()) {
+	        JPanel lastCard = rgCards.remove(rgCards.size() - 1);
+	        Component lastSpacer = rgSpacers.remove(rgSpacers.size() - 1);
 
-		rgCards.remove(rgCards.size() - 1);
-		listaDeTextFieldsRGs.remove(listaDeTextFieldsRGs.size() - 1);
+	        listaDeTextFieldsRGs.remove(listaDeTextFieldsRGs.size() - 1);
 
-		panelRGs.remove(lastCard);
-		panelRGs.revalidate();
-		panelRGs.repaint();
+	        panelRGs.remove(lastCard);
+	        panelRGs.remove(lastSpacer); // remove o espaçador correspondente
 
-		ativaOuDesativaListaRGs();
+	        panelRGs.revalidate();
+	        panelRGs.repaint();
+
+	        ativaOuDesativaListaRGs();
+	    }
 	}
 
 	/*
@@ -223,7 +234,6 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 	 */
 	public TelaEscolhaMeiaOuInteira(Sessao sessao, CarrinhoIngressos carrinho) {
 		this.totalCount = carrinho.qtdeTotalIngressos();
-		// System.out.println("Total de Ingressos: " + getRestanteCount());
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 700);
@@ -273,7 +283,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		btnVoltar.setBounds(10, 608, 89, 23);
 		contentPane_1.add(btnVoltar);
 
-		JButton btnFinalizarCompra = new JButton("Finalizar Compra");
+		JButton btnFinalizarCompra = new JButton("Concluir Compra");
 		btnFinalizarCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (getRestanteCount() > 0) {
@@ -407,10 +417,11 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 		JLabel lblNewLabel_1 = new JLabel("Resumo do Pedido:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(0, 0, 233, 31);
+		lblNewLabel_1.setBounds(10, 0, 233, 31);
 		panelResumo.add(lblNewLabel_1);
 
 		JPanel panelResumoFIlme = new JPanel();
+		panelResumoFIlme.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panelResumoFIlme.setLayout(null);
 		panelResumoFIlme.setBackground(Color.WHITE);
 		panelResumoFIlme.setBounds(0, 32, 329, 145);
@@ -436,13 +447,23 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panelNomeEClassificacao.add(lblNome);
 
-		JLabel lblClassificacao = new JLabel(sessao.getFilme().getClassificacaoIndicativa().name());
-		lblClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelNomeEClassificacao.add(lblClassificacao);
+		JLabel lblEspaço = new JLabel("     ");
+		panelNomeEClassificacao.add(lblEspaço);
+
+		Color corCerta = Estilizador.escolherCorDaClassificacao(sessao.getFilme().getClassificacaoIndicativa());
+		
+		
+		JLabel lblFraseClassificacao = new JLabel(" " + sessao.getFilme().getClassificacaoIndicativa().name()+" ");
+		lblFraseClassificacao.setBounds(10, 69, 400, 25);
+		lblFraseClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblFraseClassificacao.setForeground(new Color(255, 255, 255));
+		lblFraseClassificacao.setOpaque(true);
+		lblFraseClassificacao.setBackground(corCerta);
+		panelNomeEClassificacao.add(lblFraseClassificacao);
 
 		JLabel lblCinemax = new JLabel("Cinemax");
 		lblCinemax.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblCinemax.setBounds(134, 74, 185, 24);
+		lblCinemax.setBounds(134, 78, 185, 20);
 		panelResumoFIlme.add(lblCinemax);
 
 		JLabel lblVerDetalhes = new JLabel("Ver detalhes...");
@@ -459,15 +480,25 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		    }
 		});
 		lblVerDetalhes.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblVerDetalhes.setBounds(134, 108, 78, 26);
+		lblVerDetalhes.setBounds(134, 114, 78, 20);
 		panelResumoFIlme.add(lblVerDetalhes);
+		
+		String diaFormatado = sessao.getInicio().getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("pt", "BR")).toUpperCase();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		String horaDaSessao = sessao.getInicio().format(formatter);
 
-		JLabel lblNewLabel_4 = new JLabel("Poltronas");
-		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblNewLabel_4.setBounds(0, 176, 124, 24);
-		panelResumo.add(lblNewLabel_4);
+		JLabel lblSalaEData = new JLabel("SALA "+sessao.getId()+" | "+diaFormatado+" "+horaDaSessao);
+		lblSalaEData.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSalaEData.setBounds(134, 96, 185, 20);
+		panelResumoFIlme.add(lblSalaEData);
+
+		JLabel lblPoltronas = new JLabel("Poltronas");
+		lblPoltronas.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblPoltronas.setBounds(10, 176, 124, 24);
+		panelResumo.add(lblPoltronas);
 
 		JScrollPane scrollPanePoltronas = new JScrollPane();
+		scrollPanePoltronas = Estilizador.estilizandoScrollBarVertEHori(scrollPanePoltronas);
 		scrollPanePoltronas.setBounds(0, 205, 329, 53);
 		panelResumo.add(scrollPanePoltronas);
 		
@@ -499,9 +530,10 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		listPoltronasSelecionadas.setCellRenderer(defaultListCellRenderer);
 
 		scrollPaneRGs = new JScrollPane();
+		scrollPaneRGs = Estilizador.estilizandoScrollBarVertEHori(scrollPaneRGs);
 		scrollPaneRGs.setEnabled(false);
 		scrollPaneRGs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneRGs.setBounds(79, 109, 278, 138);
+		scrollPaneRGs.setBounds(79, 109, 195, 138);
 		panelMeias.add(scrollPaneRGs);
 
 		panelRGs = new JPanel();

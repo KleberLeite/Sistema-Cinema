@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import cinemax.backend.filmes.Sessao;
 import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -57,6 +58,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPanePrincipal = new JScrollPane();
+		scrollPanePrincipal = Estilizador.estilizandoScrollBarVertEHori(scrollPanePrincipal);
 		scrollPanePrincipal.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPanePrincipal.setBounds(87, 11, 602, 388);
 		contentPane.add(scrollPanePrincipal);

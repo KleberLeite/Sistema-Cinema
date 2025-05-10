@@ -8,6 +8,8 @@ import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
@@ -237,6 +239,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(PlanilhaDeAlimentos);
+        //jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 
         TxtnomeDoalimento.setText("Procurar Nome:");
 

@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import cinemax.backend.filmes.Filme;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -121,6 +122,7 @@ public class TelaCrudFilme extends JFrame {
 		contentPane = gerarContentPane();
 		JPanel panelPrincipal = gerarPanelPrincipal(contentPane);
 		JScrollPane scrollPane = gerarScrollPane(panelPrincipal);
+		scrollPane = Estilizador.estilizandoScrollBarVertEHori(scrollPane);
 		JPanel panelListaFilmes = gerarPanelListaFilmes(scrollPane);
 		
 		gerarBotaoAdicionarFilme(panelPrincipal);

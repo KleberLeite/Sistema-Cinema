@@ -23,12 +23,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 
+import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.GeneroFilme;
 import cinemax.backend.filmes.IBancoDeDadosFilme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 
 import javax.swing.JScrollPane;
 import java.awt.Font;
@@ -67,6 +69,17 @@ public class TelaVendaDeIngresso extends JFrame {
 	// Create the frame.
 	public TelaVendaDeIngresso() {				
 		gerarTela();
+	}
+	
+	private Color escolherCorDaClassificacao(ClassificacaoIndicativa classificacaoIndicativa) {
+		Color cor;
+		
+		if(classificacaoIndicativa==ClassificacaoIndicativa.AL ||
+				classificacaoIndicativa==ClassificacaoIndicativa.AL10 ||
+						classificacaoIndicativa==ClassificacaoIndicativa.AL12) cor = new Color(0,200,80);
+		else  cor = new Color(200,20,0);
+		
+		return cor;
 	}
 	
 	private void geraCheckBoxesGeneros(JPanel panelGeneros) {
@@ -136,6 +149,8 @@ public class TelaVendaDeIngresso extends JFrame {
 			JPanel panelNomeEClassificacao = gerarPanelNomeEClassificacao(filme);
 			panelNomeEClassificacao.setBackground(new Color(192, 192, 192));
 			card.add(panelNomeEClassificacao);
+			
+			
 
 			JLabel lblDuracao = new JLabel("Duração: " + filme.getDuracaoEmMinutos() + " min");
 			lblDuracao.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -197,23 +212,40 @@ public class TelaVendaDeIngresso extends JFrame {
 
 	
 	private JPanel gerarPanelNomeEClassificacao(Filme filme) {
-		JPanel panelNomeEClassificacao = new JPanel();
-		panelNomeEClassificacao.setLayout(new FlowLayout(FlowLayout.LEFT));
-		panelNomeEClassificacao.setBounds(15, 10, 800, 25);
-		panelNomeEClassificacao.setBackground(new Color(230, 230, 250));
-		panelNomeEClassificacao.setBorder(new EmptyBorder(0, 0, 0, 0));
+		JPanel panelNomeEClassificacaoEGeneros = new JPanel();
+		panelNomeEClassificacaoEGeneros.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelNomeEClassificacaoEGeneros.setBounds(15, 10, 800, 25);
+		panelNomeEClassificacaoEGeneros.setBackground(new Color(230, 230, 250));
+		panelNomeEClassificacaoEGeneros.setBorder(new EmptyBorder(0, 0, 0, 0));
 		
 		JLabel lblNome = new JLabel(filme.getNome());
 		lblNome.setBounds(20, 10, 490, 25);
 		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelNomeEClassificacao.add(lblNome);
+		panelNomeEClassificacaoEGeneros.add(lblNome);
 		
-		JLabel lblClassificacao = new JLabel("     " + filme.getClassificacaoIndicativa().toString());
+		JLabel lblEspaço = new JLabel("            ");
+		panelNomeEClassificacaoEGeneros.add(lblEspaço);
+		
+		for(GeneroFilme genero : filme.getGeneros()) {
+			JLabel lblGenero = new JLabel(" " + genero.name());
+			lblGenero.setBounds(20, 10, 40, 25);
+			lblGenero.setBackground(new Color(255,255,255));
+			lblGenero.setFont(new Font("Tahoma", Font.BOLD, 13));
+			panelNomeEClassificacaoEGeneros.add(lblGenero);
+		}
+		
+		Color corCerta = escolherCorDaClassificacao(filme.getClassificacaoIndicativa());
+		
+		JLabel lblClassificacao = new JLabel(" " + filme.getClassificacaoIndicativa().toString()+" ");
 		lblClassificacao.setBounds(20, 10, 400, 25);
+		lblClassificacao.setForeground(new Color(255,255,255));
+		lblClassificacao.setBackground(corCerta);
 		lblClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelNomeEClassificacao.add(lblClassificacao);
+		lblClassificacao.setOpaque(true);
+		lblClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
+		panelNomeEClassificacaoEGeneros.add(lblClassificacao);
 		
-		return panelNomeEClassificacao;
+		return panelNomeEClassificacaoEGeneros;
 	}
 	
 	private JPanel gerarPainelSessoes() {
@@ -291,6 +323,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		contentPane.add(lblFiltroGenero);
 		
 		JScrollPane scrollPaneGeneros = new JScrollPane();
+		scrollPaneGeneros = Estilizador.estilizandoScrollBarVertEHori(scrollPaneGeneros);
 		scrollPaneGeneros.setBounds(595, 91, 179, 222);
 		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPaneGeneros);
@@ -319,6 +352,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		// Criando um JScrollPane para rolar horizontalmente o painel de dias da semana
 		JScrollPane scrollPaneDatas = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPaneDatas = Estilizador.estilizandoScrollBarVertEHori(scrollPaneDatas);
 		scrollPaneDatas.setBounds(200, 0, 358, 70);
 		panelDatas.add(scrollPaneDatas);
 		
@@ -339,6 +373,7 @@ public class TelaVendaDeIngresso extends JFrame {
 
 		// Agora colocar isso num JScrollPane
 		JScrollPane scrollPaneFilmes = new JScrollPane(painelListaFilmes);
+		scrollPaneFilmes = Estilizador.estilizandoScrollBarVertEHori(scrollPaneFilmes);
 		scrollPaneFilmes.setBounds(27, 91, 558, 330);
 		scrollPaneFilmes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneFilmes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

@@ -3,6 +3,7 @@ package cinemax.frontend.geranciadefuncionarios;
 
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 import cinemax.backend.funcionarios.CargoFuncionario;
 import cinemax.backend.funcionarios.Funcionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
@@ -124,6 +125,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 			}
 		});
 		jScrollPane1.setViewportView(PlanilhaGerenciaFuncionarios);
+		//jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 
 		BotaoCadastrarFuncionarios.setText("Cadastrar");
 		BotaoCadastrarFuncionarios.addActionListener(new java.awt.event.ActionListener() {

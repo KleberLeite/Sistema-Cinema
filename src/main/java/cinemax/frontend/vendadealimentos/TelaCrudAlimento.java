@@ -7,6 +7,7 @@ import cinemax.backend.core.Backend;
 import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -145,6 +146,7 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 						return false;
 					}
 				});
+		//jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 		jScrollPane1.setViewportView(PlanilhaAlimento);
 
 		TXTNomeAlimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N

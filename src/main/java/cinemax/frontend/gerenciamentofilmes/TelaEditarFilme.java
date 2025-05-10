@@ -27,6 +27,7 @@ import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.GeneroFilme;
 import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 import cinemax.frontend.vendadeingressos.TelaEscolhaPoltrona;
 
 import javax.swing.JTextField;
@@ -274,6 +275,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		textAreaSinopse.setWrapStyleWord(true);
 
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = Estilizador.estilizandoScrollBarVertEHori(scrollPane);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(30, 101, 280, 74);
 		panelPrincipal.add(scrollPane);
@@ -298,6 +300,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		panelPrincipal.add(lblSessoes);
 
 		JScrollPane scrollPaneSessoes = new JScrollPane();
+		scrollPaneSessoes = Estilizador.estilizandoScrollBarVertEHori(scrollPaneSessoes);
 		scrollPaneSessoes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneSessoes.setBounds(425, 38, 216, 196);
 		panelPrincipal.add(scrollPaneSessoes);
@@ -338,6 +341,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		panelPrincipal.add(lblGenero);
 
 		JScrollPane scrollPaneGeneros = new JScrollPane();
+		scrollPaneGeneros = Estilizador.estilizandoScrollBarVertEHori(scrollPaneGeneros);
 		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneGeneros.setBounds(30, 271, 120, 100); // ajuste o tamanho
 		panelPrincipal.add(scrollPaneGeneros);

@@ -22,8 +22,9 @@ import cinemax.backend.relatorios.filmes.Ingresso;
 import cinemax.backend.salas.Poltrona;
 import cinemax.backend.salas.Sala;
 import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.gerenciamentofilmes.TelaDetalhesFilme;
+import cinemax.frontend.utils.Estilizador;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -34,8 +35,11 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
@@ -272,7 +276,8 @@ public class TelaEscolhaPoltrona extends JFrame {
 		    // Adiciona espaço à direita, exceto no último
 		    if (i != 16) {
 		        if(i>=1 && i<=8)panelNumeros.add(Box.createRigidArea(new Dimension(18, 0))); // Espaço horizontal
-		        else panelNumeros.add(Box.createRigidArea(new Dimension(16, 0)));
+		        else if(i<=13)panelNumeros.add(Box.createRigidArea(new Dimension(12, 0)));
+		        else panelNumeros.add(Box.createRigidArea(new Dimension(10, 0)));
 		    }
 		}
 
@@ -474,6 +479,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 		panelResumo.add(lblLinha_1);
 		
 		JPanel panelResumoFIlme = new JPanel();
+		panelResumoFIlme.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panelResumoFIlme.setBackground(new Color(255, 255, 255));
 		panelResumoFIlme.setBounds(0, 32, 329, 145);
 		panelResumo.add(panelResumoFIlme);
@@ -500,10 +506,18 @@ public class TelaEscolhaPoltrona extends JFrame {
 		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panelNomeEClassificacao.add(lblNome);
 		
-		JLabel lblClassificacao = new JLabel("     " + sessao.getFilme().getClassificacaoIndicativa().name());
-		lblClassificacao.setBounds(20, 10, 400, 25);
-		lblClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
-		panelNomeEClassificacao.add(lblClassificacao);
+		JLabel lblEspaço = new JLabel("     ");
+		panelNomeEClassificacao.add(lblEspaço);
+
+		Color corCerta = Estilizador.escolherCorDaClassificacao(sessao.getFilme().getClassificacaoIndicativa());
+		
+		JLabel lblFraseClassificacao = new JLabel(" " + sessao.getFilme().getClassificacaoIndicativa().name()+" ");
+		lblFraseClassificacao.setBounds(10, 69, 400, 25);
+		lblFraseClassificacao.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblFraseClassificacao.setForeground(new Color(255, 255, 255));
+		lblFraseClassificacao.setOpaque(true);
+		lblFraseClassificacao.setBackground(corCerta);
+		panelNomeEClassificacao.add(lblFraseClassificacao);
 		
 		JLabel lblNewLabel_3 = new JLabel("Cinemax");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -527,6 +541,15 @@ public class TelaEscolhaPoltrona extends JFrame {
 		lblVerDetalhes.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblVerDetalhes.setBounds(134, 108, 78, 26);
 		panelResumoFIlme.add(lblVerDetalhes);
+		
+		String diaFormatado = sessao.getInicio().getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("pt", "BR")).toUpperCase();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		String horaDaSessao = sessao.getInicio().format(formatter);
+
+		JLabel lblSalaEData = new JLabel("SALA "+sessao.getId()+" | "+diaFormatado+" "+horaDaSessao);
+		lblSalaEData.setFont(new Font("Tahoma", Font.BOLD, 13));
+		lblSalaEData.setBounds(134, 94, 185, 20);
+		panelResumoFIlme.add(lblSalaEData);
 		
 		JLabel lblNewLabel_1 = new JLabel("Resumo do Pedido:");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));

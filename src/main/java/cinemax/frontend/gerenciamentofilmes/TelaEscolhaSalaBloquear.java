@@ -23,6 +23,7 @@ import cinemax.backend.salas.Sala;
 import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.RelatorioGeral.TelaRelatorioFinal;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 
 public class TelaEscolhaSalaBloquear extends JFrame {
 
@@ -74,6 +75,7 @@ public class TelaEscolhaSalaBloquear extends JFrame {
 		panelPrincipal.add(lblEscolhaORelatorio);
 		
 		JScrollPane scrollPaneRelatorios = new JScrollPane();
+		scrollPaneRelatorios = Estilizador.estilizandoScrollBarVertEHori(scrollPaneRelatorios);
 		scrollPaneRelatorios.setBounds(195, 154, 179, 246);
 		scrollPaneRelatorios.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panelPrincipal.add(scrollPaneRelatorios);

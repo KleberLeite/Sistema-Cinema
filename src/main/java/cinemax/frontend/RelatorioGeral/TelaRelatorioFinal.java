@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
+import cinemax.frontend.utils.Estilizador;
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.Sessao;
@@ -131,6 +132,7 @@ public class TelaRelatorioFinal extends JFrame {
 
         // Painel para Alimentos
         JScrollPane scrollPaneAlimentos = new JScrollPane();
+        scrollPaneAlimentos = Estilizador.estilizandoScrollBarVertEHori(scrollPaneAlimentos);
         scrollPaneAlimentos.setBounds(0, 28, 432, 350);
         scrollPaneAlimentos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPaneAlimentos.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -233,6 +235,7 @@ public class TelaRelatorioFinal extends JFrame {
         
      // Painel para Alimentos
         JScrollPane scrollPaneFilmes = new JScrollPane();
+        scrollPaneFilmes = Estilizador.estilizandoScrollBarVertEHori(scrollPaneFilmes);
         scrollPaneFilmes.setBounds(432, 28, 432, 350);
         scrollPaneFilmes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPaneFilmes.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
