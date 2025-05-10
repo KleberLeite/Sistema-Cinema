@@ -1,11 +1,17 @@
 package cinemax.frontend.utils;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import cinemax.backend.filmes.ClassificacaoIndicativa;
@@ -96,5 +102,37 @@ public class Estilizador {
 
 		return cor;
 	}
+	
+	public static void estilizarBotao(JButton botao, Color corFundo, Color corTexto, int raioBorda) {
+        botao.setContentAreaFilled(false); // remove preenchimento padrão
+        botao.setFocusPainted(false);      // remove foco padrão
+        botao.setForeground(corTexto);     // cor do texto
+        botao.setFont(new Font("Tahoma", Font.BOLD, 14));
+        botao.setBorder(new EmptyBorder(10, 20, 10, 20)); // padding interno
+
+        // Cria um botão customizado com aparência arredondada
+        botao.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
+            @Override
+            public void paint(Graphics g, JComponent c) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                // Desenha fundo arredondado
+                g2.setColor(corFundo);
+                g2.fillRoundRect(0, 0, c.getWidth(), c.getHeight(), raioBorda, raioBorda);
+
+                // Desenha texto normalmente
+                super.paint(g2, c);
+                g2.dispose();
+            }
+
+            @Override
+            public void installUI(JComponent c) {
+                super.installUI(c);
+                c.setOpaque(false); // fundo transparente para ver nossa pintura
+            }
+        });
+    }
+
 	
 }

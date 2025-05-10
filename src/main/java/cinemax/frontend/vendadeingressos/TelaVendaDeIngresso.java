@@ -382,6 +382,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		
 
 		JButton btnVoltar = new JButton("Voltar");
+		Estilizador.estilizarBotao(btnVoltar, new Color(170,170,170), new Color(255,255,255), 10);
 		btnVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
