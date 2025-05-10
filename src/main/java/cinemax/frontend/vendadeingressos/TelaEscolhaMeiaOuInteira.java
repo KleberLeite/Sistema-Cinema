@@ -552,7 +552,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		listPoltronasSelecionadas.setCellRenderer(defaultListCellRenderer);
 
 		scrollPaneRGs = new JScrollPane();
-		scrollPaneRGs = Estilizador.estilizandoScrollBarVertEHori(scrollPaneRGs);
+		scrollPaneRGs = Estilizador.estilizarScrollPane(scrollPaneRGs);
 		scrollPaneRGs.setEnabled(false);
 		scrollPaneRGs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneRGs.setBounds(90, 80, 195, 138);

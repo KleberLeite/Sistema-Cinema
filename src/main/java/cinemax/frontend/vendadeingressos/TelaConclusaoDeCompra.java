@@ -60,7 +60,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPanePrincipal = new JScrollPane();
-		scrollPanePrincipal = Estilizador.estilizandoScrollBarVertEHori(scrollPanePrincipal);
+		scrollPanePrincipal = Estilizador.estilizarScrollPane(scrollPanePrincipal);
 		scrollPanePrincipal.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPanePrincipal.setBounds(87, 11, 602, 388);
 		contentPane.add(scrollPanePrincipal);

@@ -64,7 +64,7 @@ public class TelaDetalhesFilme extends JFrame {
 		if (classificacaoIndicativa == ClassificacaoIndicativa.AL)
 			frase = "  Permitido para todas as idades";
 		else
-			frase = "Não recomendado para menores de " + classificacaoIndicativa.name();
+			frase = "  Não recomendado para menores de ";
 
 		return frase;
 	}
@@ -117,7 +117,7 @@ public class TelaDetalhesFilme extends JFrame {
 		textAreaSinopse.setText(filme.getSinopse());
 
 		JLabel lblNome = new JLabel(filme.getNome());
-		lblNome.setBounds(10, 11, 490, 25);
+		lblNome.setBounds(15, 11, 409, 25);
 		lblNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblNome.setForeground(new Color(255, 255, 255));
 		contentPane.add(lblNome);

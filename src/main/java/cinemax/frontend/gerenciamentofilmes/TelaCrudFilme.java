@@ -125,7 +125,7 @@ public class TelaCrudFilme extends JFrame {
 		contentPane = gerarContentPane();
 		JPanel panelPrincipal = gerarPanelPrincipal(contentPane);
 		JScrollPane scrollPane = gerarScrollPane(panelPrincipal);
-		scrollPane = Estilizador.estilizandoScrollBarVertEHori(scrollPane);
+		scrollPane = Estilizador.estilizarScrollPane(scrollPane);
 		JPanel panelListaFilmes = gerarPanelListaFilmes(scrollPane);
 		
 		gerarBotaoAdicionarFilme(panelPrincipal);

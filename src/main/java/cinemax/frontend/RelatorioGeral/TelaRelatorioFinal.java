@@ -133,7 +133,7 @@ public class TelaRelatorioFinal extends JFrame {
 
         // Painel para Alimentos
         JScrollPane scrollPaneAlimentos = new JScrollPane();
-        scrollPaneAlimentos = Estilizador.estilizandoScrollBarVertEHori(scrollPaneAlimentos);
+        scrollPaneAlimentos = Estilizador.estilizarScrollPane(scrollPaneAlimentos);
         scrollPaneAlimentos.setBounds(0, 28, 432, 350);
         scrollPaneAlimentos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPaneAlimentos.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -236,7 +236,7 @@ public class TelaRelatorioFinal extends JFrame {
         
      // Painel para Alimentos
         JScrollPane scrollPaneFilmes = new JScrollPane();
-        scrollPaneFilmes = Estilizador.estilizandoScrollBarVertEHori(scrollPaneFilmes);
+        scrollPaneFilmes = Estilizador.estilizarScrollPane(scrollPaneFilmes);
         scrollPaneFilmes.setBounds(432, 28, 432, 350);
         scrollPaneFilmes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPaneFilmes.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

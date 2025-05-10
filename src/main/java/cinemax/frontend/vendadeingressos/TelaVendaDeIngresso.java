@@ -329,7 +329,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		contentPane.add(lblFiltroGenero);
 		
 		JScrollPane scrollPaneGeneros = new JScrollPane();
-		scrollPaneGeneros = Estilizador.estilizandoScrollBarVertEHori(scrollPaneGeneros);
+		scrollPaneGeneros = Estilizador.estilizarScrollPane(scrollPaneGeneros);
 		scrollPaneGeneros.setBounds(595, 91, 179, 222);
 		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		contentPane.add(scrollPaneGeneros);
@@ -358,7 +358,7 @@ public class TelaVendaDeIngresso extends JFrame {
 		// Criando um JScrollPane para rolar horizontalmente o painel de dias da semana
 		JScrollPane scrollPaneDatas = new JScrollPane(JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		scrollPaneDatas = Estilizador.estilizandoScrollBarVertEHori(scrollPaneDatas);
+		scrollPaneDatas = Estilizador.estilizarScrollPane(scrollPaneDatas);
 		scrollPaneDatas.setBounds(200, 0, 358, 70);
 		panelDatas.add(scrollPaneDatas);
 		
@@ -379,7 +379,7 @@ public class TelaVendaDeIngresso extends JFrame {
 
 		// Agora colocar isso num JScrollPane
 		JScrollPane scrollPaneFilmes = new JScrollPane(painelListaFilmes);
-		scrollPaneFilmes = Estilizador.estilizandoScrollBarVertEHori(scrollPaneFilmes);
+		scrollPaneFilmes = Estilizador.estilizarScrollPane(scrollPaneFilmes);
 		scrollPaneFilmes.setBounds(27, 91, 558, 330);
 		scrollPaneFilmes.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneFilmes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

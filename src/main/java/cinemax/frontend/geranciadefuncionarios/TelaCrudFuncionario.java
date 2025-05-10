@@ -132,7 +132,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 			}
 		});
 		jScrollPane1.setViewportView(PlanilhaGerenciaFuncionarios);
-		jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
+		jScrollPane1 = Estilizador.estilizarScrollPane(jScrollPane1);
 
 		BotaoCadastrarFuncionarios.setText("Cadastrar");
 		BotaoCadastrarFuncionarios.addActionListener(new java.awt.event.ActionListener() {

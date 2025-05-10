@@ -33,7 +33,7 @@ import cinemax.backend.filmes.ClassificacaoIndicativa;
 
 public class Estilizador {
 	
-	public static JScrollPane estilizandoScrollBarVertEHori(JScrollPane scrollPane) {
+	public static JScrollPane estilizarScrollPane(JScrollPane scrollPane) {
 		
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
 		
@@ -59,6 +59,87 @@ public class Estilizador {
 	            g2.dispose();
 	        }
 	    });
+
+	    // Aplica borda arredondada ao viewport
+	    scrollPane.setViewportBorder(BorderFactory.createEmptyBorder());
+	    scrollPane.setOpaque(false);
+	    scrollPane.getViewport().setOpaque(false);
+		
+		// Acesse as barras do JScrollPane
+		JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
+
+		// Cor do fundo da barra (trilha)
+		verticalBar.setBackground(new Color(2, 2, 2)); // substitua com sua cor
+
+		// Cor do "puxador" (thumb)
+		verticalBar.setUI(new BasicScrollBarUI() {
+
+			// -----------------necessario para tirar os botões das
+			// bordas--------------------------------
+			@Override
+			protected JButton createDecreaseButton(int orientation) {
+				JButton button = new JButton("▲"); // seta para cima
+				button.setForeground(Color.WHITE); // cor do texto
+				button.setBackground(new Color(30, 30, 30)); // fundo
+				button.setBorder(BorderFactory.createEmptyBorder());
+				return button;
+			}
+
+			@Override
+			protected JButton createIncreaseButton(int orientation) {
+				JButton button = new JButton("▼"); // seta para baixo
+				button.setForeground(Color.WHITE);
+				button.setBackground(new Color(30, 30, 30));
+				button.setBorder(BorderFactory.createEmptyBorder());
+				return button;
+			}
+
+			// -------------------------------------------------------------------------------------------
+			@Override
+			protected void configureScrollBarColors() {
+				this.thumbColor = new Color(170, 170, 170); // puxador
+				this.trackColor = new Color(2, 17, 28); // fundo
+			}
+
+		});
+		JScrollBar horizontalBar = scrollPane.getHorizontalScrollBar();
+
+		verticalBar.setBackground(new Color(2, 2, 2));
+
+		horizontalBar.setUI(new BasicScrollBarUI() {
+			
+			@Override
+			protected JButton createDecreaseButton(int orientation) {
+				JButton button = new JButton("◀"); // seta para cima
+				button.setForeground(Color.WHITE); // cor do texto
+				button.setBackground(new Color(30, 30, 30)); // fundo
+				button.setBorder(BorderFactory.createEmptyBorder());
+				return button;
+			}
+
+			@Override
+			protected JButton createIncreaseButton(int orientation) {
+				JButton button = new JButton("▶"); // seta para baixo
+				button.setForeground(Color.WHITE);
+				button.setBackground(new Color(30, 30, 30));
+				button.setBorder(BorderFactory.createEmptyBorder());
+				return button;
+			}
+			
+			@Override
+			protected void configureScrollBarColors() {
+				this.thumbColor = new Color(170, 170, 170);
+				this.trackColor = new Color(2, 17, 28);
+			}
+		});
+
+		return scrollPane;
+	}
+	
+public static JScrollPane estilizandoScrollBarVertEHori(JScrollPane scrollPane) {
+		
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+	
 
 	    // Aplica borda arredondada ao viewport
 	    scrollPane.setViewportBorder(BorderFactory.createEmptyBorder());

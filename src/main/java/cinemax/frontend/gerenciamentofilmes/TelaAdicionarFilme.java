@@ -273,7 +273,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		Estilizador.estilizarTextArea(textAreaSinopse);
 
 		JScrollPane scrollPane = new JScrollPane(textAreaSinopse);
-		Estilizador.estilizandoScrollBarVertEHori(scrollPane);
+		Estilizador.estilizarScrollPane(scrollPane);
 
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(30, 101, 280, 74);
@@ -301,7 +301,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		panelSessoes.setBorder(new EmptyBorder(5, 5, 5, 5)); // margem geral
 
 		JScrollPane scrollPaneSessoes = new JScrollPane(panelSessoes);
-		Estilizador.estilizandoScrollBarVertEHori(scrollPaneSessoes);
+		Estilizador.estilizarScrollPane(scrollPaneSessoes);
 		scrollPaneSessoes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneSessoes.setOpaque(false);
 		scrollPaneSessoes.setBorder(BorderFactory.createLineBorder(new Color( 0, 23, 10)));
@@ -353,7 +353,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
 
 		JScrollPane scrollPaneGeneros = new JScrollPane(panelGeneros);
-		Estilizador.estilizandoScrollBarVertEHori(scrollPaneGeneros);
+		Estilizador.estilizarScrollPane(scrollPaneGeneros);
 		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneGeneros.setBounds(30, 271, 145, 100); 
 		scrollPaneGeneros.setViewportView(panelGeneros);

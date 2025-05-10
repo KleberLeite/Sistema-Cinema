@@ -76,7 +76,7 @@ public class TelaEscolhaSalaBloquear extends JFrame {
 		panelPrincipal.add(lblEscolhaORelatorio);
 		
 		JScrollPane scrollPaneRelatorios = new JScrollPane();
-		scrollPaneRelatorios = Estilizador.estilizandoScrollBarVertEHori(scrollPaneRelatorios);
+		scrollPaneRelatorios = Estilizador.estilizarScrollPane(scrollPaneRelatorios);
 		scrollPaneRelatorios.setBounds(195, 154, 179, 246);
 		scrollPaneRelatorios.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panelPrincipal.add(scrollPaneRelatorios);

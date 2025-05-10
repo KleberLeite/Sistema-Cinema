@@ -171,7 +171,7 @@ public class TelaEscolhaRelatorio extends JFrame {
 		panelPrincipal.add(lblEscolhaORelatorio);
 		
 		JScrollPane scrollPaneRelatorios = new JScrollPane();
-		scrollPaneRelatorios = Estilizador.estilizandoScrollBarVertEHori(scrollPaneRelatorios);
+		scrollPaneRelatorios = Estilizador.estilizarScrollPane(scrollPaneRelatorios);
 		scrollPaneRelatorios.setBounds(180, 154, 195, 286);
 		scrollPaneRelatorios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneRelatorios.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
