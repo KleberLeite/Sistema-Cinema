@@ -2,6 +2,7 @@ package cinemax.frontend.gerenciamentofilmes;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -282,9 +283,10 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 							tamanho);
 					break;
 				}
-
-				botao.setBackground(Color.WHITE);
 				botao.setBorderPainted(false);
+				botao.setContentAreaFilled(false);
+				botao.setFocusPainted(false);
+				botao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 				// Ação do botão
 				final int auxI = i;

@@ -139,11 +139,10 @@ public class TelaConclusaoDeCompra extends JFrame {
 		contentPane.add(btnImprimir);
 		
 		for (Ingresso ingresso : carrinho.getIngressos()) {
-			JPanel card = new JPanel();
+			JPanel card = Estilizador.criarPainelArredondado(new Color(192, 192, 192), 10);
 			card.setLayout(null); 
 			card.setPreferredSize(new Dimension(1150, 165));
 			card.setMaximumSize(new Dimension(1150, 165));
-			card.setBackground(new Color(192, 192, 192));
 			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
 			card.setBorder(new EmptyBorder(10, 10, 10, 10)); // espaçamento interno
 			

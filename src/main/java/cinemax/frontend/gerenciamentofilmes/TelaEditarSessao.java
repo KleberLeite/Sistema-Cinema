@@ -213,6 +213,7 @@ public class TelaEditarSessao extends JFrame {
 		panel.add(lblMinuto);
 		
 		JComboBox comboBoxSala = new JComboBox();
+		Estilizador.estilizarComboBoxClassificacaoIndicativa(comboBoxSala);
 		for(Sala sala : app.getBackend().getBancoSalas().obterTodasSalas()) {
 			comboBoxSala.addItem(sala.getIdSala());
 		}

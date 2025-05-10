@@ -10,6 +10,7 @@ import cinemax.backend.filmes.Filme;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -48,7 +49,7 @@ public class TelaCrudFilme extends JFrame {
 	}
 	
 	private JPanel gerarCard() {
-		JPanel card = new JPanel();
+		JPanel card = Estilizador.criarPainelArredondado(new Color( 192, 192, 192), 10);
 	    card.setLayout(null); 
 	    card.setPreferredSize(new Dimension(1400, 50));
 	    card.setMaximumSize(new Dimension(1400, 50));
@@ -66,6 +67,7 @@ public class TelaCrudFilme extends JFrame {
 	
 	private void adicionarBotaoEditar(JPanel card, Filme filme) {
 		JButton btnEditar = new JButton("Editar");
+		Estilizador.aplicarEstiloBotao(btnEditar, EstiloBotao.PADRAO_ESCURECIDO);
 	    btnEditar.addActionListener(e -> {
               
 	    	 TelaEditarFilme telaEditarFilme = new TelaEditarFilme(filme);
@@ -82,6 +84,7 @@ public class TelaCrudFilme extends JFrame {
 	
 	private void adicionarBotaoExcluir(JPanel card, JPanel panelListaFilmes, Filme filme) {
 		JButton btnExcluir = new JButton("Excluir");
+		Estilizador.aplicarEstiloBotao(btnExcluir, EstiloBotao.PADRAO_ESCURECIDO);
 	    btnExcluir.addActionListener(e -> {
 	    	 if(!app.getBackend().getBancoFilmes().tentarRemoverFilme(filme.getId())) {
 	    		 JOptionPane.showMessageDialog(null, "Falha ao tentar Remover o Filme, tente novamente!", "Aviso", JOptionPane.WARNING_MESSAGE); 
@@ -142,6 +145,7 @@ public class TelaCrudFilme extends JFrame {
 		
 
 		JButton btnGerenciamentoDeSalas = new JButton("Gerenciamento de Salas");
+		Estilizador.aplicarEstiloBotao(btnGerenciamentoDeSalas, EstiloBotao.CLARO_UNIFICADO);
 		btnGerenciamentoDeSalas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					
@@ -191,6 +195,7 @@ public class TelaCrudFilme extends JFrame {
 	
 	private void gerarBotaoAdicionarFilme(JPanel panelPrincipal) {
 		JButton btnAdicionarFilme = new JButton("Adicionar");
+		Estilizador.aplicarEstiloBotao(btnAdicionarFilme, EstiloBotao.PADRAO_ESCURECIDO);
 		btnAdicionarFilme.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaAdicionarFilme telaAdicionarFilme = new TelaAdicionarFilme();
@@ -215,6 +220,7 @@ public class TelaCrudFilme extends JFrame {
 	
 	private void adicionarBotaoVoltar() {
 		JButton btnVoltar = new JButton("Voltar");
+		Estilizador.aplicarEstiloBotao(btnVoltar, EstiloBotao.CLARO_UNIFICADO);
 		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PaginaPrincipal.abrirPaginaPrincipal();

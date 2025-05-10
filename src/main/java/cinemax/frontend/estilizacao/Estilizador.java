@@ -3,6 +3,7 @@ package cinemax.frontend.estilizacao;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,15 +11,20 @@ import java.awt.RenderingHints;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
@@ -30,7 +36,34 @@ public class Estilizador {
 	public static JScrollPane estilizandoScrollBarVertEHori(JScrollPane scrollPane) {
 		
 		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		
+		scrollPane.setOpaque(false);
+	    scrollPane.getViewport().setOpaque(false);
+	    scrollPane.setBorder(BorderFactory.createEmptyBorder());
 
+	    scrollPane.setViewportBorder(null);
+	    scrollPane.setBackground(new Color(240, 240, 240));
+
+	    scrollPane.setUI(new javax.swing.plaf.basic.BasicScrollPaneUI() {
+	        private final int arc = 8;
+
+	        @Override
+	        public void paint(Graphics g, JComponent c) {
+	            Graphics2D g2 = (Graphics2D) g.create();
+	            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	            g2.setColor(new Color(240, 240, 240));
+	            g2.fillRoundRect(0, 0, c.getWidth(), c.getHeight(), arc, arc);
+	            g2.setColor(Color.GRAY);
+	            g2.setStroke(new BasicStroke(1.2f));
+	            g2.drawRoundRect(0, 0, c.getWidth() - 1, c.getHeight() - 1, arc, arc);
+	            g2.dispose();
+	        }
+	    });
+
+	    // Aplica borda arredondada ao viewport
+	    scrollPane.setViewportBorder(BorderFactory.createEmptyBorder());
+	    scrollPane.setOpaque(false);
+	    scrollPane.getViewport().setOpaque(false);
 		
 		// Acesse as barras do JScrollPane
 		JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
@@ -116,6 +149,15 @@ public class Estilizador {
 		return cor;
 	}
 	
+	public static void estilizarTextArea(JTextArea textArea) {
+	    textArea.setLineWrap(true);
+	    textArea.setWrapStyleWord(true);
+	    textArea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+	    textArea.setOpaque(false); // importante para transparência funcionar
+	    textArea.setBorder(new EmptyBorder(10, 10, 10, 10));
+	}
+
+	
 	public static JPanel criarPainelArredondado(Color corFundo, int raioBorda) {
 	    return new JPanel() {
 	        @Override
@@ -158,7 +200,7 @@ public class Estilizador {
 	    botao.setBorder(new EmptyBorder(4, 10, 4, 10));
 
 	    final Color[] corAtual = { corFundo };
-	    final Color corFundoDesativado = ajustarBrilho(corFundo, 0.6f); // escurece 40%
+	    final Color corFundoDesativado = ajustarBrilho(corFundo, 0.2f); // escurece 80%
 
 	    botao.setUI(new javax.swing.plaf.basic.BasicButtonUI() {
 	        @Override
@@ -184,7 +226,7 @@ public class Estilizador {
 	        @Override
 	        public void mouseEntered(java.awt.event.MouseEvent e) {
 	            if (botao.isEnabled()) {
-	                corAtual[0] = ajustarBrilho(corFundo, 2.15f);
+	                corAtual[0] = ajustarBrilho(corFundo, 4.15f);
 	                botao.repaint();
 	            }
 	        }
@@ -241,6 +283,35 @@ public class Estilizador {
 	    checkBox.setOpaque(true); // garante que a cor de fundo apareça
 	    checkBox.setBorder(new EmptyBorder(5, 10, 5, 10)); // padding interno
 	}
+	
+	
+	public static void estilizarComboBoxClassificacaoIndicativa(JComboBox<?> comboBox) {
+        comboBox.setFont(new Font("Tahoma", Font.BOLD, 13));
+        comboBox.setBackground(new Color(2, 18, 27));
+        comboBox.setForeground(Color.WHITE);
+        comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        comboBox.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                                                          boolean isSelected, boolean cellHasFocus) {
+                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+                if (isSelected) {
+                    label.setBackground(Color.GRAY);         // fundo do item selecionado
+                    label.setForeground(Color.WHITE);        // texto do item selecionado
+                } else {
+                    label.setBackground(new Color(2, 18, 27)); // fundo dos itens normais
+                    label.setForeground(Color.WHITE);         // texto dos itens normais
+                }
+
+                label.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                label.setOpaque(true); // necessário para o fundo ser visível
+                return label;
+            }
+        });
+    }
+	
 	
     /**
      * Aplica estilo customizado em CheckBoxes com uma caixa cinza.

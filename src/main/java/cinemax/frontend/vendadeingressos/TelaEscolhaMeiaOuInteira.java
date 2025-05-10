@@ -13,6 +13,7 @@ import cinemax.backend.relatorios.filmes.TipoDeIngresso;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.estilizacao.Estilizador;
 import cinemax.frontend.estilizacao.EstiloBotao;
+import cinemax.frontend.estilizacao.JTextFieldEstilizado;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -102,19 +103,19 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 	public void adicionarRGLista(JPanel panelRGs) {
 	    Component spacer = Box.createRigidArea(new Dimension(0, 5));
-	    JPanel card = new JPanel();
+	    JPanel card = Estilizador.criarPainelArredondado(new Color(2, 18, 27), 10);
 	    card.setLayout(null);
 	    card.setPreferredSize(new Dimension(350, 40));
 	    card.setMaximumSize(new Dimension(350, 40));
-	    card.setBackground(new Color(192, 192, 192));
 	    card.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 	    JLabel lblRG = new JLabel("RG:");
+	    lblRG.setForeground(new Color(255,255,255));
 	    lblRG.setFont(new Font("Tahoma", Font.BOLD, 14));
 	    lblRG.setBounds(10, 8, 40, 25);
 	    card.add(lblRG);
 
-	    JTextField textField = new JTextField();
+	    JTextField textField = new JTextFieldEstilizado(null);
 	    textField.setBounds(60, 8, 100, 25);
 	    card.add(textField);
 
@@ -143,6 +144,39 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 	        ativaOuDesativaListaRGs();
 	    }
+	}
+	
+	private JLabel geraLabelVerDetalhes(Sessao sessao) {
+		JLabel lblVerDetalhes = new JLabel("Ver detalhes...");
+		lblVerDetalhes.setForeground(new Color(0, 12, 159));
+		lblVerDetalhes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblVerDetalhes.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblVerDetalhes.setBounds(134, 114, 78, 20);
+
+		Color corOriginal = new Color(0, 12, 159);
+		Color corHover = new Color(80, 80, 200); // um azul mais claro
+
+		lblVerDetalhes.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        telaDetalhesFilme = new TelaDetalhesFilme(sessao.getFilme());
+		        telaDetalhesFilme.setVisible(true);
+		        telaDetalhesFilme.setLocationRelativeTo(null);
+		    }
+
+		    @Override
+		    public void mouseEntered(MouseEvent e) {
+		        lblVerDetalhes.setForeground(corHover);
+		    }
+
+		    @Override
+		    public void mouseExited(MouseEvent e) {
+		        lblVerDetalhes.setForeground(corOriginal);
+		    }
+		});
+
+		return lblVerDetalhes;
+
 	}
 
 	/*
@@ -390,12 +424,12 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 		JLabel lblPrecoTotal = new JLabel("R$ 0.00");
 		lblPrecoTotal.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblPrecoTotal.setBounds(263, 429, 91, 14);
+		lblPrecoTotal.setBounds(256, 429, 91, 14);
 		panelResumo.add(lblPrecoTotal);
 
 		JLabel lblTotalItens = new JLabel("0");
 		lblTotalItens.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblTotalItens.setBounds(283, 397, 91, 14);
+		lblTotalItens.setBounds(280, 397, 91, 14);
 		panelResumo.add(lblTotalItens);
 
 		JLabel lblInteiraResumo = new JLabel("0x Inteira");
@@ -410,12 +444,12 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 		JLabel lblSubPrecoInteira = new JLabel("R$ 0.00");
 		lblSubPrecoInteira.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSubPrecoInteira.setBounds(263, 322, 76, 14);
+		lblSubPrecoInteira.setBounds(256, 322, 76, 14);
 		panelResumo.add(lblSubPrecoInteira);
 
 		JLabel lblSubPrecoMeia = new JLabel("R$ 0.00");
 		lblSubPrecoMeia.setFont(new Font("Tahoma", Font.BOLD, 13));
-		lblSubPrecoMeia.setBounds(263, 347, 76, 14);
+		lblSubPrecoMeia.setBounds(256, 347, 76, 14);
 		panelResumo.add(lblSubPrecoMeia);
 
 		JLabel lblNewLabel_1 = new JLabel("Resumo do Pedido:");
@@ -469,21 +503,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		lblCinemax.setBounds(134, 78, 185, 20);
 		panelResumoFIlme.add(lblCinemax);
 
-		JLabel lblVerDetalhes = new JLabel("Ver detalhes...");
-		lblVerDetalhes.setForeground(new Color(0, 12, 159));
-		lblVerDetalhes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblVerDetalhes.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		    	
-		        telaDetalhesFilme = new TelaDetalhesFilme(sessao.getFilme());
-		        telaDetalhesFilme.setVisible(true);
-		        telaDetalhesFilme.setLocationRelativeTo(null);
-		        
-		    }
-		});
-		lblVerDetalhes.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblVerDetalhes.setBounds(134, 114, 78, 20);
+		JLabel lblVerDetalhes = geraLabelVerDetalhes(sessao);
 		panelResumoFIlme.add(lblVerDetalhes);
 		
 		String diaFormatado = sessao.getInicio().getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("pt", "BR")).toUpperCase();
@@ -501,7 +521,6 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		panelResumo.add(lblPoltronas);
 
 		JScrollPane scrollPanePoltronas = new JScrollPane();
-		scrollPanePoltronas = Estilizador.estilizandoScrollBarVertEHori(scrollPanePoltronas);
 		scrollPanePoltronas.setBounds(0, 205, 329, 53);
 		panelResumo.add(scrollPanePoltronas);
 		
@@ -519,7 +538,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 						cellHasFocus);
 
 				label.setHorizontalAlignment(SwingConstants.CENTER);
-				label.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				label.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 				return label;
 			}
@@ -529,14 +548,14 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		scrollPanePoltronas.setViewportView(listPoltronasSelecionadas);
 		listPoltronasSelecionadas.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		listPoltronasSelecionadas.setVisibleRowCount(-1); // -1 significa que ele vai quebrar sozinho
-		listPoltronasSelecionadas.setFixedCellWidth(50); // Largura de cada "item" (ajuste como quiser)
+		listPoltronasSelecionadas.setFixedCellWidth(40); // Largura de cada "item" (ajuste como quiser)
 		listPoltronasSelecionadas.setCellRenderer(defaultListCellRenderer);
 
 		scrollPaneRGs = new JScrollPane();
 		scrollPaneRGs = Estilizador.estilizandoScrollBarVertEHori(scrollPaneRGs);
 		scrollPaneRGs.setEnabled(false);
 		scrollPaneRGs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneRGs.setBounds(79, 109, 195, 138);
+		scrollPaneRGs.setBounds(90, 80, 195, 138);
 		panelMeias.add(scrollPaneRGs);
 
 		panelRGs = new JPanel();

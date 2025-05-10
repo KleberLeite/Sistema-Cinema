@@ -71,6 +71,39 @@ public class TelaEscolhaPoltrona extends JFrame {
 			}
 		});
 	}
+	
+	private JLabel geraLabelVerDetalhes(Sessao sessao) {
+		JLabel lblVerDetalhes = new JLabel("Ver detalhes...");
+		lblVerDetalhes.setForeground(new Color(0, 12, 159));
+		lblVerDetalhes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblVerDetalhes.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblVerDetalhes.setBounds(134, 114, 78, 20);
+
+		Color corOriginal = new Color(0, 12, 159);
+		Color corHover = new Color(80, 80, 200); // um azul mais claro
+
+		lblVerDetalhes.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        telaDetalhesFilme = new TelaDetalhesFilme(sessao.getFilme());
+		        telaDetalhesFilme.setVisible(true);
+		        telaDetalhesFilme.setLocationRelativeTo(null);
+		    }
+
+		    @Override
+		    public void mouseEntered(MouseEvent e) {
+		        lblVerDetalhes.setForeground(corHover);
+		    }
+
+		    @Override
+		    public void mouseExited(MouseEvent e) {
+		        lblVerDetalhes.setForeground(corOriginal);
+		    }
+		});
+
+		return lblVerDetalhes;
+
+	}
 
 	/**
 	 * Create the application.
@@ -390,11 +423,11 @@ public class TelaEscolhaPoltrona extends JFrame {
 						break;
 					}
 				}
-				
-				
-				
-				botao.setBackground(Color.WHITE);
 				botao.setBorderPainted(false);
+				botao.setContentAreaFilled(false);
+				botao.setFocusPainted(false);
+				botao.setBackground(Color.WHITE);
+				botao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 				// Ação do botão
 				final int auxI = i;
@@ -458,7 +491,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 						cellHasFocus);
 
 				label.setHorizontalAlignment(SwingConstants.CENTER);
-				label.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				label.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 				return label;
 			}
@@ -468,7 +501,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 				scrollPanePoltronas.setViewportView(listPoltronasSelecionadas);
 				listPoltronasSelecionadas.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 				listPoltronasSelecionadas.setVisibleRowCount(-1); // -1 significa que ele vai quebrar sozinho
-				listPoltronasSelecionadas.setFixedCellWidth(50); // Largura de cada "item" (ajuste como quiser)
+				listPoltronasSelecionadas.setFixedCellWidth(40); // Largura de cada "item" (ajuste como quiser)
 				listPoltronasSelecionadas.setCellRenderer(defaultListCellRenderer);
 		
 
@@ -527,22 +560,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 		lblNewLabel_3.setBounds(134, 74, 185, 24);
 		panelResumoFIlme.add(lblNewLabel_3);
 		
-		JLabel lblVerDetalhes = new JLabel("Ver detalhes...");
-		lblVerDetalhes.setForeground(new Color(0, 12, 159));
-		lblVerDetalhes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblVerDetalhes.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
-		    	
-		        telaDetalhesFilme = new TelaDetalhesFilme(sessao.getFilme());
-		        telaDetalhesFilme.setVisible(true);
-		        telaDetalhesFilme.setLocationRelativeTo(null);
-		        
-		    }
-		});
-
-		lblVerDetalhes.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblVerDetalhes.setBounds(134, 108, 78, 26);
+		JLabel lblVerDetalhes = geraLabelVerDetalhes(sessao);
 		panelResumoFIlme.add(lblVerDetalhes);
 		
 		String diaFormatado = sessao.getInicio().getDayOfWeek().getDisplayName(TextStyle.SHORT, new Locale("pt", "BR")).toUpperCase();
@@ -581,7 +599,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 				
 				JLabel lblPrecoTotal = new JLabel("R$ 0.00");
 				lblPrecoTotal.setFont(new Font("Tahoma", Font.BOLD, 13));
-				lblPrecoTotal.setBounds(262, 425, 91, 14);
+				lblPrecoTotal.setBounds(256, 425, 91, 14);
 				panelResumo.add(lblPrecoTotal);
 
 		/*

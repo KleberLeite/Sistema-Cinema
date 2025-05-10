@@ -206,10 +206,10 @@ public class TelaVendaDeIngresso extends JFrame {
 	}
 	
 	private JPanel gerarCardFilme() {
-		JPanel card = new JPanel();
+		JPanel card = Estilizador.criarPainelArredondado(new Color( 192, 192, 192), 10);
 		card.setLayout(null);
-		card.setPreferredSize(new Dimension(1355, 120)); // Altura aumentada
-		card.setMaximumSize(new Dimension(1355, 120));
+		card.setPreferredSize(new Dimension(1045, 120)); // Altura aumentada
+		card.setMaximumSize(new Dimension(1045, 120));
 		card.setBackground(new Color(192, 192, 192));
 		card.setBorder(new EmptyBorder(100, 10, 10, 10));
 		return card;

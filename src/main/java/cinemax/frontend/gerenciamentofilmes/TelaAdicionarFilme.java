@@ -1,29 +1,39 @@
 package cinemax.frontend.gerenciamentofilmes;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import cinemax.backend.core.Backend;
 import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.filmes.Filme;
 import cinemax.backend.filmes.GeneroFilme;
@@ -31,21 +41,7 @@ import cinemax.backend.filmes.Sessao;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.estilizacao.Estilizador;
 import cinemax.frontend.estilizacao.EstiloBotao;
-import cinemax.frontend.vendadeingressos.TelaEscolhaPoltrona;
-
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
+import cinemax.frontend.estilizacao.JTextFieldEstilizado;
 
 public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 
@@ -143,17 +139,17 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		panelSessoes.removeAll(); // limpa as sessões antigas
 
 		for (Sessao sessao : filme.obterTodasSessoes()) {
-			JPanel card = new JPanel();
+			JPanel card = Estilizador.criarPainelArredondado(new Color(2, 17, 28), 10);
 			card.setLayout(null);
 			card.setPreferredSize(new Dimension(400, 30));
 			card.setMaximumSize(new Dimension(400, 30));
-			card.setBackground(new Color(192, 192, 192));
 			card.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm");
 			String sessaoFormatada = sessao.getInicio().format(formatter);
 
 			JLabel lblSessao = new JLabel(sessaoFormatada);
+			lblSessao.setForeground(new Color(255,255,255));
 			lblSessao.setFont(new Font("Tahoma", Font.BOLD, 14));
 			lblSessao.setBounds(20, 2, 400, 25);
 			card.add(lblSessao);
@@ -214,7 +210,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 	    for (GeneroFilme genero : GeneroFilme.values()) {
 	        JCheckBox checkBox = new JCheckBox(genero.toString());
 	        checkBox.setActionCommand(genero.name()); 
-	        Estilizador.estilizarCheckBox(checkBox, Color.WHITE, Color.BLACK, new Font("Tahoma", Font.BOLD, 13));
+	        Estilizador.estilizarCheckBox(checkBox, new Color(240,240,240), Color.BLACK, new Font("Tahoma", Font.BOLD, 13));
 	        checkBoxesGeneros.add(checkBox);
 
 	        checkBox.addItemListener(e -> {
@@ -254,10 +250,11 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 
 		JPanel panelPrincipal = new JPanel();
 		panelPrincipal.setBounds(10, 11, 764, 405);
+		panelPrincipal.setBackground(new Color(255, 255, 255));
 		contentPane.add(panelPrincipal);
 		panelPrincipal.setLayout(null);
 
-		textFieldNome = new JTextField();
+		textFieldNome = new JTextFieldEstilizado(null);
 		textFieldNome.setBounds(30, 38, 280, 26);
 		panelPrincipal.add(textFieldNome);
 		textFieldNome.setColumns(10);
@@ -272,14 +269,12 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		lblNewLabel_1.setBounds(30, 74, 141, 26);
 		panelPrincipal.add(lblNewLabel_1);
 
-		textAreaSinopse = new JTextArea();
-		// Ativa quebra automática de linha
-		textAreaSinopse.setLineWrap(true);
-		// Garante que a quebra respeite palavras (em vez de cortar no meio)
-		textAreaSinopse.setWrapStyleWord(true);
+		JTextArea textAreaSinopse = new JTextArea();
+		Estilizador.estilizarTextArea(textAreaSinopse);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane = Estilizador.estilizandoScrollBarVertEHori(scrollPane);
+		JScrollPane scrollPane = new JScrollPane(textAreaSinopse);
+		Estilizador.estilizandoScrollBarVertEHori(scrollPane);
+
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(30, 101, 280, 74);
 		panelPrincipal.add(scrollPane);
@@ -291,7 +286,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		lblDurao.setBounds(30, 186, 103, 26);
 		panelPrincipal.add(lblDurao);
 
-		textFieldDuracao = new JTextField();
+		textFieldDuracao = new JTextFieldEstilizado(null);
 		textFieldDuracao.setColumns(10);
 		textFieldDuracao.setBounds(30, 211, 78, 26);
 		panelPrincipal.add(textFieldDuracao);
@@ -301,16 +296,17 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		lblSessoes.setBounds(425, 13, 78, 26);
 		panelPrincipal.add(lblSessoes);
 
-		JScrollPane scrollPaneSessoes = new JScrollPane();
-		scrollPaneSessoes = Estilizador.estilizandoScrollBarVertEHori(scrollPaneSessoes);
+		panelSessoes = Estilizador.criarPainelArredondado(new Color( 240, 240, 240), 20);
+		panelSessoes.setLayout(new BoxLayout(panelSessoes, BoxLayout.Y_AXIS)); // lista vertical
+		panelSessoes.setBorder(new EmptyBorder(5, 5, 5, 5)); // margem geral
+
+		JScrollPane scrollPaneSessoes = new JScrollPane(panelSessoes);
+		Estilizador.estilizandoScrollBarVertEHori(scrollPaneSessoes);
 		scrollPaneSessoes.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneSessoes.setOpaque(false);
+		scrollPaneSessoes.setBorder(BorderFactory.createLineBorder(new Color( 0, 23, 10)));
 		scrollPaneSessoes.setBounds(425, 38, 216, 196);
 		panelPrincipal.add(scrollPaneSessoes);
-
-		
-		panelSessoes.setLayout(new BoxLayout(panelSessoes, BoxLayout.Y_AXIS)); // lista vertical
-		panelSessoes.setBackground(Color.WHITE);
-		panelSessoes.setBorder(new EmptyBorder(5, 5, 5, 5)); // margem geral
 
 		scrollPaneSessoes.setViewportView(panelSessoes);
 
@@ -335,26 +331,33 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		lblNewLabel_2.setBounds(143, 186, 164, 26);
 		panelPrincipal.add(lblNewLabel_2);
 		
+		try {
+		    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		} catch (Exception e) {
+		    e.printStackTrace();
+		}
+
 		comboBoxClassificacaoIndicativa = new JComboBox<>(ClassificacaoIndicativa.values());
 		comboBoxClassificacaoIndicativa.setBounds(186, 211, 72, 26);
+		Estilizador.estilizarComboBoxClassificacaoIndicativa(comboBoxClassificacaoIndicativa);
 		panelPrincipal.add(comboBoxClassificacaoIndicativa);
+
 		
 		JLabel lblGenero = new JLabel("Gênero:");
 		lblGenero.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblGenero.setBounds(30, 248, 117, 26);
 		panelPrincipal.add(lblGenero);
 
-		JScrollPane scrollPaneGeneros = new JScrollPane();
-		scrollPaneGeneros = Estilizador.estilizandoScrollBarVertEHori(scrollPaneGeneros);
-		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPaneGeneros.setBounds(30, 271, 145, 100);
-		scrollPaneGeneros.setBackground(new Color( 255, 255, 255));
-		panelPrincipal.add(scrollPaneGeneros);
-		
-		panelGeneros = new JPanel();
-		scrollPaneGeneros.setViewportView(panelGeneros);
-		panelGeneros.setBackground(new Color( 255, 255, 255));
+		panelGeneros = Estilizador.criarPainelArredondado(new Color( 240, 240, 240), 20);
+		panelGeneros.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
+
+		JScrollPane scrollPaneGeneros = new JScrollPane(panelGeneros);
+		Estilizador.estilizandoScrollBarVertEHori(scrollPaneGeneros);
+		scrollPaneGeneros.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneGeneros.setBounds(30, 271, 145, 100); 
+		scrollPaneGeneros.setViewportView(panelGeneros);
+		panelPrincipal.add(scrollPaneGeneros);
 		
 		// Lista para guardar os checkboxes
 		geraCheckBoxesGeneros();
