@@ -1,5 +1,5 @@
 
-package cinemax.frontend.vendadealimentos;
+package cinemax.frontend.alimentos;
 
 import cinemax.backend.alimentos.Alimento;
 import cinemax.frontend.controller.ControladorDeApp;

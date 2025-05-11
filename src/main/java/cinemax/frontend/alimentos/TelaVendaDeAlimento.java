@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package cinemax.frontend.vendadealimentos;
+package cinemax.frontend.alimentos;
 
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.backend.alimentos.Alimento;

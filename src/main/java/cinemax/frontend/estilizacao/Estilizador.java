@@ -51,7 +51,7 @@ public class Estilizador {
      */
     public static void estilizarTabela(JTable tabela, Color corFundoCabecalho) {
     	Color corTextoCabecalho = Color.WHITE;
-    	Font fonteCabecalho = new Font("Tahoma", Font.BOLD, 14);
+    	Font fonteCabecalho = new Font("Segoe UI", Font.BOLD, 14);
     	int alturaCabecalho= 32;
         Color corLinhaPar = new Color(240, 240, 240);
         Color corLinhaImpar =  new Color(220, 220, 220);
@@ -235,7 +235,7 @@ public static JScrollPane estilizandoScrollBarVertEHori(JScrollPane scrollPane) 
 	public static void estilizarTextArea(JTextArea textArea) {
 	    textArea.setLineWrap(true);
 	    textArea.setWrapStyleWord(true);
-	    textArea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+	    textArea.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 	    textArea.setOpaque(false); // importante para transparência funcionar
 	    textArea.setBorder(new EmptyBorder(10, 10, 10, 10));
 	}
@@ -311,7 +311,7 @@ public static JScrollPane estilizandoScrollBarVertEHori(JScrollPane scrollPane) 
 	    botao.setContentAreaFilled(false);
 	    botao.setFocusPainted(false);
 	    botao.setForeground(corTexto);
-	    botao.setFont(new Font("Tahoma", Font.BOLD, 14));
+	    botao.setFont(new Font("Segoe UI", Font.BOLD, 14));
 	    botao.setBorder(new EmptyBorder(4, 10, 4, 10));
 
 	    final Color[] corAtual = { corFundo };
@@ -401,7 +401,7 @@ public static JScrollPane estilizandoScrollBarVertEHori(JScrollPane scrollPane) 
 	
 	
 	public static void estilizarComboBoxClassificacaoIndicativa(JComboBox<?> comboBox) {
-        comboBox.setFont(new Font("Tahoma", Font.BOLD, 13));
+        comboBox.setFont(new Font("Segoe UI", Font.BOLD, 13));
         comboBox.setBackground(new Color(2, 18, 27));
         comboBox.setForeground(Color.WHITE);
         comboBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -420,7 +420,7 @@ public static JScrollPane estilizandoScrollBarVertEHori(JScrollPane scrollPane) 
                     label.setForeground(Color.WHITE);         // texto dos itens normais
                 }
 
-                label.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
                 label.setOpaque(true); // necessário para o fundo ser visível
                 return label;
             }

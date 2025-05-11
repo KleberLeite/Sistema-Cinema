@@ -1,5 +1,5 @@
 
-package cinemax.frontend.vendadealimentos;
+package cinemax.frontend.alimentos;
 
 import cinemax.backend.alimentos.Alimento;
 import cinemax.backend.alimentos.IBancoDeDadosAlimento;
@@ -9,6 +9,7 @@ import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.estilizacao.Estilizador;
 import cinemax.frontend.estilizacao.EstiloBotao;
+import cinemax.frontend.estilizacao.JTextFieldEstilizado;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -79,72 +80,81 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 	// Code">//GEN-BEGIN:initComponents
 	private void initComponents() {
 
-		jPanel1 = new javax.swing.JPanel();
+		jPanelCabecalho = new javax.swing.JPanel();
 		TXTGenrenciAlimentos = new javax.swing.JLabel();
-		jPanel2 = new javax.swing.JPanel();
+		jPanelPrincipal = new javax.swing.JPanel();
 		jScrollPane1 = new javax.swing.JScrollPane();
 		PlanilhaAlimento = new javax.swing.JTable();
 		TXTNomeAlimento = new javax.swing.JLabel();
 		TXTPrecoAlimento = new javax.swing.JLabel();
 		TXTCodigoAlimento = new javax.swing.JLabel();
-		CapturaTXTCodigoAlimento = new javax.swing.JTextField();
-		CapturaTXTNomeAlimento = new javax.swing.JTextField();
-		CapturaTXTPrecoAlimento = new javax.swing.JTextField();
+		CapturaTXTCodigoAlimento = new JTextFieldEstilizado(null);
+		CapturaTXTNomeAlimento = new JTextFieldEstilizado(null);
+		CapturaTXTPrecoAlimento = new JTextFieldEstilizado(null);
 		ButaoCadastrarAlimento = new javax.swing.JButton();
-		ButaoCadastrarAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
-		Estilizador.aplicarEstiloBotao(ButaoCadastrarAlimento, EstiloBotao.PADRAO_ESCURECIDO);
+		ButaoCadastrarAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		ButaoEditarAlimento = new javax.swing.JButton();
-		ButaoEditarAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
-		Estilizador.aplicarEstiloBotao(ButaoEditarAlimento, EstiloBotao.PADRAO_ESCURECIDO);
+		ButaoEditarAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		ButaoRemoverAlimento = new javax.swing.JButton();
-		ButaoRemoverAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
-		Estilizador.aplicarEstiloBotao(ButaoRemoverAlimento, EstiloBotao.PADRAO_ESCURECIDO);
-		jPanel3 = new javax.swing.JPanel();
-		CapturaTXTProcurarNomeAlimento = new javax.swing.JTextField();
+		ButaoRemoverAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		jPanelFiltro = new javax.swing.JPanel();
+		CapturaTXTProcurarNomeAlimento = new JTextFieldEstilizado(null);
 		ButaoProcurarAlimentoNome = new javax.swing.JButton();
-		ButaoProcurarAlimentoNome.setFont(new Font("Tahoma", Font.BOLD, 13));
-		Estilizador.aplicarEstiloBotao(ButaoProcurarAlimentoNome, EstiloBotao.PADRAO_ESCURECIDO);
+		ButaoProcurarAlimentoNome.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		TXTProcurarNomeAlimento = new javax.swing.JLabel();
 		TXTProcurarCodigoAlimento = new javax.swing.JLabel();
-		CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
+		CapturaTXTProcurarCodigoAlimento = new JTextFieldEstilizado(null);
 		ButaoProcurarCodigoAlimento = new javax.swing.JButton();
-		ButaoProcurarCodigoAlimento.setFont(new Font("Tahoma", Font.BOLD, 13));
-		Estilizador.aplicarEstiloBotao(ButaoProcurarCodigoAlimento, EstiloBotao.PADRAO_ESCURECIDO);
+		ButaoProcurarCodigoAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		bntRecarregarLista = new javax.swing.JButton();
-		bntRecarregarLista.setFont(new Font("Tahoma", Font.BOLD, 13));
-		Estilizador.aplicarEstiloBotao(bntRecarregarLista, EstiloBotao.PADRAO_ESCURECIDO);
+		bntRecarregarLista.setFont(new Font("Segoe UI", Font.BOLD, 13));
 		ButaoVoltar = new javax.swing.JButton();
-		ButaoVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
-		Estilizador.aplicarEstiloBotao(ButaoVoltar, EstiloBotao.CLARO_UNIFICADO);
+		ButaoVoltar.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		
 
+		jPanelFiltro = Estilizador.criarPainelArredondado(new Color(255, 255, 255),10);
+        
+        Estilizador.aplicarEstiloBotao(ButaoCadastrarAlimento, EstiloBotao.PADRAO_ESCURECIDO);
+		Estilizador.aplicarEstiloBotao(ButaoEditarAlimento, EstiloBotao.PADRAO_ESCURECIDO);
+		Estilizador.aplicarEstiloBotao(ButaoRemoverAlimento, EstiloBotao.PADRAO_ESCURECIDO);
+        Estilizador.aplicarEstiloBotao(ButaoProcurarAlimentoNome, EstiloBotao.PADRAO_ESCURECIDO);
+        Estilizador.aplicarEstiloBotao(ButaoProcurarCodigoAlimento, EstiloBotao.PADRAO_ESCURECIDO);
+        Estilizador.aplicarEstiloBotao(bntRecarregarLista, EstiloBotao.PADRAO_ESCURECIDO);
+        Estilizador.aplicarEstiloBotao(ButaoVoltar, EstiloBotao.CLARO_UNIFICADO);
+        
+        Color corFundoCabelho =  new Color(2, 17, 28);
+        
+        Estilizador.estilizarTabela(PlanilhaAlimento,corFundoCabelho);
+        
+		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Cinemax");
 
-		jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+		jPanelCabecalho.setBackground(new java.awt.Color(255, 255, 255));
 
 		TXTGenrenciAlimentos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 		TXTGenrenciAlimentos.setForeground(new java.awt.Color(0, 32, 64));
 		TXTGenrenciAlimentos.setText("Gerenciamento de Alimentos");
 
-		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-		jPanel1Layout.setHorizontalGroup(
-			jPanel1Layout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+		javax.swing.GroupLayout gl_jPanelCabecalho = new javax.swing.GroupLayout(jPanelCabecalho);
+		gl_jPanelCabecalho.setHorizontalGroup(
+			gl_jPanelCabecalho.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_jPanelCabecalho.createSequentialGroup()
 					.addContainerGap(279, Short.MAX_VALUE)
 					.addComponent(TXTGenrenciAlimentos)
 					.addGap(275))
 		);
-		jPanel1Layout.setVerticalGroup(
-			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+		gl_jPanelCabecalho.setVerticalGroup(
+			gl_jPanelCabecalho.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_jPanelCabecalho.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(TXTGenrenciAlimentos)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
-		jPanel1.setLayout(jPanel1Layout);
+		jPanelCabecalho.setLayout(gl_jPanelCabecalho);
 
-		jPanel2.setBackground(new Color(2, 18, 27));
-		jPanel2.setForeground(new java.awt.Color(0, 32, 64));
+		jPanelPrincipal.setBackground(new Color(2, 18, 27));
+		jPanelPrincipal.setForeground(new java.awt.Color(0, 32, 64));
 
 		PlanilhaAlimento.setBackground(new java.awt.Color(242, 242, 242));
 		PlanilhaAlimento.setModel(
@@ -155,20 +165,20 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 						return false;
 					}
 				});
-		//jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
+		jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 		jScrollPane1.setViewportView(PlanilhaAlimento);
 
-		TXTNomeAlimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+		TXTNomeAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
 		TXTNomeAlimento.setForeground(new java.awt.Color(255, 255, 255));
-		TXTNomeAlimento.setText("Nome");
+		TXTNomeAlimento.setText("Nome:");
 
-		TXTPrecoAlimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+		TXTPrecoAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
 		TXTPrecoAlimento.setForeground(new java.awt.Color(255, 255, 255));
-		TXTPrecoAlimento.setText("Preço");
+		TXTPrecoAlimento.setText("Preço:");
 
-		TXTCodigoAlimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+		TXTCodigoAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
 		TXTCodigoAlimento.setForeground(new java.awt.Color(255, 255, 255));
-		TXTCodigoAlimento.setText("Código");
+		TXTCodigoAlimento.setText("Código:");
 
 		CapturaTXTPrecoAlimento.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,13 +214,13 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 			}
 		});
 
-		TXTProcurarNomeAlimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+		TXTProcurarNomeAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
 		TXTProcurarNomeAlimento.setForeground(new java.awt.Color(0, 32, 64));
-		TXTProcurarNomeAlimento.setText("Procure Nome");
+		TXTProcurarNomeAlimento.setText("Procure Nome:");
 
-		TXTProcurarCodigoAlimento.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+		TXTProcurarCodigoAlimento.setFont(new Font("Segoe UI", Font.BOLD, 13)); // NOI18N
 		TXTProcurarCodigoAlimento.setForeground(new java.awt.Color(0, 32, 64));
-		TXTProcurarCodigoAlimento.setText("Procurar Código");
+		TXTProcurarCodigoAlimento.setText("Procurar Código:");
 
 		ButaoProcurarCodigoAlimento.setText("Procurar");
 		ButaoProcurarCodigoAlimento.addActionListener(new java.awt.event.ActionListener() {
@@ -226,36 +236,36 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 			}
 		});
 
-		javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-		jPanel3.setLayout(jPanel3Layout);
-		jPanel3Layout.setHorizontalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel3Layout.createSequentialGroup()
-						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(jPanel3Layout.createSequentialGroup().addGap(17, 17, 17)
+		javax.swing.GroupLayout gl_jPanelFiltro = new javax.swing.GroupLayout(jPanelFiltro);
+		jPanelFiltro.setLayout(gl_jPanelFiltro);
+		gl_jPanelFiltro.setHorizontalGroup(gl_jPanelFiltro.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(gl_jPanelFiltro.createSequentialGroup()
+						.addGroup(gl_jPanelFiltro.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+								.addGroup(gl_jPanelFiltro.createSequentialGroup().addGap(17, 17, 17)
 										.addComponent(TXTProcurarNomeAlimento).addGap(14, 14, 14))
 								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-										jPanel3Layout.createSequentialGroup().addContainerGap()
+										gl_jPanelFiltro.createSequentialGroup().addContainerGap()
 												.addComponent(TXTProcurarCodigoAlimento)
 												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+						.addGroup(gl_jPanelFiltro.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
 								.addComponent(CapturaTXTProcurarNomeAlimento)
 								.addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.DEFAULT_SIZE,
 										174, Short.MAX_VALUE))
 						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(gl_jPanelFiltro.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 								.addComponent(ButaoProcurarAlimentoNome).addComponent(ButaoProcurarCodigoAlimento))
 						.addContainerGap(12, Short.MAX_VALUE))
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gl_jPanelFiltro.createSequentialGroup()
 						.addGap(0, 0, Short.MAX_VALUE).addComponent(bntRecarregarLista).addGap(116, 116, 116)));
-		jPanel3Layout.setVerticalGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+		gl_jPanelFiltro.setVerticalGroup(gl_jPanelFiltro.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, gl_jPanelFiltro.createSequentialGroup()
 						.addGap(22, 22, 22)
-						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addGroup(gl_jPanelFiltro.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 								.addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
 								.addComponent(TXTProcurarNomeAlimento).addComponent(ButaoProcurarAlimentoNome))
 						.addGap(28, 28, 28)
-						.addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addGroup(gl_jPanelFiltro.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 								.addComponent(TXTProcurarCodigoAlimento)
 								.addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,65 +279,65 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 			}
 		});
 
-		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-		jPanel2Layout.setHorizontalGroup(
-			jPanel2Layout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(jPanel2Layout.createSequentialGroup()
-					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-						.addGroup(jPanel2Layout.createSequentialGroup()
+		javax.swing.GroupLayout gl_jPanelPrincipal = new javax.swing.GroupLayout(jPanelPrincipal);
+		gl_jPanelPrincipal.setHorizontalGroup(
+			gl_jPanelPrincipal.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_jPanelPrincipal.createSequentialGroup()
+					.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_jPanelPrincipal.createSequentialGroup()
 							.addGap(158)
 							.addComponent(ButaoCadastrarAlimento)
 							.addGap(123)
 							.addComponent(ButaoEditarAlimento)
 							.addGap(107)
 							.addComponent(ButaoRemoverAlimento))
-						.addGroup(jPanel2Layout.createSequentialGroup()
+						.addGroup(gl_jPanelPrincipal.createSequentialGroup()
 							.addGap(16)
 							.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 770, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(31, Short.MAX_VALUE))
-				.addGroup(jPanel2Layout.createSequentialGroup()
+				.addGroup(gl_jPanelPrincipal.createSequentialGroup()
 					.addGap(33)
-					.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING, false)
-						.addGroup(jPanel2Layout.createSequentialGroup()
-							.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(gl_jPanelPrincipal.createSequentialGroup()
+							.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.LEADING)
 								.addComponent(TXTPrecoAlimento)
 								.addComponent(TXTNomeAlimento))
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING, false)
+							.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(CapturaTXTNomeAlimento, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
 								.addComponent(CapturaTXTPrecoAlimento)))
-						.addGroup(jPanel2Layout.createSequentialGroup()
+						.addGroup(gl_jPanelPrincipal.createSequentialGroup()
 							.addComponent(TXTCodigoAlimento)
 							.addGap(18)
 							.addComponent(CapturaTXTCodigoAlimento, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-					.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(jPanelFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addGap(57))
-				.addGroup(Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+				.addGroup(Alignment.LEADING, gl_jPanelPrincipal.createSequentialGroup()
 					.addGap(25)
 					.addComponent(ButaoVoltar, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(706, Short.MAX_VALUE))
 		);
-		jPanel2Layout.setVerticalGroup(
-			jPanel2Layout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+		gl_jPanelPrincipal.setVerticalGroup(
+			gl_jPanelPrincipal.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_jPanelPrincipal.createSequentialGroup()
 					.addGap(22)
-					.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(jPanel2Layout.createSequentialGroup()
-							.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_jPanelPrincipal.createSequentialGroup()
+							.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.BASELINE)
 								.addComponent(CapturaTXTNomeAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(TXTNomeAlimento))
 							.addGap(33)
-							.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+							.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.BASELINE)
 								.addComponent(CapturaTXTPrecoAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(TXTPrecoAlimento))
 							.addGap(33)
-							.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+							.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.BASELINE)
 								.addComponent(CapturaTXTCodigoAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addComponent(TXTCodigoAlimento)))
-						.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(jPanelFiltro, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(39)
-					.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.BASELINE)
 						.addComponent(ButaoCadastrarAlimento)
 						.addComponent(ButaoEditarAlimento)
 						.addComponent(ButaoRemoverAlimento))
@@ -337,20 +347,20 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 					.addComponent(ButaoVoltar)
 					.addContainerGap(21, Short.MAX_VALUE))
 		);
-		jPanel2.setLayout(jPanel2Layout);
+		jPanelPrincipal.setLayout(gl_jPanelPrincipal);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+				.addComponent(jPanelCabecalho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 						Short.MAX_VALUE)
-				.addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+				.addComponent(jPanelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 						Short.MAX_VALUE));
 		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
-						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
+						.addComponent(jPanelCabecalho, javax.swing.GroupLayout.PREFERRED_SIZE,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jPanel2,
+						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jPanelPrincipal,
 								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 								Short.MAX_VALUE)));
 
@@ -636,9 +646,9 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 	private javax.swing.JLabel TXTProcurarCodigoAlimento;
 	private javax.swing.JLabel TXTProcurarNomeAlimento;
 	private javax.swing.JButton bntRecarregarLista;
-	private javax.swing.JPanel jPanel1;
-	private javax.swing.JPanel jPanel2;
-	private javax.swing.JPanel jPanel3;
+	private javax.swing.JPanel jPanelCabecalho;
+	private javax.swing.JPanel jPanelPrincipal;
+	private javax.swing.JPanel jPanelFiltro;
 	private javax.swing.JScrollPane jScrollPane1;
 	// End of variables declaration//GEN-END:variables
 }

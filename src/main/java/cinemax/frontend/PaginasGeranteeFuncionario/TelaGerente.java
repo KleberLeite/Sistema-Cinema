@@ -5,6 +5,8 @@
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
 import cinemax.frontend.RelatorioGeral.TelaEscolhaRelatorio;
+import cinemax.frontend.alimentos.TelaCrudAlimento;
+import cinemax.frontend.alimentos.TelaVendaDeAlimento;
 import cinemax.backend.core.Backend;
 import cinemax.backend.funcionarios.BancoDeDadosFuncionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
@@ -14,8 +16,6 @@ import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.frontend.geranciadefuncionarios.TelaCrudFuncionario;
 import cinemax.frontend.gerenciamentofilmes.TelaCrudFilme;
 import cinemax.frontend.login.TelaLogin;
-import cinemax.frontend.vendadealimentos.TelaCrudAlimento;
-import cinemax.frontend.vendadealimentos.TelaVendaDeAlimento;
 import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
