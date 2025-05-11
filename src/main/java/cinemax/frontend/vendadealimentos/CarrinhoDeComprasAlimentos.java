@@ -32,7 +32,7 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
  
  
    private void configurarEstilos() {
-        // Configuração de cores e fontes
+       
         getContentPane().setBackground(new Color(2, 32, 64));
         TabelaCarrinho.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 12));
         TabelaCarrinho.getTableHeader().setBackground(new Color(2, 32, 64));
@@ -44,30 +44,31 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
         Voltar.setBackground(new Color(204, 0, 0)); // Vermelho
         Voltar.setForeground(Color.WHITE);
         
-        Total.setFont(new Font("Tahoma", Font.BOLD, 14));
+        TXTTotal.setFont(new Font("Tahoma", Font.BOLD, 14));
     }
 
      public void adicionarItens(Map<Alimento, Integer> itens) {
-        modeloTabela.setRowCount(0);
-        double total = 0;
+    modeloTabela.setRowCount(0);
+    double total = 0;
+    
+    for (Map.Entry<Alimento, Integer> entry : itens.entrySet()) {
+        Alimento alimento = entry.getKey();
+        int quantidade = entry.getValue();
+        double subtotal = alimento.getPreco() * quantidade;
+        total += subtotal;
         
-        for (Map.Entry<Alimento, Integer> entry : itens.entrySet()) {
-            Alimento alimento = entry.getKey();
-            int quantidade = entry.getValue();
-            double subtotal = alimento.getPreco() * quantidade;
-            total += subtotal;
-            
-            modeloTabela.addRow(new Object[]{
-                alimento.getNome(),
-                String.format("R$ %.2f", alimento.getPreco()),
-                quantidade,
-                String.format("R$ %.2f", subtotal)
-            });
-        }
-        
-        // Atualiza o total
-        Total.setText(String.format("R$ %.2f", total));
+        modeloTabela.addRow(new Object[]{
+            alimento.getNome(),
+            String.format("R$ %.2f", alimento.getPreco()),
+            quantidade,
+            String.format("R$ %.2f", subtotal)
+        });
     }
+    
+    
+    TXTTotal.setText(String.format("R$ %.2f", total)); 
+}
+
  
 
     /**
@@ -87,7 +88,7 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
         Voltar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        Total = new javax.swing.JLabel();
+        TXTTotal = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -96,7 +97,7 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
         setBackground(new java.awt.Color(2, 32, 64));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel1.setBackground(new Color(2, 17, 28));
+        jPanel1.setBackground(new java.awt.Color(2, 32, 64));
 
         TabelaCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -129,8 +130,8 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
 
         jLabel1.setText("Total da compra:");
 
-        Total.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Total.setText("0");
+        TXTTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TXTTotal.setText("0");
 
         jLabel2.setText("R$");
 
@@ -142,10 +143,10 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
-                .addComponent(Total, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addComponent(TXTTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
                 .addComponent(jLabel2)
-                .addGap(31, 31, 31))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +154,7 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Total)
+                        .addComponent(TXTTotal)
                         .addComponent(jLabel2))
                     .addComponent(jLabel1))
                 .addContainerGap(32, Short.MAX_VALUE))
@@ -186,9 +187,9 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Comprar)
-                    .addComponent(Voltar))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Voltar)
+                    .addComponent(Comprar))
                 .addGap(28, 28, 28))
         );
 
@@ -228,80 +229,60 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
     }//GEN-LAST:event_VoltarActionPerformed
 
     private void ComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprarActionPerformed
-         if (modeloTabela.getRowCount() == 0) {
-        JOptionPane.showMessageDialog(this, 
-            "Não há itens no carrinho!", 
-            "Aviso", 
-            JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
+        
+       
     int confirm = JOptionPane.showConfirmDialog(this,
-        "Confirmar compra no valor de " + Total.getText() + "?",
+        "Confirmar compra no valor de " + TXTTotal.getText() + "?",
         "Confirmação de Compra",
         JOptionPane.YES_NO_OPTION);
     
     if (confirm == JOptionPane.YES_OPTION) {
         try {
-            // 1. Registrar a venda (mantém seu código atual)
+           
+            if (modeloTabela.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Nenhum item no carrinho.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+           
             Map<Alimento, Integer> itens = new HashMap<>();
             for (int i = 0; i < modeloTabela.getRowCount(); i++) {
                 String nome = (String) modeloTabela.getValueAt(i, 0);
-                double preco = Double.parseDouble(
-                    ((String) modeloTabela.getValueAt(i, 1)).replace("R$ ", ""));
+                String precoString = (String) modeloTabela.getValueAt(i, 1);
+                
+              
+                precoString = precoString.replace("R$ ", "").replace(",", ".");
+                double preco = Double.parseDouble(precoString);
+                
                 int quantidade = (Integer) modeloTabela.getValueAt(i, 2);
                 
                 Alimento alimento = new Alimento(nome, preco, 0);
                 itens.put(alimento, quantidade);
             }
             
+           
             app.getBackend().getGerenciadorRelatorios()
                .obterRelatorioDoDia()
                .getRelatorioAlimentos()
                .adicionarVendas(itens);
             
-            // 2. Limpar o carrinho atual
+           
             modeloTabela.setRowCount(0);
-            Total.setText("0");
+            TXTTotal.setText("0");
             
-            // 3. Fechar o carrinho
+            
             this.dispose();
             
-            // 4. Limpar a tela de vendas usando reflexão
+           
             for (Window window : Window.getWindows()) {
                 if (window instanceof TelaVendaDeAlimento) {
                     TelaVendaDeAlimento telaVenda = (TelaVendaDeAlimento) window;
                     
-                    // Limpa os campos usando reflexão
-                    try {
-                        // Limpa o campo de item selecionado
-                        JLabel txtItemSelecionado = (JLabel) telaVenda.getClass()
-                            .getDeclaredField("TXTitemSelecionado").get(telaVenda);
-                        txtItemSelecionado.setText("");
-                        
-                        // Limpa os totais
-                        JLabel txtQuantidade = (JLabel) telaVenda.getClass()
-                            .getDeclaredField("TXTQuantidadeDeitemTotaisSelecionados").get(telaVenda);
-                        txtQuantidade.setText("0");
-                        
-                        JLabel txtPrecoTotal = (JLabel) telaVenda.getClass()
-                            .getDeclaredField("TXTPrecoTotalDeTodosOsItems").get(telaVenda);
-                        txtPrecoTotal.setText("0");
-                        
-                        // Limpa o carrinho interno (HashMap)
-                        Map<Alimento, Integer> carrinho = (Map<Alimento, Integer>) telaVenda.getClass()
-                            .getDeclaredField("carrinho").get(telaVenda);
-                        carrinho.clear();
-                        
-                        // Traz a tela de vendas para frente
-                        telaVenda.toFront();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null,
-                            "Compra registrada, mas não foi possível limpar todos os campos.\n" +
-                            "Erro: " + e.getMessage(),
-                            "Aviso",
-                            JOptionPane.WARNING_MESSAGE);
-                    }
+                   
+                    telaVenda.limparCamposs();
+
+                   
+                    telaVenda.toFront();
                     break;
                 }
             }
@@ -357,8 +338,8 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Comprar;
+    private javax.swing.JLabel TXTTotal;
     private javax.swing.JTable TabelaCarrinho;
-    private javax.swing.JLabel Total;
     private javax.swing.JButton Voltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

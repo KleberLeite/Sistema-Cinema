@@ -104,6 +104,15 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 		});
 	}
 
+        
+        public void limparCamposs() {
+    // Limpar os campos internos diretamente
+    TXTitemSelecionado.setText("");
+    TXTQuantidadeDeitemTotaisSelecionados.setText("0");
+    TXTPrecoTotalDeTodosOsItems.setText("0");
+    carrinho.clear();
+}
+
 	private void limparCampos() {
 		CapturaTXTProcurarNomeAlimento.setText("");
 		CapturaTXTProcurarCodigoAlimento.setText("");
@@ -168,12 +177,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 		// System.out.println("Total de itens no carrinho: " + total);
 	}
 
-        public void limparCarrinho() {
-    carrinho.clear();
-    atualizarQuantidadeTotal();
-    atualizarPrecoTotal();
-    TXTitemSelecionado.setText("");
-}
+      
         
         
         
