@@ -17,6 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 /**
  *
@@ -223,8 +226,6 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         jLabel9.setFont(new Font("Tahoma", Font.BOLD, 13));
         TXTQuantidadeDeitemTotaisSelecionados = new javax.swing.JLabel();
         TXTPrecoTotalDeTodosOsItems = new javax.swing.JLabel();
-        BotaoComprar = new javax.swing.JButton();
-        BotaoComprar.setFont(new Font("Tahoma", Font.BOLD, 13));
         bntRecarregarLista = new javax.swing.JButton();
         bntRecarregarLista.setFont(new Font("Tahoma", Font.BOLD, 12));
         bntVoltar = new javax.swing.JButton();
@@ -338,13 +339,6 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
                         .addGap(19, 19, 19))))
         );
 
-        BotaoComprar.setText("Compra");
-        BotaoComprar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotaoComprarActionPerformed(evt);
-            }
-        });
-
         bntRecarregarLista.setText("Recarregar Lista");
         bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,92 +347,84 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(bntRecarregarLista)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(TxtnomeDoalimento)
-                                        .addGap(12, 12, 12))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(TXTcodigodoalimento)
-                                        .addGap(18, 18, 18)))
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                                    .addComponent(CapturaTXTProcurarCodigoAlimento))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bntProvurarcodigo)
-                                    .addComponent(bntProcurarnomeAliemnto)))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(TXTitemSelecionado)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(TXTAcrementoDeItem)
-                                        .addGap(32, 32, 32)
-                                        .addComponent(TXTDecrementoDeItem)))
-                                .addGap(28, 28, 28))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(BotaoComprar)
-                                .addGap(158, 158, 158))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(0, 9, Short.MAX_VALUE))))
+        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel2Layout.createSequentialGroup()
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addGap(20)
+        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+        						.addComponent(bntRecarregarLista)
+        						.addGroup(jPanel2Layout.createSequentialGroup()
+        							.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+        								.addGroup(jPanel2Layout.createSequentialGroup()
+        									.addComponent(TxtnomeDoalimento)
+        									.addGap(12))
+        								.addGroup(jPanel2Layout.createSequentialGroup()
+        									.addComponent(TXTcodigodoalimento)
+        									.addGap(18)))
+        							.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING, false)
+        								.addComponent(CapturaTXTProcurarNomeAlimento, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+        								.addComponent(CapturaTXTProcurarCodigoAlimento))
+        							.addGap(18)
+        							.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(bntProvurarcodigo)
+        								.addComponent(bntProcurarnomeAliemnto)))))
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addGap(138)
+        					.addComponent(TXTitemSelecionado)))
+        			.addContainerGap(44, Short.MAX_VALUE))
+        		.addGroup(jPanel2Layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addGap(0, 0, Short.MAX_VALUE)
+        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+        						.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        						.addGroup(jPanel2Layout.createSequentialGroup()
+        							.addComponent(TXTAcrementoDeItem)
+        							.addGap(32)
+        							.addComponent(TXTDecrementoDeItem)))
+        					.addGap(28))
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        						.addComponent(jLabel3)
+        						.addComponent(jLabel4))
+        					.addGap(0, 92, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TxtnomeDoalimento)
-                    .addComponent(CapturaTXTProcurarNomeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntProcurarnomeAliemnto))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TXTcodigodoalimento)
-                    .addComponent(CapturaTXTProcurarCodigoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntProvurarcodigo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(bntRecarregarLista)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(TXTitemSelecionado)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TXTAcrementoDeItem)
-                    .addComponent(TXTDecrementoDeItem))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BotaoComprar)
-                .addGap(32, 32, 32))
+        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel2Layout.createSequentialGroup()
+        			.addGap(25)
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(TxtnomeDoalimento)
+        				.addComponent(CapturaTXTProcurarNomeAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(bntProcurarnomeAliemnto))
+        			.addGap(38)
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(TXTcodigodoalimento)
+        				.addComponent(CapturaTXTProcurarCodigoAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(bntProvurarcodigo))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addComponent(bntRecarregarLista)
+        			.addPreferredGap(ComponentPlacement.RELATED, 3, Short.MAX_VALUE)
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+        					.addGap(57))
+        				.addGroup(jPanel2Layout.createSequentialGroup()
+        					.addComponent(jLabel4)
+        					.addPreferredGap(ComponentPlacement.RELATED)))
+        			.addComponent(TXTitemSelecionado)
+        			.addGap(10)
+        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(TXTAcrementoDeItem)
+        				.addComponent(TXTDecrementoDeItem))
+        			.addPreferredGap(ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+        			.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addGap(75))
         );
+        jPanel2.setLayout(jPanel2Layout);
 
         bntVoltar.setText("Voltar");
         bntVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -446,33 +432,46 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
                 bntVoltarActionPerformed(evt);
             }
         });
+        BotaoAvancar = new javax.swing.JButton();
+        BotaoAvancar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        
+                BotaoAvancar.setText("Avançar");
+                BotaoAvancar.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        BotaoComprarActionPerformed(evt);
+                    }
+                });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bntVoltar)
-                .addGap(71, 71, 71))
+        	jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(26)
+        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 434, GroupLayout.PREFERRED_SIZE)
+        			.addGap(39)
+        			.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(57, Short.MAX_VALUE))
+        		.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+        			.addGap(18)
+        			.addComponent(bntVoltar)
+        			.addPreferredGap(ComponentPlacement.RELATED, 770, Short.MAX_VALUE)
+        			.addComponent(BotaoAvancar)
+        			.addGap(20))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bntVoltar)
-                .addGap(18, 18, 18))
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(44)
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 503, GroupLayout.PREFERRED_SIZE))
+        			.addPreferredGap(ComponentPlacement.UNRELATED)
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(bntVoltar)
+        				.addComponent(BotaoAvancar))
+        			.addContainerGap(13, Short.MAX_VALUE))
         );
+        jPanel1.setLayout(jPanel1Layout);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -632,7 +631,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotaoComprar;
+    private javax.swing.JButton BotaoAvancar;
     private javax.swing.JTextField CapturaTXTProcurarCodigoAlimento;
     private javax.swing.JTextField CapturaTXTProcurarNomeAlimento;
     private javax.swing.JTable PlanilhaDeAlimentos;

@@ -96,7 +96,7 @@ public class CarrinhoDeComprasAlimentos extends javax.swing.JFrame {
         setBackground(new java.awt.Color(2, 32, 64));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel1.setBackground(new java.awt.Color(2, 32, 64));
+        jPanel1.setBackground(new Color(2, 17, 28));
 
         TabelaCarrinho.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
