@@ -1,5 +1,5 @@
 
-package cinemax.frontend.geranciadefuncionarios;
+package cinemax.backend.funcionarios;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -14,7 +14,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -26,7 +25,6 @@ import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
 import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.estilizacao.Estilizador;
 import cinemax.frontend.estilizacao.EstiloBotao;
-import cinemax.frontend.estilizacao.JTextFieldEstilizado;
 
 /**
  * @author Geraldo Luiz
@@ -125,14 +123,14 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		TXTSenhaFuncionarios = new javax.swing.JLabel();
 		TXTSenhaFuncionarios.setForeground(new Color(255, 255, 255));
 		TXTSenhaFuncionarios.setFont(new Font("Tahoma", Font.BOLD, 13));
-		CapturarTXTNomeFuncionarios = new JTextFieldEstilizado(null);
-		CapturarTXTCPFFuncionarios = new JTextFieldEstilizado(null);
+		CapturarTXTNomeFuncionarios = new javax.swing.JTextField();
+		CapturarTXTCPFFuncionarios = new javax.swing.JTextField();
 		comboBoxCargoFuncionario =  new JComboBox<>();
 		for (CargoFuncionario cargo : CargoFuncionario.values()) {
 		    if(cargo!=CargoFuncionario.Administrador)comboBoxCargoFuncionario.addItem(cargo);
 		}
-		CapturarTXTTelefoneFuncionarios = new JTextFieldEstilizado(null);
-		CapturarTXTSenhaFuncionarios = new JTextFieldEstilizado(null);
+		CapturarTXTTelefoneFuncionarios = new javax.swing.JTextField();
+		CapturarTXTSenhaFuncionarios = new javax.swing.JTextField();
 		jPanel1 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
 		jLabel1.setBackground(new Color(0, 0, 0));
@@ -199,7 +197,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 
 		TXTCargoFuncionarios.setText("Cargo:");
 
-		TXTTelefoneFuncionarios.setText("Telefone:");
+		TXTTelefoneFuncionarios.setText("Telefone");
 
 		TXTSenhaFuncionarios.setText("Senha:");
 
@@ -489,7 +487,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 // -------------------------------------------------------------------------------//
 
 	private boolean validarCampos(String nome, String cpf, CargoFuncionario cargo, String telefone, String senha) {
-		if (nome.trim().isEmpty() || cpf.trim().isEmpty() || cargo==null || telefone.trim().isEmpty()
+		if (nome.trim().isEmpty() || cpf.trim().isEmpty() || telefone.trim().isEmpty()
 				|| senha.trim().isEmpty()) {
 			return false;
 		}

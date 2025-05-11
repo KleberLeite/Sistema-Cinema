@@ -10,12 +10,14 @@ import cinemax.backend.alimentos.IBancoDeDadosAlimento;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.estilizacao.Estilizador;
 import cinemax.frontend.estilizacao.EstiloBotao;
+import cinemax.frontend.estilizacao.JTextFieldEstilizado;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 import java.util.Map;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -206,13 +208,13 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         PlanilhaDeAlimentos = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
+        jPanelPrincipal = new javax.swing.JPanel();
         TxtnomeDoalimento = new javax.swing.JLabel();
         TxtnomeDoalimento.setFont(new Font("Tahoma", Font.BOLD, 13));
         TXTcodigodoalimento = new javax.swing.JLabel();
         TXTcodigodoalimento.setFont(new Font("Tahoma", Font.BOLD, 13));
-        CapturaTXTProcurarNomeAlimento = new javax.swing.JTextField();
-        CapturaTXTProcurarCodigoAlimento = new javax.swing.JTextField();
+        CapturaTXTProcurarNomeAlimento = new JTextFieldEstilizado(null);
+        CapturaTXTProcurarCodigoAlimento = new JTextFieldEstilizado(null);
         bntProcurarnomeAliemnto = new javax.swing.JButton();
         bntProcurarnomeAliemnto.setFont(new Font("Tahoma", Font.BOLD, 12));
         bntProvurarcodigo = new javax.swing.JButton();
@@ -222,8 +224,10 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         jLabel4.setFont(new Font("Tahoma", Font.BOLD, 13));
         TXTitemSelecionado = new javax.swing.JLabel();
         TXTAcrementoDeItem = new javax.swing.JLabel();
+        TXTAcrementoDeItem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         TXTDecrementoDeItem = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        TXTDecrementoDeItem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        jPanelTotalEItens = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel8.setFont(new Font("Tahoma", Font.BOLD, 13));
         jLabel9 = new javax.swing.JLabel();
@@ -234,13 +238,21 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         bntRecarregarLista.setFont(new Font("Tahoma", Font.BOLD, 12));
         bntVoltar = new javax.swing.JButton();
         bntVoltar.setFont(new Font("Tahoma", Font.BOLD, 13));
-        /*
-        Estilizador.aplicarEstiloBotao(BotaoComprar, EstiloBotao.PADRAO_ESCURECIDO);
+        BotaoAvancar = new javax.swing.JButton();
+        BotaoAvancar.setFont(new Font("Tahoma", Font.BOLD, 13));
+        
+        jPanelPrincipal = Estilizador.criarPainelArredondado(new Color(255, 255, 255),10);
+        jPanelTotalEItens = Estilizador.criarPainelArredondadoComBorda(new Color(240, 240, 240),Color.BLACK, 10, 1);
+        
+        Estilizador.aplicarEstiloBotao(BotaoAvancar, EstiloBotao.CLARO_UNIFICADO);
         Estilizador.aplicarEstiloBotao(bntProcurarnomeAliemnto, EstiloBotao.PADRAO_ESCURECIDO);
         Estilizador.aplicarEstiloBotao(bntProvurarcodigo, EstiloBotao.PADRAO_ESCURECIDO);
         Estilizador.aplicarEstiloBotao(bntRecarregarLista, EstiloBotao.PADRAO_ESCURECIDO);
         Estilizador.aplicarEstiloBotao(bntVoltar, EstiloBotao.CLARO_UNIFICADO);
-        */
+        
+        Color corFundoCabelho =  new Color(2, 17, 28);
+        
+        Estilizador.estilizarTabela(PlanilhaDeAlimentos,corFundoCabelho);
         
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinemax");
@@ -265,7 +277,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(PlanilhaDeAlimentos);
-        //jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
+        jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 
         TxtnomeDoalimento.setText("Procurar Nome:");
 
@@ -285,7 +297,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("----------------------------------------------------------------------------");
+        jLabel3.setText("__________________________________________________________");
 
         jLabel4.setText("Item Selecionado:");
 
@@ -297,7 +309,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         TXTDecrementoDeItem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         TXTDecrementoDeItem.setText("-");
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelTotalEItens.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel8.setText("Total de Item selecionados:");
 
@@ -309,39 +321,36 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         TXTPrecoTotalDeTodosOsItems.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TXTPrecoTotalDeTodosOsItems.setText("0");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-                        .addComponent(TXTQuantidadeDeitemTotaisSelecionados))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TXTPrecoTotalDeTodosOsItems)))
-                .addGap(22, 22, 22))
+        javax.swing.GroupLayout gl_jPanelTotalEItens = new javax.swing.GroupLayout(jPanelTotalEItens);
+        gl_jPanelTotalEItens.setHorizontalGroup(
+        	gl_jPanelTotalEItens.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_jPanelTotalEItens.createSequentialGroup()
+        			.addGap(17)
+        			.addGroup(gl_jPanelTotalEItens.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_jPanelTotalEItens.createSequentialGroup()
+        					.addComponent(jLabel8)
+        					.addPreferredGap(ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
+        					.addComponent(TXTQuantidadeDeitemTotaisSelecionados))
+        				.addGroup(Alignment.TRAILING, gl_jPanelTotalEItens.createSequentialGroup()
+        					.addComponent(jLabel9)
+        					.addPreferredGap(ComponentPlacement.RELATED, 284, Short.MAX_VALUE)
+        					.addComponent(TXTPrecoTotalDeTodosOsItems)))
+        			.addGap(22))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(TXTQuantidadeDeitemTotaisSelecionados))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(TXTPrecoTotalDeTodosOsItems)
-                        .addGap(19, 19, 19))))
+        gl_jPanelTotalEItens.setVerticalGroup(
+        	gl_jPanelTotalEItens.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_jPanelTotalEItens.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(gl_jPanelTotalEItens.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(jLabel8)
+        				.addComponent(TXTQuantidadeDeitemTotaisSelecionados))
+        			.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+        			.addGroup(gl_jPanelTotalEItens.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(TXTPrecoTotalDeTodosOsItems)
+        				.addComponent(jLabel9))
+        			.addGap(19))
         );
+        jPanelTotalEItens.setLayout(gl_jPanelTotalEItens);
 
         bntRecarregarLista.setText("Recarregar Lista");
         bntRecarregarLista.addActionListener(new java.awt.event.ActionListener() {
@@ -350,101 +359,97 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2Layout.setHorizontalGroup(
-        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(jPanel2Layout.createSequentialGroup()
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout gl_jPanelPrincipal = new javax.swing.GroupLayout(jPanelPrincipal);
+        gl_jPanelPrincipal.setHorizontalGroup(
+        	gl_jPanelPrincipal.createParallelGroup(Alignment.TRAILING)
+        		.addGroup(gl_jPanelPrincipal.createSequentialGroup()
+        			.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.LEADING)
+        				.addGroup(gl_jPanelPrincipal.createSequentialGroup()
         					.addGap(20)
-        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+        					.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.TRAILING)
         						.addComponent(bntRecarregarLista)
-        						.addGroup(jPanel2Layout.createSequentialGroup()
-        							.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
-        								.addGroup(jPanel2Layout.createSequentialGroup()
+        						.addGroup(gl_jPanelPrincipal.createSequentialGroup()
+        							.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.TRAILING)
+        								.addGroup(gl_jPanelPrincipal.createSequentialGroup()
         									.addComponent(TxtnomeDoalimento)
         									.addGap(12))
-        								.addGroup(jPanel2Layout.createSequentialGroup()
+        								.addGroup(gl_jPanelPrincipal.createSequentialGroup()
         									.addComponent(TXTcodigodoalimento)
         									.addGap(18)))
-        							.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING, false)
+        							.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.LEADING, false)
         								.addComponent(CapturaTXTProcurarNomeAlimento, GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
         								.addComponent(CapturaTXTProcurarCodigoAlimento))
         							.addGap(18)
-        							.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        							.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.LEADING)
         								.addComponent(bntProvurarcodigo)
         								.addComponent(bntProcurarnomeAliemnto)))))
-        				.addGroup(jPanel2Layout.createSequentialGroup()
+        				.addGroup(gl_jPanelPrincipal.createSequentialGroup()
         					.addGap(138)
         					.addComponent(TXTitemSelecionado)))
         			.addContainerGap(44, Short.MAX_VALUE))
-        		.addGroup(jPanel2Layout.createSequentialGroup()
+        		.addGroup(gl_jPanelPrincipal.createSequentialGroup()
         			.addContainerGap()
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(jPanel2Layout.createSequentialGroup()
-        					.addGap(0, 0, Short.MAX_VALUE)
-        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
-        						.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-        						.addGroup(jPanel2Layout.createSequentialGroup()
-        							.addComponent(TXTAcrementoDeItem)
-        							.addGap(32)
-        							.addComponent(TXTDecrementoDeItem)))
+        			.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(gl_jPanelPrincipal.createSequentialGroup()
+        					.addGap(316, 316, Short.MAX_VALUE)
+        					.addComponent(TXTAcrementoDeItem)
+        					.addGap(32)
+        					.addComponent(TXTDecrementoDeItem)
         					.addGap(28))
-        				.addGroup(jPanel2Layout.createSequentialGroup()
-        					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(jLabel3)
-        						.addComponent(jLabel4))
-        					.addGap(0, 92, Short.MAX_VALUE))))
+        				.addGroup(gl_jPanelPrincipal.createSequentialGroup()
+        					.addComponent(jLabel4)
+        					.addGap(188, 280, Short.MAX_VALUE))))
+        		.addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 406, Short.MAX_VALUE)
+        		.addGroup(gl_jPanelPrincipal.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(jPanelTotalEItens, GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+        			.addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        		.addGroup(jPanel2Layout.createSequentialGroup()
+        gl_jPanelPrincipal.setVerticalGroup(
+        	gl_jPanelPrincipal.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_jPanelPrincipal.createSequentialGroup()
         			.addGap(25)
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        			.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.BASELINE)
         				.addComponent(TxtnomeDoalimento)
         				.addComponent(CapturaTXTProcurarNomeAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         				.addComponent(bntProcurarnomeAliemnto))
         			.addGap(38)
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        			.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.BASELINE)
         				.addComponent(TXTcodigodoalimento)
         				.addComponent(CapturaTXTProcurarCodigoAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         				.addComponent(bntProvurarcodigo))
         			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addComponent(bntRecarregarLista)
-        			.addPreferredGap(ComponentPlacement.RELATED, 3, Short.MAX_VALUE)
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
-        				.addGroup(jPanel2Layout.createSequentialGroup()
-        					.addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
-        					.addGap(57))
-        				.addGroup(jPanel2Layout.createSequentialGroup()
-        					.addComponent(jLabel4)
-        					.addPreferredGap(ComponentPlacement.RELATED)))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+        			.addComponent(jLabel4)
+        			.addPreferredGap(ComponentPlacement.RELATED)
         			.addComponent(TXTitemSelecionado)
         			.addGap(10)
-        			.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+        			.addGroup(gl_jPanelPrincipal.createParallelGroup(Alignment.BASELINE)
         				.addComponent(TXTAcrementoDeItem)
         				.addComponent(TXTDecrementoDeItem))
-        			.addPreferredGap(ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-        			.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addGap(41)
+        			.addComponent(jPanelTotalEItens, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addGap(75))
         );
-        jPanel2.setLayout(jPanel2Layout);
+        jPanelPrincipal.setLayout(gl_jPanelPrincipal);
 
-        bntVoltar.setText("Voltar");
+        bntVoltar.setText("  Voltar  ");
         bntVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntVoltarActionPerformed(evt);
             }
         });
-        BotaoAvancar = new javax.swing.JButton();
-        BotaoAvancar.setFont(new Font("Tahoma", Font.BOLD, 13));
         
-                BotaoAvancar.setText("Avançar");
-                BotaoAvancar.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        BotaoComprarActionPerformed(evt);
-                    }
-                });
+        
+        BotaoAvancar.setText(" Avançar ");
+        BotaoAvancar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            BotaoComprarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1Layout.setHorizontalGroup(
@@ -453,7 +458,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         			.addGap(26)
         			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 434, GroupLayout.PREFERRED_SIZE)
         			.addGap(39)
-        			.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addComponent(jPanelPrincipal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         			.addContainerGap(57, Short.MAX_VALUE))
         		.addGroup(Alignment.LEADING, jPanel1Layout.createSequentialGroup()
         			.addGap(18)
@@ -467,7 +472,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         		.addGroup(jPanel1Layout.createSequentialGroup()
         			.addGap(44)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
-        				.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jPanelPrincipal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         				.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 503, GroupLayout.PREFERRED_SIZE))
         			.addPreferredGap(ComponentPlacement.UNRELATED)
         			.addGroup(jPanel1Layout.createParallelGroup(Alignment.BASELINE)
@@ -497,6 +502,8 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 		// Chamando a tela Gerente//
 		PaginaPrincipal.abrirPaginaPrincipal();
 		dispose();
+		
+		telaCarrinhoAlimentos.dispose();
 	}// GEN-LAST:event_bntVoltarActionPerformed
 
 	private void PlanilhaDeAlimentosMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_PlanilhaDeAlimentosMouseClicked
@@ -562,10 +569,10 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
     }
 
     
-    CarrinhoDeComprasAlimentos telaCarrinho = new CarrinhoDeComprasAlimentos();
-    telaCarrinho.adicionarItens(new HashMap<>(carrinho)); // Passa cópia do carrinho
-    telaCarrinho.setVisible(true);
-    telaCarrinho.setLocationRelativeTo(null);
+    telaCarrinhoAlimentos = new TelaCarrinhoAlimentos();
+    telaCarrinhoAlimentos.adicionarItens(new HashMap<>(carrinho)); // Passa cópia do carrinho
+    telaCarrinhoAlimentos.setVisible(true);
+    telaCarrinhoAlimentos.setLocationRelativeTo(null);
 	}// GEN-LAST:event_BotaoComprarActionPerformed
 
 	private void bntRecarregarListaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bntRecarregarListaActionPerformed
@@ -635,6 +642,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+	private TelaCarrinhoAlimentos telaCarrinhoAlimentos;
     private javax.swing.JButton BotaoAvancar;
     private javax.swing.JTextField CapturaTXTProcurarCodigoAlimento;
     private javax.swing.JTextField CapturaTXTProcurarNomeAlimento;
@@ -655,9 +663,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JPanel jPanelTotalEItens;
     private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration//GEN-END:variables
-
 }

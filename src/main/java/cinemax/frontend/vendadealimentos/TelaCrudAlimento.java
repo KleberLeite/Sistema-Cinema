@@ -16,6 +16,7 @@ import java.awt.Color;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import java.awt.Font;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 /**
  *
@@ -269,86 +270,74 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 		});
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-		jPanel2.setLayout(jPanel2Layout);
-		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+		jPanel2Layout.setHorizontalGroup(
+			jPanel2Layout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(jPanel2Layout.createSequentialGroup()
-						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(jPanel2Layout.createSequentialGroup().addGap(158, 158, 158)
-										.addComponent(ButaoCadastrarAlimento).addGap(123, 123, 123)
-										.addComponent(ButaoEditarAlimento).addGap(107, 107, 107)
-										.addComponent(ButaoRemoverAlimento))
-								.addGroup(jPanel2Layout.createSequentialGroup().addGap(16, 16, 16).addComponent(
-										jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 770,
-										javax.swing.GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-								javax.swing.GroupLayout.Alignment.TRAILING,
-								jPanel2Layout.createSequentialGroup().addGap(33, 33, 33).addGroup(jPanel2Layout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-										.addGroup(jPanel2Layout.createSequentialGroup().addGroup(jPanel2Layout
-												.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-												.addComponent(TXTPrecoAlimento).addComponent(TXTNomeAlimento))
-												.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-														javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addGroup(jPanel2Layout
-														.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING,
-																false)
-														.addComponent(CapturaTXTNomeAlimento,
-																javax.swing.GroupLayout.DEFAULT_SIZE, 214,
-																Short.MAX_VALUE)
-														.addComponent(CapturaTXTPrecoAlimento)))
-										.addGroup(jPanel2Layout.createSequentialGroup().addComponent(TXTCodigoAlimento)
-												.addGap(18, 18, 18).addComponent(CapturaTXTCodigoAlimento,
-														javax.swing.GroupLayout.PREFERRED_SIZE, 217,
-														javax.swing.GroupLayout.PREFERRED_SIZE)))
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61,
-												Short.MAX_VALUE)
-										.addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-										jPanel2Layout.createSequentialGroup()
-												.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(ButaoVoltar)))
-						.addGap(57, 57, 57)));
-		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-								jPanel2Layout.createSequentialGroup().addGap(41, 41, 41).addGroup(jPanel2Layout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(CapturaTXTNomeAlimento, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addComponent(TXTNomeAlimento)).addGap(33, 33, 33)
-										.addGroup(jPanel2Layout
-												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(CapturaTXTPrecoAlimento,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(TXTPrecoAlimento))
-										.addGap(33, 33, 33)
-										.addGroup(jPanel2Layout
-												.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-												.addComponent(CapturaTXTCodigoAlimento,
-														javax.swing.GroupLayout.PREFERRED_SIZE,
-														javax.swing.GroupLayout.DEFAULT_SIZE,
-														javax.swing.GroupLayout.PREFERRED_SIZE)
-												.addComponent(TXTCodigoAlimento)))
-								.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-										jPanel2Layout.createSequentialGroup().addGap(22, 22, 22).addComponent(jPanel3,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)))
-						.addGap(39, 39, 39)
-						.addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(ButaoCadastrarAlimento).addComponent(ButaoEditarAlimento)
-								.addComponent(ButaoRemoverAlimento))
-						.addGap(18, 18, 18)
-						.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(18, 18, 18).addComponent(ButaoVoltar).addContainerGap(21, Short.MAX_VALUE)));
+					.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(jPanel2Layout.createSequentialGroup()
+							.addGap(158)
+							.addComponent(ButaoCadastrarAlimento)
+							.addGap(123)
+							.addComponent(ButaoEditarAlimento)
+							.addGap(107)
+							.addComponent(ButaoRemoverAlimento))
+						.addGroup(jPanel2Layout.createSequentialGroup()
+							.addGap(16)
+							.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 770, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(31, Short.MAX_VALUE))
+				.addGroup(jPanel2Layout.createSequentialGroup()
+					.addGap(33)
+					.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING, false)
+						.addGroup(jPanel2Layout.createSequentialGroup()
+							.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING)
+								.addComponent(TXTPrecoAlimento)
+								.addComponent(TXTNomeAlimento))
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGroup(jPanel2Layout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(CapturaTXTNomeAlimento, GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+								.addComponent(CapturaTXTPrecoAlimento)))
+						.addGroup(jPanel2Layout.createSequentialGroup()
+							.addComponent(TXTCodigoAlimento)
+							.addGap(18)
+							.addComponent(CapturaTXTCodigoAlimento, GroupLayout.PREFERRED_SIZE, 217, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+					.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(57))
+				.addGroup(Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+					.addGap(25)
+					.addComponent(ButaoVoltar, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(706, Short.MAX_VALUE))
+		);
+		jPanel2Layout.setVerticalGroup(
+			jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+					.addGap(22)
+					.addGroup(jPanel2Layout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(jPanel2Layout.createSequentialGroup()
+							.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(CapturaTXTNomeAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(TXTNomeAlimento))
+							.addGap(33)
+							.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(CapturaTXTPrecoAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(TXTPrecoAlimento))
+							.addGap(33)
+							.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(CapturaTXTCodigoAlimento, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(TXTCodigoAlimento)))
+						.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(39)
+					.addGroup(jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(ButaoCadastrarAlimento)
+						.addComponent(ButaoEditarAlimento)
+						.addComponent(ButaoRemoverAlimento))
+					.addGap(18)
+					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 269, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(ButaoVoltar)
+					.addContainerGap(21, Short.MAX_VALUE))
+		);
+		jPanel2.setLayout(jPanel2Layout);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
