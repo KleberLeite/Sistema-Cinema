@@ -165,6 +165,19 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 		// System.out.println("Total de itens no carrinho: " + total);
 	}
 
+        public void limparCarrinho() {
+    carrinho.clear();
+    atualizarQuantidadeTotal();
+    atualizarPrecoTotal();
+    TXTitemSelecionado.setText("");
+}
+        
+        
+        
+        
+        
+        
+        
 	private void atualizarPrecoTotal() {
 		double total = 0.0;
 		for (Map.Entry<Alimento, Integer> entry : carrinho.entrySet()) {
@@ -538,20 +551,18 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 
 	private void BotaoComprarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotaoComprarActionPerformed
 		if (carrinho.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Carrinho está vazio!", "Aviso", JOptionPane.WARNING_MESSAGE);
-			return;
-		}
+        JOptionPane.showMessageDialog(this, 
+            "Carrinho está vazio!", 
+            "Aviso", 
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-		// Salvar os dados no histórico do backend
-		salvarCompraNoHistorico();
-
-		// Exibir confirmação
-		JOptionPane.showMessageDialog(this, "Compra concluída!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-
-		// Limpar carrinho
-		carrinho.clear();
-		atualizarQuantidadeTotal();
-		atualizarPrecoTotal();
+    
+    CarrinhoDeComprasAlimentos telaCarrinho = new CarrinhoDeComprasAlimentos();
+    telaCarrinho.adicionarItens(new HashMap<>(carrinho)); // Passa cópia do carrinho
+    telaCarrinho.setVisible(true);
+    telaCarrinho.setLocationRelativeTo(null);
 	}// GEN-LAST:event_BotaoComprarActionPerformed
 
 	private void bntRecarregarListaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bntRecarregarListaActionPerformed
