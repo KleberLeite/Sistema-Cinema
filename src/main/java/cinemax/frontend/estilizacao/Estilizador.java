@@ -26,11 +26,14 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import cinemax.backend.filmes.ClassificacaoIndicativa;
 
@@ -49,65 +52,74 @@ public class Estilizador {
      * @param corTextoCelula     Cor do texto das células.
      * @param corBordaCelula     Cor da borda de cada célula.
      */
-    public static void estilizarTabela(JTable tabela, Color corFundoCabecalho) {
-    	Color corTextoCabecalho = Color.WHITE;
-    	Font fonteCabecalho = new Font("Segoe UI", Font.BOLD, 14);
-    	int alturaCabecalho= 32;
-        Color corLinhaPar = new Color(240, 240, 240);
-        Color corLinhaImpar =  new Color(220, 220, 220);
-        Color corTextoCelula = Color.BLACK;
-        Color corBordaCelula = new Color(200, 200, 200);
-        		
-      
-        // === Estilo do cabeçalho ===
-        JTableHeader header = tabela.getTableHeader();
-        header.setPreferredSize(new Dimension(header.getWidth(), alturaCabecalho));
-        header.setBackground(corFundoCabecalho);
-        header.setForeground(corTextoCabecalho);
-        header.setFont(fonteCabecalho);
+	public static void estilizarTabela(JTable tabela, Color corFundoCabecalho) {
+	    Color corTextoCabecalho = Color.WHITE;
+	    Font fonteCabecalho = new Font("Segoe UI", Font.BOLD, 14);
+	    int alturaCabecalho = 32;
+	    Color corLinhaPar = new Color(240, 240, 240);
+	    Color corLinhaImpar = new Color(220, 220, 220);
+	    Color corTextoCelula = Color.BLACK;
+	    Color corBordaCelula = new Color(200, 200, 200);
 
-        header.setDefaultRenderer(new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                    boolean isSelected, boolean hasFocus, int row, int column) {
-                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                label.setBackground(corFundoCabecalho);
-                label.setForeground(corTextoCabecalho);
-                label.setFont(fonteCabecalho);
-                label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-                return label;
-            }
-        });
+	    // === Estilo do cabeçalho ===
+	    JTableHeader header = tabela.getTableHeader();
+	    header.setPreferredSize(new Dimension(header.getWidth(), alturaCabecalho));
+	    header.setBackground(corFundoCabecalho);
+	    header.setForeground(corTextoCabecalho);
+	    header.setFont(fonteCabecalho);
 
-        // === Estilo das células ===
-        tabela.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                    boolean isSelected, boolean hasFocus, int row, int column) {
+	    header.setDefaultRenderer(new DefaultTableCellRenderer() {
+	        @Override
+	        public Component getTableCellRendererComponent(JTable table, Object value,
+	                boolean isSelected, boolean hasFocus, int row, int column) {
+	            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	            label.setBackground(corFundoCabecalho);
+	            label.setForeground(corTextoCabecalho);
+	            label.setFont(fonteCabecalho);
+	            label.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+	            label.setHorizontalAlignment(SwingConstants.CENTER); // Centraliza título
+	            return label;
+	        }
+	    });
 
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	    // === Estilo das células ===
+	    tabela.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+	        @Override
+	        public Component getTableCellRendererComponent(JTable table, Object value,
+	                boolean isSelected, boolean hasFocus, int row, int column) {
 
-                // Cores alternadas
-                if (isSelected) {
-                    c.setBackground(table.getSelectionBackground());
-                    c.setForeground(table.getSelectionForeground());
-                } else {
-                    c.setBackground((row % 2 == 0) ? corLinhaPar : corLinhaImpar);
-                    c.setForeground(corTextoCelula);
-                }
+	            JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
-                // Borda personalizada
-                ((JComponent) c).setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, corBordaCelula));
+	            // Cores alternadas
+	            if (isSelected) {
+	                label.setBackground(table.getSelectionBackground());
+	                label.setForeground(table.getSelectionForeground());
+	            } else {
+	                label.setBackground((row % 2 == 0) ? corLinhaPar : corLinhaImpar);
+	                label.setForeground(corTextoCelula);
+	            }
 
-                return c;
-            }
-        });
+	            // Centraliza conteúdo da célula
+	            label.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Outras configurações úteis
-        tabela.setRowHeight(24);
-        tabela.setGridColor(corBordaCelula);
-        tabela.setShowGrid(true);
-    }
+	            // Borda personalizada
+	            label.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, corBordaCelula));
+
+	            return label;
+	        }
+	    });
+
+	    // === Ordenação automática pela primeira coluna ===
+	    TableRowSorter<TableModel> sorter = new TableRowSorter<>(tabela.getModel());
+	    tabela.setRowSorter(sorter);
+	    sorter.toggleSortOrder(0); // Ordena automaticamente pela primeira coluna (índice 0)
+
+	    // Outras configurações úteis
+	    tabela.setRowHeight(24);
+	    tabela.setGridColor(corBordaCelula);
+	    tabela.setShowGrid(true);
+	}
+
 	
 	public static JScrollPane estilizarScrollPane(JScrollPane scrollPane) {
 		

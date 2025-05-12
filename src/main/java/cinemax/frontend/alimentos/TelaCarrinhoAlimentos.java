@@ -69,9 +69,7 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 		TXTTotal = new javax.swing.JLabel();
 
 		jPanePrincipal = Estilizador.criarPainelArredondado(new Color(255, 255, 255), 10);
-		jPanePrincipal.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		jPanelTotalCompra = Estilizador.criarPainelArredondado(new Color(200, 200, 200), 10);
-		jPanelTotalCompra.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		jPanelTotalCompra = Estilizador.criarPainelArredondadoComBorda(new Color(200, 200, 200),Color.BLACK, 10,1);
 		
 		Color corFundoCabelho = new Color(2, 17, 28);
 		
