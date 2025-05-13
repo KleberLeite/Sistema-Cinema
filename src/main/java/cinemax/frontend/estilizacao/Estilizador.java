@@ -109,10 +109,6 @@ public class Estilizador {
 	        }
 	    });
 
-	    // === Ordenação automática pela primeira coluna ===
-	    TableRowSorter<TableModel> sorter = new TableRowSorter<>(tabela.getModel());
-	    tabela.setRowSorter(sorter);
-	    sorter.toggleSortOrder(0); // Ordena automaticamente pela primeira coluna (índice 0)
 
 	    // Outras configurações úteis
 	    tabela.setRowHeight(24);

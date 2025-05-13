@@ -102,11 +102,6 @@ public class TelaConclusaoDeCompra extends JFrame {
 							ingresso.getSessao().getId(), 
 							ingresso.getPoltrona().getLinha(), 
 							ingresso.getPoltrona().getColuna());
-					System.out.println(sucesso);
-					System.out.println(Integer.toString(ingresso.getSessao().getFilme().getId()));
-					System.out.println(Integer.toString(ingresso.getSessao().getId()));
-					System.out.println(Integer.toString(ingresso.getPoltrona().getLinha()));
-					System.out.println(Integer.toString(ingresso.getPoltrona().getColuna()));
 					sucessoCompras &= sucesso;
 					if(sucesso) {
 						ingressosFinalizados.add(ingresso);
@@ -143,18 +138,17 @@ public class TelaConclusaoDeCompra extends JFrame {
 			card.setLayout(null); 
 			card.setPreferredSize(new Dimension(1150, 165));
 			card.setMaximumSize(new Dimension(1150, 165));
-			// ADICIONA BORDA PRA DESTACAR CADA RETÂNGULO
-			card.setBorder(new EmptyBorder(10, 10, 10, 10)); // espaçamento interno
+			card.setBorder(new EmptyBorder(10, 10, 10, 10));
 			
 			if(ingresso.getTipo() == TipoDeIngresso.Meia) {
 				card.setPreferredSize(new Dimension(1150, 215));
 				card.setMaximumSize(new Dimension(1150, 215));
 				JLabel lblRG = new JLabel("RG: "+ingresso.getRG());
-				lblRG.setBounds(20, 160, 100, 20); // mais largura pro nome
+				lblRG.setBounds(20, 160, 100, 20);
 				card.add(lblRG);
 				JLabel lblAviso = new JLabel("AVISO: Entrada permitida apenas com o porte do RG");
 				lblAviso.setForeground(Color.RED);
-				lblAviso.setBounds(20, 185, 300, 20); // mais largura pro nome
+				lblAviso.setBounds(20, 185, 300, 20);
 				card.add(lblAviso);
 			}
 
@@ -164,7 +158,7 @@ public class TelaConclusaoDeCompra extends JFrame {
 			
 
 			JLabel lblIdSala = new JLabel("Sala: "+Integer.toString(ingresso.getSessao().getSala().getIdSala()));
-			lblIdSala.setBounds(20, 35, 100, 20); // mais largura pro nome
+			lblIdSala.setBounds(20, 35, 100, 20); 
 			card.add(lblIdSala);
 			
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM//yyyy HH:mm");
@@ -174,18 +168,18 @@ public class TelaConclusaoDeCompra extends JFrame {
 			card.add(lblIdSessao);
 			
 			JLabel lblFilme = new JLabel("Filme: "+ingresso.getSessao().getFilme().getNome());
-			lblFilme.setBounds(20, 85, 400, 20); // mais largura pro nome
+			lblFilme.setBounds(20, 85, 400, 20);
 			card.add(lblFilme);
 			
 			JLabel lblTipo = new JLabel("Tipo: "+ingresso.getTipo().name());
-			lblTipo.setBounds(20, 110, 100, 20); // mais largura pro nome
+			lblTipo.setBounds(20, 110, 100, 20);
 			card.add(lblTipo);
 			
 			JLabel lblPoltrona = new JLabel("Poltrona: " + ingresso.getPoltrona().getIdentificador());
 			lblPoltrona.setBounds(20, 135, 100, 20);
 			card.add(lblPoltrona);
 			
-		    panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10))); // espaço entre os cards
+		    panelPrincipal.add(Box.createRigidArea(new Dimension(0, 10))); 
 		    panelPrincipal.add(card);
 		}
 	}

@@ -82,8 +82,11 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 
 		try {
 			funcionariosLista = bancoDeDados.obterTodosFuncionarios();
+			
 			//System.out.println("Número de funcionários encontrados: " + funcionariosLista.length);
-
+			Color corFundoCabelho =  new Color(2, 17, 28);
+			Estilizador.estilizarTabela(PlanilhaGerenciaFuncionarios,corFundoCabelho);
+			
 			DefaultTableModel model = (DefaultTableModel) PlanilhaGerenciaFuncionarios.getModel();
 			model.setRowCount(0);
 
@@ -150,7 +153,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Cinemax");
-		Color corFundoCabelho =  new Color(2, 17, 28);
+		
 		jScrollPane1 = Estilizador.estilizarScrollPane(jScrollPane1);
 
 		BotaoCadastrarFuncionarios.setText("Cadastrar");
@@ -314,6 +317,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 							return false;
 						}
 				});
+				Color corFundoCabelho =  new Color(2, 17, 28);
 				Estilizador.estilizarTabela(PlanilhaGerenciaFuncionarios,corFundoCabelho);
 				
 		PlanilhaGerenciaFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {

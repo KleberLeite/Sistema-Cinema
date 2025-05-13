@@ -179,36 +179,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 	}
 
-	/*
-	 * public void atualizarListaDeRGs(JPanel panelRGs) { String[] valoresAntigos =
-	 * new String[meiasCount]; System.out.println(listaDeTextFieldsRGs.size());
-	 * for(int j = 0; j < meiasCount; j++) { valoresAntigos[j] =
-	 * listaDeTextFieldsRGs.get(j).getText(); j++; }
-	 * 
-	 * ativaOuDesativaListaRGs();
-	 * 
-	 * panelRGs.removeAll(); listaDeTextFieldsRGs.clear();
-	 * 
-	 * 
-	 * 
-	 * for (int i = 0; i < meiasCount; i++) { JPanel card = new JPanel();
-	 * card.setLayout(null); card.setPreferredSize(new Dimension(400, 50));
-	 * card.setMaximumSize(new Dimension(400, 50)); card.setBackground(new
-	 * Color(230, 210, 250)); card.setBorder(new EmptyBorder(5, 5, 5, 5));
-	 * 
-	 * JLabel lblRG = new JLabel("RG:"); lblRG.setFont(new Font("Tahoma", Font.BOLD,
-	 * 14)); lblRG.setBounds(10, 10, 40, 25); card.add(lblRG);
-	 * 
-	 * JTextField textField = new JTextField(valoresAntigos[i]);
-	 * textField.setBounds(60, 10, 100, 25); card.add(textField);
-	 * 
-	 * listaDeTextFieldsRGs.add(textField); // Adiciona à lista
-	 * 
-	 * panelRGs.add(Box.createRigidArea(new Dimension(0, 10))); panelRGs.add(card);
-	 * }
-	 * 
-	 * panelRGs.revalidate(); panelRGs.repaint(); }
-	 */
+
 
 	// -----------------------------------------------------------------------------------------------
 
@@ -232,7 +203,6 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 	public void configuraRGsMeia(List<Ingresso> ingressos) {
 		for (int i = 0; i < meiasCount; i++) {
-			System.out.println(listaDeTextFieldsRGs.get(i).getText().trim());
 			ingressos.get(i).setRG(listaDeTextFieldsRGs.get(i).getText().trim());
 		}
 	}

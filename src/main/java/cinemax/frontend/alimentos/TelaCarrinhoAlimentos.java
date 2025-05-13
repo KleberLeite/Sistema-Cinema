@@ -75,8 +75,6 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setAlwaysOnTop(true);
-		setAutoRequestFocus(false);
 		setBackground(new java.awt.Color(2, 32, 64));
 		setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -228,30 +226,24 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 						.adicionarVendas(itens)) {
 					JOptionPane.showMessageDialog(null, "Compra registrada com sucesso!", "Sucesso",
 							JOptionPane.INFORMATION_MESSAGE);
-					return;
-				}else {
-					JOptionPane.showMessageDialog(this, "Não é permitido vendas ainda", "Erro", JOptionPane.ERROR_MESSAGE);
-					
-				}
-				
-				
-				modeloTabela.setRowCount(0);
-				TXTTotal.setText("0");
 
-				this.dispose();
+					modeloTabela.setRowCount(0);
+					TXTTotal.setText("0");
 
-				for (Window window : Window.getWindows()) {
-					if (window instanceof TelaVendaDeAlimento) {
-						TelaVendaDeAlimento telaVenda = (TelaVendaDeAlimento) window;
+					this.dispose();
 
-						telaVenda.limparCamposs();
-
-						telaVenda.toFront();
-						break;
+					for (Window window : Window.getWindows()) {
+						if (window instanceof TelaVendaDeAlimento) {
+							TelaVendaDeAlimento telaVenda = (TelaVendaDeAlimento) window;
+							telaVenda.limparCamposs();
+							telaVenda.toFront();
+							break;
+						}
 					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Não é permitido vendas ainda", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 
-				
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, "Erro ao processar compra: " + e.getMessage(), "Erro",

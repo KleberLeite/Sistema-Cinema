@@ -304,12 +304,7 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 						} else {
 							auxBotao.setIcon(iconeLocalCadeirantes);
 						}
-						/*
-						 * modeloLista.removeElement(poltronaSelecionada); poltronas.remove(poltrona);
-						 * poltronasRestantes++;
-						 */
-						System.out.println(app.getBackend().getBancoSalas()
-								.tentarDesbloquearLocal(salaAtual.getIdSala(), auxI, auxJ));
+						app.getBackend().getBancoSalas().tentarDesbloquearLocal(salaAtual.getIdSala(), auxI, auxJ);
 						;
 					}
 					// Se ainda pode selecionar, marcar
@@ -321,12 +316,8 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 						} else if (auxBotao.getIcon().equals(iconeLocalCadeirantes)) {
 							auxBotao.setIcon(iconeBloqueada);
 						}
-						/*
-						 * modeloLista.addElement(poltronaSelecionada); poltronas.add(poltrona);
-						 * poltronasRestantes--;
-						 */
-						System.out.println(app.getBackend().getBancoSalas().tentarBloquearLocal(salaAtual.getIdSala(),
-								auxI, auxJ));
+
+						app.getBackend().getBancoSalas().tentarBloquearLocal(salaAtual.getIdSala(),auxI, auxJ);
 					}
 				});
 
@@ -334,11 +325,6 @@ public class TelaEscolhaPoltronaBloquear extends JFrame {
 			}
 		}
 
-		/*
-		 * Checa se tá achando a imagem mesmo java.net.URL url =
-		 * getClass().getResource("/img/poltronaPreta.png");
-		 * System.out.println("URL da imagem: " + url);
-		 */
 
 	}
 }
