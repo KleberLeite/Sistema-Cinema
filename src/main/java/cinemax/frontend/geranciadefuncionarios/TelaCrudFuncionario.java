@@ -1,16 +1,32 @@
 
 package cinemax.frontend.geranciadefuncionarios;
 
-import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
-import cinemax.frontend.controller.ControladorDeApp;
-import cinemax.frontend.estilizacao.Estilizador;
-import cinemax.frontend.estilizacao.EstiloBotao;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.JComboBox;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
+import cinemax.backend.filmes.ClassificacaoIndicativa;
 import cinemax.backend.funcionarios.CargoFuncionario;
 import cinemax.backend.funcionarios.Funcionario;
 import cinemax.backend.funcionarios.IBancoDeDadosFuncionario;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import java.awt.Color;
+import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
+import cinemax.frontend.estilizacao.Estilizador;
+import cinemax.frontend.estilizacao.EstiloBotao;
+import cinemax.frontend.estilizacao.JTextFieldEstilizado;
 
 /**
  * @author Geraldo Luiz
@@ -51,6 +67,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 	private Funcionario[] funcionariosLista;
 
 	public TelaCrudFuncionario(IBancoDeDadosFuncionario bancoDeDados) {
+		getContentPane().setBackground(new Color(2, 17, 28));
 		this.bancoDeDados = bancoDeDados;
 		initComponents();
 		DefaultTableModel model = (DefaultTableModel) PlanilhaGerenciaFuncionarios.getModel();
@@ -94,24 +111,45 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		BotaoEditarFuncionarios = new javax.swing.JButton();
 		BotaoRemoverFuncionarios = new javax.swing.JButton();
 		TXTNomeFuncionarios = new javax.swing.JLabel();
+		TXTNomeFuncionarios.setFont(new Font("Tahoma", Font.BOLD, 13));
+		TXTNomeFuncionarios.setForeground(new Color(255, 255, 255));
 		TXTCPFFuncionarios = new javax.swing.JLabel();
+		TXTCPFFuncionarios.setFont(new Font("Tahoma", Font.BOLD, 13));
+		TXTCPFFuncionarios.setForeground(new Color(255, 255, 255));
 		TXTCargoFuncionarios = new javax.swing.JLabel();
+		TXTCargoFuncionarios.setFont(new Font("Tahoma", Font.BOLD, 13));
+		TXTCargoFuncionarios.setForeground(new Color(255, 255, 255));
 		TXTTelefoneFuncionarios = new javax.swing.JLabel();
+		TXTTelefoneFuncionarios.setFont(new Font("Tahoma", Font.BOLD, 13));
+		TXTTelefoneFuncionarios.setForeground(new Color(255, 255, 255));
 		TXTSenhaFuncionarios = new javax.swing.JLabel();
-		CapturarTXTNomeFuncionarios = new javax.swing.JTextField();
-		CapturarTXTCPFFuncionarios = new javax.swing.JTextField();
-		CapturarTXTCargoFuncionarios = new javax.swing.JTextField();
-		CapturarTXTTelefoneFuncionarios = new javax.swing.JTextField();
-		CapturarTXTSenhaFuncionarios = new javax.swing.JTextField();
+		TXTSenhaFuncionarios.setForeground(new Color(255, 255, 255));
+		TXTSenhaFuncionarios.setFont(new Font("Tahoma", Font.BOLD, 13));
+		CapturarTXTNomeFuncionarios = new JTextFieldEstilizado(null);
+		CapturarTXTCPFFuncionarios = new JTextFieldEstilizado(null);
+		comboBoxCargoFuncionario =  new JComboBox<>();
+		for (CargoFuncionario cargo : CargoFuncionario.values()) {
+		    if(cargo!=CargoFuncionario.Administrador)comboBoxCargoFuncionario.addItem(cargo);
+		}
+		CapturarTXTTelefoneFuncionarios = new JTextFieldEstilizado(null);
+		CapturarTXTSenhaFuncionarios = new JTextFieldEstilizado(null);
 		jPanel1 = new javax.swing.JPanel();
 		jLabel1 = new javax.swing.JLabel();
+		jLabel1.setBackground(new Color(0, 0, 0));
 		ButaoVoltar = new javax.swing.JButton();
 		
+		Estilizador.estilizarComboBoxClassificacaoIndicativa(comboBoxCargoFuncionario);
+		comboBoxCargoFuncionario.setSelectedIndex(-1);
 		
-		Estilizador.aplicarEstiloBotao(ButaoVoltar, EstiloBotao.PADRAO_ESCURECIDO);
+		Estilizador.aplicarEstiloBotao(ButaoVoltar, EstiloBotao.CLARO_UNIFICADO);
 		Estilizador.aplicarEstiloBotao(BotaoCadastrarFuncionarios, EstiloBotao.PADRAO_ESCURECIDO);
 		Estilizador.aplicarEstiloBotao(BotaoEditarFuncionarios, EstiloBotao.PADRAO_ESCURECIDO);
 		Estilizador.aplicarEstiloBotao(BotaoRemoverFuncionarios, EstiloBotao.PADRAO_ESCURECIDO);
+		
+		
+		Color corFundoCabelho =  new Color(2, 17, 28);
+        
+        Estilizador.estilizarTabela(PlanilhaGerenciaFuncionarios,corFundoCabelho);
 		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Cinemax");
@@ -120,7 +158,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 			new javax.swing.table.DefaultTableModel(
 				new Object[][] { { null, null, null, null, null }, { null, null, null, null, null },
 						{ null, null, null, null, null }, { null, null, null, null, null } },
-				new String[] { "Nome", "CPF", "Cargo", "Teléfone", "Senha" }
+				new String[] { "Nome", "CPF", "Cargo", "Telefone", "Senha" }
 			) {	
 				public boolean isCellEditable(int rowIndex, int columnIndex) {
 					return false;
@@ -155,15 +193,15 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 			}
 		});
 
-		TXTNomeFuncionarios.setText("Nome");
+		TXTNomeFuncionarios.setText("Nome:");
 
-		TXTCPFFuncionarios.setText("CPF");
+		TXTCPFFuncionarios.setText("CPF:");
 
-		TXTCargoFuncionarios.setText("Cargo");
+		TXTCargoFuncionarios.setText("Cargo:");
 
-		TXTTelefoneFuncionarios.setText("Teléfone");
+		TXTTelefoneFuncionarios.setText("Telefone:");
 
-		TXTSenhaFuncionarios.setText("Senha");
+		TXTSenhaFuncionarios.setText("Senha:");
 
 		CapturarTXTNomeFuncionarios.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -171,20 +209,27 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 			}
 		});
 
-		jPanel1.setBackground(new Color(2, 18, 27));
+		jPanel1.setBackground(new Color(255, 255, 255));
 
 		jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-		jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-		jLabel1.setText("Gerência de Funcionários");
+		jLabel1.setForeground(new Color(0, 0, 0));
+		jLabel1.setText("Gerenciamento de Funcionários");
 
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+		jPanel1Layout.setHorizontalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addGap(281)
+					.addComponent(jLabel1)
+					.addContainerGap(301, Short.MAX_VALUE))
+		);
+		jPanel1Layout.setVerticalGroup(
+			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(jPanel1Layout.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(jLabel1))
+		);
 		jPanel1.setLayout(jPanel1Layout);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(280, 280, 280).addComponent(jLabel1)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-						jPanel1Layout.createSequentialGroup().addGap(0, 11, Short.MAX_VALUE).addComponent(jLabel1)));
 
 		ButaoVoltar.setText("Voltar");
 		ButaoVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -216,7 +261,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
 										.addComponent(CapturarTXTNomeFuncionarios)
 										.addComponent(CapturarTXTCPFFuncionarios)
-										.addComponent(CapturarTXTCargoFuncionarios,
+										.addComponent(comboBoxCargoFuncionario,
 												javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))))
 						.addGap(0, 475, Short.MAX_VALUE))
 				.addGroup(layout.createSequentialGroup()
@@ -249,7 +294,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 						.addGap(18, 18, 18)
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 								.addComponent(TXTCargoFuncionarios)
-								.addComponent(CapturarTXTCargoFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE,
+								.addComponent(comboBoxCargoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE,
 										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
 						.addGap(22, 22, 22)
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -285,18 +330,17 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 	private void BotaoCadastrarFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotaoCadastrarFuncionariosActionPerformed
 		String nome = CapturarTXTNomeFuncionarios.getText();
 		String cpf = CapturarTXTCPFFuncionarios.getText();
-		String cargoStr = CapturarTXTCargoFuncionarios.getText();
+		CargoFuncionario cargo = (CargoFuncionario)comboBoxCargoFuncionario.getSelectedItem();
 		String telefone = CapturarTXTTelefoneFuncionarios.getText();
 		String senha = CapturarTXTSenhaFuncionarios.getText();
 
-		if (!validarCampos(nome, cpf, cargoStr, telefone, senha)) {
+		if (!validarCampos(nome, cpf, cargo, telefone, senha)) {
 			JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente!", "Erro",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
-		try {
-			CargoFuncionario cargo = CargoFuncionario.valueOf(cargoStr);
+		
 			if (bancoDeDados.tentarAdicionarFuncionario(nome, cpf, cargo, telefone, senha)) {
 				JOptionPane.showMessageDialog(this, "Funcionário cadastrado com sucesso!", "Sucesso",
 						JOptionPane.INFORMATION_MESSAGE);
@@ -307,11 +351,8 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 						"Erro ao cadastrar funcionário. Verifique se o CPF já existe ou se o dia está aberto.", "Erro",
 						JOptionPane.ERROR_MESSAGE);
 			}
-		} catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(this, "Cargo inválido! Valores aceitos: Administrador, Gerente, Atendente",
-					"Erro", JOptionPane.ERROR_MESSAGE);
-		}
-	}
+		} 
+	
 
 // ===================== MEDODOS DE FUNCIONALIDADES GERAIS ===================== //
 //              1- lIMPARA CAMPOS DE TEXTO;
@@ -322,7 +363,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 	public void limparTextos() {
 		CapturarTXTNomeFuncionarios.setText("");
 		CapturarTXTCPFFuncionarios.setText("");
-		CapturarTXTCargoFuncionarios.setText("");
+		comboBoxCargoFuncionario.setSelectedIndex(-1);
 		CapturarTXTTelefoneFuncionarios.setText("");
 		CapturarTXTSenhaFuncionarios.setText("");
 		BotaoCadastrarFuncionarios.setEnabled(true);
@@ -337,7 +378,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 
 			CapturarTXTNomeFuncionarios.setText(f.getNome());
 			CapturarTXTCPFFuncionarios.setText(f.getCpf());
-			CapturarTXTCargoFuncionarios.setText(f.getCargo().toString());
+			comboBoxCargoFuncionario.setSelectedItem(f.getCargo()); 
 			CapturarTXTTelefoneFuncionarios.setText(f.getTelefone());
 			CapturarTXTSenhaFuncionarios.setText(f.getSenha());
 
@@ -361,18 +402,16 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 
 		String nome = CapturarTXTNomeFuncionarios.getText();
 		String cpf = CapturarTXTCPFFuncionarios.getText();
-		String cargoStr = CapturarTXTCargoFuncionarios.getText();
+		CargoFuncionario cargo = (CargoFuncionario) comboBoxCargoFuncionario.getSelectedItem();
 		String telefone = CapturarTXTTelefoneFuncionarios.getText();
 		String senha = CapturarTXTSenhaFuncionarios.getText();
 
-		if (!validarCampos(nome, cpf, cargoStr, telefone, senha)) {
+		if (!validarCampos(nome, cpf, cargo, telefone, senha)) {
 			JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente!", "Erro",
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
-		try {
-			CargoFuncionario cargo = CargoFuncionario.valueOf(cargoStr);
 			String cpfOriginal = funcionariosLista[indiceSelecionado].getCpf();
 
 			boolean sucesso = true;
@@ -395,10 +434,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(this, "Erro ao atualizar funcionário. Verifique se o dia está aberto.",
 						"Erro", JOptionPane.ERROR_MESSAGE);
 			}
-		} catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(this, "Cargo inválido! Valores aceitos: Administrador, Gerente, Atendente",
-					"Erro", JOptionPane.ERROR_MESSAGE);
-		}
+
 		BotaoCadastrarFuncionarios.setEnabled(true);
 		BotaoRemoverFuncionarios.setEnabled(true);
 	}// GEN-LAST:event_BotaoEditarFuncionariosActionPerformed
@@ -452,8 +488,8 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 // Verifica se algum campo obrigatório está vazio;
 // -------------------------------------------------------------------------------//
 
-	private boolean validarCampos(String nome, String cpf, String cargoStr, String telefone, String senha) {
-		if (nome.trim().isEmpty() || cpf.trim().isEmpty() || cargoStr.trim().isEmpty() || telefone.trim().isEmpty()
+	private boolean validarCampos(String nome, String cpf, CargoFuncionario cargo, String telefone, String senha) {
+		if (nome.trim().isEmpty() || cpf.trim().isEmpty() || cargo==null || telefone.trim().isEmpty()
 				|| senha.trim().isEmpty()) {
 			return false;
 		}
@@ -473,14 +509,6 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		if (senha.length() < 6) {
 			JOptionPane.showMessageDialog(this, "Senha deve ter no mínimo 6 caracteres!", "Erro",
 					JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
-
-		try {
-			CargoFuncionario.valueOf(cargoStr);
-		} catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(this, "Cargo inválido! Valores aceitos: Administrador, Gerente, Atendente",
-					"Erro", JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
@@ -510,7 +538,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 	private javax.swing.JButton BotaoRemoverFuncionarios;
 	private javax.swing.JButton ButaoVoltar;
 	private javax.swing.JTextField CapturarTXTCPFFuncionarios;
-	private javax.swing.JTextField CapturarTXTCargoFuncionarios;
+	private JComboBox<CargoFuncionario> comboBoxCargoFuncionario;
 	private javax.swing.JTextField CapturarTXTNomeFuncionarios;
 	private javax.swing.JTextField CapturarTXTSenhaFuncionarios;
 	private javax.swing.JTextField CapturarTXTTelefoneFuncionarios;

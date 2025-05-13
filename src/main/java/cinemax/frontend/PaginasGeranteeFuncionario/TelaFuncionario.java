@@ -4,11 +4,11 @@
  */
 package cinemax.frontend.PaginasGeranteeFuncionario;
 
+import cinemax.frontend.alimentos.TelaVendaDeAlimento;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.estilizacao.Estilizador;
 import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.frontend.login.TelaLogin;
-import cinemax.frontend.vendadealimentos.TelaVendaDeAlimento;
 import cinemax.frontend.vendadeingressos.TelaVendaDeIngresso;
 
 import javax.swing.JButton;
