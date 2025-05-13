@@ -30,6 +30,8 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 	private void configurarTabela() {
 		modeloTabela = (DefaultTableModel) TabelaCarrinho.getModel();
 		modeloTabela.setColumnIdentifiers(new String[] { "Item", "Preço", "Quantidade", "Subtotal" });
+		Color corFundoCabelho =  new Color(2, 17, 28);
+        Estilizador.estilizarTabela(TabelaCarrinho,corFundoCabelho);
 	}
 
 	public void adicionarItens(Map<Alimento, Integer> itens) {
@@ -70,10 +72,7 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 
 		jPanePrincipal = Estilizador.criarPainelArredondado(new Color(255, 255, 255), 10);
 		jPanelTotalCompra = Estilizador.criarPainelArredondadoComBorda(new Color(200, 200, 200),Color.BLACK, 10,1);
-		
-		Color corFundoCabelho = new Color(2, 17, 28);
-		
-		Estilizador.estilizarTabela(TabelaCarrinho, corFundoCabelho);
+
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setAlwaysOnTop(true);
@@ -225,9 +224,17 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 					itens.put(alimento, quantidade);
 				}
 
-				app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia().getRelatorioAlimentos()
-						.adicionarVendas(itens);
-
+				if (app.getBackend().getGerenciadorRelatorios().obterRelatorioDoDia().getRelatorioAlimentos()
+						.adicionarVendas(itens)) {
+					JOptionPane.showMessageDialog(null, "Compra registrada com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}else {
+					JOptionPane.showMessageDialog(this, "Não é permitido vendas ainda", "Erro", JOptionPane.ERROR_MESSAGE);
+					
+				}
+				
+				
 				modeloTabela.setRowCount(0);
 				TXTTotal.setText("0");
 
@@ -244,8 +251,7 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 					}
 				}
 
-				JOptionPane.showMessageDialog(null, "Compra registrada com sucesso!", "Sucesso",
-						JOptionPane.INFORMATION_MESSAGE);
+				
 
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(this, "Erro ao processar compra: " + e.getMessage(), "Erro",

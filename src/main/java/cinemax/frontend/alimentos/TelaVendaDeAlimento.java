@@ -85,6 +85,8 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 	private void inicializarTabela() {
 		modeloTabela = (DefaultTableModel) PlanilhaDeAlimentos.getModel();
 		atualizarTabela();
+		Color corFundoCabelho =  new Color(2, 17, 28);
+        Estilizador.estilizarTabela(PlanilhaDeAlimentos,corFundoCabelho);
 	}
 
 	private void atualizarTabela() {
@@ -93,6 +95,8 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 		for (Alimento alimento : alimentos) {
 			modeloTabela.addRow(new Object[] { alimento.getNome(), alimento.getPreco(), alimento.getCodigo() });
 		}
+		Color corFundoCabelho =  new Color(2, 17, 28);
+        Estilizador.estilizarTabela(PlanilhaDeAlimentos,corFundoCabelho);
 	}
 
 	private void configurarListeners() {
@@ -250,10 +254,6 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
         Estilizador.aplicarEstiloBotao(bntRecarregarLista, EstiloBotao.PADRAO_ESCURECIDO);
         Estilizador.aplicarEstiloBotao(bntVoltar, EstiloBotao.CLARO_UNIFICADO);
         
-        Color corFundoCabelho =  new Color(2, 17, 28);
-        
-        Estilizador.estilizarTabela(PlanilhaDeAlimentos,corFundoCabelho);
-        
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cinemax");
         setBackground(new java.awt.Color(2, 32, 64));
@@ -271,11 +271,13 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
                 "Nome", "Preço", "Código"
             }
         ));
+        
         PlanilhaDeAlimentos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PlanilhaDeAlimentosMouseClicked(evt);
             }
         });
+        
         jScrollPane1.setViewportView(PlanilhaDeAlimentos);
         jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 

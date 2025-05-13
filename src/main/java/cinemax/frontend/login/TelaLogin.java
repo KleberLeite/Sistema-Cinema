@@ -11,6 +11,8 @@ import cinemax.frontend.PaginasGeranteeFuncionario.TelaGerente;
 import cinemax.frontend.controller.ControladorDeApp;
 import cinemax.frontend.estilizacao.Estilizador;
 import cinemax.frontend.estilizacao.EstiloBotao;
+import cinemax.frontend.estilizacao.JPasswordFieldEstilizado;
+import cinemax.frontend.estilizacao.JTextFieldEstilizado;
 
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -49,11 +51,11 @@ public class TelaLogin extends javax.swing.JFrame {
         TXTLoginAcessso = new javax.swing.JLabel();
         TXTUsuarioLogin = new javax.swing.JLabel();
         TXTSenhaLogin = new javax.swing.JLabel();
-        CapturaDeTXTUsuarioLogin = new javax.swing.JTextField();
+        CapturaDeTXTUsuarioLogin = new JTextFieldEstilizado(null);
         BotaoLogin = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        CapturaDeTXTSenhaLogin = new javax.swing.JPasswordField();
+        CapturaDeTXTSenhaLogin = new JPasswordFieldEstilizado();
 
         Estilizador.aplicarEstiloBotao(BotaoLogin, EstiloBotao.PADRAO_ESCURECIDO);
         

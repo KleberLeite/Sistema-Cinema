@@ -147,10 +147,6 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		Estilizador.aplicarEstiloBotao(BotaoRemoverFuncionarios, EstiloBotao.PADRAO_ESCURECIDO);
 		
 		
-		Color corFundoCabelho =  new Color(2, 17, 28);
-        
-        Estilizador.estilizarTabela(PlanilhaGerenciaFuncionarios,corFundoCabelho);
-		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Cinemax");
 
@@ -164,6 +160,9 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 					return false;
 				}
 		});
+		Color corFundoCabelho =  new Color(2, 17, 28);
+		Estilizador.estilizarTabela(PlanilhaGerenciaFuncionarios,corFundoCabelho);
+		 
 		PlanilhaGerenciaFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
 				PlanilhaGerenciaFuncionariosMouseClicked(evt);

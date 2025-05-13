@@ -24,10 +24,12 @@ public class RelatorioAlimentos extends BaseRelatorio {
 		super(permitirAlteracoes, aoAlterarPermissaoAlteracoes);
 	}
 
-	public void adicionarVendas(Map<Alimento, Integer> venda) {
+	public boolean adicionarVendas(Map<Alimento, Integer> venda) {
 		if (super.getPermitirAlteracoes()) {
 			internoAdicionarVendas(venda);
+			return true;
 		}
+		return false;
 	}
 
 	protected void internoAdicionarVendas(Map<Alimento, Integer> venda) {

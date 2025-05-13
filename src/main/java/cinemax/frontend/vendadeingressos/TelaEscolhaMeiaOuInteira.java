@@ -313,8 +313,9 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 				telaEscolhaPoltrona.setVisible(true);
 
 				dispose();
-
-			}
+				
+				telaDetalhesFilme.dispose();
+				}
 		});
 		btnVoltar.setBounds(10, 608, 89, 23);
 		contentPane_1.add(btnVoltar);

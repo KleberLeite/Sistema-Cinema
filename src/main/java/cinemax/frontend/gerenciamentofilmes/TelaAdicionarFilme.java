@@ -348,7 +348,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		lblGenero.setBounds(30, 248, 117, 26);
 		panelPrincipal.add(lblGenero);
 
-		panelGeneros = Estilizador.criarPainelArredondado(new Color( 240, 240, 240), 20);
+		panelGeneros = Estilizador.criarPainelArredondadoComBorda(new Color( 240, 240, 240),Color.BLACK, 10,1);
 		panelGeneros.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		panelGeneros.setLayout(new BoxLayout(panelGeneros, BoxLayout.Y_AXIS));
 

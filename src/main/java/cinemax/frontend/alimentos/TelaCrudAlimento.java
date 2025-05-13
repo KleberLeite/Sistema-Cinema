@@ -122,10 +122,6 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
         Estilizador.aplicarEstiloBotao(bntRecarregarLista, EstiloBotao.PADRAO_ESCURECIDO);
         Estilizador.aplicarEstiloBotao(ButaoVoltar, EstiloBotao.CLARO_UNIFICADO);
         
-        Color corFundoCabelho =  new Color(2, 17, 28);
-        
-        Estilizador.estilizarTabela(PlanilhaAlimento,corFundoCabelho);
-        
 		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Cinemax");
@@ -165,6 +161,10 @@ public class TelaCrudAlimento extends javax.swing.JFrame {
 						return false;
 					}
 				});
+		
+		Color corFundoCabelho =  new Color(2, 17, 28);
+        Estilizador.estilizarTabela(PlanilhaAlimento,corFundoCabelho);
+        
 		jScrollPane1 = Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 		jScrollPane1.setViewportView(PlanilhaAlimento);
 

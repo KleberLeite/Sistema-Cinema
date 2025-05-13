@@ -73,9 +73,7 @@ public class TelaDetalhesFilme extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaDetalhesFilme(Filme filme) {
-		if (filme == null)
-			filme = app.getBackend().getBancoFilmes().obterFilmePorId(0);
-
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -105,13 +103,12 @@ public class TelaDetalhesFilme extends JFrame {
 		textAreaSinopse.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textAreaSinopse.setForeground(Color.WHITE);
 
-		textAreaSinopse.setBackground(null); // ou remova essa linha
-
+		textAreaSinopse.setBackground(null); 
 		textAreaSinopse.setLineWrap(true);
 		textAreaSinopse.setWrapStyleWord(true);
 		textAreaSinopse.setEditable(false);
-		textAreaSinopse.setFocusable(false); // evita que ele receba foco
-		textAreaSinopse.setOpaque(false); // deixa o fundo transparente (opcional)
+		textAreaSinopse.setFocusable(false);
+		textAreaSinopse.setOpaque(false);
 		textAreaSinopse.setBorder(BorderFactory.createEmptyBorder());
 		textAreaSinopse.setBorder(new EmptyBorder(5, 5, 5, 5));
 		textAreaSinopse.setText(filme.getSinopse());
