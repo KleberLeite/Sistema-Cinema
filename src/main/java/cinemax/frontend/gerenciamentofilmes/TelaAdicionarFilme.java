@@ -269,7 +269,7 @@ public class TelaAdicionarFilme extends JFrame implements TelaManutencaoFilme{
 		lblNewLabel_1.setBounds(30, 74, 141, 26);
 		panelPrincipal.add(lblNewLabel_1);
 
-		JTextArea textAreaSinopse = new JTextArea();
+		textAreaSinopse = new JTextArea();
 		Estilizador.estilizarTextArea(textAreaSinopse);
 
 		JScrollPane scrollPane = new JScrollPane(textAreaSinopse);
