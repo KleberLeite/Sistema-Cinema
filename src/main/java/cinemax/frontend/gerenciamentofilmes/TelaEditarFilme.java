@@ -1,6 +1,7 @@
 package cinemax.frontend.gerenciamentofilmes;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -132,55 +133,62 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 	}
 
 	public void atualizarListaDeSessoes(JPanel panelSessoes, Filme filme) {
-		panelSessoes.removeAll(); // limpa as sessões antigas
+	    panelSessoes.removeAll(); // limpa as sessões antigas
 
-		for (Sessao sessao : filme.obterTodasSessoes()) {
-			JPanel card = Estilizador.criarPainelArredondado(new Color(2, 17, 28), 10);
-			card.setLayout(null);
-			card.setPreferredSize(new Dimension(400, 30));
-			card.setMaximumSize(new Dimension(400, 30));
-			card.setBorder(new EmptyBorder(5, 5, 5, 5));
+	    for (Sessao sessao : filme.obterTodasSessoes()) {
+	        JPanel card = Estilizador.criarPainelArredondado(new Color(2, 17, 28), 10);
+	        card.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5)); // alinhamento à esquerda, espaçamento entre itens
+	        card.setPreferredSize(new Dimension(200, 40));
+	        card.setMaximumSize(new Dimension(200, 40));
+	        card.setBorder(new EmptyBorder(5, 10, 5, 10));
 
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm");
-			String sessaoFormatada = sessao.getInicio().format(formatter);
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm");
+	        String sessaoFormatada = sessao.getInicio().format(formatter);
 
-			JLabel lblSessao = new JLabel(sessaoFormatada);
-			lblSessao.setForeground(new Color(255,255,255));
-			lblSessao.setFont(new Font("Tahoma", Font.BOLD, 14));
-			lblSessao.setBounds(20, 2, 400, 25);
-			card.add(lblSessao);
+	        JLabel lblSessao = new JLabel(sessaoFormatada);
+	        lblSessao.setForeground(Color.WHITE);
+	        lblSessao.setFont(new Font("Tahoma", Font.BOLD, 14));
 
-			JButton btnEditar = new JButton(iconeEditar); // ou seu ícone
-			btnEditar.setBounds(125, 4, 20, 20);
-			btnEditar.addActionListener(e -> {
-				telaEditarSessao = new TelaEditarSessao(sessao, TelaEditarFilme.this);
-				telaEditarSessao.setLocationRelativeTo(null);
-				telaEditarSessao.setVisible(true);
+	        JButton btnEditar = new JButton(iconeEditar);
+	        btnEditar.setPreferredSize(new Dimension(24, 24));
+	        btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	        btnEditar.setBorderPainted(false);
+	    	btnEditar.setContentAreaFilled(false);
+	    	btnEditar.setFocusPainted(false);
+	        btnEditar.addActionListener(e -> {
+	            telaEditarSessao = new TelaEditarSessao(sessao, TelaEditarFilme.this);
+	            telaEditarSessao.setLocationRelativeTo(null);
+	            telaEditarSessao.setVisible(true);
+	        });
 
-				
-			});
-			card.add(btnEditar);
-			
-			
-			JButton btnExcluir = new JButton(iconeExcluir); // ou seu ícone
-			btnExcluir.setBounds(160, 4, 20, 20);
-			btnExcluir.addActionListener(e -> {
-				boolean sucesso = app.getBackend().getBancoFilmes().tentarRemoverSessao(sessao.getId(), filme.getId());
-				if (!sucesso) {
-					JOptionPane.showMessageDialog(null, "Falha ao tentar Remover a sessão, tente novamente!", "Aviso",
-							JOptionPane.WARNING_MESSAGE);
-				} else {
-					atualizarListaDeSessoes(panelSessoes, filme); // atualiza após excluir
-				}
-			});
-			card.add(btnExcluir);
+	        JButton btnExcluir = new JButton(iconeExcluir);
+	        btnExcluir.setPreferredSize(new Dimension(24, 24));
+	        btnExcluir.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	        btnExcluir.setBorderPainted(false);
+	        btnExcluir.setContentAreaFilled(false);
+	        btnExcluir.setFocusPainted(false);
+	        btnExcluir.addActionListener(e -> {
+	            boolean sucesso = app.getBackend().getBancoFilmes().tentarRemoverSessao(sessao.getId(), filme.getId());
+	            if (!sucesso) {
+	                JOptionPane.showMessageDialog(null, "Falha ao tentar Remover a sessão, tente novamente!", "Aviso",
+	                        JOptionPane.WARNING_MESSAGE);
+	            } else {
+	                atualizarListaDeSessoes(panelSessoes, filme); // atualiza após excluir
+	            }
+	        });
 
-			panelSessoes.add(Box.createRigidArea(new Dimension(0, 10)));
-			panelSessoes.add(card);
-		}
+	        // adiciona os componentes ao card
+	        card.add(lblSessao);
+	        card.add(btnEditar);
+	        card.add(btnExcluir);
 
-		panelSessoes.revalidate();
-		panelSessoes.repaint();
+	        // adiciona o card à lista
+	        panelSessoes.add(Box.createRigidArea(new Dimension(0, 10)));
+	        panelSessoes.add(card);
+	    }
+
+	    panelSessoes.revalidate();
+	    panelSessoes.repaint();
 	}
 	
 	private GeneroFilme[] pegaOsGeneros(List<JCheckBox> checkBoxesGeneros) {

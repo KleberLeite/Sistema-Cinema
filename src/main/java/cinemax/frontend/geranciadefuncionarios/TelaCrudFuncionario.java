@@ -27,6 +27,8 @@ import cinemax.frontend.PaginasGeranteeFuncionario.PaginaPrincipal;
 import cinemax.frontend.estilizacao.Estilizador;
 import cinemax.frontend.estilizacao.EstiloBotao;
 import cinemax.frontend.estilizacao.JTextFieldEstilizado;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JScrollPane;
 
 /**
  * @author Geraldo Luiz
@@ -106,7 +108,6 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 	private void initComponents() {
 
 		jScrollPane1 = new javax.swing.JScrollPane();
-		PlanilhaGerenciaFuncionarios = new javax.swing.JTable();
 		BotaoCadastrarFuncionarios = new javax.swing.JButton();
 		BotaoEditarFuncionarios = new javax.swing.JButton();
 		BotaoRemoverFuncionarios = new javax.swing.JButton();
@@ -149,26 +150,7 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 		setTitle("Cinemax");
-
-		PlanilhaGerenciaFuncionarios.setModel(
-			new javax.swing.table.DefaultTableModel(
-				new Object[][] { { null, null, null, null, null }, { null, null, null, null, null },
-						{ null, null, null, null, null }, { null, null, null, null, null } },
-				new String[] { "Nome", "CPF", "Cargo", "Telefone", "Senha" }
-			) {	
-				public boolean isCellEditable(int rowIndex, int columnIndex) {
-					return false;
-				}
-		});
 		Color corFundoCabelho =  new Color(2, 17, 28);
-		Estilizador.estilizarTabela(PlanilhaGerenciaFuncionarios,corFundoCabelho);
-		 
-		PlanilhaGerenciaFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				PlanilhaGerenciaFuncionariosMouseClicked(evt);
-			}
-		});
-		jScrollPane1.setViewportView(PlanilhaGerenciaFuncionarios);
 		jScrollPane1 = Estilizador.estilizarScrollPane(jScrollPane1);
 
 		BotaoCadastrarFuncionarios.setText("Cadastrar");
@@ -218,102 +200,128 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 		jPanel1Layout.setHorizontalGroup(
 			jPanel1Layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(jPanel1Layout.createSequentialGroup()
-					.addGap(281)
+					.addGap(416)
 					.addComponent(jLabel1)
-					.addContainerGap(301, Short.MAX_VALUE))
+					.addContainerGap(419, Short.MAX_VALUE))
 		);
 		jPanel1Layout.setVerticalGroup(
 			jPanel1Layout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(jPanel1Layout.createSequentialGroup()
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(jLabel1))
+					.addComponent(jLabel1)
+					.addContainerGap())
 		);
 		jPanel1.setLayout(jPanel1Layout);
 
-		ButaoVoltar.setText("Voltar");
+		ButaoVoltar.setText("  Voltar  ");
 		ButaoVoltar.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				ButaoVoltarActionPerformed(evt);
 			}
 		});
+		
+		scrollPane = new JScrollPane();
+		Estilizador.estilizandoScrollBarVertEHori(jScrollPane1);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE,
-						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addGroup(layout.createSequentialGroup().addGap(37, 37, 37).addGroup(layout
-						.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, 1104, Short.MAX_VALUE)
+				.addGroup(layout.createSequentialGroup()
+					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(layout.createSequentialGroup()
-								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-										.addComponent(TXTTelefoneFuncionarios)
-										.addComponent(TXTSenhaFuncionarios, javax.swing.GroupLayout.Alignment.LEADING))
-								.addGap(18, 18, 18)
-								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(CapturarTXTTelefoneFuncionarios)
-										.addComponent(CapturarTXTSenhaFuncionarios)))
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(BotaoCadastrarFuncionarios))
 						.addGroup(layout.createSequentialGroup()
-								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-										.addComponent(TXTNomeFuncionarios).addComponent(TXTCPFFuncionarios)
-										.addComponent(TXTCargoFuncionarios))
-								.addGap(34, 34, 34)
-								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+							.addGap(37)
+							.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(layout.createSequentialGroup()
+									.addGroup(layout.createParallelGroup(Alignment.LEADING)
+										.addComponent(TXTNomeFuncionarios)
+										.addComponent(TXTCargoFuncionarios)
+										.addComponent(TXTCPFFuncionarios)
+										.addComponent(ButaoVoltar)
+										.addComponent(TXTSenhaFuncionarios))
+									.addGap(4)
+									.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
 										.addComponent(CapturarTXTNomeFuncionarios)
 										.addComponent(CapturarTXTCPFFuncionarios)
-										.addComponent(comboBoxCargoFuncionario,
-												javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE))))
-						.addGap(0, 475, Short.MAX_VALUE))
+										.addComponent(comboBoxCargoFuncionario, 0, 221, Short.MAX_VALUE)
+										.addComponent(CapturarTXTSenhaFuncionarios, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(layout.createSequentialGroup()
+									.addComponent(TXTTelefoneFuncionarios)
+									.addGap(18)
+									.addComponent(CapturarTXTTelefoneFuncionarios, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+					.addGap(180)
+					.addComponent(BotaoEditarFuncionarios)
+					.addGap(224)
+					.addComponent(BotaoRemoverFuncionarios)
+					.addGap(229))
 				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(layout.createSequentialGroup().addGap(161, 161, 161)
-										.addComponent(BotaoCadastrarFuncionarios).addGap(128, 128, 128)
-										.addComponent(BotaoEditarFuncionarios).addGap(122, 122, 122)
-										.addComponent(BotaoRemoverFuncionarios))
-								.addGroup(layout.createSequentialGroup().addGap(22, 22, 22).addComponent(jScrollPane1,
-										javax.swing.GroupLayout.PREFERRED_SIZE, 753,
-										javax.swing.GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-						.addGap(0, 0, Short.MAX_VALUE).addComponent(ButaoVoltar).addGap(38, 38, 38)));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-						.addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addGap(29, 29, 29)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(layout
-								.createSequentialGroup()
-								.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(TXTNomeFuncionarios).addComponent(CapturarTXTNomeFuncionarios,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addGap(31, 31, 31).addComponent(TXTCPFFuncionarios))
-								.addComponent(CapturarTXTCPFFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGap(18, 18, 18)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(TXTCargoFuncionarios)
-								.addComponent(comboBoxCargoFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGap(22, 22, 22)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(TXTTelefoneFuncionarios)
-								.addComponent(CapturarTXTTelefoneFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGap(23, 23, 23)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(TXTSenhaFuncionarios)
-								.addComponent(CapturarTXTSenhaFuncionarios, javax.swing.GroupLayout.PREFERRED_SIZE,
-										javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-						.addGap(22, 22, 22)
-						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-								.addComponent(BotaoCadastrarFuncionarios).addComponent(BotaoEditarFuncionarios)
-								.addComponent(BotaoRemoverFuncionarios))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-						.addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(ButaoVoltar)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+					.addContainerGap(159, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 828, GroupLayout.PREFERRED_SIZE)
+					.addGap(117))
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(TXTNomeFuncionarios)
+								.addComponent(CapturarTXTNomeFuncionarios, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(31)
+							.addComponent(TXTCPFFuncionarios))
+						.addComponent(CapturarTXTCPFFuncionarios, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(TXTCargoFuncionarios)
+						.addComponent(comboBoxCargoFuncionario, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(22)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(TXTTelefoneFuncionarios)
+						.addComponent(CapturarTXTTelefoneFuncionarios, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(23)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(TXTSenhaFuncionarios)
+						.addComponent(CapturarTXTSenhaFuncionarios, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(22)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(BotaoRemoverFuncionarios)
+						.addComponent(BotaoEditarFuncionarios)
+						.addComponent(BotaoCadastrarFuncionarios))
+					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup()
+							.addGap(311)
+							.addComponent(ButaoVoltar))
+						.addGroup(layout.createSequentialGroup()
+							.addGap(18)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 290, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(23, Short.MAX_VALUE))
+		);
+		PlanilhaGerenciaFuncionarios = new javax.swing.JTable();
+		scrollPane.setViewportView(PlanilhaGerenciaFuncionarios);
+		
+				PlanilhaGerenciaFuncionarios.setModel(
+					new javax.swing.table.DefaultTableModel(
+						new Object[][] { { null, null, null, null, null }, { null, null, null, null, null },
+								{ null, null, null, null, null }, { null, null, null, null, null } },
+						new String[] { "Nome", "CPF", "Cargo", "Telefone", "Senha" }
+					) {	
+						public boolean isCellEditable(int rowIndex, int columnIndex) {
+							return false;
+						}
+				});
+				Estilizador.estilizarTabela(PlanilhaGerenciaFuncionarios,corFundoCabelho);
+				
+		PlanilhaGerenciaFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				PlanilhaGerenciaFuncionariosMouseClicked(evt);
+			}
+		});
+		getContentPane().setLayout(layout);
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
@@ -550,5 +558,5 @@ public class TelaCrudFuncionario extends javax.swing.JFrame {
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JPanel jPanel1;
 	private javax.swing.JScrollPane jScrollPane1;
-	// End of variables declaration//GEN-END:variables
+	private JScrollPane scrollPane;
 }
