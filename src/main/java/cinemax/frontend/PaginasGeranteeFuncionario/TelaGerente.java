@@ -135,6 +135,7 @@ public class TelaGerente extends javax.swing.JFrame {
         	}
         });
         if(app.getBackend().getGerenciadorRelatorios().size() > 0 && !app.getBackend().diaEstaAberto()) {
+        	System.out.println("[Log:TelaGerente]: pode consultar relatorio.");
         	botaoConsultarRelatorio.setEnabled(true);
         } else {
         	botaoConsultarRelatorio.setEnabled(false);
