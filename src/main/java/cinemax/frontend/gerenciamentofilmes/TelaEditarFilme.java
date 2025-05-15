@@ -346,6 +346,7 @@ public class TelaEditarFilme extends JFrame  implements TelaManutencaoFilme{
 		
 		JComboBox<ClassificacaoIndicativa> comboBoxClassificacaoIndicativa = new JComboBox<>(ClassificacaoIndicativa.values());
 		comboBoxClassificacaoIndicativa.setBounds(186, 211, 72, 26);
+		comboBoxClassificacaoIndicativa.setSelectedIndex(filme.getClassificacaoIndicativa().ordinal());
 		Estilizador.estilizarComboBoxClassificacaoIndicativa(comboBoxClassificacaoIndicativa);
 		panelPrincipal.add(comboBoxClassificacaoIndicativa);
 		
