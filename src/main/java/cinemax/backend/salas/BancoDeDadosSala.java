@@ -85,8 +85,8 @@ A 0  0
 	}
 
 	private void preencherSalas() {
-		Estrutura[][] estrutura = gerarEstruturaSala();
 		for (int i = 0; i < NUM_SALAS; i++) {
+			Estrutura[][] estrutura = gerarEstruturaSala();
 			Sala sala = new Sala(i, TAM_VERT, TAM_HOR, estrutura);
 			salas.put(i, sala);
 		}
