@@ -6,7 +6,7 @@ import java.util.Map;
 import cinemax.backend.core.Backend;
 
 public class BancoDeDadosSala implements IBancoDeDadosSala {
-	private final int NUM_SALAS = 4;
+	private final int NUM_SALAS = 2;
 	private final int TAM_HOR = 16;
 	private final int TAM_VERT = 18;
 
