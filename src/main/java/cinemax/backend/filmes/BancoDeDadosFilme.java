@@ -342,8 +342,12 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		if(!filme.contemSessao(idSessao)) {
 			return false;
 		}
+		if(novoInicio.isBefore(LocalDateTime.now())) {
+			return false;
+		}
 		Sessao sessao = filme.obterSessao(idSessao);
 		if(existeOutraSessaoNoMesmoLugarHora(sessao.getSala().getIdSala(), novoInicio, sessao.getId())) {
+			System.out.println("[Log:BancoDeDadosFilme]: existe outra sessoa no mesmo lugar e hora!");
 			return false;
 		}
 		sessao.setInicio(novoInicio);
