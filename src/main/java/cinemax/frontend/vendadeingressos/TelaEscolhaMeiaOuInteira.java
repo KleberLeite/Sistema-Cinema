@@ -222,7 +222,7 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 	public boolean validarRGs() {
 		boolean todosValidos = true;
-		String regexRG = "\\d{7,9}"; // Exemplo: 7 a 9 dígitos numéricos
+		String regexRG = "\\d{7,11}"; // Exemplo: 7 a 11 dígitos numéricos
 
 		for (JTextField JTextFieldRG : listaDeTextFieldsRGs) {
 			String rg = JTextFieldRG.getText().trim();
