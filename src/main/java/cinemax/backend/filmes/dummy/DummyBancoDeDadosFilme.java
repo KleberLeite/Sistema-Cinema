@@ -56,13 +56,13 @@ public class DummyBancoDeDadosFilme extends BancoDeDadosFilme {
 		);
 		
 		// Dia 1
-		this.internoAdicionarSessao(0, 0, LocalDateTime.now().withHour(11).withMinute(0)); // Nemo: 13:00–14:40
-		this.internoAdicionarSessao(0, 1, LocalDateTime.now().withHour(15).withMinute(55)); // Paddington: 14:55–16:38
-		this.internoAdicionarSessao(0, 2, LocalDateTime.now().withHour(20).withMinute(55)); // Pantera: 16:55–19:16
+		this.internoAdicionarSessao(0, 0, LocalDateTime.now().plusHours(1).withMinute(0));
+		this.internoAdicionarSessao(1, 1, LocalDateTime.now().plusHours(1).withMinute(0));
+		this.internoAdicionarSessao(0, 2, LocalDateTime.now().plusHours(4).withMinute(0));
 
 		// Dia 2
-		this.internoAdicionarSessao(1, 3, LocalDateTime.now().plusDays(1).withHour(10).withMinute(0)); // Jogos: 12:00–14:22
-		this.internoAdicionarSessao(1, 4, LocalDateTime.now().plusDays(1).withHour(14).withMinute(37)); // Coringa: 14:37–16:39
+		this.internoAdicionarSessao(1, 3, LocalDateTime.now().plusDays(1).withHour(10).withMinute(0));
+		this.internoAdicionarSessao(1, 4, LocalDateTime.now().plusDays(1).withHour(14).withMinute(37));
 		this.internoAdicionarSessao(1, 5, LocalDateTime.now().plusDays(1).withHour(20).withMinute(54)); // Lobo: 16:54–19:54
 
 		// Dia 3
