@@ -64,7 +64,8 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	// Tenta adicionar um filme, retorna o id do filme criado ou -1 caso:
 	// 1. nome.length() <= 2;
 	// 2. sinopse.length() <= 2;
-	// 3. duracaoEmMinutos < 1.
+	// 3. duracaoEmMinutos < 1;
+	// 4. generos.length > 3.
 	@Override
 	public int tentarAdicionarFilme(
 		String nome,
@@ -86,6 +87,9 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			return -1;
 		}
 		if(!duracaoValida(duracaoEmMinutos)) {
+			return -1;
+		}
+		if(!generosValidos(generos)) {
 			return -1;
 		}
 		
@@ -400,9 +404,14 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	}
 	
 	// Tenta adicionar o genero do filme com o respectivo id, retorna falso caso:
-	// 1. Não encontrar o filme.
+	// 1. Não encontrar o filme;
+	// 2. generos.length > 3.
 	@Override
 	public boolean alterarGeneros(int idFilme, GeneroFilme[] generos) {
+		if(!generosValidos(generos)) {
+			return false;
+		}
+		
 		Filme f = filmes.getOrDefault(idFilme, null);
 		if(f == null) {
 			return false;
@@ -507,5 +516,9 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 	
 	private boolean duracaoValida(int duracaoEmMinutos) {
 		return duracaoEmMinutos >= 1;
+	}
+	
+	private boolean generosValidos(GeneroFilme[] generos) {
+		return generos.length <= 3;
 	}
 }

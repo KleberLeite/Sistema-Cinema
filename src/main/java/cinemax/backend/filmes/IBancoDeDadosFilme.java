@@ -17,7 +17,8 @@ public interface IBancoDeDadosFilme {
 	// Tenta adicionar um filme, retorna o id do filme criado ou -1 caso:
 	// 1. nome.length() <= 2;
 	// 2. sinopse.length() <= 2;
-	// 3. duracaoEmMinutos < 1.
+	// 3. duracaoEmMinutos < 1;
+	// 4. generos.length > 3.
 	int tentarAdicionarFilme(
 		String nome,
 		String sinopse,
@@ -32,7 +33,8 @@ public interface IBancoDeDadosFilme {
 	boolean tentarAlterarNome(int id, String novoNome);
 	
 	// Tenta adicionar o genero do filme com o respectivo id, retorna falso caso:
-	// 1. Não encontrar o filme.
+	// 1. Não encontrar o filme;
+	// 2. generos.length > 3.
 	boolean alterarGeneros(int idFilme, GeneroFilme[] generos);
 	
 	// Tenta alterar a sinopse do filme com o respectivo id, retorna falso caso:
