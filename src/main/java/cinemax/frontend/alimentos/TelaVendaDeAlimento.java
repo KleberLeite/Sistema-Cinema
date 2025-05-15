@@ -505,7 +505,9 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 		PaginaPrincipal.abrirPaginaPrincipal();
 		dispose();
 		
-		telaCarrinhoAlimentos.dispose();
+		if(telaCarrinhoAlimentos != null) {
+			telaCarrinhoAlimentos.dispose();
+		}
 	}// GEN-LAST:event_bntVoltarActionPerformed
 
 	private void PlanilhaDeAlimentosMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_PlanilhaDeAlimentosMouseClicked
