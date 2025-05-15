@@ -107,6 +107,7 @@ public class TelaGerente extends javax.swing.JFrame {
         	public void actionPerformed(ActionEvent e) {
         		app.getBackend().tentarFecharDia();
         		botaoTerminoDia.setEnabled(false);
+        		botaoIniciarDia.setEnabled(true);
         		
         		BotaoAcessarGeranciaFuncinario.setEnabled(true);
         		BotaoAcessarGeranciaDeFilmes.setEnabled(true);
