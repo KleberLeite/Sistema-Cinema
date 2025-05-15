@@ -284,8 +284,10 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 
 				dispose();
 				
-				telaDetalhesFilme.dispose();
+				if(telaDetalhesFilme != null) {
+					telaDetalhesFilme.dispose();
 				}
+			}
 		});
 		btnVoltar.setBounds(10, 608, 89, 23);
 		contentPane_1.add(btnVoltar);
