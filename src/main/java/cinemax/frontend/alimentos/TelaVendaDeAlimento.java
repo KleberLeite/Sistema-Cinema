@@ -19,6 +19,9 @@ import java.util.Map;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -111,7 +114,7 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 	}
 
         
-        public void limparCamposs() {
+        public void limparCamposs() {        	
     // Limpar os campos internos diretamente
     TXTitemSelecionado.setText("");
     TXTQuantidadeDeitemTotaisSelecionados.setText("0");
@@ -565,18 +568,28 @@ public class TelaVendaDeAlimento extends javax.swing.JFrame {
 
 	private void BotaoComprarActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_BotaoComprarActionPerformed
 		if (carrinho.isEmpty()) {
-        JOptionPane.showMessageDialog(this, 
-            "Carrinho está vazio!", 
-            "Aviso", 
-            JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    
-    telaCarrinhoAlimentos = new TelaCarrinhoAlimentos();
-    telaCarrinhoAlimentos.adicionarItens(new HashMap<>(carrinho)); // Passa cópia do carrinho
-    telaCarrinhoAlimentos.setVisible(true);
-    telaCarrinhoAlimentos.setLocationRelativeTo(null);
+	        JOptionPane.showMessageDialog(this, 
+	            "Carrinho está vazio!", 
+	            "Aviso", 
+	            JOptionPane.WARNING_MESSAGE);
+	        return;
+	    }
+	
+		if(telaCarrinhoAlimentos != null) {
+			return;
+		}
+	    
+	    telaCarrinhoAlimentos = new TelaCarrinhoAlimentos(this);
+	    telaCarrinhoAlimentos.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+            	telaCarrinhoAlimentos = null;
+            }
+        });
+	    
+	    telaCarrinhoAlimentos.adicionarItens(new HashMap<>(carrinho)); // Passa cópia do carrinho
+	    telaCarrinhoAlimentos.setVisible(true);
+	    telaCarrinhoAlimentos.setLocationRelativeTo(null);
 	}// GEN-LAST:event_BotaoComprarActionPerformed
 
 	private void bntRecarregarListaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_bntRecarregarListaActionPerformed

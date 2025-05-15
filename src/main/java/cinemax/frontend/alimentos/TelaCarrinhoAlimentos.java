@@ -17,14 +17,15 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 	private DefaultTableModel modeloTabela;
 	private ControladorDeApp app = ControladorDeApp.getInstancia();
+	private TelaVendaDeAlimento vendaDeAlimento;
 
 	/**
 	 * Creates new form CarrinhoDeComprasAlimentos
 	 */
-	public TelaCarrinhoAlimentos() {
+	public TelaCarrinhoAlimentos(TelaVendaDeAlimento vendaDeAlimento) {
 		initComponents();
 		configurarTabela();
-
+		this.vendaDeAlimento = vendaDeAlimento;
 	}
 
 	private void configurarTabela() {
@@ -230,16 +231,19 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 					modeloTabela.setRowCount(0);
 					TXTTotal.setText("0");
 
+					this.vendaDeAlimento.limparCamposs();
+					this.vendaDeAlimento.toFront();
+					
 					this.dispose();
 
-					for (Window window : Window.getWindows()) {
+					/*for (Window window : Window.getWindows()) {
 						if (window instanceof TelaVendaDeAlimento) {
 							TelaVendaDeAlimento telaVenda = (TelaVendaDeAlimento) window;
 							telaVenda.limparCamposs();
 							telaVenda.toFront();
 							break;
 						}
-					}
+					}*/
 				} else {
 					JOptionPane.showMessageDialog(this, "Não é permitido vendas ainda", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
@@ -289,7 +293,7 @@ public class TelaCarrinhoAlimentos extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new TelaCarrinhoAlimentos().setVisible(true);
+				new TelaCarrinhoAlimentos(null).setVisible(true);
 			}
 		});
 	}
