@@ -353,7 +353,9 @@ public class TelaEscolhaPoltrona extends JFrame {
 
 				dispose();
 				
-				telaDetalhesFilme.dispose();
+				if(telaDetalhesFilme != null) {
+					telaDetalhesFilme.dispose();
+				}
 
 			}
 		});
