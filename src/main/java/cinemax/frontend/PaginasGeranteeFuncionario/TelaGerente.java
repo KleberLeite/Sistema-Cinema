@@ -93,7 +93,7 @@ public class TelaGerente extends javax.swing.JFrame {
                 BotaoAcessarGeranciaFuncinario.setEnabled(false);
         		BotaoAcessarGeranciaDeFilmes.setEnabled(false);
                 BotaoAcessarGeranciaDeAlimentos.setEnabled(false);
-                
+                botaoConsultarRelatorio.setEnabled(false);
         	}
         });
         if(app.getBackend().diaEstaAberto()) {
@@ -135,7 +135,10 @@ public class TelaGerente extends javax.swing.JFrame {
         	}
         });
         if(app.getBackend().getGerenciadorRelatorios().size() > 0 && !app.getBackend().diaEstaAberto()) {
+        	System.out.println("[Log:TelaGerente]: pode consultar relatorio.");
         	botaoConsultarRelatorio.setEnabled(true);
+        } else {
+        	botaoConsultarRelatorio.setEnabled(false);
         }
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
