@@ -41,6 +41,8 @@ import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -159,9 +161,20 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 		lblVerDetalhes.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(telaDetalhesFilme != null) {
+		    		return;
+		    	}
+		    	
 		        telaDetalhesFilme = new TelaDetalhesFilme(sessao.getFilme());
 		        telaDetalhesFilme.setVisible(true);
 		        telaDetalhesFilme.setLocationRelativeTo(null);
+		        
+		        telaDetalhesFilme.addWindowListener(new WindowAdapter() {
+		            @Override
+		            public void windowClosed(WindowEvent e) {
+		            	telaDetalhesFilme = null;
+		            }
+		        });
 		    }
 
 		    @Override
@@ -281,12 +294,12 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 				TelaEscolhaPoltrona telaEscolhaPoltrona = new TelaEscolhaPoltrona(sessao);
 				telaEscolhaPoltrona.setLocationRelativeTo(null);
 				telaEscolhaPoltrona.setVisible(true);
-
-				dispose();
 				
 				if(telaDetalhesFilme != null) {
 					telaDetalhesFilme.dispose();
 				}
+
+				dispose();				
 			}
 		});
 		btnVoltar.setBounds(10, 608, 89, 23);
@@ -314,6 +327,11 @@ public class TelaEscolhaMeiaOuInteira extends JFrame {
 				TelaConclusaoDeCompra telaConclusaoDeCompra = new TelaConclusaoDeCompra(sessao, carrinho);
 				telaConclusaoDeCompra.setVisible(true);
 				telaConclusaoDeCompra.setLocationRelativeTo(null);
+				
+				if(telaDetalhesFilme != null) {
+					telaDetalhesFilme.dispose();
+				}
+				
 				dispose();
 			}
 		});

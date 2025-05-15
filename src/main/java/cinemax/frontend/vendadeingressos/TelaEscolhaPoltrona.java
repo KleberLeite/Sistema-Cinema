@@ -36,6 +36,8 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -85,9 +87,20 @@ public class TelaEscolhaPoltrona extends JFrame {
 		lblVerDetalhes.addMouseListener(new MouseAdapter() {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
+		    	if(telaDetalhesFilme != null) {
+		    		return;
+		    	}
+		    	
 		        telaDetalhesFilme = new TelaDetalhesFilme(sessao.getFilme());
 		        telaDetalhesFilme.setVisible(true);
 		        telaDetalhesFilme.setLocationRelativeTo(null);
+		        
+		        telaDetalhesFilme.addWindowListener(new WindowAdapter() {
+		            @Override
+		            public void windowClosed(WindowEvent e) {
+		            	telaDetalhesFilme = null;
+		            }
+		        });
 		    }
 
 		    @Override
@@ -332,6 +345,10 @@ public class TelaEscolhaPoltrona extends JFrame {
 					telaFinalizarCompra.setVisible(true);
 					telaFinalizarCompra.setLocationRelativeTo(null);
 	
+					if(telaDetalhesFilme != null) {
+						telaDetalhesFilme.dispose();
+					}
+					
 					dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "Escolha ao menos uma poltrona para avançar!", "Aviso",
@@ -350,13 +367,12 @@ public class TelaEscolhaPoltrona extends JFrame {
 				TelaVendaDeIngresso telaEscolhaFilme = new TelaVendaDeIngresso();
 				telaEscolhaFilme.setLocationRelativeTo(null);
 				telaEscolhaFilme.setVisible(true);
-
-				dispose();
 				
 				if(telaDetalhesFilme != null) {
 					telaDetalhesFilme.dispose();
 				}
 
+				dispose();
 			}
 		});
 		btnVoltar.setBounds(10, 612, 89, 23);
