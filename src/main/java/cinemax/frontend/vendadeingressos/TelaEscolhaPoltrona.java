@@ -585,7 +585,7 @@ public class TelaEscolhaPoltrona extends JFrame {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 		String horaDaSessao = sessao.getInicio().format(formatter);
 
-		JLabel lblSalaEData = new JLabel("SALA "+sessao.getId()+" | "+diaFormatado+" "+horaDaSessao);
+		JLabel lblSalaEData = new JLabel("SALA "+sessao.getSala().getIdSala()+" | "+diaFormatado+" "+horaDaSessao);
 		lblSalaEData.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblSalaEData.setBounds(134, 94, 185, 20);
 		panelResumoFIlme.add(lblSalaEData);
