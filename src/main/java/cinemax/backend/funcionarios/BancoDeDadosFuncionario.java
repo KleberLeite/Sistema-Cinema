@@ -14,6 +14,7 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 	
 	private static final int TAMANHO_TELEFONE = 11;
 	private static final int TAMANHO_CPF = 11;
+	private static final int TAMANHO_MIN_SENHA = 6;
 
 	private Map<String, Funcionario> funcionarios = new HashMap<String, Funcionario>();
 	private Backend backend;
@@ -32,10 +33,11 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 
 	@Override
 	public Funcionario[] obterFuncionariosPorNome(String nome) {
+		String lowerNome = nome.toLowerCase();
 		List<Funcionario> funcionariosValue = new ArrayList<Funcionario>();
 
 		for (Funcionario funcionario : funcionarios.values()) {
-			if (funcionario.getNome().contains(nome)) {
+			if (funcionario.getNome().toLowerCase().contains(lowerNome)) {
 				funcionariosValue.add(funcionario);
 			}
 		}
@@ -242,7 +244,7 @@ public class BancoDeDadosFuncionario implements IBancoDeDadosFuncionario {
 	}
 
 	private boolean eSenhaValida(String senha) {
-		return senha.length() > 2;
+		return senha.length() >= TAMANHO_MIN_SENHA;
 	}
 
 	private boolean eCargoValido(CargoFuncionario cargo) {
