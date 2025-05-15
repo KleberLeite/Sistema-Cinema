@@ -30,9 +30,10 @@ public class BancoDeDadosAlimento implements IBancoDeDadosAlimento {
 	// Retorna um array de alimentos que contém o parâmetro "nome" em seu nome.
 	@Override
 	public Alimento[] obterAlimentoPorNome(String nome) {
+		String lowerNome = nome.toLowerCase();
 		List<Alimento> result = new ArrayList<Alimento>();
 		for(Alimento alimento : alimentos.values()) {			
-			if(alimento.getNome().contains(nome)) {				
+			if(alimento.getNome().toLowerCase().contains(lowerNome)) {				
 				result.add(alimento);
 			}
 		}
