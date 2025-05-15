@@ -283,6 +283,10 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 			return false;
 		}
 		
+		if(!LocalDateTime.now().isBefore(filme.obterSessao(idSessao).getInicio())) {
+			return false;
+		}
+		
 		return filme.obterSessao(idSessao).tentarReservar(linha, coluna);
 	}
 	
