@@ -38,7 +38,7 @@ public class TelaEditarSessao extends JFrame {
 	private JTextField textFieldDia;
 	private JTextField textFieldHora;
 	private JTextField textFieldMinuto;
-	Sessao sessao = app.getBackend().getBancoFilmes().obterFilmePorId(0).obterSessao(0);
+	Sessao sessao;
 
 	/**
 	 * Launch the application.
