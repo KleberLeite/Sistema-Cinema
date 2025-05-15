@@ -110,8 +110,9 @@ public class TelaEditarSessao extends JFrame {
 			return false;
 		}
 
-		if (app.getBackend().getBancoFilmes().tentarAlterarInicioSessao(sessao.getFilme().getId(), sessao.getId(), novaData) &&
-				app.getBackend().getBancoFilmes().tentarAlterarSalaSessao(sessao.getFilme().getId(), sessao.getId(), idSala)) {
+		boolean alterarIn = app.getBackend().getBancoFilmes().tentarAlterarInicioSessao(sessao.getFilme().getId(), sessao.getId(), novaData);
+		boolean alterarSala = app.getBackend().getBancoFilmes().tentarAlterarSalaSessao(sessao.getFilme().getId(), sessao.getId(), idSala);
+		if (alterarIn && alterarSala) {
 			JOptionPane.showMessageDialog(null, "Sessão atualizada com sucesso!");
 			return true;
 		}
@@ -214,10 +215,16 @@ public class TelaEditarSessao extends JFrame {
 		
 		JComboBox comboBoxSala = new JComboBox();
 		Estilizador.estilizarComboBoxClassificacaoIndicativa(comboBoxSala);
+		int i = 0;
 		for(Sala sala : app.getBackend().getBancoSalas().obterTodasSalas()) {
 			comboBoxSala.addItem(sala.getIdSala());
+			if(sessao.getSala().getIdSala() == sala.getIdSala()) {
+				comboBoxSala.setSelectedIndex(i);
+			}
+			i++;
 		}
 		comboBoxSala.setBounds(456, 101, 59, 22);
+		
 		panel.add(comboBoxSala);
 		
 		JLabel lblSala = new JLabel("Salas:");

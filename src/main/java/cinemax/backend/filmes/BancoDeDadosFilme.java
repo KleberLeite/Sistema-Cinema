@@ -364,7 +364,7 @@ public class BancoDeDadosFilme implements IBancoDeDadosFilme {
 		}
 		Sessao sessao = filme.obterSessao(idSessao);
 		if(sessao.getSala().getIdSala() == idNovaSala) {
-			return false;
+			return true;
 		}
 		if(existeOutraSessaoNoMesmoLugarHora(idNovaSala, sessao.getInicio())) {
 			return false;
