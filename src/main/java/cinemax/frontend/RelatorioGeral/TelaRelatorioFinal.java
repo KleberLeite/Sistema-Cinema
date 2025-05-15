@@ -101,7 +101,12 @@ public class TelaRelatorioFinal extends JFrame {
         TabelaAlimento.setModel(new javax.swing.table.DefaultTableModel(
             new Object[][] { { null, null, null, null }, { null, null, null, null },
                     { null, null, null, null }, { null, null, null, null } },
-            new String[] { "Item", "Preço", "Quantidade", "Subtotal" }));
+            new String[] { "Item", "Preço", "Quantidade", "Subtotal" }) {
+        	@Override
+    		public boolean isCellEditable(int row, int column) {
+    			return false; // Impede a edição da célula
+    		}
+        });
 
         modeloTabelaAlimento = (DefaultTableModel) TabelaAlimento.getModel();
         modeloTabelaAlimento.setColumnIdentifiers(new String[] { "Item", "Preço", "Quantidade", "Subtotal" });
@@ -139,7 +144,12 @@ public class TelaRelatorioFinal extends JFrame {
         TabelaFilme.setModel(new javax.swing.table.DefaultTableModel(
             new Object[][] { { null, null, null, null }, { null, null, null, null },
                     { null, null, null, null }, { null, null, null, null } },
-            new String[] { "Filme", "Inteiras", "Meias", "Subtotal" }));
+            new String[] { "Filme", "Inteiras", "Meias", "Subtotal" }) {
+        	@Override
+    		public boolean isCellEditable(int row, int column) {
+    			return false; // Impede a edição da célula
+    		}
+        });
 
         modeloTabelaFilme = (DefaultTableModel) TabelaFilme.getModel();
         modeloTabelaFilme.setColumnIdentifiers(new String[] { "Filme", "Inteiras", "Meias", "Subtotal" });
