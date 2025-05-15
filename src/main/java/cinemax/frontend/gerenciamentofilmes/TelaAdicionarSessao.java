@@ -152,7 +152,7 @@ public class TelaAdicionarSessao extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Editar Sessão:");
+		JLabel lblNewLabel = new JLabel("Adicionar Sessão:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setBounds(10, 11, 161, 44);
 		panel.add(lblNewLabel);
